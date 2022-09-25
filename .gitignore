@@ -32,6 +32,7 @@ inputFiles.lst
 createdFiles.lst
 release.properties
 dependency-reduced-pom.xml
+nb-configuration.xml
 buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
