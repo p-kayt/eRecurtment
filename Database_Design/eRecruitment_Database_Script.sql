@@ -273,3 +273,245 @@ CREATE TABLE Application_Position_Status(
 	CONSTRAINT PK_Application_Position_Status PRIMARY KEY (StatusID)
 )
 
+GO
+CREATE TABLE ApplicationPosition(
+	PositionID INT IDENTITY(1,1) NOT NULL,
+	PositionName NVARCHAR(100) NOT NULL,
+	PositionDescription NVARCHAR(1000) NOT NULL,
+	HiringQuantity INT NOT NULL,
+	CreatedDate DATE NOT NULL,
+
+	StatusID INT NOT NULL, 
+
+	CONSTRAINT PK_ApplicationPosition PRIMARY KEY (PositionID),
+	CONSTRAINT FK_ApplicationPosition_from_Application_Position_Status FOREIGN KEY (StatusID)
+		REFERENCES Application_Position_Status(StatusID)
+)
+
+----------------------------------
+-- Application Post Section --
+----------------------------------
+
+GO
+CREATE TABLE WorkingForm(
+	FormID INT IDENTITY(1,1) NOT NULL,
+	FormName VARCHAR(20) NOT NULL,
+
+	CONSTRAINT PK_WorkingForm PRIMARY KEY (FormID)
+)
+
+GO
+INSERT INTO WorkingForm(FormName) VALUES ('Part Time')
+INSERT INTO WorkingForm(FormName) VALUES ('Full Time')
+
+GO
+CREATE TABLE Application_Post_Status(
+	StatusID INT IDENTITY(1,1) NOT NULL,
+	StatusName VARCHAR(20) NOT NULL,
+
+	CONSTRAINT PK_Application_Post_Status PRIMARY KEY (StatusID)
+)
+
+GO
+INSERT INTO Application_Post_Status(StatusName) VALUES ('Hiring')
+INSERT INTO Application_Post_Status(StatusName) VALUES ('Not Hiring')
+INSERT INTO Application_Post_Status(StatusName) VALUES ('inActive')
+
+GO
+CREATE TABLE ApplicationPost(
+	PostID INT IDENTITY(1,1) NOT NULL,
+	PostDescription NVARCHAR(1000) NOT NULL,
+	Benefit NVARCHAR(1000) NOT NULL,
+	Salary FLOAT NOT NULL,
+	HiringQuantity INT NOT NULL,
+	SubmitDate DATE NOT NULL,
+	ExpiredDate DATE NOT NULL,
+
+	PositionID INT NOT NULL,
+	FormID INT NOT NULL,
+	StatusID INT NOT NULL,
+
+	CONSTRAINT PK_ApplicationPost PRIMARY KEY (PostID),
+	CONSTRAINT FK_ApplicationPost_from_ApplicationPosition FOREIGN KEY (PositionID)
+		REFERENCES ApplicationPosition (PositionID),
+	CONSTRAINT FK_ApplicationPost_from_WorkingForm FOREIGN KEY (FormID)
+		REFERENCES WorkingForm (FormID),
+	CONSTRAINT FK_ApplicationPost_from_Application_Post_Status FOREIGN KEY (StatusID)
+		REFERENCES Application_Post_Status (StatusID)
+)
+
+GO
+CREATE TABLE ApplicationSkill(
+	SkillID INT IDENTITY(1,1) NOT NULL,
+	SkillName NVARCHAR(100) NOT NULL,
+
+	PostID INT NOT NULL, 
+
+	CONSTRAINT PK_ApplicationSkill PRIMARY KEY (SkillID),
+	CONSTRAINT FK_ApplicationSkill_from_ApplicationPost FOREIGN KEY (PostID)
+		REFERENCES ApplicationPost(PostID)
+)
+
+GO
+CREATE TABLE ApplicationRequirement(
+	RequirementID INT IDENTITY(1,1) NOT NULL,
+	Requirement NVARCHAR(200) NOT NULL,
+
+	PostID INT NOT NULL, 
+
+	CONSTRAINT PK_ApplicationRequirement PRIMARY KEY (RequirementID),
+	CONSTRAINT FK_ApplicationRequirement_from_ApplicationPost FOREIGN KEY (PostID)
+		REFERENCES ApplicationPost(PostID)
+)
+
+GO
+CREATE TABLE Stage(
+	StageID INT IDENTITY(1,1) NOT NULL,
+	StageName VARCHAR(30) NOT NULL,
+
+	CONSTRAINT PK_Stage PRIMARY KEY (StageID)
+)
+
+GO
+CREATE TABLE Application_Stage(
+	ID INT IDENTITY(1,1) NOT NULL,
+	[Description] NVARCHAR(200) NOT NULL,
+
+	PostID INT NOT NULL,
+	StageID INT NOT NULL,
+
+	CONSTRAINT PK_Application_Stage PRIMARY KEY (ID),
+	CONSTRAINT FK_Application_Stage_from_ApplicationPost FOREIGN KEY (PostID)
+		REFERENCES ApplicationPost(PostID),
+	CONSTRAINT FK_Application_Stage_from_Stage FOREIGN KEY (StageID)
+		REFERENCES Stage (StageID)
+)
+
+GO
+CREATE TABLE ApplicationStatus(
+	StatusID INT IDENTITY(1,1) NOT NULL,
+	StatusName VARCHAR(20) NOT NULL,
+
+	CONSTRAINT PK_ApplicationStatus PRIMARY KEY (StatusID)
+)
+
+GO
+INSERT INTO ApplicationStatus(StatusName) VALUES ('In-progress')
+INSERT INTO ApplicationStatus(StatusName) VALUES ('Cancelled')
+INSERT INTO ApplicationStatus(StatusName) VALUES ('Fail')
+INSERT INTO ApplicationStatus(StatusName) VALUES ('Success')
+
+GO
+CREATE TABLE [Application](
+	ApplicationID INT IDENTITY(1,1) NOT NULL,
+	ApplyDate DATE NOT NULL,
+
+	StatusID INT NOT NULL,
+	UserID INT NOT NULL,
+	PostID INT NOT NULL,
+
+	CONSTRAINT PK_Application PRIMARY KEY (ApplicationID),
+	CONSTRAINT FK_Application_from_ApplicationStatus FOREIGN KEY (StatusID)
+		REFERENCES ApplicationStatus (StatusID),
+	CONSTRAINT FK_Application_from_User FOREIGN KEY (UserID)
+		REFERENCES [User] (UserID),
+	CONSTRAINT FK_Application_from_ApplicationPost FOREIGN KEY (PostID)
+		REFERENCES ApplicationPost (PostID)
+)
+
+----------------------------------
+-- Interview Section --
+----------------------------------
+GO
+CREATE TABLE InterviewStatus(
+	StatusID INT IDENTITY(1,1) NOT NULL,
+	StatusName VARCHAR(20) NOT NULL,
+
+	CONSTRAINT PK_InterviewStatus PRIMARY KEY (StatusID)
+)
+
+GO 
+INSERT INTO InterviewStatus(StatusName) VALUES ('Booked')
+INSERT INTO InterviewStatus(StatusName) VALUES ('Cancelled')
+INSERT INTO InterviewStatus(StatusName) VALUES ('Have Occurred')
+
+GO
+CREATE TABLE InterviewFormat(
+	FormatID INT IDENTITY(1,1) NOT NULL,
+	FormatName VARCHAR(20) NOT NULL,
+
+	CONSTRAINT PK_InterviewFormat PRIMARY KEY (FormatID)
+)
+
+GO
+INSERT INTO InterviewFormat(FormatName) VALUES ('Online')
+INSERT INTO InterviewFormat(FormatName) VALUES ('Offline')
+
+GO
+CREATE TABLE Interview(
+	InterviewID INT IDENTITY(1,1) NOT NULL,
+	[Description] NVARCHAR(200) NOT NULL,
+	OnlineLink VARCHAR(512) NULL,
+	[Address] NVARCHAR(200) NULL,
+	InterviewTime DATETIME NOT NULL,
+
+	StageID INT NOT NULL,
+	PostID INT NOT NULL,
+	FormatID INT NOT NULL,
+	StatusID INT NOT NULL,
+	BookerID INT NOT NULL,
+
+	CONSTRAINT PK_Interview PRIMARY KEY (InterviewID),
+	CONSTRAINT FK_Interview_from_Stage FOREIGN KEY (StageID)
+		REFERENCES Stage (StageID),
+	CONSTRAINT FK_Interview_from_ApplicationPost FOREIGN KEY (PostID)
+		REFERENCES ApplicationPost (PostID),
+	CONSTRAINT FK_Interview_from_InterviewFormat FOREIGN KEY (FormatID)
+		REFERENCES InterviewFormat (FormatID),
+	CONSTRAINT FK_Interview_from_InterviewStatus FOREIGN KEY (StatusID)
+		REFERENCES InterviewStatus (StatusID),
+	CONSTRAINT FK_Interview_from_User FOREIGN KEY (BookerID)
+		REFERENCES [User] (UserID)
+)
+
+GO
+CREATE TABLE Interviewer(
+	UserID INT NOT NULL,
+	InterviewID INT NOT NULL,
+
+	CONSTRAINT FK_Interviewer_from_User FOREIGN KEY (UserID)
+		REFERENCES [User] (UserID),
+	CONSTRAINT FK_Interviewer_from_Interview FOREIGN KEY (InterviewID)
+		REFERENCES Interview (InterviewID)
+)
+
+GO
+CREATE TABLE Participant(
+	UserID INT NOT NULL,
+	InterviewID INT NOT NULL,
+
+	CONSTRAINT FK_Participant_from_User FOREIGN KEY (UserID)
+		REFERENCES [User] (UserID),
+	CONSTRAINT FK_Participant_from_Interview FOREIGN KEY (InterviewID)
+		REFERENCES Interview (InterviewID)
+)
+
+GO
+CREATE TABLE Evaluation(
+	EvaluationID INT IDENTITY(1,1) NOT NULL,
+	EvaluationDescription NVARCHAR(1000) NOT NULL,
+	Score INT NOT NULL,
+
+	InterviewerID INT NOT NULL,
+	ParticipantID INT NOT NULL,
+	InterviewID INT NOT NULL,
+
+	CONSTRAINT PK_Evaluation PRIMARY KEY (EvaluationID),
+	CONSTRAINT FK_Evaluation_from_Interviewer_User FOREIGN KEY (InterviewerID)
+		REFERENCES [User] (UserID),
+	CONSTRAINT FK_Evaluation_from_Participant_User FOREIGN KEY (ParticipantID)
+		REFERENCES [User] (UserID),
+	CONSTRAINT FK_Evaluation_from_Interview FOREIGN KEY (InterviewID)
+		REFERENCES Interview (InterviewID),
+	CONSTRAINT Score_Range_Check CHECK(Score >= 0 AND Score <= 10)
+)
