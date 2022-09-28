@@ -88,5 +88,11 @@ public class UserDTO {
     public void setStatusID(int statusID) {
         this.statusID = statusID;
     }
+    
+    @Override
+    public String toString() {
+        return "Email: " + email + ", Password: " + password + ", firstName: " + firstName
+                + ", lastName: " + lastName + ", genderID: " + genderID + ", statusID: " + statusID;
+    }
 
 }

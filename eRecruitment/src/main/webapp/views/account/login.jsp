@@ -19,12 +19,12 @@
             crossorigin="anonymous"
             />
 
-        <link rel="stylesheet" href="../css/style_lgin.css">
+        <link rel="stylesheet" href="css/style_lgin.css">
     </head>
     <body>
         <div class="container">
             <div class="login-form">
-                <form action="./login" method = "get">
+                <form action="./login" method = "post">
                     <div class="form-row">
                         <div class="form-group col-12">
                             <label class="" for="email"
@@ -35,6 +35,7 @@
                                 class="form-control form-control-sm mr-1"
                                 id="email"
                                 name = "email"
+                                value = "${email}"
                                 placeholder="Username or Email"
                                 />
                         </div>
@@ -59,12 +60,12 @@
                         </button>
                     </div>
                     
-                    <div style="color: red; font-weight: bold;">
+                    <div style="color: red">
                         <p>${errorMessage}</p>
                     </div>
 
                     <div class="form-row justify-content-center m-2">
-                        <a href="./signup.html">Sign up</a>
+                        <a href="./signup">Sign up</a>
                     </div>
                 </form>
             </div>

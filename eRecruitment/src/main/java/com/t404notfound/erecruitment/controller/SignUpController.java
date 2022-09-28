@@ -20,8 +20,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author MINH TRI
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/login"})
-public class LoginController extends HttpServlet {
+@WebServlet(name = "SignUpController", urlPatterns = {"/signup"})
+public class SignUpController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,24 +36,33 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String email = (String) request.getParameter("email");
-        String password = (String) request.getParameter("password");
+        String email = request.getParameter("email");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String gender = request.getParameter("gender");
+        String password = request.getParameter("password");
+        //mac dinh cac bien tren da duoc check null va rong o front-end
 
-        if (email == null && password == null) {
-            request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
-        } else {
-            UserDAO dao = new UserDAO();
-            UserDTO user = dao.login(email, password);
-            if (user == null) {
+        UserDAO dao = new UserDAO();
+        if (email != null) {
+            if (dao.checkEmail(email)) {
                 request.setAttribute("email", email);
-                request.setAttribute("errorMessage", "Incorrect email or password");
-                request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
+                request.setAttribute("firstName", firstName);
+                request.setAttribute("lastName", lastName);
+                request.setAttribute("accExistMess", "This email has been used");
             } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect(request.getContextPath() + "/home");
+                UserDTO user = dao.signup(email, password, firstName, lastName, gender);
+                if (user != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", user);
+                    response.sendRedirect(request.getContextPath() + "/home");
+                    return;
+                }
             }
         }
+
+        request.getRequestDispatcher("/views/account/signup.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
