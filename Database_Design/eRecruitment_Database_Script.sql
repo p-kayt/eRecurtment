@@ -102,18 +102,18 @@ INSERT INTO User_Role(UserID, RoleID) VALUES (5, 5)
 GO
 CREATE TABLE CV(
 	CVID INT IDENTITY(1,1) NOT NULL,
-	FirstName NVARCHAR(50) NOT NULL,
-	LastName NVARCHAR(50) NOT NULL,
+	FirstName NVARCHAR(50) NULL,
+	LastName NVARCHAR(50) NULL,
 	Avatar VARCHAR(512) NULL,
-	Dob DATE NOT NULL,
-	Introduction NVARCHAR(1000) NOT NULL,
-	Email VARCHAR(254) UNIQUE NOT NULL,
-	PhoneNumber VARCHAR(15) NOT NULL,
-	[Address] NVARCHAR(100) NOT NULL,
-	City NVARCHAR(100) NOT NULL,
+	Dob DATE NULL,
+	Introduction NVARCHAR(1000) NULL,
+	Email VARCHAR(254) UNIQUE NULL,
+	PhoneNumber VARCHAR(15) NULL,
+	[Address] NVARCHAR(100) NULL,
+	City NVARCHAR(100) NULL,
 
-	Gender INT NOT NULL,
-	UserID INT NOT NULL,
+	Gender INT NULL,
+	UserID INT NULL,
 
 	CONSTRAINT PK_CV PRIMARY KEY (CVID),
 	CONSTRAINT FK_CV_from_Gender FOREIGN KEY (Gender)
@@ -126,8 +126,8 @@ CREATE TABLE CV(
 GO
 CREATE TABLE CV_Skill(
 	SkillID INT IDENTITY(1,1) NOT NULL,
-	SkillName NVARCHAR(50) NOT NULL,
-	SkillDescription NVARCHAR(100) NULL,
+	SkillName NVARCHAR(100) NULL,
+	SkillDescription NVARCHAR(200) NULL,
 
 	CVID INT NOT NULL,
 
@@ -139,8 +139,7 @@ CREATE TABLE CV_Skill(
 GO
 CREATE TABLE CV_Interest(
 	InterestID INT IDENTITY(1,1) NOT NULL,
-	InterestName NVARCHAR(50) NOT NULL,
-	InterestDescription NVARCHAR(100) NULL,
+	InterestName NVARCHAR(100) NULL,
 
 	CVID INT NOT NULL,
 
@@ -152,8 +151,8 @@ CREATE TABLE CV_Interest(
 GO
 CREATE TABLE CV_Certificate(
 	CertificateID INT IDENTITY(1,1) NOT NULL,
-	CertificateName NVARCHAR(100) NOT NULL,
-	CertificateLink VARCHAR(512) NOT NULL,
+	CertificateName NVARCHAR(100) NULL,
+	CertificateLink VARCHAR(512) NULL,
 
 	CVID INT NOT NULL,
 
@@ -165,9 +164,9 @@ CREATE TABLE CV_Certificate(
 GO
 CREATE TABLE CV_Achievement(
 	AchievementID INT IDENTITY(1,1) NOT NULL,
-	AchievementName NVARCHAR(100) NOT NULL,
-	AchievementDescription NVARCHAR(200) NOT NULL,
-	AchievementLink VARCHAR(512) NOT NULL,
+	AchievementName NVARCHAR(100) NULL,
+	AchievementDescription NVARCHAR(200) NULL,
+	AchievementLink VARCHAR(512) NULL,
 
 	CVID INT NOT NULL,
 
@@ -179,10 +178,10 @@ CREATE TABLE CV_Achievement(
 GO
 CREATE TABLE CV_Experience(
 	ExperienceID INT IDENTITY(1,1) NOT NULL,
-	JobTitle NVARCHAR(100) NOT NULL,
-	OrganizationName NVARCHAR(100) NOT NULL,
-	ExperienceDescription NVARCHAR(200) NOT NULL,
-	ExperienceDuration NVARCHAR(30) NOT NULL,
+	JobTitle NVARCHAR(100) NULL,
+	OrganizationName NVARCHAR(100) NULL,
+	ExperienceDescription NVARCHAR(1000) NULL,
+	ExperienceDuration NVARCHAR(100) NULL,
 
 	CVID INT NOT NULL,
 
@@ -194,8 +193,8 @@ CREATE TABLE CV_Experience(
 GO
 CREATE TABLE CV_Language(
 	LanguageID INT IDENTITY(1,1) NOT NULL,
-	LanguageName NVARCHAR(50) NOT NULL,
-	LanguageDescription NVARCHAR(100) NOT NULL,
+	LanguageName NVARCHAR(50) NULL,
+	LanguageDescription NVARCHAR(200) NULL,
 
 	CVID INT NOT NULL,
 
@@ -219,8 +218,8 @@ INSERT INTO EducationStatus(StatusName) VALUES('In-progress')
 GO
 CREATE TABLE CV_Education(
 	EducationID INT IDENTITY(1,1) NOT NULL,
-	EducationName NVARCHAR(100) NOT NULL,
-	OrganizationName NVARCHAR(100) NOT NULL,
+	EducationName NVARCHAR(100) NULL,
+	OrganizationName NVARCHAR(100) NULL,
 
 	StatusID INT NOT NULL,
 	CVID INT NOT NULL,
@@ -245,12 +244,12 @@ INSERT INTO [Platform](PlatformName) VALUES('LinkedIn')
 INSERT INTO [Platform](PlatformName) VALUES('Facebook')
 INSERT INTO [Platform](PlatformName) VALUES('Twitter')
 INSERT INTO [Platform](PlatformName) VALUES('GitHub')
-INSERT INTO [Platform](PlatformName) VALUES('GitLab')
+INSERT INTO [Platform](PlatformName) VALUES('Personal Website')
 
 GO
 CREATE TABLE CV_SocialMedia(
 	SocialMediaID INT IDENTITY(1,1) NOT NULL,
-	SocialMediaLink VARCHAR(512) NOT NULL,
+	SocialMediaLink VARCHAR(512) NULL,
 
 	PlatformID INT NOT NULL,
 	CVID INT NOT NULL,
@@ -266,26 +265,32 @@ CREATE TABLE CV_SocialMedia(
 -- Application Position Section --
 ----------------------------------
 GO
-CREATE TABLE Application_Position_Status(
+CREATE TABLE PositionStatus(
 	StatusID INT IDENTITY(1,1) NOT NULL,
 	StatusName VARCHAR(20) NOT NULL,
 
-	CONSTRAINT PK_Application_Position_Status PRIMARY KEY (StatusID)
+	CONSTRAINT PK_PositionStatus PRIMARY KEY (StatusID)
 )
+
+GO
+INSERT INTO PositionStatus(StatusName) VALUES ('inActive')
+INSERT INTO PositionStatus(StatusName) VALUES ('Pending')
+INSERT INTO PositionStatus(StatusName) VALUES ('Hiring')
+INSERT INTO PositionStatus(StatusName) VALUES ('Closed')
 
 GO
 CREATE TABLE ApplicationPosition(
 	PositionID INT IDENTITY(1,1) NOT NULL,
-	PositionName NVARCHAR(100) NOT NULL,
-	PositionDescription NVARCHAR(1000) NOT NULL,
-	HiringQuantity INT NOT NULL,
-	CreatedDate DATE NOT NULL,
+	PositionName NVARCHAR(100) NULL,
+	PositionDescription NVARCHAR(1000) NULL,
+	HiringQuantity INT NULL,
+	CreatedDate DATE NULL,
 
 	StatusID INT NOT NULL, 
 
 	CONSTRAINT PK_ApplicationPosition PRIMARY KEY (PositionID),
-	CONSTRAINT FK_ApplicationPosition_from_Application_Position_Status FOREIGN KEY (StatusID)
-		REFERENCES Application_Position_Status(StatusID)
+	CONSTRAINT FK_ApplicationPosition_from_PositionStatus FOREIGN KEY (StatusID)
+		REFERENCES PositionStatus(StatusID)
 )
 
 ----------------------------------
@@ -301,49 +306,44 @@ CREATE TABLE WorkingForm(
 )
 
 GO
-INSERT INTO WorkingForm(FormName) VALUES ('Part Time')
-INSERT INTO WorkingForm(FormName) VALUES ('Full Time')
+INSERT INTO WorkingForm(FormName) VALUES ('Full Time - Offline')
+INSERT INTO WorkingForm(FormName) VALUES ('Full Time - Online')
+INSERT INTO WorkingForm(FormName) VALUES ('Full Time - Hybrid')
+INSERT INTO WorkingForm(FormName) VALUES ('Part Time - Offline')
+INSERT INTO WorkingForm(FormName) VALUES ('Part Time - Online')
+INSERT INTO WorkingForm(FormName) VALUES ('Part Time - Hybrid')
 
-GO
-CREATE TABLE Application_Post_Status(
-	StatusID INT IDENTITY(1,1) NOT NULL,
-	StatusName VARCHAR(20) NOT NULL,
 
-	CONSTRAINT PK_Application_Post_Status PRIMARY KEY (StatusID)
-)
-
-GO
-INSERT INTO Application_Post_Status(StatusName) VALUES ('Hiring')
-INSERT INTO Application_Post_Status(StatusName) VALUES ('Closed')
-INSERT INTO Application_Post_Status(StatusName) VALUES ('inActive')
 
 GO
 CREATE TABLE ApplicationPost(
 	PostID INT IDENTITY(1,1) NOT NULL,
-	PostDescription NVARCHAR(1000) NOT NULL,
-	Benefit NVARCHAR(1000) NOT NULL,
-	Salary NVARCHAR(30) NOT NULL,
-	HiringQuantity INT NOT NULL,
-	SubmitDate DATE NOT NULL,
-	ExpiredDate DATE NOT NULL,
+	PostDescription NVARCHAR(1000) NULL,
+	Benefit NVARCHAR(1000) NULL,
+	Salary NVARCHAR(30) NULL,
+	HiringQuantity INT NULL,
+	CreateDate DATE NULL,
+	StartDate DATE NULL,
+	ExpiredDate DATE NULL,
 
 	PositionID INT NOT NULL,
-	FormID INT NOT NULL,
-	StatusID INT NOT NULL,
+	FormID INT NOT NULL DEFAULT 1,
+	StatusID INT NOT NULL DEFAULT 1,
 
 	CONSTRAINT PK_ApplicationPost PRIMARY KEY (PostID),
 	CONSTRAINT FK_ApplicationPost_from_ApplicationPosition FOREIGN KEY (PositionID)
 		REFERENCES ApplicationPosition (PositionID),
 	CONSTRAINT FK_ApplicationPost_from_WorkingForm FOREIGN KEY (FormID)
 		REFERENCES WorkingForm (FormID),
-	CONSTRAINT FK_ApplicationPost_from_Application_Post_Status FOREIGN KEY (StatusID)
-		REFERENCES Application_Post_Status (StatusID)
+	CONSTRAINT FK_ApplicationPost_from_PositionStatus FOREIGN KEY (StatusID)
+		REFERENCES PositionStatus (StatusID)
 )
 
 GO
 CREATE TABLE ApplicationSkill(
 	SkillID INT IDENTITY(1,1) NOT NULL,
-	SkillName NVARCHAR(100) NOT NULL,
+	SkillName NVARCHAR(100) NULL,
+	SkillDescription NVARCHAR(200) NULL,
 
 	PostID INT NOT NULL, 
 
@@ -355,7 +355,7 @@ CREATE TABLE ApplicationSkill(
 GO
 CREATE TABLE ApplicationRequirement(
 	RequirementID INT IDENTITY(1,1) NOT NULL,
-	Requirement NVARCHAR(200) NOT NULL,
+	Requirement NVARCHAR(200) NULL,
 
 	PostID INT NOT NULL, 
 
@@ -373,9 +373,13 @@ CREATE TABLE Stage(
 )
 
 GO
+INSERT INTO Stage(StageName) VALUES('CV Applying')
+INSERT INTO Stage(StageName) VALUES('Interview')
+
+GO
 CREATE TABLE Application_Stage(
 	ID INT IDENTITY(1,1) NOT NULL,
-	[Description] NVARCHAR(200) NOT NULL,
+	[Description] NVARCHAR(200) NULL,
 
 	PostID INT NOT NULL,
 	StageID INT NOT NULL,
@@ -406,7 +410,7 @@ CREATE TABLE [Application](
 	ApplicationID INT IDENTITY(1,1) NOT NULL,
 	ApplyDate DATE NOT NULL,
 
-	StatusID INT NOT NULL,
+	StatusID INT NOT NULL DEFAULT 1,
 	UserID INT NOT NULL,
 	PostID INT NOT NULL,
 
@@ -444,21 +448,21 @@ CREATE TABLE InterviewFormat(
 )
 
 GO
-INSERT INTO InterviewFormat(FormatName) VALUES ('Online')
 INSERT INTO InterviewFormat(FormatName) VALUES ('Offline')
+INSERT INTO InterviewFormat(FormatName) VALUES ('Online')
 
 GO
 CREATE TABLE Interview(
 	InterviewID INT IDENTITY(1,1) NOT NULL,
-	[Description] NVARCHAR(200) NOT NULL,
+	[Description] NVARCHAR(200) NULL,
 	OnlineLink VARCHAR(512) NULL,
 	[Address] NVARCHAR(200) NULL,
-	InterviewTime SMALLDATETIME NOT NULL,
+	InterviewTime SMALLDATETIME NULL,
 
 	StageID INT NOT NULL,
 	PostID INT NOT NULL,
-	FormatID INT NOT NULL,
-	StatusID INT NOT NULL,
+	FormatID INT NOT NULL DEFAULT 1,
+	StatusID INT NOT NULL DEFAULT 1,
 	BookerID INT NOT NULL,
 
 	CONSTRAINT PK_Interview PRIMARY KEY (InterviewID),
@@ -499,8 +503,8 @@ CREATE TABLE Participant(
 GO
 CREATE TABLE Evaluation(
 	EvaluationID INT IDENTITY(1,1) NOT NULL,
-	EvaluationDescription NVARCHAR(1000) NOT NULL,
-	Score INT NOT NULL,
+	EvaluationDescription NVARCHAR(1000) NULL,
+	Score INT NOT NULL DEFAULT 5,
 
 	InterviewerID INT NOT NULL,
 	ParticipantID INT NOT NULL,
