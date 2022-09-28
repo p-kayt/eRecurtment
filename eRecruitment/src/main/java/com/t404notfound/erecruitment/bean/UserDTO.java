@@ -9,29 +9,24 @@ package com.t404notfound.erecruitment.bean;
  * @author MINH TRI
  */
 public class UserDTO {
-    
+
     protected int userID;
     protected String email;
     protected String password;
     protected String avatarURL = null;               // can be null
     protected String firstName;
     protected String lastName;
-    protected String CVLink = null;                  // can be null
-    protected int CVID;
+    protected int genderID;
     protected int statusID;
-    protected int roleID;
 
-    public UserDTO(int userID, String email, String password, String avatarURL, String firstName, String lastName, String CVLink, int CVID, int statusID, int roleID) {
+    public UserDTO(int userID, String email, String password, String firstName, String lastName, int genderID, int statusID) {
         this.userID = userID;
         this.email = email;
         this.password = password;
-        this.avatarURL = avatarURL;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.CVLink = CVLink;
-        this.CVID = CVID;
+        this.genderID = genderID;
         this.statusID = statusID;
-        this.roleID = roleID;
     }
 
     public int getUserID() {
@@ -78,20 +73,12 @@ public class UserDTO {
         this.lastName = lastName;
     }
 
-    public String getCVLink() {
-        return CVLink;
+    public int getGenderID() {
+        return genderID;
     }
 
-    public void setCVLink(String CVLink) {
-        this.CVLink = CVLink;
-    }
-
-    public int getCVID() {
-        return CVID;
-    }
-
-    public void setCVID(int CVID) {
-        this.CVID = CVID;
+    public void setGenderID(int genderID) {
+        this.genderID = genderID;
     }
 
     public int getStatusID() {
@@ -102,13 +89,4 @@ public class UserDTO {
         this.statusID = statusID;
     }
 
-    public int getRoleID() {
-        return roleID;
-    }
-
-    public void setRoleID(int roleID) {
-        this.roleID = roleID;
-    }
-    
-    
- }
+}
