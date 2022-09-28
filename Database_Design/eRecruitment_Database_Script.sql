@@ -314,7 +314,7 @@ CREATE TABLE Application_Post_Status(
 
 GO
 INSERT INTO Application_Post_Status(StatusName) VALUES ('Hiring')
-INSERT INTO Application_Post_Status(StatusName) VALUES ('Not Hiring')
+INSERT INTO Application_Post_Status(StatusName) VALUES ('Closed')
 INSERT INTO Application_Post_Status(StatusName) VALUES ('inActive')
 
 GO
@@ -322,7 +322,7 @@ CREATE TABLE ApplicationPost(
 	PostID INT IDENTITY(1,1) NOT NULL,
 	PostDescription NVARCHAR(1000) NOT NULL,
 	Benefit NVARCHAR(1000) NOT NULL,
-	Salary FLOAT NOT NULL,
+	Salary NVARCHAR(30) NOT NULL,
 	HiringQuantity INT NOT NULL,
 	SubmitDate DATE NOT NULL,
 	ExpiredDate DATE NOT NULL,
@@ -453,7 +453,7 @@ CREATE TABLE Interview(
 	[Description] NVARCHAR(200) NOT NULL,
 	OnlineLink VARCHAR(512) NULL,
 	[Address] NVARCHAR(200) NULL,
-	InterviewTime DATETIME NOT NULL,
+	InterviewTime SMALLDATETIME NOT NULL,
 
 	StageID INT NOT NULL,
 	PostID INT NOT NULL,
