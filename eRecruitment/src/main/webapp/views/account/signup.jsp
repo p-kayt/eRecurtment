@@ -24,7 +24,7 @@
     <body>
         <div class="container">
             <div class="login-form">
-                <form action = "./signup" method="post" id="signupForm">
+                <form action = "signup" method="post" id="signupForm">
                     <div class="form-row">
                         <div class="form-group col-12">
                             <label class="" for="email"
@@ -36,12 +36,12 @@
                                 id="email"
                                 name = "email"
                                 value= "${email}"
-                                placeholder="Enter your Email"
+                                placeholder="@gmail.com"
                                 required
                                 />
                         </div>
-                        <div style="color: red">
-                            <p>${accExistMess}</p>
+                        <div id="emailError" style="color: red; display: block;" >
+                            <p>${EmailErrorMess}</p>
                         </div>
 
                         <div class="form-group col-12">
@@ -107,7 +107,7 @@
                                    >Confirm Password</label
                             >
                             <input
-                                type="confirm-password"
+                                type= "password"
                                 class="form-control form-control-sm mr-1"
                                 id="confirm-password"
                                 placeholder="Confirm Password"
@@ -120,13 +120,12 @@
 
                     </div>
                     <div class="form-row">
-                        <button class="btn btn-primary btn-sm ml-1 login-btn" onclick="checkForm('signupForm')">
+                        <button type="button" class="btn btn-primary btn-sm ml-1 login-btn" onclick="checkForm()"> 
                             Sign up
                         </button>
-                        //button tu dong gui form?
                     </div>
                     <div class = "mt-2" style = "color:red;">
-                        <p>Already have account? <a class= "text-primary" href="login.jsp">Log in </a></p>
+                        <p>Already have account? <a class= "text-primary" href="login?action=login">Log in </a></p>
                     </div>
                 </form>
             </div>
@@ -134,15 +133,17 @@
     </div>
 
     <script>
-        function checkForm(id) {
-            var form = document.getElementById(id);
+        function checkForm() {
+            var form = document.getElementById("signupForm");
             var pass = document.getElementById("password");
             var rePass = document.getElementById("confirm-password");
 
-            if (pass !== rePass) {
+            if (pass.value !== rePass.value) {
+                document.getElementById("emailError").style.display = "none";
                 document.getElementById("checkPass").style.display = "block";
-                rePass.value = "";
+                repass.value = "";
             } else {
+                document.getElementById("checkPass").style.display = "none";
                 form.submit();
             }
         }

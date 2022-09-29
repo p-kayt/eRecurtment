@@ -45,18 +45,26 @@ public class SignUpController extends HttpServlet {
 
         UserDAO dao = new UserDAO();
         if (email != null) {
-            if (dao.checkEmail(email)) {
+            boolean matchEmail = email.matches("^[a-z][a-z0-9_\\.]{5,32}@gmail.com$");
+            if (!matchEmail) {
                 request.setAttribute("email", email);
                 request.setAttribute("firstName", firstName);
                 request.setAttribute("lastName", lastName);
-                request.setAttribute("accExistMess", "This email has been used");
+                request.setAttribute("EmailErrorMess", "Invalid email");
             } else {
-                UserDTO user = dao.signup(email, password, firstName, lastName, gender);
-                if (user != null) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("user", user);
-                    response.sendRedirect(request.getContextPath() + "/home");
-                    return;
+                if (dao.checkEmail(email)) {
+                    request.setAttribute("email", email);
+                    request.setAttribute("firstName", firstName);
+                    request.setAttribute("lastName", lastName);
+                    request.setAttribute("EmailErrorMess", "This email has been used");
+                } else {
+                    UserDTO user = dao.signup(email, password, firstName, lastName, gender);
+                    if (user != null) {
+                        HttpSession session = request.getSession();
+                        session.setAttribute("user", user);
+                        response.sendRedirect(request.getContextPath() + "/home");
+                        return;
+                    }
                 }
             }
         }

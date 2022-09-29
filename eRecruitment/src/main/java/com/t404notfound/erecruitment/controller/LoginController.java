@@ -35,24 +35,34 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String action = request.getParameter("action");
 
-        String email = (String) request.getParameter("email");
-        String password = (String) request.getParameter("password");
-
-        if (email == null && password == null) {
+        if (action == null) {
             request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
-        } else {
-            UserDAO dao = new UserDAO();
-            UserDTO user = dao.login(email, password);
-            if (user == null) {
-                request.setAttribute("email", email);
-                request.setAttribute("errorMessage", "Incorrect email or password");
+        } else if (action.equalsIgnoreCase("login")) {
+            if (email == null && password == null) {
                 request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
             } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                response.sendRedirect(request.getContextPath() + "/home");
+                UserDAO dao = new UserDAO();
+                UserDTO user = dao.login(email, password);
+                if (user == null) {
+                    request.setAttribute("email", email);
+                    request.setAttribute("errorMessage", "Incorrect email or password");
+                    request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
+                } else {                   
+                    session.setAttribute("user", user);
+                    response.sendRedirect(request.getContextPath() + "/home");
+                }
             }
+        } else if (action.equalsIgnoreCase("logout")) {           
+            session.setAttribute("user", null);
+            response.sendRedirect(request.getContextPath() + "/login");
+        } else {
+            request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
         }
     }
 

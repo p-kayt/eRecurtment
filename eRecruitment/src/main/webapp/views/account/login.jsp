@@ -37,6 +37,7 @@
                                 name = "email"
                                 value = "${email}"
                                 placeholder="Username or Email"
+                                required
                                 />
                         </div>
                         <div class="form-group col-12">
@@ -49,7 +50,10 @@
                                 name ="password"
                                 id="password"
                                 placeholder="Password"
+                                required
                                 />
+
+                            <input type="hidden" name = "action" value="login">
 
                             <a href="">Forgot password?</a>
                         </div>
@@ -59,7 +63,7 @@
                             Login
                         </button>
                     </div>
-                    
+
                     <div style="color: red">
                         <p>${errorMessage}</p>
                     </div>
