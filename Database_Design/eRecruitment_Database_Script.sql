@@ -141,6 +141,12 @@ CREATE TABLE CV_Skill(
 )
 
 GO
+INSERT INTO CV_Skill(SkillName, SkillDescription, CVID) VALUES (N'Java', N'Intermediate Level', 1)
+INSERT INTO CV_Skill(SkillName, SkillDescription, CVID) VALUES (N'C#', N'Beginer Level', 1)
+INSERT INTO CV_Skill(SkillName, SkillDescription, CVID) VALUES (N'Chicken Herding', N'Professor Level', 1)
+
+
+GO
 CREATE TABLE CV_Interest(
 	InterestID INT IDENTITY(1,1) NOT NULL,
 	InterestName NVARCHAR(100) NULL,
@@ -151,6 +157,12 @@ CREATE TABLE CV_Interest(
 	CONSTRAINT FK_CV_Interest_from_CV FOREIGN KEY (CVID)
 		REFERENCES CV(CVID)
 )
+
+GO
+INSERT INTO CV_Interest(InterestName, CVID) VALUES (N'Game', 1)
+INSERT INTO CV_Interest(InterestName, CVID) VALUES (N'Manga', 1)
+INSERT INTO CV_Interest(InterestName, CVID) VALUES (N'Anime', 1)
+INSERT INTO CV_Interest(InterestName, CVID) VALUES (N'Food', 1)
 
 GO
 CREATE TABLE CV_Certificate(
@@ -166,6 +178,10 @@ CREATE TABLE CV_Certificate(
 )
 
 GO
+INSERT INTO CV_Certificate(CertificateName, CertificateLink, CVID) VALUES (N'Ielts', 'https://ielts.idp.com/results/check-your-result', 1)
+INSERT INTO CV_Certificate(CertificateName, CertificateLink, CVID) VALUES (N'Business Advisor', 'https://thanhnien.vn/dung-de-bi-lua-ga-post1481000.html', 1)
+
+GO
 CREATE TABLE CV_Achievement(
 	AchievementID INT IDENTITY(1,1) NOT NULL,
 	AchievementName NVARCHAR(100) NULL,
@@ -178,6 +194,10 @@ CREATE TABLE CV_Achievement(
 	CONSTRAINT FK_CV_Achievement_from_CV FOREIGN KEY (CVID)
 		REFERENCES CV(CVID)
 )
+
+GO
+INSERT INTO CV_Achievement(AchievementName, AchievementDescription, AchievementLink, CVID) VALUES (N'Manga Hub', N'A website for reading manga online', 'https://github.com/MHTteam/Read-Manga-Online-Website', 1)
+
 
 GO
 CREATE TABLE CV_Experience(
@@ -195,6 +215,9 @@ CREATE TABLE CV_Experience(
 )
 
 GO
+INSERT INTO CV_Experience(JobTitle, OrganizationName, ExperienceDescription, ExperienceDuration, CVID) VALUES (N'Chicken Herding', N'University Of F', N'Herding young, inexperience, newly born chicken into the world of Incident Technology (IT) at the University of F (UF)', N'20 Years', 1)
+
+GO
 CREATE TABLE CV_Language(
 	LanguageID INT IDENTITY(1,1) NOT NULL,
 	LanguageName NVARCHAR(50) NULL,
@@ -206,6 +229,9 @@ CREATE TABLE CV_Language(
 	CONSTRAINT FK_CV_Language_from_CV FOREIGN KEY (CVID)
 		REFERENCES CV(CVID)
 )
+
+GO
+INSERT INTO CV_Language(LanguageName, LanguageDescription, CVID) VALUES (N'English', N'Ielts 10 Cham', 1)
 
 GO
 CREATE TABLE EducationStatus(
@@ -236,6 +262,10 @@ CREATE TABLE CV_Education(
 )
 
 GO
+INSERT INTO CV_Education(EducationName, OrganizationName, StatusID, CVID) VALUES (N'Bachelor of Chicken Herding', N'University of F', 1, 1)
+INSERT INTO CV_Education(EducationName, OrganizationName, StatusID, CVID) VALUES (N'Bachelor of Incedent Technology', N'University of F', 2, 1)
+
+GO
 CREATE TABLE [Platform](
 	PlatformID INT IDENTITY(1,1) NOT NULL,
 	PlatformName VARCHAR(30) NOT NULL,
@@ -264,6 +294,9 @@ CREATE TABLE CV_SocialMedia(
 	CONSTRAINT FK_CV_SocialMedia_from_CV FOREIGN KEY (CVID)
 		REFERENCES CV(CVID)
 )
+
+GO
+INSERT INTO CV_SocialMedia(SocialMediaLink, PlatformID, CVID) VALUES ('https://github.com/HoaNT3010', 4, 1)
 
 ----------------------------------
 -- Application Position Section --
