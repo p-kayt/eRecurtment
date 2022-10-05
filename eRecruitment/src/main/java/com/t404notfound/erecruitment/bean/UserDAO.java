@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -36,6 +37,12 @@ public class UserDAO {
                 int genderID = rs.getInt("Gender");
                 int statusID = rs.getInt("Status");
                 UserDTO user = new UserDTO(userID, email, password, firstName, lastName, genderID, statusID);
+
+                //get user role
+                ArrayList<Integer> userRole = new ArrayList<>();
+                userRole = getUserRole(userID);
+                user.setUserRole(userRole);
+
                 return user;
             }
 
@@ -66,12 +73,36 @@ public class UserDAO {
         return false;
     }
 
+    public ArrayList<Integer> getUserRole(int userID) {
+        ArrayList<Integer> tmp = new ArrayList<>();
+        String sql = " SELECT RoleID "
+                + " FROM User_Role "
+                + " WHERE UserID = ? ";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                tmp.add(rs.getInt("RoleID"));
+            }
+
+            return tmp;
+
+        } catch (Exception e) {
+            System.out.println("Error when query role!");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public UserDTO signup(String email, String password, String firstName, String lastName, String gender) {
 
         String sql = "INSERT INTO [User](Email, [Password], Avatar, FirstName, LastName, Gender, [Status]) "
                 + " VALUES (?,?,null,?,?,?,1) ";
-        
-        if(checkEmail(email)) {
+
+        if (checkEmail(email)) {
             return null;
         }
 
@@ -110,7 +141,49 @@ public class UserDAO {
         return null;
     }
 
+    public boolean setUserRole(int userID, int roleID) {
+        String sql = " INSERT INTO User_Role(UserID, RoleID) "
+                + " VALUES (?, ?) ";
+
+        //Xoa truoc khi insert de tranh loi
+        deleteUserRole(userID, roleID);
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, userID);
+            ps.setInt(2, roleID);
+            int result = ps.executeUpdate();
+            if (result != 0) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("Error when query Update!");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteUserRole(int userID, int roleID) {
+        //Hàm delete chi false khi xay ra exception
+        String sql = " DELETE FROM User_Role "
+                + " WHERE UserID = ? AND RoleID = ? ";
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, userID);
+            ps.setInt(2, roleID);
+            int rs = ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error when query user role!");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
+        boolean check;
         String email = "testCandidate@gmail.com";
         String email2 = "daominhtri1@gmail.com";
         String password = "111111";
@@ -125,7 +198,21 @@ public class UserDAO {
         user = dao.login("daominhtri1000@gmail.com", "123456");
         System.out.println("Print user: ");
         System.out.println(user.toString());
-
+        System.out.println("===========================================");
+        System.out.println("Test getUserRole function: ");
+        ArrayList<Integer> test = new ArrayList<>();
+        test = dao.getUserRole(2);
+        System.out.println("Role of UserID 2: ");
+        for (int i = 0; i < test.size(); i++) {
+            System.out.println("Role " + test.get(i));
+        }
+        System.out.println("===========================================");
+        System.out.println("Test setUserRole: ");
+        check = dao.setUserRole(2, 3);
+        System.out.println(check);
+        
+        
+        
     }
 
 }

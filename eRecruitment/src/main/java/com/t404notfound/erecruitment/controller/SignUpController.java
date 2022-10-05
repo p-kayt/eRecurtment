@@ -46,7 +46,7 @@ public class SignUpController extends HttpServlet {
         UserDAO dao = new UserDAO();
         if (email != null) {
             email = email.toLowerCase();
-            boolean matchEmail = email.matches("^[a-z][a-z0-9_\\.]{5,32}@gmail.com$");
+            boolean matchEmail = email.matches("^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$");
             if (!matchEmail) {
                 request.setAttribute("email", email);
                 request.setAttribute("firstName", firstName);

@@ -4,6 +4,8 @@
  */
 package com.t404notfound.erecruitment.bean;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author MINH TRI
@@ -18,6 +20,7 @@ public class UserDTO {
     protected String lastName;
     protected int genderID;
     protected int statusID;
+    protected ArrayList<Integer> userRole = new ArrayList<>();
 
     public UserDTO(int userID, String email, String password, String firstName, String lastName, int genderID, int statusID) {
         this.userID = userID;
@@ -87,6 +90,14 @@ public class UserDTO {
 
     public void setStatusID(int statusID) {
         this.statusID = statusID;
+    }
+    
+    public void setUserRole(ArrayList<Integer> a){
+        this.userRole = a;
+    }
+    
+    public ArrayList<Integer> getUserRole(){
+        return this.userRole;
     }
     
     @Override

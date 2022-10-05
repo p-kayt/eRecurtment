@@ -47,6 +47,7 @@ public class LoginController extends HttpServlet {
             if (email == null && password == null) {
                 request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
             } else {
+                email = email.toLowerCase();
                 UserDAO dao = new UserDAO();
                 UserDTO user = dao.login(email, password);
                 if (user == null) {
