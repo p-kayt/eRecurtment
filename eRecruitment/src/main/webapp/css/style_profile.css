@@ -1,0 +1,38 @@
+.profile-img{
+    height: 400px;
+    width: 300px;
+}
+
+.profile-img img{
+    height: 300px;
+    border: solid black 1px;
+    border-radius: 50%;
+}
+
+.profile-info{
+    /* border: 1px solid black; */
+    width: 100%;
+    margin-left: 50px;
+    font-size: 20px;
+}
+
+.profile-info label{
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid black;
+    padding-left: 10px;
+}
+
+.profile-info label p{
+    font-size: 20px;
+    font-weight: lighter;
+    padding-left: 30px;
+}
+
+.profile-info input[type=button]{
+    height: 50px;
+    width: 130px;
+    font-size: 18px;
+    word-break: break-all;
+    align-self: flex-end;
+}
