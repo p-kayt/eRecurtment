@@ -1,0 +1,53 @@
+nav {
+  background: #ffffff;
+}
+
+/* search box */
+.post-search-form {
+  max-width: 80%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 2%;
+  font-size: 20px;
+}
+
+.post-search-form input[type="button"] {
+  background-color: #a4caf3;
+  border-radius: 10%;
+  /* border: none; */
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.post-search-form label {
+  display: inline-block;
+  height: 100%;
+  margin: 0 auto;
+  /* border: 1px solid black; */
+}
+
+/* post list */
+.post-list{
+    margin-top: 30px;
+}
+
+.post-list .post-table{
+    border: solid black 1px;
+    margin-right: 5px;
+}
+
+.post-list .post-item{
+    border: solid black 1px;
+    margin: 5px;
+    height: 100px;
+    max-height: 100px;
+    overflow: hidden;
+}
+.post-list .category{
+    border: solid black 1px;
+}
