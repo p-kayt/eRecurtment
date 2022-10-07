@@ -1,4 +1,4 @@
-USE [master]
+﻿USE [master]
 
 GO
 DROP DATABASE IF EXISTS eRecruitment
@@ -331,6 +331,9 @@ CREATE TABLE ApplicationPosition(
 		REFERENCES PositionStatus(StatusID)
 )
 
+GO
+INSERT INTO ApplicationPosition(PositionName, PositionDescription, HiringQuantity, CreatedDate, StatusID) VALUES(N'Front-end Developer', N'Lập trình viên Front-end là người tập trung phát triển phía Client Side, nói một cách đơn giản dễ hiểu là tập trung vào mảng phát triển xây dựng giao diện và trải nghiệm cho người dùng, là người phụ trách phát triển hiển thị và trải nghiệm người dùng cho ứng dụng web. Front-end Developer chính là người quyết định cái nhìn đầu tiên của người dùng về trang web, đồng thời mang lại một trang web dễ dàng thao tác và sử dụng.', 10, '2022-10-7', 3)
+
 ----------------------------------
 -- Application Post Section --
 ----------------------------------
@@ -357,7 +360,6 @@ GO
 CREATE TABLE ApplicationPost(
 	PostID INT IDENTITY(1,1) NOT NULL,
 	PostDescription NVARCHAR(1000) NULL,
-	Benefit NVARCHAR(1000) NULL,
 	Salary NVARCHAR(30) NULL,
 	HiringQuantity INT NULL,
 	CreateDate DATE NULL,
@@ -378,6 +380,46 @@ CREATE TABLE ApplicationPost(
 )
 
 GO
+INSERT INTO ApplicationPost(PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID) 
+VALUES (N'Tham gia phát triển các dự án về Web, xây dựng các chức năng front-end của Website, Web application.
+
+Triển khai giao diện HTML/CSS Javascript theo yêu cầu của khách hàng trên hệ thống website xây dựng sẵn
+
+Phối hợp với các back-end developers và web designers để cải thiện tính khả dụng
+
+Đảm bảo tiêu chuẩn đồ họa chất lượng cao và sự thống nhất trong brand
+
+Thu thập ý kiến phản hồi và xây dựng các hướng giải quyết cho người sử dụng và khách hàng
+
+Nghiên cứu, tìm hiểu các công nghệ về HTML/CSS Javascript mới nhất để áp dụng cái tiến sản phẩm', 
+N'Around $3000', 10, '2022-10-7', '2022-10-10', '2023-10-10', 1, 1, 3)
+
+ GO
+CREATE TABLE ApplicationBenefit(
+	BenefitID INT IDENTITY(1,1) NOT NULL,
+	Benefit NVARCHAR(200) NULL,
+
+	PostID INT NOT NULL, 
+
+	CONSTRAINT PK_ApplicationBenefit PRIMARY KEY (BenefitID),
+	CONSTRAINT FK_ApplicationBenefit_from_ApplicationPost FOREIGN KEY (PostID)
+		REFERENCES ApplicationPost(PostID)
+)
+
+GO
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Attractive salary package and 100% Gross Salary in probation period', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'13th-month salary', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Monthly performance bonus. (over $600 on average and over $2000 for top performers)', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'18 days of annual leaves (cashback allowed if not used) and plus 4 days for an oversea company trip', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Multiple allowances (Lunch, Gym, Parking, Birthday/Tet/Wedding voucher... )', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Full social, healthy and unemployment insurance', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Premium healthcare insurance', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Annual company trip abroad', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Monthly team-building activities (Bowling, Go-Kart,....) and special celebrations on Autumn Festival, Halloween, Christmas, Tet, ...', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Monthly happy lunch/birthday celebration and happy hours every day with free snacks, soft drinks, fruit, and coffee', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Sports activities (Badminton, Ping Pong, etc...)', 1)
+
+GO
 CREATE TABLE ApplicationSkill(
 	SkillID INT IDENTITY(1,1) NOT NULL,
 	SkillName NVARCHAR(100) NULL,
@@ -391,6 +433,12 @@ CREATE TABLE ApplicationSkill(
 )
 
 GO
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Front-End', N'5+ Years', 1)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'JavaScript', N'Advance Knowledge', 1)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'TypeScript', N'Advance Knowledge', 1)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'ReactJS', N'5+ Years', 1)
+
+GO
 CREATE TABLE ApplicationRequirement(
 	RequirementID INT IDENTITY(1,1) NOT NULL,
 	Requirement NVARCHAR(200) NULL,
@@ -401,6 +449,14 @@ CREATE TABLE ApplicationRequirement(
 	CONSTRAINT FK_ApplicationRequirement_from_ApplicationPost FOREIGN KEY (PostID)
 		REFERENCES ApplicationPost(PostID)
 )
+
+GO
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'A Bachelor’s Degree in any relevant major (e.g. Information Technology, Computer Science, etc.)', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Proficiency in English (both verbal and written)', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Having experience in leading software development projects', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Having previous full-stack/ backend experience is a strong plus', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'A strong fundamental understanding of software development', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Strong self-discipline for delivering well-tested, complete features/modules under a tight schedule and the capability for rational thinking', 1)
 
 GO
 CREATE TABLE Stage(
@@ -428,6 +484,11 @@ CREATE TABLE Application_Stage(
 	CONSTRAINT FK_Application_Stage_from_Stage FOREIGN KEY (StageID)
 		REFERENCES Stage (StageID)
 )
+
+GO
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Applying CV and Waiting For Approval', 1, 1)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Candidate''s Skills and Knowledge', 1, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Contract Negotiation', 1, 2)
 
 GO
 CREATE TABLE ApplicationStatus(
