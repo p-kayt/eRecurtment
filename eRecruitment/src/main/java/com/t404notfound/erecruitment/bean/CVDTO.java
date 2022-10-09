@@ -180,11 +180,11 @@ public class CVDTO {
         this.certificates = certificates;
     }
 
-    public ArrayList getAchivements() {
+    public ArrayList getAchievements() {
         return achivements;
     }
 
-    public void setAchivements(ArrayList achivements) {
+    public void setAchievements(ArrayList achivements) {
         this.achivements = achivements;
     }
 
@@ -222,8 +222,10 @@ public class CVDTO {
 
     @Override
     public String toString() {
-        return CVID + " - " + firstName + " - " + lastName + " - " + avatar + " - " + dob + " - " + introduction + " - " + email + " - " + phoneNumber + " - " + address + " - " + city + " - " + gender + " - " + userID;
+        return "CVDTO{" + "CVID=" + CVID + ", firstName=" + firstName + ", lastName=" + lastName + ", avatar=" + avatar + ", dob=" + dob + ", introduction=" + introduction + ", email=" + email + ", phoneNumber=" + phoneNumber + ", address=" + address + ", city=" + city + ", gender=" + gender + ", userID=" + userID + ", \nskills=" + skills + ", \ninterests=" + interests + ", \ncertificates=" + certificates + ", \nachivements=" + achivements + ", \nexperiences=" + experiences + ", \nlanguages=" + languages + ", \neducations=" + educations + ", \nsocialMedia=" + socialMedia + '}';
     }
+
+    
     
     
     

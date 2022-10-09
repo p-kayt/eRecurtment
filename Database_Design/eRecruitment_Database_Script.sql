@@ -141,6 +141,8 @@ CREATE TABLE CV_Skill(
 		REFERENCES CV(CVID)
 )
 
+SELECT SkillID, SkillName, SkillDescription, CVID FROM CV_Skill WHERE CVID = 1;
+
 GO
 INSERT INTO CV_Skill(SkillName, SkillDescription, CVID) VALUES (N'Java', N'Intermediate Level', 1)
 INSERT INTO CV_Skill(SkillName, SkillDescription, CVID) VALUES (N'C#', N'Beginer Level', 1)
@@ -199,6 +201,8 @@ CREATE TABLE CV_Achievement(
 GO
 INSERT INTO CV_Achievement(AchievementName, AchievementDescription, AchievementLink, CVID) VALUES (N'Manga Hub', N'A website for reading manga online', 'https://github.com/MHTteam/Read-Manga-Online-Website', 1)
 
+SELECT AchievementID, AchievementName, AchievementDescription, AchievementLink, CVID
+FROM CV_Achievement WHERE CVID = 1;
 
 GO
 CREATE TABLE CV_Experience(
