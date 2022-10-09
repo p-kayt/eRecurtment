@@ -118,11 +118,11 @@ public class LoginFilter implements Filter {
             String url = httpRequest.getServletPath();
             if (session.getAttribute("user") != null) {
                 if (url.contains("login") || url.contains("signup")) {
-                    httpResponse.sendRedirect("home");
+                    httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
                 }
             } else {
                 if (url.contains("profile")) {
-                    httpResponse.sendRedirect("login");
+                    httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
                 }
             }
 

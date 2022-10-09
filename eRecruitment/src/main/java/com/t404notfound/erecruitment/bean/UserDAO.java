@@ -182,11 +182,73 @@ public class UserDAO {
         }
     }
 
+    public boolean changePass(int userID, String password) {
+
+        String sql = "UPDATE [User] "
+                + " SET [Password] = ? "
+                + " WHERE UserID = ? ";
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, password);
+            ps.setInt(2, userID);
+            int rs = ps.executeUpdate();
+
+            if (rs != 0) {
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error when execute update.");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean updateProfile(int UserID, String firstName, String lastName, String gender) {
+        String sql = "UPDATE [User] "
+                + " SET FirstName = ?, LastName = ?, Gender = ? "
+                + " WHERE UserID = ? ";
+
+        int genderID;
+        switch (gender.toLowerCase()) {
+            case "male":
+                genderID = 1;
+                break;
+            case "female":
+                genderID = 2;
+                break;
+            default:
+                genderID = 3;
+                break;
+        }
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, firstName);
+            ps.setString(2, lastName);
+            ps.setInt(3, genderID);
+            ps.setInt(4, UserID);
+            int rs = ps.executeUpdate();
+
+            if (rs != 0) {
+                return true;
+            }
+            return false;
+
+        } catch (Exception e) {
+            System.out.println("Error when execute update");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         boolean check;
         String email = "testCandidate@gmail.com";
         String email2 = "daominhtri1@gmail.com";
-        String password = "111111";
+        String password = "1";
         UserDAO dao = new UserDAO();
         UserDTO user = dao.login(email, password);
         System.out.println("Print user: ");
@@ -210,9 +272,13 @@ public class UserDAO {
         System.out.println("Test setUserRole: ");
         check = dao.setUserRole(2, 3);
         System.out.println(check);
-        
-        
-        
+//        System.out.println("===========================================");
+//        System.out.println("Check changePass: ");
+//        System.out.println(dao.changePass(1, "1234"));
+        System.out.println("===========================================");
+        System.out.println("Test updateProfile: ");
+        System.out.println(dao.updateProfile(10, "tri", "dao minh", "male"));
+
     }
 
 }
