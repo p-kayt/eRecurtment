@@ -222,6 +222,8 @@ CREATE TABLE CV_Experience(
 GO
 INSERT INTO CV_Experience(JobTitle, OrganizationName, ExperienceDescription, ExperienceDuration, CVID) VALUES (N'Chicken Herding', N'University Of F', N'Herding young, inexperience, newly born chicken into the world of Incident Technology (IT) at the University of F (UF)', N'20 Years', 1)
 
+SELECT ExperienceID, JobTitle, OrganizationName, ExperienceDescription, ExperienceDuration, CVID FROM CV_Experience WHERE CVID = 1;
+
 GO
 CREATE TABLE CV_Language(
 	LanguageID INT IDENTITY(1,1) NOT NULL,
@@ -271,6 +273,9 @@ INSERT INTO CV_Education(EducationName, OrganizationName, StatusID, CVID) VALUES
 INSERT INTO CV_Education(EducationName, OrganizationName, StatusID, CVID) VALUES (N'Bachelor of Incedent Technology', N'University of F', 2, 1)
 
 GO
+
+SELECT EducationID, EducationName, OrganizationName, StatusName FROM CV_Education JOIN EducationStatus ON CV_Education.StatusID = EducationStatus.StatusID  ;
+
 CREATE TABLE [Platform](
 	PlatformID INT IDENTITY(1,1) NOT NULL,
 	PlatformName VARCHAR(30) NOT NULL,
@@ -302,7 +307,7 @@ CREATE TABLE CV_SocialMedia(
 
 GO
 INSERT INTO CV_SocialMedia(SocialMediaLink, PlatformID, CVID) VALUES ('https://github.com/HoaNT3010', 4, 1)
-
+SELECT SocialMediaID, SocialMediaLink, PlatformName FROM CV_SocialMedia JOIN [Platform] ON CV_SocialMedia.PlatformID = [Platform].PlatformID
 ----------------------------------
 -- Application Position Section --
 ----------------------------------
