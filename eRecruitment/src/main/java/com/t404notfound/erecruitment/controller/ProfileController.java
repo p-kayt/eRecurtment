@@ -115,7 +115,7 @@ public class ProfileController extends HttpServlet {
                     }
                 } else if (action.equalsIgnoreCase("updateAvatar")) {
 
-                    request.setAttribute("infor", "Hello");
+//                    request.setAttribute("infor", "Hello");
                     //Lấy đường dẫn tương đối
                     String dir;
 

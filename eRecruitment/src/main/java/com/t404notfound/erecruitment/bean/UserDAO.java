@@ -37,6 +37,7 @@ public class UserDAO {
                 int genderID = rs.getInt("Gender");
                 int statusID = rs.getInt("Status");
                 UserDTO user = new UserDTO(userID, email, password, firstName, lastName, genderID, statusID);
+                user.setAvatarURL(avatarURL);
 
                 //get user role
                 ArrayList<Integer> userRole = new ArrayList<>();

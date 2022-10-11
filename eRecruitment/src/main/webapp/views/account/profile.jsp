@@ -25,89 +25,145 @@
         <link rel="stylesheet" href="css/style_profile.css" />
     </head>
     <body>
-    <c:if test="${not empty user}">
-        <div class="container">
-            <div class="d-flex flex-row mt-4">
-                <div class="profile-img d-flex flex-column">
-                    <div>
-                        <img src="${user.getAvatarURL() != null ? user.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
-                        <div class="align-self-center m-2"><%=user.getFirstName()%> <%=user.getLastName()%></div>
+        <header>
+            <!-- navi -->
+            <nav
+                class="navbar navbar-expand-xl navbar-expand-sm justify-content-center"
+                >
+                <button
+                    class="navbar-toggler bg-dark col-6"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#Navbar"
+                    aria-controls="Navbar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                    >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!--  -->
+                <div class="collapse navbar-collapse col-8" id="Navbar">
+                    <ul class="navbar-nav mr-auto d-flex flex-row">
+                        <li class="nav-item active col-6">
+                            <!-- logo img -->
+                            <a class="nav-link" href="home"
+                               ><span class="fa fa-home fa-lg bg-dark"></span>Home</a
+                            >
+                        </li>
+
+                        <li class="nav-item col-4">
+                            <a class="nav-link hyper" href="#">Section 1</a>
+                        </li>
+
+                        <li class="nav-item col-4">
+                            <a class="nav-link hyper" href="#">Section 2</a>
+                        </li>
+
+                        <li class="nav-item col-4">
+                            <a class="nav-link hyper" href="#">Section 3</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <c:if test="${empty user}">
+                        <a href="login?action=login">
+                            <span class="fa fa-sign-in"></span>Login
+                        </a>
+                    </c:if>
+                    <c:if test="${not empty user}">
+                        <a href="login?action=logout">
+                            <span class="fa fa-sign-in"></span>Logout
+                        </a>
+                    </c:if>
+                </div>
+            </nav>
+
+        </header>
+
+        <c:if test="${not empty user}">
+            <div class="container">
+                <div class="d-flex flex-row mt-4">
+                    <div class="profile-img d-flex flex-column">
+                        <div>
+                            <img src= "${user.getAvatarURL() != null ? user.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                            <div class="align-self-center m-2"><%=user.getFirstName()%> <%=user.getLastName()%></div>
+                        </div>
+                        <div>
+                            <p>PNG file</p>
+                            <form action = "profile" method ="post" enctype="multipart/form-data"> <!-- multipart phai di voi method post-->
+                                <input type="file" name="file" accept="image/png" value =""/> <br />
+                                <input type ="hidden" name="action" value="updateAvatar">
+                                <button type="submit">Update avatar</button>
+                            </form>
+                            <%--<p>Path: ${path}</p>--%>
+                        </div>
+                        <%-- <p>${infor != null ? infor : "Null"}</p> --%>
                     </div>
-                    <div>
-                        <p>PNG file</p>
-                        <form action = "profile" method ="post" enctype="multipart/form-data"> <!-- multipart phai di voi method post-->
-                            <input type="file" name="file" accept="image/png" value =""/> <br />
-                            <input type ="hidden" name="action" value="updateAvatar">
-                            <button type="submit">Update avatar</button>
+
+                    <div class="profile-info d-flex flex-column">
+                        <form action = "profile" method ="post" id="profileForm">
+                            <p style="color: yellow; font-weight: bold; display: block;">${updateMess}</p>
+                            <p style="color: yellow; font-weight: bold; display: block;">${updateErrorMess}</p>
+                            <label for="firstName">First name</label> <br/>
+                            <input type = "text" id="firstName" name ="firstName"
+                                   placeholder = "Enter your first name" value="<%=user.getFirstName()%>"><br/>
+
+                            <label for ="lastName">Last Name</label> <br/>
+                            <input type="text" name ="lastName" id ="lastName" value = "<%=user.getLastName()%>"
+                                   placeholder = "Enter your last name"> <br/>
+
+                            <label for="gender">Gender</label> <br/>
+                            <select name="gender" id="gender">
+                                <option value = "Male" <%=user.getGenderID() == 1 ? "selected" : ""%>>Male</option>
+                                <option value = "Female" <%=user.getGenderID() == 2 ? "selected" : ""%>>Female</option>                       
+                                <option value = "Other" <%=user.getGenderID() == 3 ? "selected" : ""%>>Other</option>
+                            </select> <br/>
+                            <input type="hidden" name="action" value="updateProfile">
+
+                            <button type="submit" >Save</button>
+                        </form><br/><br/>
+
+                        <h3>Change password</h3>
+                        <form action ="profile" method = "post" id="passwordForm">
+                            <p style="color: yellow; font-weight: bold; display: block;">${changePassMess}</p>
+                            <label for="oldPassword">Enter your password</label> <br/>
+                            <input type="password" name="oldPassword" id="oldPassword" value="${oldPassword}"/> <br/>
+                            <p style="color: red; font-weight: bold; display: block;">${passwordErrMess1}</p>
+                            <label for="newPassword">Enter new password</label> <br/>
+                            <input type="password" name="newPassword" id="newPassword" value="${newPassword}" /> <br/>
+                            <p style="color: red; font-weight: bold; display: block;">${passwordErrMess2}</p>
+                            <label for="rePass">Confirm password</label> <br/>
+                            <input type ="password" name="rePass" id="rePass" /> <br/>
+                            <p id ="passwordError" style="color: red; font-weight: bold; display: none;">Password does not match!</p>
+                            <input type="hidden" name="action" value="changePass">
+                            <button onclick="checkPassword()" type="button">Save</button>
                         </form>
-                        <%--<p>Path: ${path}</p>--%>
                     </div>
-                    <p>${infor != null ? infor : "Null"}</p>
+
+
                 </div>
-
-                <div class="profile-info d-flex flex-column">
-                    <form action = "profile" method ="post" id="profileForm">
-                        <p style="color: yellow; font-weight: bold; display: block;">${updateMess}</p>
-                        <p style="color: yellow; font-weight: bold; display: block;">${updateErrorMess}</p>
-                        <label for="firstName">First name</label> <br/>
-                        <input type = "text" id="firstName" name ="firstName"
-                               placeholder = "Enter your first name" value="<%=user.getFirstName()%>"><br/>
-
-                        <label for ="lastName">Last Name</label> <br/>
-                        <input type="text" name ="lastName" id ="lastName" value = "<%=user.getLastName()%>"
-                               placeholder = "Enter your last name"> <br/>
-
-                        <label for="gender">Gender</label> <br/>
-                        <select name="gender" id="gender">
-                            <option value = "Male" <%=user.getGenderID() == 1 ? "selected" : ""%>>Male</option>
-                            <option value = "Female" <%=user.getGenderID() == 2 ? "selected" : ""%>>Female</option>                       
-                            <option value = "Other" <%=user.getGenderID() == 3 ? "selected" : ""%>>Other</option>
-                        </select> <br/>
-                        <input type="hidden" name="action" value="updateProfile">
-
-                        <button type="submit" >Save</button>
-                    </form><br/><br/>
-
-                    <h3>Change password</h3>
-                    <form action ="profile" method = "get" id="passwordForm">
-                        <p style="color: yellow; font-weight: bold; display: block;">${changePassMess}</p>
-                        <label for="oldPassword">Enter your password</label> <br/>
-                        <input type="password" name="oldPassword" id="oldPassword" value="${oldPassword}"/> <br/>
-                        <p style="color: red; font-weight: bold; display: block;">${passwordErrMess1}</p>
-                        <label for="newPassword">Enter new password</label> <br/>
-                        <input type="password" name="newPassword" id="newPassword" value="${newPassword}" /> <br/>
-                        <p style="color: red; font-weight: bold; display: block;">${passwordErrMess2}</p>
-                        <label for="rePass">Confirm password</label> <br/>
-                        <input type ="password" name="rePass" id="rePass" /> <br/>
-                        <p id ="passwordError" style="color: red; font-weight: bold; display: none;">Password does not match!</p>
-                        <input type="hidden" name="action" value="changePass">
-                        <button onclick="checkPassword()" type="button">Save</button>
-                    </form>
-                </div>
-
-
             </div>
-        </div>
-    </c:if>
-    <!--Javascript-->
-    <c:if test = "${not empty user}">
-        <script>
-            function checkPassword() {
-                var f = document.getElementById("passwordForm");
-                var pass = document.getElementById("newPassword");
-                var rePass = document.getElementById("rePass");
+        </c:if>
+        <!--Javascript-->
+        <c:if test = "${not empty user}">
+            <script>
+                function checkPassword() {
+                    var f = document.getElementById("passwordForm");
+                    var pass = document.getElementById("newPassword");
+                    var rePass = document.getElementById("rePass");
 
-                if (pass.value === rePass.value) {
-                    f.submit();
-                } else {
-                    document.getElementById("passwordError").style.display = "block";
-                    repass.value = null;
+                    if (pass.value === rePass.value) {
+                        f.submit();
+                    } else {
+                        document.getElementById("passwordError").style.display = "block";
+                        repass.value = null;
+                    }
                 }
-            }
 
-        </script>
-    </c:if>
-</body>
+            </script>
+        </c:if>
+    </body>
 </html>
 
 
