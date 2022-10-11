@@ -5,6 +5,7 @@
 --%>
 
 <%@page import="com.t404notfound.erecruitment.bean.UserDTO"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -28,12 +29,24 @@
         <div class="container">
             <div class="d-flex flex-row mt-4">
                 <div class="profile-img d-flex flex-column">
-                    <img src="image/sample-avatar.jpg" alt="avatar" />
-                    <div class="align-self-center m-2">name goes here</div>
+                    <div>
+                        <img src="${user.getAvatarURL() != null ? user.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                        <div class="align-self-center m-2"><%=user.getFirstName()%> <%=user.getLastName()%></div>
+                    </div>
+                    <div>
+                        <p>PNG file</p>
+                        <form action = "profile" method ="post" enctype="multipart/form-data"> <!-- multipart phai di voi method post-->
+                            <input type="file" name="file" accept="image/png" value =""/> <br />
+                            <input type ="hidden" name="action" value="updateAvatar">
+                            <button type="submit">Update avatar</button>
+                        </form>
+                        <%--<p>Path: ${path}</p>--%>
+                    </div>
+                    <p>${infor != null ? infor : "Null"}</p>
                 </div>
 
                 <div class="profile-info d-flex flex-column">
-                    <form action = "profile" method ="get" id="profileForm">
+                    <form action = "profile" method ="post" id="profileForm">
                         <p style="color: yellow; font-weight: bold; display: block;">${updateMess}</p>
                         <p style="color: yellow; font-weight: bold; display: block;">${updateErrorMess}</p>
                         <label for="firstName">First name</label> <br/>

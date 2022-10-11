@@ -243,6 +243,31 @@ public class UserDAO {
         }
         return false;
     }
+    
+    
+    public boolean changeAvatar(String url, int userID) {
+
+        String sql = "UPDATE [User] "
+                + " SET Avatar = ? "
+                + " WHERE userID = ? ";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, url);
+            ps.setInt(2, userID);
+            int rs = ps.executeUpdate();
+            if (rs > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Error when execute query.");
+            e.printStackTrace();
+            e.getMessage();
+        }
+
+        return false;
+    }
 
     public static void main(String[] args) {
         boolean check;

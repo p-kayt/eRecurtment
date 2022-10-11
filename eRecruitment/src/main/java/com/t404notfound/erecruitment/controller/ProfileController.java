@@ -6,20 +6,28 @@ package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.UserDAO;
 import com.t404notfound.erecruitment.bean.UserDTO;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author MINH TRI
  */
 @WebServlet(name = "ProfileController", urlPatterns = {"/profile"})
+@javax.servlet.annotation.MultipartConfig
 public class ProfileController extends HttpServlet {
 
     /**
@@ -34,15 +42,11 @@ public class ProfileController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
         HttpSession session = request.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
         String action = request.getParameter("action");
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String gender = request.getParameter("gender");
-        String oldPassword = request.getParameter("oldPassword");
-        String newPassword = request.getParameter("newPassword");
 
         //check case user is null
         if (user != null) {
@@ -51,6 +55,8 @@ public class ProfileController extends HttpServlet {
 
             if (action != null) {
                 if (action.equalsIgnoreCase("changePass")) {
+                    String oldPassword = request.getParameter("oldPassword");
+                    String newPassword = request.getParameter("newPassword");
                     //check case password is null
                     if (oldPassword == null || oldPassword.equals("")) {
                         request.setAttribute("passwordErrMess1", "Password cannot be empty");
@@ -78,6 +84,9 @@ public class ProfileController extends HttpServlet {
                         }
                     }
                 } else if (action.equalsIgnoreCase("updateProfile")) {
+                    String firstName = request.getParameter("firstName");
+                    String lastName = request.getParameter("lastName");
+                    String gender = request.getParameter("gender");
                     if (firstName == null || firstName.trim().equals("")) {
                         firstName = user.getFirstName();
                     }
@@ -103,6 +112,62 @@ public class ProfileController extends HttpServlet {
                         user.setGenderID(genderID);
                         session.setAttribute("user", user);
                         request.setAttribute("updateMess", "Update profile successfully");
+                    }
+                } else if (action.equalsIgnoreCase("updateAvatar")) {
+
+                    request.setAttribute("infor", "Hello");
+                    //Lấy đường dẫn tương đối
+                    String dir;
+
+                    dir = request.getServletContext().getRealPath("homepage.jsp");
+                    String path[] = dir.split("eRecruitment");
+                    dir = path[0];
+
+                    dir += "\\image";
+                    File img = new File(dir);
+                    if (!img.exists()) {
+                        img.mkdir();
+                    }
+                    dir += "\\avatar";
+                    File avatar = new File(dir);
+                    if (!avatar.exists()) {
+                        avatar.mkdir();
+                    }
+                    dir += "\\" + user.getFirstName().trim() + user.getLastName().trim();
+                    File image = new File(dir);
+                    if (!image.exists()) {
+                        image.mkdir();
+                    }
+                    //Lấy đường dẫn tương đối
+
+                    //tạo file .png và ghi đè img vào
+                    String fileName = "avatar";
+                    File file = File.createTempFile(fileName, ".png", image);
+
+                    try {
+                        Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
+                        try ( InputStream input = filePart.getInputStream()) {
+                            Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    //tạo file .png và ghi đè img vào
+
+                    //rename img
+                    Path source = Paths.get(file.getParentFile() + "\\" + file.getName());
+
+                    Files.move(source, source.resolveSibling("avatar.png"),
+                            StandardCopyOption.REPLACE_EXISTING);
+                    //rename img
+
+//                request.setAttribute("path", file.getAbsolutePath());
+                    String url = "image/avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/avatar.png";
+                    if (dao.changeAvatar(url, user.getUserID())) {
+                        user.setAvatarURL(url);
+                        session.setAttribute("user", user);
                     }
                 }
             }

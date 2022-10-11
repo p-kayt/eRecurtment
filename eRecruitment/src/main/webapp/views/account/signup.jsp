@@ -61,7 +61,7 @@
 
                         <div class="form-group col-12">
                             <label class="" for="lastName"
-                                   >First Name</label
+                                   >Last Name</label
                             >
                             <input
                                 type="text"
