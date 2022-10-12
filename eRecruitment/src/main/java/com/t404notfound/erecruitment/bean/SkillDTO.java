@@ -32,11 +32,11 @@ public class SkillDTO {
         this.skillName = skillName;
     }
 
-    public String getskillDescription() {
+    public String getSkillDescription() {
         return skillDescription;
     }
 
-    public void setskillDescription(String skillDescription) {
+    public void setSkillDescription(String skillDescription) {
         this.skillDescription = skillDescription;
     }
 

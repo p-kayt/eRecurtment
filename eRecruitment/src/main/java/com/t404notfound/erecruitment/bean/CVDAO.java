@@ -57,7 +57,7 @@ public class CVDAO {
                 cv.setExperiences(loadExperience(CVID));
                 cv.setLanguages(loadLanguage(CVID));
                 cv.setEducations(loadEducation(CVID));
-                cv.setSocialMedia(loadSocialMedia(CVID));
+                cv.setSocialMedias(loadSocialMedia(CVID));
                 return cv;
             }
         } catch (SQLException e) {
@@ -83,7 +83,7 @@ public class CVDAO {
                 SkillDTO dto = new SkillDTO();
                 dto.setSkillID(rs.getInt("SkillID"));
                 dto.setSkillName(rs.getString("SkillName"));
-                dto.setskillDescription("SkillDescription");
+                dto.setSkillDescription("SkillDescription");
                 dto.setCVID(CVID);
                 list.add(dto);
             }

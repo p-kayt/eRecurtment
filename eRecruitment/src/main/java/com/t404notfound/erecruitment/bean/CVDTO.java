@@ -46,12 +46,12 @@ public class CVDTO {
     protected ArrayList experiences;
     protected ArrayList languages;
     protected ArrayList educations;
-    protected ArrayList socialMedia;
+    protected ArrayList socialMedias;
 
     public CVDTO() {
     }
 
-    public CVDTO(int CVID, String firstName, String lastName, String avatar, Date dob, String introduction, String email, String phoneNumber, String address, String city, String gender, int userID, ArrayList skills, ArrayList interests, ArrayList certificates, ArrayList achivements, ArrayList experiences, ArrayList languages, ArrayList educations, ArrayList socialMedia) {
+    public CVDTO(int CVID, String firstName, String lastName, String avatar, Date dob, String introduction, String email, String phoneNumber, String address, String city, String gender, int userID, ArrayList skills, ArrayList interests, ArrayList certificates, ArrayList achivements, ArrayList experiences, ArrayList languages, ArrayList educations, ArrayList socialMedias) {
         this.CVID = CVID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -71,7 +71,7 @@ public class CVDTO {
         this.experiences = experiences;
         this.languages = languages;
         this.educations = educations;
-        this.socialMedia = socialMedia;
+        this.socialMedias = socialMedias;
     }
 
     
@@ -212,17 +212,17 @@ public class CVDTO {
         this.educations = educations;
     }
 
-    public ArrayList getSocialMedia() {
-        return socialMedia;
+    public ArrayList getSocialMedias() {
+        return socialMedias;
     }
 
-    public void setSocialMedia(ArrayList socialMedia) {
-        this.socialMedia = socialMedia;
+    public void setSocialMedias(ArrayList socialMedias) {
+        this.socialMedias = socialMedias;
     }
 
     @Override
     public String toString() {
-        return "CVDTO{" + "CVID=" + CVID + ", firstName=" + firstName + ", lastName=" + lastName + ", avatar=" + avatar + ", dob=" + dob + ", introduction=" + introduction + ", email=" + email + ", phoneNumber=" + phoneNumber + ", address=" + address + ", city=" + city + ", gender=" + gender + ", userID=" + userID + ", \nskills=" + skills + ", \ninterests=" + interests + ", \ncertificates=" + certificates + ", \nachivements=" + achivements + ", \nexperiences=" + experiences + ", \nlanguages=" + languages + ", \neducations=" + educations + ", \nsocialMedia=" + socialMedia + '}';
+        return "CVDTO{" + "CVID=" + CVID + ", firstName=" + firstName + ", lastName=" + lastName + ", avatar=" + avatar + ", dob=" + dob + ", introduction=" + introduction + ", email=" + email + ", phoneNumber=" + phoneNumber + ", address=" + address + ", city=" + city + ", gender=" + gender + ", userID=" + userID + ", \nskills=" + skills + ", \ninterests=" + interests + ", \ncertificates=" + certificates + ", \nachivements=" + achivements + ", \nexperiences=" + experiences + ", \nlanguages=" + languages + ", \neducations=" + educations + ", \nsocialMedias=" + socialMedias + '}';
     }
 
     
