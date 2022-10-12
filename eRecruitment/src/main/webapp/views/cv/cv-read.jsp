@@ -4,18 +4,24 @@
     Author     : Huu Minh
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="com.t404notfound.erecruitment.bean.CVDTO"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">        
         <!-- Css Styles -->
-        <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css">
-        <link rel="stylesheet" href="../../css/font-awesome.min.css" type="text/css">
-        <link rel="stylesheet" href="../../css/elegant-icons.css" type="text/css">
-        <link rel="stylesheet" href="../../css/style_cv.css" type="text/css">
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="css/style_cv.css" type="text/css">
     </head>
     <body>
+        <!-- Declare attributes from servlet -->
+        <%!CVDTO cv;%>
+        <%cv = (CVDTO) request.getAttribute("cv");%>
         <div class="cv">      
             <div class="cv-column">
                 <div class="cv-element">
@@ -24,17 +30,17 @@
                 </div>
                 <div class="cv-element">
                     <h3> Introduction </h3>
-                    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+                    <span><%=cv.getIntroduction()%></span>
                     <br>
                     <!-- Basic information -->
-                    <div><b>First name: </b> sample</div>
-                    <div><b>Last name: </b> </div>
-                    <div><b>Gender: </b> </div> 
-                    <div><b>Day of birth: </b> </div> 
-                    <div><b>Email: </b> </div>
-                    <div><b>Phone number: </b> </div>
-                    <div><b>Address: </b> </div>
-                    <div><b>City: </b> </div>
+                    <div><b>First name: </b> <%=cv.getFirstName()%></div>
+                    <div><b>Last name: </b> <%=cv.getLastName()%></div>
+                    <div><b>Gender: </b> <%=cv.getGender()%></div> 
+                    <div><b>Day of birth: </b> <%=cv.getDob()%></div> 
+                    <div><b>Email: </b> <%=cv.getEmail()%></div>
+                    <div><b>Phone number: </b> <%=cv.getPhoneNumber()%></div>
+                    <div><b>Address: </b> <%=cv.getAddress()%></div>
+                    <div><b>City: </b> <%=cv.getCity()%></div>
                 </div>
                 <div class="cv-element">
                     <h3> Education </h3>
