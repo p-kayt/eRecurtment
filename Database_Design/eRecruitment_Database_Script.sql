@@ -74,6 +74,9 @@ CREATE TABLE [User](
 
 GO
 INSERT INTO [User](Email, [Password], Avatar, FirstName, LastName, Gender, [Status]) VALUES ('testCandidate@gmail.com', '111111', NULL, N'Candidate', N'Test', 1, 1)
+INSERT INTO [User](Email, [Password], Avatar, FirstName, LastName, Gender, [Status]) VALUES ('testCandidate1@gmail.com', '111111', NULL, N'Candidate 1', N'Test', 1, 1)
+INSERT INTO [User](Email, [Password], Avatar, FirstName, LastName, Gender, [Status]) VALUES ('testCandidate2@gmail.com', '111111', NULL, N'Candidate 2', N'Test', 1, 1)
+
 INSERT INTO [User](Email, [Password], Avatar, FirstName, LastName, Gender, [Status]) VALUES ('testHRStaff@gmail.com', '111111', NULL, N'HR Staff', N'Test', 1, 1)
 INSERT INTO [User](Email, [Password], Avatar, FirstName, LastName, Gender, [Status]) VALUES ('testHRManager@gmail.com', '111111', NULL, N'HR Manager', N'Test', 1, 1)
 INSERT INTO [User](Email, [Password], Avatar, FirstName, LastName, Gender, [Status]) VALUES ('testInterviewer@gmail.com', '111111', NULL, N'Interviewer', N'Test', 1, 1)
@@ -92,10 +95,13 @@ CREATE TABLE User_Role(
 )
 GO
 INSERT INTO User_Role(UserID, RoleID) VALUES (1, 1)
-INSERT INTO User_Role(UserID, RoleID) VALUES (2, 2)
-INSERT INTO User_Role(UserID, RoleID) VALUES (3, 3)
-INSERT INTO User_Role(UserID, RoleID) VALUES (4, 4)
-INSERT INTO User_Role(UserID, RoleID) VALUES (5, 5)
+INSERT INTO User_Role(UserID, RoleID) VALUES (2, 1)
+INSERT INTO User_Role(UserID, RoleID) VALUES (3, 1)
+INSERT INTO User_Role(UserID, RoleID) VALUES (4, 2)
+INSERT INTO User_Role(UserID, RoleID) VALUES (5, 3)
+INSERT INTO User_Role(UserID, RoleID) VALUES (5, 4)
+INSERT INTO User_Role(UserID, RoleID) VALUES (6, 4)
+INSERT INTO User_Role(UserID, RoleID) VALUES (7, 5)
 
 --------------------------
 -- CV Section --
@@ -141,7 +147,6 @@ CREATE TABLE CV_Skill(
 		REFERENCES CV(CVID)
 )
 
-SELECT SkillID, SkillName, SkillDescription, CVID FROM CV_Skill WHERE CVID = 1;
 
 GO
 INSERT INTO CV_Skill(SkillName, SkillDescription, CVID) VALUES (N'Java', N'Intermediate Level', 1)
@@ -201,8 +206,6 @@ CREATE TABLE CV_Achievement(
 GO
 INSERT INTO CV_Achievement(AchievementName, AchievementDescription, AchievementLink, CVID) VALUES (N'Manga Hub', N'A website for reading manga online', 'https://github.com/MHTteam/Read-Manga-Online-Website', 1)
 
-SELECT AchievementID, AchievementName, AchievementDescription, AchievementLink, CVID
-FROM CV_Achievement WHERE CVID = 1;
 
 GO
 CREATE TABLE CV_Experience(
@@ -221,8 +224,6 @@ CREATE TABLE CV_Experience(
 
 GO
 INSERT INTO CV_Experience(JobTitle, OrganizationName, ExperienceDescription, ExperienceDuration, CVID) VALUES (N'Chicken Herding', N'University Of F', N'Herding young, inexperience, newly born chicken into the world of Incident Technology (IT) at the University of F (UF)', N'20 Years', 1)
-
-SELECT ExperienceID, JobTitle, OrganizationName, ExperienceDescription, ExperienceDuration, CVID FROM CV_Experience WHERE CVID = 1;
 
 GO
 CREATE TABLE CV_Language(
@@ -274,7 +275,6 @@ INSERT INTO CV_Education(EducationName, OrganizationName, StatusID, CVID) VALUES
 
 GO
 
-SELECT EducationID, EducationName, OrganizationName, StatusName FROM CV_Education JOIN EducationStatus ON CV_Education.StatusID = EducationStatus.StatusID  ;
 
 CREATE TABLE [Platform](
 	PlatformID INT IDENTITY(1,1) NOT NULL,
@@ -307,7 +307,7 @@ CREATE TABLE CV_SocialMedia(
 
 GO
 INSERT INTO CV_SocialMedia(SocialMediaLink, PlatformID, CVID) VALUES ('https://github.com/HoaNT3010', 4, 1)
-SELECT SocialMediaID, SocialMediaLink, PlatformName FROM CV_SocialMedia JOIN [Platform] ON CV_SocialMedia.PlatformID = [Platform].PlatformID
+
 ----------------------------------
 -- Application Position Section --
 ----------------------------------
@@ -341,6 +341,7 @@ CREATE TABLE ApplicationPosition(
 )
 
 GO
+INSERT INTO ApplicationPosition(PositionName, PositionDescription, HiringQuantity, CreatedDate, StatusID) VALUES(N'Front-end Developer', N'Lập trình viên Front-end là người tập trung phát triển phía Client Side, nói một cách đơn giản dễ hiểu là tập trung vào mảng phát triển xây dựng giao diện và trải nghiệm cho người dùng, là người phụ trách phát triển hiển thị và trải nghiệm người dùng cho ứng dụng web. Front-end Developer chính là người quyết định cái nhìn đầu tiên của người dùng về trang web, đồng thời mang lại một trang web dễ dàng thao tác và sử dụng.', 20, '2022-10-7', 3)
 INSERT INTO ApplicationPosition(PositionName, PositionDescription, HiringQuantity, CreatedDate, StatusID) VALUES(N'Front-end Developer', N'Lập trình viên Front-end là người tập trung phát triển phía Client Side, nói một cách đơn giản dễ hiểu là tập trung vào mảng phát triển xây dựng giao diện và trải nghiệm cho người dùng, là người phụ trách phát triển hiển thị và trải nghiệm người dùng cho ứng dụng web. Front-end Developer chính là người quyết định cái nhìn đầu tiên của người dùng về trang web, đồng thời mang lại một trang web dễ dàng thao tác và sử dụng.', 10, '2022-10-7', 3)
 
 ----------------------------------
@@ -403,6 +404,34 @@ Thu thập ý kiến phản hồi và xây dựng các hướng giải quyết c
 Nghiên cứu, tìm hiểu các công nghệ về HTML/CSS Javascript mới nhất để áp dụng cái tiến sản phẩm', 
 N'Around $3000', 10, '2022-10-7', '2022-10-10', '2023-10-10', 1, 1, 3)
 
+INSERT INTO ApplicationPost(PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID) 
+VALUES (N' CLOSED - Tham gia phát triển các dự án về Web, xây dựng các chức năng front-end của Website, Web application.
+
+Triển khai giao diện HTML/CSS Javascript theo yêu cầu của khách hàng trên hệ thống website xây dựng sẵn
+
+Phối hợp với các back-end developers và web designers để cải thiện tính khả dụng
+
+Đảm bảo tiêu chuẩn đồ họa chất lượng cao và sự thống nhất trong brand
+
+Thu thập ý kiến phản hồi và xây dựng các hướng giải quyết cho người sử dụng và khách hàng
+
+Nghiên cứu, tìm hiểu các công nghệ về HTML/CSS Javascript mới nhất để áp dụng cái tiến sản phẩm', 
+N'Around $3000', 5, '2022-10-7', '2022-10-10', '2022-10-13', 1, 1, 4)
+
+INSERT INTO ApplicationPost(PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID) 
+VALUES (N' CLOSED - Tham gia phát triển các dự án về Web, xây dựng các chức năng front-end của Website, Web application.
+
+Triển khai giao diện HTML/CSS Javascript theo yêu cầu của khách hàng trên hệ thống website xây dựng sẵn
+
+Phối hợp với các back-end developers và web designers để cải thiện tính khả dụng
+
+Đảm bảo tiêu chuẩn đồ họa chất lượng cao và sự thống nhất trong brand
+
+Thu thập ý kiến phản hồi và xây dựng các hướng giải quyết cho người sử dụng và khách hàng
+
+Nghiên cứu, tìm hiểu các công nghệ về HTML/CSS Javascript mới nhất để áp dụng cái tiến sản phẩm', 
+N'Around $3000', 10, '2022-10-7', '2022-10-10', '2022-10-13', 2, 1, 4)
+
  GO
 CREATE TABLE ApplicationBenefit(
 	BenefitID INT IDENTITY(1,1) NOT NULL,
@@ -428,6 +457,15 @@ INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Monthly team-building a
 INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Monthly happy lunch/birthday celebration and happy hours every day with free snacks, soft drinks, fruit, and coffee', 1)
 INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Sports activities (Badminton, Ping Pong, etc...)', 1)
 
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Attractive salary package and 100% Gross Salary in probation period', 2)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'13th-month salary', 2)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Monthly performance bonus. (over $600 on average and over $2000 for top performers)', 2)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'18 days of annual leaves (cashback allowed if not used) and plus 4 days for an oversea company trip', 2)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Multiple allowances (Lunch, Gym, Parking, Birthday/Tet/Wedding voucher... )', 2)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Full social, healthy and unemployment insurance', 2)
+
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Attractive salary package and 100% Gross Salary in probation period', 3)
+
 GO
 CREATE TABLE ApplicationSkill(
 	SkillID INT IDENTITY(1,1) NOT NULL,
@@ -446,6 +484,11 @@ INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Fron
 INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'JavaScript', N'Advance Knowledge', 1)
 INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'TypeScript', N'Advance Knowledge', 1)
 INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'ReactJS', N'5+ Years', 1)
+
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Front-End', N'5+ Years', 2)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'JavaScript', N'Advance Knowledge', 2)
+
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Front-End', N'5+ Years', 3)
 
 GO
 CREATE TABLE ApplicationRequirement(
@@ -467,6 +510,12 @@ INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Having previous
 INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'A strong fundamental understanding of software development', 1)
 INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Strong self-discipline for delivering well-tested, complete features/modules under a tight schedule and the capability for rational thinking', 1)
 
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'A Bachelor’s Degree in any relevant major (e.g. Information Technology, Computer Science, etc.)', 2)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Proficiency in English (both verbal and written)', 2)
+
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'A Bachelor’s Degree in any relevant major (e.g. Information Technology, Computer Science, etc.)', 3)
+
+
 GO
 CREATE TABLE Stage(
 	StageID INT IDENTITY(1,1) NOT NULL,
@@ -478,6 +527,7 @@ CREATE TABLE Stage(
 GO
 INSERT INTO Stage(StageName) VALUES('CV Applying')
 INSERT INTO Stage(StageName) VALUES('Interview')
+INSERT INTO Stage(StageName) VALUES('Finish')
 
 GO
 CREATE TABLE Application_Stage(
@@ -499,6 +549,14 @@ INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Applying 
 INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Candidate''s Skills and Knowledge', 1, 2)
 INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Contract Negotiation', 1, 2)
 
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Applying CV and Waiting For Approval', 2, 1)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Candidate''s Skills and Knowledge', 2, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Contract Negotiation', 2, 2)
+
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Applying CV and Waiting For Approval', 3, 1)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Candidate''s Skills and Knowledge', 3, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Contract Negotiation', 3, 2)
+
 GO
 CREATE TABLE ApplicationStatus(
 	StatusID INT IDENTITY(1,1) NOT NULL,
@@ -519,17 +577,26 @@ CREATE TABLE [Application](
 	ApplyDate DATE NOT NULL,
 
 	StatusID INT NOT NULL DEFAULT 1,
+	StageID INT NOT NULL DEFAULT 1,
 	UserID INT NOT NULL,
 	PostID INT NOT NULL,
 
 	CONSTRAINT PK_Application PRIMARY KEY (ApplicationID),
 	CONSTRAINT FK_Application_from_ApplicationStatus FOREIGN KEY (StatusID)
 		REFERENCES ApplicationStatus (StatusID),
+	CONSTRAINT FK_Application_from_Stage FOREIGN KEY (StageID)
+		REFERENCES Stage (StageID),
 	CONSTRAINT FK_Application_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Application_from_ApplicationPost FOREIGN KEY (PostID)
 		REFERENCES ApplicationPost (PostID)
 )
+
+GO
+INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 1, 2, 2)
+INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-13', 1, 1, 3, 2)
+
+INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 2, 1, 3)
 
 ----------------------------------
 -- Interview Section --
@@ -587,6 +654,14 @@ CREATE TABLE Interview(
 )
 
 GO
+INSERT INTO Interview([Description], OnlineLink, [Address], InterviewTime, StageID, PostID, FormatID, StatusID, BookerID)
+	VALUES(N'Candidate''s Skills and Knowledge', 'https://meet.google.com/', NULL, '2022-10-20 10:00', 2, 3, 2, 3, 4)
+
+INSERT INTO Interview([Description], OnlineLink, [Address], InterviewTime, StageID, PostID, FormatID, StatusID, BookerID)
+	VALUES(N'Contract Negotiation', 'https://meet.google.com/', NULL, '2022-10-25 22:00', 2, 3, 2, 1, 4)
+
+
+GO
 CREATE TABLE Interviewer(
 	UserID INT NOT NULL,
 	InterviewID INT NOT NULL,
@@ -598,6 +673,13 @@ CREATE TABLE Interviewer(
 )
 
 GO
+INSERT INTO Interviewer(UserID, InterviewID) VALUES(6, 1)
+INSERT INTO Interviewer(UserID, InterviewID) VALUES(5, 1)
+
+INSERT INTO Interviewer(UserID, InterviewID) VALUES(5, 2)
+INSERT INTO Interviewer(UserID, InterviewID) VALUES(6, 2)
+
+GO
 CREATE TABLE Participant(
 	UserID INT NOT NULL,
 	InterviewID INT NOT NULL,
@@ -607,6 +689,10 @@ CREATE TABLE Participant(
 	CONSTRAINT FK_Participant_from_Interview FOREIGN KEY (InterviewID)
 		REFERENCES Interview (InterviewID)
 )
+
+GO
+INSERT INTO Participant(UserID, InterviewID) VALUES(1, 1)
+INSERT INTO Participant(UserID, InterviewID) VALUES(1, 2)
 
 GO
 CREATE TABLE Evaluation(
@@ -627,3 +713,14 @@ CREATE TABLE Evaluation(
 		REFERENCES Interview (InterviewID),
 	CONSTRAINT Score_Range_Check CHECK(Score >= 0 AND Score <= 10)
 )
+
+GO
+INSERT INTO Evaluation(EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID) 
+	VALUES(N'Best Candidate Ever. Hire Immediately', 10, 5, 1, 1)
+INSERT INTO Evaluation(EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID) 
+	VALUES(N'Best Candidate Ever. Hire Immediately', 9, 6, 1, 1)
+
+INSERT INTO Evaluation(EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID) 
+	VALUES(N'Best Candidate Ever. Hire Immediately To The Company', 8, 5, 1, 2)
+INSERT INTO Evaluation(EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID) 
+	VALUES(N'Best Candidate Ever. Hire Immediately To The Company', 9, 6, 1, 2)
