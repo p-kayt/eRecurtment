@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.t404notfound.erecruitment.bean.application;
+package com.t404notfound.erecruitment.bean.applicationposition;
 
 import java.io.Serializable;
 import java.sql.Date;
