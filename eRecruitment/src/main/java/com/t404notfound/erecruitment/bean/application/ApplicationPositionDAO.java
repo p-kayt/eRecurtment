@@ -27,8 +27,43 @@ public class ApplicationPositionDAO {
             while (rs.next()) {                
                 ApplicationPositionDTO ap = new ApplicationPositionDTO();
                 ap.setPositionID(rs.getInt("PositionID"));
-                ap.setPositionName(rs.getString("PositionName"));
-                ap.setPositionDescription(rs.getString("PositionDescription"));
+                ap.setPositionName(rs.getNString("PositionName"));
+                ap.setPositionDescription(rs.getNString("PositionDescription"));
+                ap.setHiringQuantity(rs.getInt("HiringQuantity"));
+                ap.setCreatedDate(rs.getDate("CreatedDate"));
+                ap.setStatusID(rs.getInt("StatusID"));
+                
+                list.add(ap);
+            }
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if(cn != null){
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
+    
+    public ArrayList<ApplicationPositionDTO> searchApplicationPositions(String keyword){
+        String sql = "select PositionID, PositionName, PositionDescription, HiringQuantity, CreatedDate, StatusID from ApplicationPosition where PositionName like ?";
+        Connection cn = null;
+        try {
+            cn = DBUtil.getConnection();
+            ArrayList<ApplicationPositionDTO> list =  new ArrayList<>();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setNString(1, "%" + keyword + "%");
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {                
+                ApplicationPositionDTO ap = new ApplicationPositionDTO();
+                ap.setPositionID(rs.getInt("PositionID"));
+                ap.setPositionName(rs.getNString("PositionName"));
+                ap.setPositionDescription(rs.getNString("PositionDescription"));
                 ap.setHiringQuantity(rs.getInt("HiringQuantity"));
                 ap.setCreatedDate(rs.getDate("CreatedDate"));
                 ap.setStatusID(rs.getInt("StatusID"));
@@ -52,7 +87,7 @@ public class ApplicationPositionDAO {
     
     public static void main(String[] args) {
         ApplicationPositionDAO dao = new ApplicationPositionDAO();
-        ArrayList<ApplicationPositionDTO> list = dao.listApplicationPositions();
+        ArrayList<ApplicationPositionDTO> list = dao.searchApplicationPositions("er");
         for (ApplicationPositionDTO ap : list) {
             System.out.println(ap.getPositionID());
             System.out.println(ap.getPositionName());
