@@ -1,20 +1,28 @@
-package com.t404notfound.erecruitment.bean;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.t404notfound.erecruitment.bean.applicationpost;
 
-public class SkillDTO {
+/**
+ *
+ * @author MSI GF63
+ */
+public class PostSkillDTO {
 
     private int skillID;
     private String skillName;
     private String skillDescription;
-    private int CVID;
+    private int postID;
 
-    public SkillDTO() {
+    public PostSkillDTO() {
     }
 
-    public SkillDTO(int skillID, String skillName, String skillDescription, int CVID) {
+    public PostSkillDTO(int skillID, String skillName, String skillDescription, int postID) {
         this.skillID = skillID;
         this.skillName = skillName;
         this.skillDescription = skillDescription;
-        this.CVID = CVID;
+        this.postID = postID;
     }
 
     public int getSkillID() {
@@ -41,17 +49,12 @@ public class SkillDTO {
         this.skillDescription = skillDescription;
     }
 
-    public int getCVID() {
-        return CVID;
+    public int getPostID() {
+        return postID;
     }
 
-    public void setCVID(int CVID) {
-        this.CVID = CVID;
-    }
-
-    @Override
-    public String toString() {
-        return "SkillDTO{" + "skillID=" + skillID + ", skillName=" + skillName + ", skillDescription=" + skillDescription + ", CVID=" + CVID + '}';
+    public void setPostID(int postID) {
+        this.postID = postID;
     }
 
 }
