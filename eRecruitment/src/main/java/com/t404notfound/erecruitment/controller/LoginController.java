@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,39 +36,56 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         HttpSession session = request.getSession();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String action = request.getParameter("action");
+//        String url = "";
 
-        if (action == null) {
-            request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
-        } else if (action.equalsIgnoreCase("login")) {
-            if (email == null && password == null) {
-                request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
-            } else {
-                email = email.toLowerCase();
-                UserDAO dao = new UserDAO();
-                UserDTO user = dao.login(email, password);
-                if (user == null) {
-                    request.setAttribute("email", email);
-                    request.setAttribute("errorMessage", "Incorrect email or password");
-                    request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
-                } else {                   
-                    session.setAttribute("user", user);
-                    response.sendRedirect(request.getContextPath() + "/home");
+        Cookie[] cookie = request.getCookies();
+        if (cookie != null) {
+            for (Cookie c : cookie) {
+                if (c.getName().equalsIgnoreCase("email")) {
+                    email = c.getValue();
+                } else if (c.getName().equalsIgnoreCase("password")) {
+                    password = c.getValue();
+//                } else if (c.getName().equalsIgnoreCase("url")) {
+//                    url = c.getValue();
                 }
+                c.setMaxAge(0);
+                response.addCookie(c);
             }
-        } else if (action.equalsIgnoreCase("logout")) {           
-            session.setAttribute("user", null);
-            response.sendRedirect(request.getContextPath() + "/login");
-        } else {
-            request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
         }
+
+        if (email != null && password != null) {
+            email = email.toLowerCase();
+            UserDAO dao = new UserDAO();
+            UserDTO user = dao.login(email, password);
+            if (user == null) {
+                request.setAttribute("email", email);
+                request.setAttribute("errorMessage", "Incorrect email or password");
+            } else {
+                session.setAttribute("user", user);
+
+                /*add cookie*/
+                Cookie e = new Cookie("email", email);
+                Cookie p = new Cookie("password", password);
+                e.setMaxAge(60 * 60 * 24); //luu trong 1 ngay
+                p.setMaxAge(60 * 60 * 24); //luu trong 1 ngay
+                response.addCookie(e);
+                response.addCookie(p);
+                /*add cookie*/
+//                if (url == null || url.trim().equals("")) {
+//                    url = "/home";
+//                }
+                response.sendRedirect(request.getContextPath() + "/home");
+                return;
+            }
+        }
+        request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

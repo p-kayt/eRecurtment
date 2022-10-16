@@ -62,12 +62,12 @@
 
                     <div>
                         <c:if test="${empty user}">
-                            <a href="login?action=login">
+                            <a href="login">
                                 <span class="fa fa-sign-in"></span>Login
                             </a>
                         </c:if>
                         <c:if test="${not empty user}">
-                            <a href="login?action=logout">
+                            <a href="logout">
                                 <span class="fa fa-sign-in"></span>Logout
                             </a>
                         </c:if>

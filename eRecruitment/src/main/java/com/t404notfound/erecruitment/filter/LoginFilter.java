@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -116,18 +117,36 @@ public class LoginFilter implements Filter {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             HttpSession session = httpRequest.getSession();
             String url = httpRequest.getServletPath();
+            boolean checkLogin = false;
+
             if (session.getAttribute("user") != null) {
                 if (url.contains("login") || url.contains("signup")) {
                     httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
                 }
             } else {
-                if (url.contains("profile")) {
+                Cookie[] cookie = httpRequest.getCookies();
+                if (cookie != null) {
+                    for (Cookie c : cookie) {
+                        if (c.getName().equalsIgnoreCase("email")) {
+                            checkLogin = true;
+                            break;
+                        }
+                    }
+                }
+                if (checkLogin) {
+//                    String urlPage = httpRequest.getServletPath();
+////                    request.setAttribute("url", url);
+////                    httpRequest.getRequestDispatcher("/login").forward(request, response);
+//                    Cookie c = new Cookie("url", urlPage);
+//                    c.setMaxAge(60*5);
+//                    httpResponse.addCookie(c);
                     httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
+                } else {
+                    if (url.contains("profile")) {
+                        httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
+                    }
                 }
             }
-
-            chain.doFilter(request, response);
-
             /* lọc trang web khi đã login */
             chain.doFilter(request, response);
         } catch (Throwable t) {

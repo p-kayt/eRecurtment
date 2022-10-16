@@ -6,19 +6,20 @@ package com.t404notfound.erecruitment.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author MINH TRI
  */
-@WebServlet(name = "HomeController", urlPatterns = {"/home"})
-public class HomeController extends HttpServlet {
+@WebServlet(name = "Logout", urlPatterns = {"/logout"})
+public class Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,8 +33,22 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        session.setAttribute("user", null);
+        Cookie[] cookies = request.getCookies();
 
-        request.getRequestDispatcher("views/home/homepage.jsp").forward(request, response);
+        for (Cookie c : cookies) {
+//            if (c.getName().equalsIgnoreCase("email")) {
+//                c.setMaxAge(0);
+//                response.addCookie(c);
+//            } else if (c.getName().equalsIgnoreCase("password")) {
+//                c.setMaxAge(0);
+//                response.addCookie(c);
+//            }
+            c.setMaxAge(0);
+            response.addCookie(c);
+        }
+        response.sendRedirect(request.getContextPath() + "/login");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
