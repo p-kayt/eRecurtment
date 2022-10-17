@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import com.t404notfound.erecruitment.bean.CVDAO;
-import com.t404notfound.erecruitment.bean.CVDTO;
+import com.t404notfound.erecruitment.bean.cv.CVDAO;
+import com.t404notfound.erecruitment.bean.cv.CVDTO;
 
 /**
  *

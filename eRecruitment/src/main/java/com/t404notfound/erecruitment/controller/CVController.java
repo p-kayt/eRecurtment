@@ -4,8 +4,8 @@
  */
 package com.t404notfound.erecruitment.controller;
 
-import com.t404notfound.erecruitment.bean.CVDAO;
-import com.t404notfound.erecruitment.bean.CVDTO;
+import com.t404notfound.erecruitment.bean.cv.CVDAO;
+import com.t404notfound.erecruitment.bean.cv.CVDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;

@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.t404notfound.erecruitment.bean;
+package com.t404notfound.erecruitment.bean.cv;
+
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
  * @author Huu Minh
  */
 public class CVDTO {
+
     protected int CVID;
     protected String firstName;
     protected String lastName;
@@ -23,6 +25,14 @@ public class CVDTO {
     protected String city;
     protected String gender;
     protected int userID;
+    protected ArrayList skills;
+    protected ArrayList interests;
+    protected ArrayList certificates;
+    protected ArrayList achivements;
+    protected ArrayList experiences;
+    protected ArrayList languages;
+    protected ArrayList educations;
+    protected ArrayList socialMedias;
 
     public int getCVID() {
         return CVID;
@@ -39,14 +49,6 @@ public class CVDTO {
     public void setUserID(int userID) {
         this.userID = userID;
     }
-    protected ArrayList skills;
-    protected ArrayList interests;
-    protected ArrayList certificates;
-    protected ArrayList achivements;
-    protected ArrayList experiences;
-    protected ArrayList languages;
-    protected ArrayList educations;
-    protected ArrayList socialMedias;
 
     public CVDTO() {
     }
@@ -73,8 +75,6 @@ public class CVDTO {
         this.educations = educations;
         this.socialMedias = socialMedias;
     }
-
-    
 
     public String getFirstName() {
         return firstName;
@@ -225,8 +225,4 @@ public class CVDTO {
         return "CVDTO{" + "CVID=" + CVID + ", firstName=" + firstName + ", lastName=" + lastName + ", avatar=" + avatar + ", dob=" + dob + ", introduction=" + introduction + ", email=" + email + ", phoneNumber=" + phoneNumber + ", address=" + address + ", city=" + city + ", gender=" + gender + ", userID=" + userID + ", \nskills=" + skills + ", \ninterests=" + interests + ", \ncertificates=" + certificates + ", \nachivements=" + achivements + ", \nexperiences=" + experiences + ", \nlanguages=" + languages + ", \neducations=" + educations + ", \nsocialMedias=" + socialMedias + '}';
     }
 
-    
-    
-    
-    
 }

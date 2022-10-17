@@ -34,7 +34,7 @@
             <div class="cv-column">
                 <div class="cv-element">
                     <!-- Avatar -->
-                    <img src="../../image/sample-avatar.jpg" alt="alt"/>
+                    <img src="../image/sample-avatar.jpg"/>
                 </div>
                 <div class="cv-element">
                     <h3> Introduction </h3>

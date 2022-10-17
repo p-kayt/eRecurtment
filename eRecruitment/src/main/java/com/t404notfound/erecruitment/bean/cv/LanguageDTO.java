@@ -1,4 +1,4 @@
-package com.t404notfound.erecruitment.bean;
+package com.t404notfound.erecruitment.bean.cv;
 
 public class LanguageDTO {
     private int languageID;
