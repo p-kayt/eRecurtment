@@ -6,9 +6,11 @@ package com.t404notfound.erecruitment.bean.applicationposition;
 
 import Util.DBUtil;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -121,6 +123,35 @@ public class ApplicationPositionDAO {
         }
         return null;
     }
+    
+    public int addApplicationPosition(ApplicationPositionDTO dto) {
+        String sql = "INSERT INTO ApplicationPosition(PositionName, PositionDescription, HiringQuantity, CreatedDate, StatusID) VALUES(?, ?, ?, ?, ?)";
+        int result = 0;
+        Connection cn = null;
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setNString(1, dto.getPositionName());
+            pst.setNString(2, dto.getPositionDescription());
+            pst.setInt(3, dto.getHiringQuantity());
+            pst.setDate(4, dto.getCreatedDate());
+            pst.setInt(5, dto.getStatusID());
+
+            result = pst.executeUpdate();
+            return result;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return result;
+    }
 
     public int updateApplicationPosition(ApplicationPositionDTO dto) {
         String sql = "update ApplicationPosition set PositionName = ?, PositionDescription = ?, HiringQuantity = ?, CreatedDate = ?, StatusID = ? where PositionID = ?";
@@ -179,20 +210,35 @@ public class ApplicationPositionDAO {
 
     public static void main(String[] args) {
         ApplicationPositionDAO dao = new ApplicationPositionDAO();
-        ArrayList<ApplicationPositionDTO> list = dao.listByStatus(2);
-
-        if (list.isEmpty() || list == null) {
-            System.out.println("List is null");
+//        ArrayList<ApplicationPositionDTO> list = dao.listByStatus(2);
+//
+//        if (list.isEmpty() || list == null) {
+//            System.out.println("List is null");
+//        }
+//
+//        for (ApplicationPositionDTO ap : list) {
+//            System.out.println(ap.getPositionID());
+//            System.out.println(ap.getPositionName());
+//            System.out.println(ap.getPositionDescription());
+//            System.out.println(ap.getHiringQuantity());
+//            System.out.println(ap.getCreatedDate());
+//            System.out.println(ap.getStatusID());
+//            System.out.println("");
+//        }
+        ApplicationPositionDTO dto = new ApplicationPositionDTO();
+        dto.setPositionID(0);
+        dto.setPositionName("Test V? Trí");
+        dto.setPositionDescription("Test mô t? v? trí");
+        dto.setHiringQuantity(0);
+        dto.setCreatedDate(Date.valueOf(LocalDate.now()));
+        dto.setStatusID(3);
+        
+        int result = dao.addApplicationPosition(dto);
+        if(result == 0){
+            System.out.println("Add position fail!");
         }
-
-        for (ApplicationPositionDTO ap : list) {
-            System.out.println(ap.getPositionID());
-            System.out.println(ap.getPositionName());
-            System.out.println(ap.getPositionDescription());
-            System.out.println(ap.getHiringQuantity());
-            System.out.println(ap.getCreatedDate());
-            System.out.println(ap.getStatusID());
-            System.out.println("");
+        else{
+            System.out.println("Add position success");
         }
     }
 }
