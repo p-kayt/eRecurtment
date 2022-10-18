@@ -24,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author MINH TRI
  */
-@WebFilter(filterName = "LoginFilter", urlPatterns = {"/*"})
-public class LoginFilter implements Filter {
+@WebFilter(filterName = "CookieFilter", urlPatterns = {"/*"})
+public class CookieFilter implements Filter {
 
     private static final boolean debug = true;
 
@@ -34,13 +34,13 @@ public class LoginFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public LoginFilter() {
+    public CookieFilter() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("NewFilter:DoBeforeProcessing");
+            log("CookieFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -68,7 +68,7 @@ public class LoginFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("NewFilter:DoAfterProcessing");
+            log("CookieFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -104,7 +104,7 @@ public class LoginFilter implements Filter {
             throws IOException, ServletException {
 
         if (debug) {
-            log("NewFilter:doFilter()");
+            log("CookieFilter:doFilter()");
         }
 
         doBeforeProcessing(request, response);
@@ -112,31 +112,37 @@ public class LoginFilter implements Filter {
         Throwable problem = null;
         try {
 
-            /* lọc trang web khi đã login */
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             HttpSession session = httpRequest.getSession();
             String url = httpRequest.getServletPath();
-            boolean checkLogin = false;
 
-            if (session.getAttribute("user") != null) {
-                if (url.contains("login") || url.contains("signup")) {
-                    session.setAttribute("url", url);
-                    httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
+            if (session.getAttribute("user") == null) {
+                Cookie[] cookie = httpRequest.getCookies();
+                Cookie checkLogin = null;
+                if (cookie != null) {
+                    for (Cookie c : cookie) {
+                        if (c.getName().equalsIgnoreCase("logged")) {
+                            if (c.getValue().equalsIgnoreCase("true")) {
+                                checkLogin = c;
+                            }
+                            break;
+                        }
+                    }
+                    if (checkLogin != null) {
+                        checkLogin.setValue("false");
+                        httpResponse.addCookie(checkLogin);
+                        session.setAttribute("url", url);
+                        httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
+                    } else {
+                        chain.doFilter(request, response);
+                    }
                 } else {
                     chain.doFilter(request, response);
                 }
             } else {
-
-                if (url.contains("profile")) {
-                    session.setAttribute("url", url);
-                    httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
-                } else {
-                    chain.doFilter(request, response);
-                }
-
+                 chain.doFilter(request, response);
             }
-            /* lọc trang web khi đã login */
 
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,
@@ -150,7 +156,8 @@ public class LoginFilter implements Filter {
 
         // If there was a problem, we want to rethrow it if it is
         // a known type, otherwise log it.
-        if (problem != null) {
+        if (problem
+                != null) {
             if (problem instanceof ServletException) {
                 throw (ServletException) problem;
             }
@@ -190,7 +197,7 @@ public class LoginFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("NewFilter:Initializing filter");
+                log("CookieFilter:Initializing filter");
             }
         }
     }
@@ -201,9 +208,9 @@ public class LoginFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("NewFilter()");
+            return ("CookieFilter()");
         }
-        StringBuffer sb = new StringBuffer("NewFilter(");
+        StringBuffer sb = new StringBuffer("CookieFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

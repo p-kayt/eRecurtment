@@ -18,8 +18,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author MINH TRI
  */
-@WebServlet(name = "Logout", urlPatterns = {"/logout"})
-public class Logout extends HttpServlet {
+@WebServlet(name = "LogoutController", urlPatterns = {"/logout"})
+public class LogoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,13 +38,6 @@ public class Logout extends HttpServlet {
         Cookie[] cookies = request.getCookies();
 
         for (Cookie c : cookies) {
-//            if (c.getName().equalsIgnoreCase("email")) {
-//                c.setMaxAge(0);
-//                response.addCookie(c);
-//            } else if (c.getName().equalsIgnoreCase("password")) {
-//                c.setMaxAge(0);
-//                response.addCookie(c);
-//            }
             c.setMaxAge(0);
             response.addCookie(c);
         }

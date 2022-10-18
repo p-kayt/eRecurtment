@@ -36,27 +36,32 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
         HttpSession session = request.getSession();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-//        String url = "";
-
+        String url = (String)session.getAttribute("url");
+        Cookie checkCookie = null;
+        
+        /*duyet cookie*/
         Cookie[] cookie = request.getCookies();
         if (cookie != null) {
             for (Cookie c : cookie) {
                 if (c.getName().equalsIgnoreCase("email")) {
-                    email = c.getValue();
+                    if (email == null || email.trim().equals("")) {
+                        email = c.getValue();
+                    }
                 } else if (c.getName().equalsIgnoreCase("password")) {
-                    password = c.getValue();
-//                } else if (c.getName().equalsIgnoreCase("url")) {
-//                    url = c.getValue();
+                    if (password == null || password.trim().equals("")) {
+                        password = c.getValue();
+                    }
+                } else if(c.getName().equalsIgnoreCase("logged")) {
+                    checkCookie = c;
                 }
-                c.setMaxAge(0);
-                response.addCookie(c);
             }
         }
-
+        /*duyet cookie*/
+        
         if (email != null && password != null) {
             email = email.toLowerCase();
             UserDAO dao = new UserDAO();
@@ -68,17 +73,25 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("user", user);
 
                 /*add cookie*/
-                Cookie e = new Cookie("email", email);
-                Cookie p = new Cookie("password", password);
-                e.setMaxAge(60 * 60 * 24); //luu trong 1 ngay
-                p.setMaxAge(60 * 60 * 24); //luu trong 1 ngay
-                response.addCookie(e);
-                response.addCookie(p);
+                if (checkCookie == null) {
+                    Cookie e = new Cookie("email", email);
+                    Cookie p = new Cookie("password", password);
+                    Cookie l = new Cookie("logged", "true");
+                    e.setMaxAge(60 * 60 * 24); //luu trong 1 ngay
+                    p.setMaxAge(60 * 60 * 24); //luu trong 1 ngay
+                    l.setMaxAge(60 * 60 * 24);
+                    response.addCookie(e);
+                    response.addCookie(p);
+                    response.addCookie(l);
+                } else {
+                    checkCookie.setValue("true");
+                    response.addCookie(checkCookie);
+                }
                 /*add cookie*/
-//                if (url == null || url.trim().equals("")) {
-//                    url = "/home";
-//                }
-                response.sendRedirect(request.getContextPath() + "/home");
+                if (url == null || url.trim().equals("")) {
+                    url = "/home";
+                }
+                response.sendRedirect(request.getContextPath() + url);
                 return;
             }
         }
