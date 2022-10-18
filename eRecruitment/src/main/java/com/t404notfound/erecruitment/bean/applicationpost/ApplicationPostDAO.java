@@ -193,9 +193,9 @@ public class ApplicationPostDAO {
         }
         return null;
     }
-    
+
     // load posts list
-    public ArrayList<ApplicationPostDTO> listApplicationPosts(){
+    public ArrayList<ApplicationPostDTO> listApplicationPosts() {
         String sql = "select PostID, PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID from ApplicationPost";
         Connection cn = null;
         try {
@@ -237,9 +237,97 @@ public class ApplicationPostDAO {
         }
         return null;
     }
-    
+
+    public ArrayList<ApplicationPostDTO> listByStatus(int statusID) {
+        String sql = "select PostID, PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID from ApplicationPost where StatusID = ?";
+        Connection cn = null;
+        try {
+            cn = DBUtil.getConnection();
+            ArrayList<ApplicationPostDTO> list = new ArrayList<>();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, statusID);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                ApplicationPostDTO post = new ApplicationPostDTO();
+                post.setPostID(rs.getInt("PostID"));
+                post.setPostDescription(rs.getNString("PostDescription"));
+                post.setSalary(rs.getNString("Salary"));
+                post.setHiringQuantity(rs.getInt("HiringQuantity"));
+                post.setCreatedDate(rs.getDate("CreateDate"));
+                post.setStartDate(rs.getDate("StartDate"));
+                post.setExpiredDate(rs.getDate("ExpiredDate"));
+                post.setPositionID(rs.getInt("PositionID"));
+                post.setFormID(rs.getInt("FormID"));
+                post.setStatusID(rs.getInt("StatusID"));
+
+                post.setBenefitList(loadPostBenefits(post.getPostID()));
+                post.setSkillList(loadPostSkills(post.getPostID()));
+                post.setRequirementList(loadPostRequirements(post.getPostID()));
+                post.setStageList(loadPostStages(post.getPostID()));
+
+                list.add(post);
+            }
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<ApplicationPostDTO> listByPosition(int positionID) {
+        String sql = "select PostID, PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID from ApplicationPost where PositionID = ?";
+        Connection cn = null;
+        try {
+            cn = DBUtil.getConnection();
+            ArrayList<ApplicationPostDTO> list = new ArrayList<>();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, positionID);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                ApplicationPostDTO post = new ApplicationPostDTO();
+                post.setPostID(rs.getInt("PostID"));
+                post.setPostDescription(rs.getNString("PostDescription"));
+                post.setSalary(rs.getNString("Salary"));
+                post.setHiringQuantity(rs.getInt("HiringQuantity"));
+                post.setCreatedDate(rs.getDate("CreateDate"));
+                post.setStartDate(rs.getDate("StartDate"));
+                post.setExpiredDate(rs.getDate("ExpiredDate"));
+                post.setPositionID(rs.getInt("PositionID"));
+                post.setFormID(rs.getInt("FormID"));
+                post.setStatusID(rs.getInt("StatusID"));
+
+                post.setBenefitList(loadPostBenefits(post.getPostID()));
+                post.setSkillList(loadPostSkills(post.getPostID()));
+                post.setRequirementList(loadPostRequirements(post.getPostID()));
+                post.setStageList(loadPostStages(post.getPostID()));
+
+                list.add(post);
+            }
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
-        
+
         ApplicationPostDAO dao = new ApplicationPostDAO();
 //        ApplicationPostDTO p = dao.loadApplicationPost(1);
 //        System.out.println(p.getPostDescription());
@@ -265,31 +353,32 @@ public class ApplicationPostDAO {
 //        }
 //        System.out.println("");
 //        System.out.println("");
-        
-        ArrayList<ApplicationPostDTO> l = dao.listApplicationPosts();
+
+        ArrayList<ApplicationPostDTO> l = dao.listByStatus(4);
         for (ApplicationPostDTO po : l) {
             System.out.println(po.getPostDescription());
-        for (PostSkillDTO s : po.getSkillList()) {
-            System.out.println(s.getSkillName());
-            System.out.println(s.getSkillDescription());
+            for (PostSkillDTO s : po.getSkillList()) {
+                System.out.println(s.getSkillName());
+                System.out.println(s.getSkillDescription());
+                System.out.println("");
+            }
             System.out.println("");
-        }
-        System.out.println("");
-        for (PostBenefitDTO b : po.getBenefitList()) {
-            System.out.println(b.getBenefit());
-            System.out.println("");  
-        }
-        System.out.println("");
-        for (PostRequirementDTO r : po.getRequirementList()) {
-            System.out.println(r.getRequirement());
+            for (PostBenefitDTO b : po.getBenefitList()) {
+                System.out.println(b.getBenefit());
+                System.out.println("");
+            }
             System.out.println("");
-        }
-        System.out.println("");
-        for (PostStageDTO s : po.getStageList()) {
-            System.out.println(s.getDescription());
+            for (PostRequirementDTO r : po.getRequirementList()) {
+                System.out.println(r.getRequirement());
+                System.out.println("");
+            }
             System.out.println("");
-        }
-        System.out.println("");
+            for (PostStageDTO s : po.getStageList()) {
+                System.out.println(s.getDescription());
+                System.out.println("");
+            }
+            System.out.println("================================");
+            System.out.println("");
         }
     }
 }
