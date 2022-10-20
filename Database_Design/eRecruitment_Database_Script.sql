@@ -129,9 +129,6 @@ CREATE TABLE CV(
 		REFERENCES [User](UserID),
 	CONSTRAINT Email_Check_CV CHECK(Email LIKE '%___@___%')
 )
---SELECT FirstName, LastName, Avatar, Dob, Introduction, Email, PhoneNumber, [Address], City, GenderName, UserID FROM CV INNER JOIN Gender ON Gender = GenderID WHERE CVID = 1;
---SELECT * FROM CV_Skill;
-SELECT * FROM CV
 
 GO
 INSERT INTO CV(FirstName, LastName, Avatar, Dob, Introduction, Email, PhoneNumber, [Address], City, Gender, UserID)
@@ -690,6 +687,7 @@ GO
 CREATE TABLE Participant(
 	UserID INT NOT NULL,
 	InterviewID INT NOT NULL,
+	InterviewTime SMALLDATETIME NULL,
 
 	CONSTRAINT FK_Participant_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
@@ -698,8 +696,8 @@ CREATE TABLE Participant(
 )
 
 GO
-INSERT INTO Participant(UserID, InterviewID) VALUES(1, 1)
-INSERT INTO Participant(UserID, InterviewID) VALUES(1, 2)
+INSERT INTO Participant(UserID, InterviewID, InterviewTime) VALUES(1, 1, '2022-10-20 10:00')
+INSERT INTO Participant(UserID, InterviewID, InterviewTime) VALUES(1, 2, '2022-10-25 22:00')
 
 GO
 CREATE TABLE Evaluation(
