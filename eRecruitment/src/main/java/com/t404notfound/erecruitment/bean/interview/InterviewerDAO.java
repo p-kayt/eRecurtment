@@ -18,7 +18,7 @@ public class InterviewerDAO {
 
     //Add an interviewer to a interview
     public boolean addInterviewer(int userID, int interviewID) {
-        
+
         //If interviewer exist then return false
         if (!checkInterviewer(userID, interviewID)) {
             String sql = "INSERT INTO Interviewer (UserID, InterviewID) "
@@ -53,7 +53,7 @@ public class InterviewerDAO {
             ps.setInt(1, interviewID);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 int userID = rs.getInt("UserID");
                 InterviewerDTO tmp = new InterviewerDTO(userID, interviewID);
                 list.add(tmp);
@@ -65,7 +65,7 @@ public class InterviewerDAO {
 
         return null;
     }
-    
+
     //remove interviewer from an interview
     public boolean removeInterviewer(int userID, int interviewID) {
         String sql = "DELETE Interviewer "

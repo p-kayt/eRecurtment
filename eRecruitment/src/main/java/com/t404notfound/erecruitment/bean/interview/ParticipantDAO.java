@@ -38,6 +38,7 @@ public class ParticipantDAO {
                     return true;
                 }
             } catch (Exception e) {
+                System.out.println("Error when add candidate.");
                 e.printStackTrace();
             }
         }
@@ -55,7 +56,7 @@ public class ParticipantDAO {
             ps.setInt(1, interviewID);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 int userID = rs.getInt("UserID");
                 /* Convert date to String using DateFormat*/
                 String pattern = "YYYY/mm/dd HH:mm:ss";

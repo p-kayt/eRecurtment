@@ -153,7 +153,6 @@ public class InterviewDAO {
 //        }
 //        return false;
 //    }
-    
     //ok
     public InterviewDTO updateInterview(int interviewID, String description, int formatID,
             String link, String address, String time, int stageID, int statusID) {
@@ -175,14 +174,52 @@ public class InterviewDAO {
                 ps.setInt(6, formatID);
                 ps.setInt(7, statusID);
                 ps.setInt(8, interviewID);
-                
+
                 int rs = ps.executeUpdate();
-                if(rs > 0) {
+                if (rs > 0) {
                     return getInterview(interviewID);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        return null;
+    }
+
+    //get interview list
+    public ArrayList<InterviewDTO> getInterviewList() {
+        ArrayList<InterviewDTO> list = new ArrayList<>();
+        String sql = " SELECT * FROM [Interview] ";
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int interviewID = rs.getInt("InterviewID");
+                String description = rs.getString("Description");
+                String link = rs.getString("OnlineLink");
+                String address = rs.getString("Address");
+
+                /* Convert date to String using DateFormat*/
+                String pattern = "YYYY/mm/dd HH:mm:ss";
+                DateFormat df = new SimpleDateFormat(pattern);
+                String time = df.format(rs.getDate("InterviewTime"));
+                /* Convert date to String using DateFormat*/
+
+                int stageID = rs.getInt("StageID");
+                int postID = rs.getInt("PostID");
+                int formatID = rs.getInt("FormatID");
+                int statusID = rs.getInt("StatusID");
+                int bookerID = rs.getInt("BookerID");
+
+                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, stageID, postID, statusID, bookerID);
+                list.add(tmp);
+            }
+            return list;
+
+        } catch (Exception e) {
+            System.out.println("Error when get interview list.");
+            e.printStackTrace();
         }
         return null;
     }
@@ -200,14 +237,21 @@ public class InterviewDAO {
         int bookerID = 1;
         int interviewID = 8;
 
-        System.out.println(dao.createAnInterview(description, formatID, link, address, time, stageID, postID, inteviewStatusID, bookerID));
+//        System.out.println(dao.createAnInterview(description, formatID, link, address, time, stageID, postID, inteviewStatusID, bookerID));
+//
+//        System.out.println(dao.getInterview(7).toString());
+//
+//        System.out.println(dao.deleteInterview(6));
+//
+//        link = "https://abc.com";
+//        InterviewDTO t = dao.updateInterview(interviewID, description, formatID, link, address, time, stageID, inteviewStatusID);
+//        System.out.println(t.toString());
+        System.out.println("=====================================================================================");
+        ArrayList<InterviewDTO> li = dao.getInterviewList();
+        System.out.println("List interview: ");
+        for (InterviewDTO o : li) {
+            System.out.println(o.toString());
+        }
 
-        System.out.println(dao.getInterview(7).toString());
-
-        System.out.println(dao.deleteInterview(6));
-        
-        link = "https://abc.com";
-        InterviewDTO t = dao.updateInterview(interviewID, description, formatID, link, address, time, stageID, inteviewStatusID);
-        System.out.println(t.toString());
     }
 }
