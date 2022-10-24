@@ -18,6 +18,40 @@ import java.util.ArrayList;
  * @author MSI GF63
  */
 public class ApplicationPositionDAO {
+    
+    public ApplicationPositionDTO loadApplicationPositions(int id) {
+        String sql = "select PositionID, PositionName, PositionDescription, HiringQuantity, CreatedDate, StatusID from ApplicationPosition where PositionID = ?";
+        Connection cn = null;
+        try {
+            cn = DBUtil.getConnection();
+            ArrayList<ApplicationPositionDTO> list = new ArrayList<>();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                ApplicationPositionDTO ap = new ApplicationPositionDTO();
+                ap.setPositionID(rs.getInt("PositionID"));
+                ap.setPositionName(rs.getNString("PositionName"));
+                ap.setPositionDescription(rs.getNString("PositionDescription"));
+                ap.setHiringQuantity(rs.getInt("HiringQuantity"));
+                ap.setCreatedDate(rs.getDate("CreatedDate"));
+                ap.setStatusID(rs.getInt("StatusID"));
+                
+                return ap;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
 
     public ArrayList<ApplicationPositionDTO> listApplicationPositions() {
         String sql = "select PositionID, PositionName, PositionDescription, HiringQuantity, CreatedDate, StatusID from ApplicationPosition";
