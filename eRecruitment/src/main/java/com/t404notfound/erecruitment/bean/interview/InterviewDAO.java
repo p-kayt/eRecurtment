@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  *
@@ -112,7 +113,7 @@ public class InterviewDAO {
         return false;
     }
 
-    //test delete Interview
+    //test delete Interview ok
     public boolean deleteInterview(int interviewID) {
         if (checkInterview(interviewID)) {
             String sql = "DELETE Interview "
@@ -122,7 +123,7 @@ public class InterviewDAO {
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setInt(1, interviewID);
                 int rs = ps.executeUpdate();
-                if(rs != 0) {
+                if (rs != 0) {
                     return true;
                 }
             } catch (Exception e) {
@@ -130,6 +131,60 @@ public class InterviewDAO {
             }
         }
         return false;
+    }
+
+//    public boolean changeDescription(int interviewID, String description) {
+//        if (checkInterview(interviewID)) {
+//            String sql = "UPDATE Interview "
+//                    + " SET Description = ? "
+//                    + " WHERE InterviewID = ? ";
+//            try {
+//                Connection con = DBUtil.getConnection();
+//                PreparedStatement ps = con.prepareStatement(sql);
+//                ps.setNString(1, description);
+//                ps.setInt(2, interviewID);
+//                int rs = ps.executeUpdate();
+//                if (rs != 0) {
+//                    return true;
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return false;
+//    }
+    
+    //ok
+    public InterviewDTO updateInterview(int interviewID, String description, int formatID,
+            String link, String address, String time, int stageID, int statusID) {
+
+        if (checkInterview(interviewID)) {
+            String sql = "UPDATE Interview "
+                    + " SET [Description] = ?, OnlineLink = ?, [Address] = ?, InterviewTime = ?, StageID =?, "
+                    + " FormatID = ?, StatusID = ? "
+                    + " WHERE InterviewID = ? ";
+
+            try {
+                Connection con = DBUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setNString(1, description);
+                ps.setString(2, link);
+                ps.setString(3, address);
+                ps.setString(4, time);
+                ps.setInt(5, stageID);
+                ps.setInt(6, formatID);
+                ps.setInt(7, statusID);
+                ps.setInt(8, interviewID);
+                
+                int rs = ps.executeUpdate();
+                if(rs > 0) {
+                    return getInterview(interviewID);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     public static void main(String[] args) {
@@ -143,11 +198,16 @@ public class InterviewDAO {
         int postID = 5;
         int inteviewStatusID = 1;
         int bookerID = 1;
+        int interviewID = 8;
 
         System.out.println(dao.createAnInterview(description, formatID, link, address, time, stageID, postID, inteviewStatusID, bookerID));
 
-        System.out.println(dao.getInterview(6).toString());
-        
+        System.out.println(dao.getInterview(7).toString());
+
         System.out.println(dao.deleteInterview(6));
+        
+        link = "https://abc.com";
+        InterviewDTO t = dao.updateInterview(interviewID, description, formatID, link, address, time, stageID, inteviewStatusID);
+        System.out.println(t.toString());
     }
 }
