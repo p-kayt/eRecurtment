@@ -18,10 +18,38 @@ import java.util.ArrayList;
  * @author MSI GF63
  */
 public class ApplicationPositionDAO {
+    private static Connection cn;
+    
+    // Check Post for Position deletion
+    private int checkPost(int postID) {
+        String sql = "select PositionID from ApplicationPost where PositionID = ?";
+        int result = 0;
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, postID);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                result = 1;
+                return result;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return result;
+    }
+    
     
     public ApplicationPositionDTO loadApplicationPositions(int id) {
         String sql = "select PositionID, PositionName, PositionDescription, HiringQuantity, CreatedDate, StatusID from ApplicationPosition where PositionID = ?";
-        Connection cn = null;
         try {
             cn = DBUtil.getConnection();
             ArrayList<ApplicationPositionDTO> list = new ArrayList<>();
@@ -55,7 +83,6 @@ public class ApplicationPositionDAO {
 
     public ArrayList<ApplicationPositionDTO> listApplicationPositions() {
         String sql = "select PositionID, PositionName, PositionDescription, HiringQuantity, CreatedDate, StatusID from ApplicationPosition";
-        Connection cn = null;
         try {
             cn = DBUtil.getConnection();
             ArrayList<ApplicationPositionDTO> list = new ArrayList<>();
@@ -90,7 +117,6 @@ public class ApplicationPositionDAO {
     // get application positions list by status
     public ArrayList<ApplicationPositionDTO> listByStatus(int statusID) {
         String sql = "select PositionID, PositionName, PositionDescription, HiringQuantity, CreatedDate, StatusID from ApplicationPosition where StatusID = ?";
-        Connection cn = null;
         try {
             cn = DBUtil.getConnection();
             ArrayList<ApplicationPositionDTO> list = new ArrayList<>();
@@ -125,7 +151,6 @@ public class ApplicationPositionDAO {
 
     public ArrayList<ApplicationPositionDTO> searchApplicationPositions(String keyword) {
         String sql = "select PositionID, PositionName, PositionDescription, HiringQuantity, CreatedDate, StatusID from ApplicationPosition where PositionName like ?";
-        Connection cn = null;
         try {
             cn = DBUtil.getConnection();
             ArrayList<ApplicationPositionDTO> list = new ArrayList<>();
@@ -161,7 +186,6 @@ public class ApplicationPositionDAO {
     public int addApplicationPosition(ApplicationPositionDTO dto) {
         String sql = "INSERT INTO ApplicationPosition(PositionName, PositionDescription, HiringQuantity, CreatedDate, StatusID) VALUES(?, ?, ?, ?, ?)";
         int result = 0;
-        Connection cn = null;
         try {
             cn = DBUtil.getConnection();
             PreparedStatement pst = cn.prepareStatement(sql);
@@ -190,7 +214,6 @@ public class ApplicationPositionDAO {
     public int updateApplicationPosition(ApplicationPositionDTO dto) {
         String sql = "update ApplicationPosition set PositionName = ?, PositionDescription = ?, HiringQuantity = ?, CreatedDate = ?, StatusID = ? where PositionID = ?";
         int result = 0;
-        Connection cn = null;
         try {
             cn = DBUtil.getConnection();
             PreparedStatement pst = cn.prepareStatement(sql);
@@ -219,8 +242,11 @@ public class ApplicationPositionDAO {
 
     public int deleteApplicationPosition(int id) {
         String sql = "delete from ApplicationPosition where PositionID = ?";
-        int result = 0;
-        Connection cn = null;
+        int result = 0, check = checkPost(id);
+        if(check != 0){
+            System.out.println("FK of Position existed! Deletion cancel");
+            return 0;
+        }
         try {
             cn = DBUtil.getConnection();
             PreparedStatement pst = cn.prepareStatement(sql);
