@@ -45,6 +45,61 @@ public class ApplicationPostDAO {
         }
         return result;
     }
+    
+    // Check FK for Post deletion
+    // check candidate's application
+    private int checkApplication(int postID) {
+        String sql = "select PostID from Application where PostID = ?";
+        int result = 0;
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, postID);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                result = 1;
+                return result;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return result;
+    }
+    
+    // check Interview for post
+    private int checkInterview(int postID) {
+        String sql = "select PostID from Interview where PostID = ?";
+        int result = 0;
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, postID);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                result = 1;
+                return result;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return result;
+    }
 
     // Load post's benefits
     private ArrayList<PostBenefitDTO> loadPostBenefits(int postID) {
@@ -450,7 +505,12 @@ public class ApplicationPostDAO {
     // Delete Post
     public int deleteApplicationPost(int postID) {
         int result = -1;
-        // check if post is in DB\
+        // check if post is in DB
+        int check1 = checkApplication(postID), check2 = checkInterview(postID);
+        if(check1 != 0 || check2 != 0){
+            System.out.println("FK of post existed! Cancel deletion");
+            return result;
+        }
         int post = isPostExist(postID);
         if (post != 0) {
             int delete1 = deletePostBenefits(postID);
@@ -485,7 +545,7 @@ public class ApplicationPostDAO {
 
         ApplicationPostDAO dao = new ApplicationPostDAO();
         
-        int res = dao.deleteApplicationPost(3);
+        int res = dao.deleteApplicationPost(1);
         System.out.println(res);
 //        int res = dao.isPostExist(1);
 //        System.out.println(res);
