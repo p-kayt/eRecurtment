@@ -1,18 +1,19 @@
 package com.t404notfound.erecruitment.bean.cv;
 
 public class SocialMediaDTO {
+
     private int socialMediaID;
     private String socialMediaLink;
-    private String platformName;
+    private int platformID;
     private int CVID;
 
     public SocialMediaDTO() {
     }
 
-    public SocialMediaDTO(int socialMediaID, String socialMediaLink, String platformName, int CVID) {
+    public SocialMediaDTO(int socialMediaID, String socialMediaLink, int platformID, int CVID) {
         this.socialMediaID = socialMediaID;
         this.socialMediaLink = socialMediaLink;
-        this.platformName = platformName;
+        this.platformID = platformID;
         this.CVID = CVID;
     }
 
@@ -32,12 +33,12 @@ public class SocialMediaDTO {
         this.socialMediaLink = socialMediaLink;
     }
 
-    public String getPlatformName() {
-        return platformName;
+    public int getPlatformID() {
+        return platformID;
     }
 
-    public void setPlatformName(String platformName) {
-        this.platformName = platformName;
+    public void setPlatformID(int platformID) {
+        this.platformID = platformID;
     }
 
     public int getCVID() {
@@ -50,8 +51,7 @@ public class SocialMediaDTO {
 
     @Override
     public String toString() {
-        return "SocialMediaDTO{" + "socialMediaID=" + socialMediaID + ", socialMediaLink=" + socialMediaLink + ", PlatformName=" + platformName + ", CVID=" + CVID + '}';
+        return "SocialMediaDTO{" + "socialMediaID=" + socialMediaID + ", socialMediaLink=" + socialMediaLink + ", platformID=" + platformID + ", CVID=" + CVID + '}';
     }
-    
-    
+
 }

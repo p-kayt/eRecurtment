@@ -4,6 +4,7 @@
  */
 package com.t404notfound.erecruitment.controller;
 
+import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.cv.CVDAO;
 import com.t404notfound.erecruitment.bean.cv.CVDTO;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,15 +35,23 @@ public class CVController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            CVDAO dao = new CVDAO();
-            CVDTO dto = dao.loadCV(1);
-            request.setAttribute("cv", dto);
-            request.getRequestDispatcher("/views/cv/cv-read.jsp").forward(request, response);
-        }
+        request.setCharacterEncoding("UTF-8");
+
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        String action = request.getParameter("action");
+
+        CVDAO cvdao = new CVDAO();
+        System.out.println("UserIDDDDDDDDDDDD"+ user.getUserID());
+        CVDTO cvdto = cvdao.loadCVByUserID(user.getUserID());
+        
+        request.setAttribute("cv", cvdto);
+        request.getRequestDispatcher("profile").forward(request, response);
     }
     
-
+    public static void main(String[] args) {
+        
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

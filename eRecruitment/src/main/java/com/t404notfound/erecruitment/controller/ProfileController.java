@@ -6,6 +6,8 @@ package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.UserDAO;
 import com.t404notfound.erecruitment.bean.UserDTO;
+import com.t404notfound.erecruitment.bean.cv.CVDAO;
+import com.t404notfound.erecruitment.bean.cv.CVDTO;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -171,6 +173,10 @@ public class ProfileController extends HttpServlet {
                     }
                 }
             }
+            CVDAO cvdao = new CVDAO();
+            CVDTO cvdto = cvdao.loadCVByUserID(user.getUserID());
+            session.setAttribute("cv", user);
+            //System.out.println(cvdto.toString());
         }
 
         request.getRequestDispatcher("/views/account/profile.jsp").forward(request, response);

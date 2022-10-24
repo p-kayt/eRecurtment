@@ -4,6 +4,7 @@
     Author     : MINH TRI
 --%>
 
+<%@page import="com.t404notfound.erecruitment.bean.cv.CVDTO"%>
 <%@page import="com.t404notfound.erecruitment.bean.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -145,7 +146,11 @@
                 </div>
             </div>
         </c:if>
-        <!--Javascript-->
+
+        <!--Show CV-->
+        
+        
+        <!--JavaScript-->
         <c:if test = "${not empty user}">
             <script>
                 function checkPassword() {
@@ -161,8 +166,15 @@
                     }
                 }
 
+
+                function showCV() {
+                    var x = document.getElementById("cv");
+                    x.style.display = "block";
+                }
             </script>
         </c:if>
+
+
     </body>
 </html>
 

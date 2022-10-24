@@ -11,12 +11,36 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Huu Minh
  */
 public class CVDAO {
+
+    public CVDTO loadCVByUserID(int userID) {
+        System.out.println(userID);
+        String sql = "SELECT CVID, "
+                + "UserID FROM CV "
+                + "INNER JOIN Gender ON Gender = GenderID "
+                + "WHERE UserID = ?";
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setNString(1, String.valueOf(userID));
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                int CVID = rs.getInt("CVID");
+                con.close();
+                return loadCV(CVID);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 
     public CVDTO loadCV(int CVID) {
         String sql = "SELECT FirstName, "
@@ -33,9 +57,9 @@ public class CVDAO {
                 + "INNER JOIN Gender ON Gender = GenderID "
                 + "WHERE CVID = ?";
         try {
-            Connection cn = DBUtil.getConnection();
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, String.valueOf(CVID));
+            Connection con = DBUtil.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setNString(1, String.valueOf(CVID));
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 CVDTO cv = new CVDTO();
@@ -76,9 +100,9 @@ public class CVDAO {
                 + "WHERE CVID = ?";
         try {
             ArrayList<SkillDTO> list = new ArrayList<>();
-            Connection cn = DBUtil.getConnection();
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, String.valueOf(CVID));
+            Connection con = DBUtil.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setNString(1, String.valueOf(CVID));
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 SkillDTO dto = new SkillDTO();
@@ -103,9 +127,9 @@ public class CVDAO {
                 + "WHERE CVID = ?";
         try {
             ArrayList<InterestDTO> list = new ArrayList<>();
-            Connection cn = DBUtil.getConnection();
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, String.valueOf(CVID));
+            Connection con = DBUtil.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setNString(1, String.valueOf(CVID));
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 InterestDTO dto = new InterestDTO();
@@ -130,9 +154,9 @@ public class CVDAO {
                 + "WHERE CVID = ?";
         try {
             ArrayList<CertificateDTO> list = new ArrayList<>();
-            Connection cn = DBUtil.getConnection();
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, String.valueOf(CVID));
+            Connection con = DBUtil.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setNString(1, String.valueOf(CVID));
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 CertificateDTO dto = new CertificateDTO();
@@ -153,9 +177,9 @@ public class CVDAO {
         String sql = "SELECT AchievementID, AchievementName, AchievementDescription, AchievementLink, CVID FROM CV_Achievement WHERE CVID = ?;";
         try {
             ArrayList<AchievementDTO> list = new ArrayList<>();
-            Connection cn = DBUtil.getConnection();
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, String.valueOf(CVID));
+            Connection con = DBUtil.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setNString(1, String.valueOf(CVID));
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 AchievementDTO dto = new AchievementDTO();
@@ -184,9 +208,9 @@ public class CVDAO {
                 + "WHERE CVID = ?;";
         try {
             ArrayList<ExperienceDTO> list = new ArrayList<>();
-            Connection cn = DBUtil.getConnection();
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, String.valueOf(CVID));
+            Connection con = DBUtil.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setNString(1, String.valueOf(CVID));
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 ExperienceDTO dto = new ExperienceDTO();
@@ -214,9 +238,9 @@ public class CVDAO {
                 + "WHERE CVID = ?;";
         try {
             ArrayList<LanguageDTO> list = new ArrayList<>();
-            Connection cn = DBUtil.getConnection();
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, String.valueOf(CVID));
+            Connection con = DBUtil.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setNString(1, String.valueOf(CVID));
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 LanguageDTO dto = new LanguageDTO();
@@ -238,16 +262,15 @@ public class CVDAO {
         String sql = "SELECT EducationID, "
                 + "EducationName, "
                 + "OrganizationName, "
-                + "StatusName "
+                + "StatusID, "
+                + "CVID "
                 + "FROM CV_Education "
-                + "JOIN EducationStatus "
-                + "ON CV_Education.StatusID = EducationStatus.StatusID "
-                + "WHERE CVID = ?;";
+                + "WHERE CVID = ?";
         try {
             ArrayList<EducationDTO> list = new ArrayList<>();
-            Connection cn = DBUtil.getConnection();
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, String.valueOf(CVID));
+            Connection con = DBUtil.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setNString(1, String.valueOf(CVID));
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 EducationDTO dto = new EducationDTO();
@@ -255,7 +278,7 @@ public class CVDAO {
                 dto.setEducationID(rs.getInt("EducationID"));
                 dto.setEducationName(rs.getString("EducationName"));
                 dto.setOrganizationName(rs.getString("OrganizationName"));
-                dto.setStatus(rs.getString("StatusName"));
+                dto.setStatus(rs.getInt("StatusID"));
                 dto.setCVID(CVID);
                 list.add(dto);
             }
@@ -269,23 +292,19 @@ public class CVDAO {
     public ArrayList<SocialMediaDTO> loadSocialMedia(int CVID) {
         String sql = "SELECT SocialMediaID, "
                 + "SocialMediaLink, "
-                + "PlatformName "
-                + "FROM CV_SocialMedia "
-                + "JOIN [Platform] "
-                + "ON CV_SocialMedia.PlatformID = [Platform].PlatformID "
-                + "WHERE CVID = ?;";
+                + "PlatformID "
+                + "FROM CV_SocialMedia ";
         try {
             ArrayList<SocialMediaDTO> list = new ArrayList<>();
-            Connection cn = DBUtil.getConnection();
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, String.valueOf(CVID));
+            Connection con = DBUtil.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 SocialMediaDTO dto = new SocialMediaDTO();
                 System.out.println(rs.toString());
                 dto.setSocialMediaID(rs.getInt("SocialMediaID"));
                 dto.setSocialMediaLink(rs.getString("SocialMediaLink"));
-                dto.setPlatformName(rs.getString("PlatformName"));
+                dto.setPlatformID(rs.getInt("PlatformID"));
                 dto.setCVID(CVID);
                 list.add(dto);
             }
@@ -296,7 +315,31 @@ public class CVDAO {
         return null;
     }
 
-    public void saveCV(String firstName, String lastName, String avatar, Date dob, String introduction, String email, String phoneNumber, String address, String city, String gender, int userID, ArrayList skills, ArrayList interests, ArrayList certificates, ArrayList achivements, ArrayList experiences, ArrayList languages, ArrayList educations, ArrayList socialMedias) {
+//==============================================================================
+    public void saveCVByUserID(int userID, CVDTO cv) {
+        String sql = "SELECT CVID, "
+                + "UserID FROM CV "
+                + "INNER JOIN Gender ON Gender = GenderID "
+                + "WHERE UserID = ?";
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setNString(1, String.valueOf(userID));
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                int CVID = rs.getInt("CVID");
+                con.close();
+                updateCV(cv);
+            } else {
+                saveCV(cv);
+            }
+
+        } catch (SQLException e) {
+
+        }
+    }
+
+    public int saveCV(CVDTO cv) {
         String sql = "INSERT INTO CV(FirstName, "
                 + "LastName, "
                 + "Avatar, "
@@ -309,20 +352,26 @@ public class CVDAO {
                 + "Gender, "
                 + "UserID) "
                 + " VALUES (?,?,?,?,?,?,?,?,?,?,?) ";
+        int result = 0;
+        Connection con = null;
+        PreparedStatement ps = null;
         try {
-            Connection con = DBUtil.getConnection();
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, firstName);
-            ps.setString(2, lastName);
-            ps.setString(3, avatar);
-            ps.setDate(4, dob);
-            ps.setString(5, introduction);
-            ps.setString(6, email);
-            ps.setString(7, phoneNumber);
-            ps.setString(8, address);
-            ps.setString(9, city);
-            int genderID = 0;
-            switch (gender.toLowerCase()) {
+            con = DBUtil.getConnection();
+
+            con.setAutoCommit(false);
+
+            ps = con.prepareStatement(sql);
+            ps.setNString(1, cv.getFirstName());
+            ps.setNString(2, cv.getLastName());
+            ps.setNString(3, cv.getAvatar());
+            ps.setDate(4, cv.getDob());
+            ps.setNString(5, cv.getIntroduction());
+            ps.setNString(6, cv.getEmail());
+            ps.setNString(7, cv.getPhoneNumber());
+            ps.setNString(8, cv.getAddress());
+            ps.setNString(9, cv.getCity());
+            int genderID = 1;
+            switch (cv.getGender().toLowerCase()) {
                 case "female":
                     genderID = 2;
                     break;
@@ -334,23 +383,57 @@ public class CVDAO {
                     break;
             }
             ps.setInt(10, genderID);
-            ps.setInt(11, userID);
+            ps.setInt(11, cv.getUserID());
+            result = ps.executeUpdate();
+//            System.out.println(result);
+            int CVID = getHighestCVID(con);
+//            System.out.println(getHighestCVID());
+            saveSkill(cv.getSkills(), CVID, con).executeUpdate();
+            saveInterest(cv.getInterests(), CVID, con).executeUpdate();
+            saveCertificate(cv.getCertificates(), CVID, con).executeUpdate();
+            saveAchievement(cv.getAchievements(), CVID, con).executeUpdate();
+            saveExperience(cv.getExperiences(), CVID, con).executeUpdate();
+            saveLanguage(cv.getLanguages(), CVID, con).executeUpdate();
+            saveEducation(cv.getEducations(), CVID, con).executeUpdate();
+            saveSocialMedia(cv.getSocialMedias(), CVID, con).executeUpdate();
+            con.commit();
 
-//            int CVID = getHighestCVID();
-//            saveSkill(skills, CVID);
-//            saveInterest(interests, CVID);
-//            saveCertificate(certificates, CVID);
-//            saveAchievement(achivements, CVID);
+            return result;
         } catch (SQLException e) {
-            System.out.print("CV save error: " + e.getMessage());
+            System.out.println("CV save error: " + e.getMessage());
+            try {
+                if (con != null) {
+                    con.rollback();
+                }
+            } catch (SQLException e1) {
+                System.out.println("CV save error: " + e.getMessage());
+            };
+
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CVDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (con != null) {
+                try {
+
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CVDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
         }
+        return result;
     }
 
-    public int getHighestCVID() {
+    public int getHighestCVID(Connection con) {
         String sql = "SELECT MAX(CVID) AS CVID FROM CV ";
         try {
-            Connection cn = DBUtil.getConnection();
-            PreparedStatement pst = cn.prepareStatement(sql);
+            PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 CVDTO cv = new CVDTO();
@@ -363,49 +446,53 @@ public class CVDAO {
         return -1;
     }
 
-    public void saveSkill(ArrayList<SkillDTO> skillList, int CVID) {
+    public PreparedStatement saveSkill(ArrayList<SkillDTO> skillList, int CVID, Connection con) {
         String sql = "INSERT INTO CV_Skill( "
                 + "SkillName, "
                 + "SkillDescription, "
                 + "CVID "
                 + ") VALUES (?,?,?) ";
-        try {
-            for (SkillDTO x : skillList) {
-                Connection con = DBUtil.getConnection();
-                PreparedStatement ps = con.prepareStatement(sql);
-                ps.setString(1, x.getSkillName());
-                ps.setString(2, x.getSkillDescription());
-                ps.setInt(3, CVID);
 
-                ps.execute();
+        if (skillList != null) {
+            try {
+                for (SkillDTO x : skillList) {
+
+                    PreparedStatement ps = con.prepareStatement(sql);
+                    ps.setNString(1, x.getSkillName());
+                    ps.setNString(2, x.getSkillDescription());
+                    ps.setInt(3, CVID);
+
+                    return ps;
+                }
+
+            } catch (SQLException e) {
+                System.out.println("CV save error: " + e.getMessage());
             }
-
-        } catch (SQLException e) {
-            System.out.print("CV save error: " + e.getMessage());
         }
+        return null;
     }
 
-    public void saveInterest(ArrayList<InterestDTO> interestList, int CVID) {
+    public PreparedStatement saveInterest(ArrayList<InterestDTO> interestList, int CVID, Connection con) {
         String sql = "INSERT INTO CV_Interest( "
                 + "InterestName, "
                 + "CVID "
                 + ") VALUES (?,?) ";
         try {
             for (InterestDTO x : interestList) {
-                Connection con = DBUtil.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);
-                ps.setString(1, x.getInterestName());
+                ps.setNString(1, x.getInterestName());
                 ps.setInt(2, CVID);
 
-                ps.execute();
+                return ps;
             }
 
         } catch (SQLException e) {
-            System.out.print("CV save error: " + e.getMessage());
+            System.out.println("CV save error: " + e.getMessage());
         }
+        return null;
     }
 
-    public void saveCertificate(ArrayList<CertificateDTO> certificateList, int CVID) {
+    public PreparedStatement saveCertificate(ArrayList<CertificateDTO> certificateList, int CVID, Connection con) {
         String sql = "INSERT INTO CV_Certificate( "
                 + "CertificateName, "
                 + "CertificateLink, "
@@ -413,21 +500,21 @@ public class CVDAO {
                 + ") VALUES (?,?,?) ";
         try {
             for (CertificateDTO x : certificateList) {
-                Connection con = DBUtil.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);
-                ps.setString(1, x.getCertificateName());
-                ps.setString(2, x.getCertificateLink());
+                ps.setNString(1, x.getCertificateName());
+                ps.setNString(2, x.getCertificateLink());
                 ps.setInt(3, CVID);
 
-                ps.execute();
+                return ps;
             }
 
         } catch (SQLException e) {
-            System.out.print("CV save error: " + e.getMessage());
+            System.out.println("CV save error: " + e.getMessage());
         }
+        return null;
     }
 
-    public void saveAchievement(ArrayList<AchievementDTO> achievementList, int CVID) {
+    public PreparedStatement saveAchievement(ArrayList<AchievementDTO> achievementList, int CVID, Connection con) {
         String sql = "INSERT INTO CV_Achievement( "
                 + "AchievementName, "
                 + "AchievementDescription, "
@@ -436,42 +523,418 @@ public class CVDAO {
                 + ") VALUES (?,?,?,?) ";
         try {
             for (AchievementDTO x : achievementList) {
-                Connection con = DBUtil.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql);
-                ps.setString(1, x.getAchievementName());
-                ps.setString(2, x.getAchievementDescription());
-                ps.setString(3, x.getAchievementLink());
+                ps.setNString(1, x.getAchievementName());
+                ps.setNString(2, x.getAchievementDescription());
+                ps.setNString(3, x.getAchievementLink());
                 ps.setInt(4, CVID);
 
-                ps.execute();
+                return ps;
             }
 
         } catch (SQLException e) {
-            System.out.print("CV save error: " + e.getMessage());
+            System.out.println("CV save error: " + e.getMessage());
         }
+        return null;
+    }
+
+    public PreparedStatement saveExperience(ArrayList<ExperienceDTO> experienceList, int CVID, Connection con) {
+        String sql = "INSERT INTO CV_Experience( "
+                + "JobTitle, "
+                + "OrganizationName, "
+                + "ExperienceDescription, "
+                + "ExperienceDuration, "
+                + "CVID "
+                + ") VALUES (?,?,?,?,?) ";
+        try {
+            for (ExperienceDTO x : experienceList) {
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setNString(1, x.getJobTitle());
+                ps.setNString(2, x.getOrganizationName());
+                ps.setNString(3, x.getExperienceDescription());
+                ps.setNString(4, x.getExperienceDuration());
+                ps.setInt(5, CVID);
+
+                return ps;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("CV save error: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public PreparedStatement saveLanguage(ArrayList<LanguageDTO> languageList, int CVID, Connection con) {
+        String sql = "INSERT INTO CV_Language( "
+                + "LanguageName, "
+                + "LanguageDescription, "
+                + "CVID "
+                + ") VALUES (?,?,?) ";
+
+        if (languageList != null) {
+            try {
+                for (LanguageDTO x : languageList) {
+
+                    PreparedStatement ps = con.prepareStatement(sql);
+                    ps.setNString(1, x.getLanguageName());
+                    ps.setNString(2, x.getLanguageDescription());
+                    ps.setInt(3, CVID);
+
+                    return ps;
+                }
+
+            } catch (SQLException e) {
+                System.out.println("CV save error: " + e.getMessage());
+            }
+        }
+        return null;
+    }
+
+    public PreparedStatement saveEducation(ArrayList<EducationDTO> educationList, int CVID, Connection con) {
+        String sql = "INSERT INTO CV_Education( "
+                + "EducationName, "
+                + "OrganizationName, "
+                + "StatusID, "
+                + "CVID "
+                + ") VALUES (?,?,?,?) ";
+
+        if (educationList != null) {
+            try {
+                for (EducationDTO x : educationList) {
+
+                    PreparedStatement ps = con.prepareStatement(sql);
+                    ps.setNString(1, x.getEducationName());
+                    ps.setNString(2, x.getOrganizationName());
+                    ps.setInt(3, x.getStatus());
+                    ps.setInt(4, CVID);
+
+                    return ps;
+                }
+
+            } catch (SQLException e) {
+                System.out.println("CV save error: " + e.getMessage());
+            }
+        }
+        return null;
+    }
+
+    public PreparedStatement saveSocialMedia(ArrayList<SocialMediaDTO> socialMediaList, int CVID, Connection con) {
+        String sql = "INSERT INTO CV_SocialMedia( "
+                + "SocialMediaLink, "
+                + "PlatformID, "
+                + "CVID "
+                + ") VALUES (?,?,?) ";
+        try {
+            for (SocialMediaDTO x : socialMediaList) {
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setNString(1, x.getSocialMediaLink());
+                ps.setInt(2, x.getPlatformID());
+                ps.setInt(3, CVID);
+
+                return ps;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("CV save error: " + e.getMessage());
+        }
+        return null;
+    }
+
+//==============================================================================
+    public int updateCV(CVDTO cv) {
+        String sql = "UPDATE CV "
+                + "SET FirstName = ?, "
+                + "LastName = ?, "
+                + "Avatar = ?, "
+                + "Dob = ?, "
+                + "Introduction = ?, "
+                + "Email = ?, "
+                + "PhoneNumber = ?, "
+                + "[Address] = ?, "
+                + "City = ?, "
+                + "Gender = ? "
+                + "WHERE CVID = ? ";
+        int result = 0;
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = DBUtil.getConnection();
+
+            con.setAutoCommit(false);
+
+            ps = con.prepareStatement(sql);
+            ps.setNString(1, cv.getFirstName());
+            ps.setNString(2, cv.getLastName());
+            ps.setNString(3, cv.getAvatar());
+            ps.setDate(4, cv.getDob());
+            ps.setNString(5, cv.getIntroduction());
+            ps.setNString(6, cv.getEmail());
+            ps.setNString(7, cv.getPhoneNumber());
+            ps.setNString(8, cv.getAddress());
+            ps.setNString(9, cv.getCity());
+            int genderID = 1;
+            switch (cv.getGender().toLowerCase()) {
+                case "female":
+                    genderID = 2;
+                    break;
+                case "other":
+                    genderID = 3;
+                    break;
+                default:
+                    genderID = 1;
+                    break;
+            }
+            ps.setInt(10, genderID);
+
+            int CVID = cv.getCVID();
+            deleteSkill(CVID, con).executeUpdate();
+            deleteInterest(CVID, con).executeUpdate();
+            deleteCertificate(CVID, con).executeUpdate();
+            deleteAchievement(CVID, con).executeUpdate();
+            deleteExperience(CVID, con).executeUpdate();
+            deleteLanguage(CVID, con).executeUpdate();
+            deleteEducation(CVID, con).executeUpdate();
+            deleteSocialMedia(CVID, con).executeUpdate();
+
+            saveSkill(cv.getSkills(), CVID, con).executeUpdate();
+            saveInterest(cv.getInterests(), CVID, con).executeUpdate();
+            saveCertificate(cv.getCertificates(), CVID, con).executeUpdate();
+            saveAchievement(cv.getAchievements(), CVID, con).executeUpdate();
+            saveExperience(cv.getExperiences(), CVID, con).executeUpdate();
+            saveLanguage(cv.getLanguages(), CVID, con).executeUpdate();
+            saveEducation(cv.getEducations(), CVID, con).executeUpdate();
+            saveSocialMedia(cv.getSocialMedias(), CVID, con).executeUpdate();
+
+            
+            ps.setInt(11, cv.getCVID());
+            result = ps.executeUpdate();
+
+            con.commit();
+
+            return result;
+        } catch (SQLException e) {
+            System.out.println("CV update error: " + e.getMessage());
+            try {
+                if (con != null) {
+                    con.rollback();
+                }
+            } catch (SQLException e1) {
+                System.out.println("CV update error: " + e.getMessage());
+            };
+
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CVDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (con != null) {
+                try {
+
+                    con.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CVDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+        return result;
+    }
+
+    //==============================================================================
+    public void deleteCV(CVDTO cv) {
+        String sql = "DELETE FROM CV "
+                + "WHERE CVID = ? ";
+        int result = 0;
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = DBUtil.getConnection();
+
+            con.setAutoCommit(false);
+
+            int CVID = cv.getCVID();
+            deleteSkill(CVID, con).executeUpdate();
+            deleteInterest(CVID, con).executeUpdate();
+            deleteCertificate(CVID, con).executeUpdate();
+            deleteAchievement(CVID, con).executeUpdate();
+            deleteExperience(CVID, con).executeUpdate();
+            deleteLanguage(CVID, con).executeUpdate();
+            deleteEducation(CVID, con).executeUpdate();
+            deleteSocialMedia(CVID, con).executeUpdate();
+
+            ps.setInt(1, cv.getCVID());
+            result = ps.executeUpdate();
+
+            con.commit();
+
+        } catch (SQLException e) {
+
+        }
+    }
+
+    public PreparedStatement deleteSkill(int CVID, Connection con) {
+        String sql = "DELETE FROM CV_Skill "
+                + "WHERE CVID = ? ";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, CVID);
+            return ps;
+
+        } catch (SQLException e) {
+            System.out.println("CV delete error: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    public PreparedStatement deleteInterest(int CVID, Connection con) {
+        String sql = "DELETE FROM CV_Interest "
+                + "WHERE CVID = ? ";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, CVID);
+            return ps;
+
+        } catch (SQLException e) {
+            System.out.println("CV delete error: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    public PreparedStatement deleteCertificate(int CVID, Connection con) {
+        String sql = "DELETE FROM CV_Certificate "
+                + "WHERE CVID = ? ";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, CVID);
+            return ps;
+
+        } catch (SQLException e) {
+            System.out.println("CV delete error: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    public PreparedStatement deleteAchievement(int CVID, Connection con) {
+        String sql = "DELETE FROM CV_Achievement "
+                + "WHERE CVID = ? ";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, CVID);
+            return ps;
+
+        } catch (SQLException e) {
+            System.out.println("CV delete error: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    public PreparedStatement deleteExperience(int CVID, Connection con) {
+        String sql = "DELETE FROM CV_Experience "
+                + "WHERE CVID = ? ";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, CVID);
+            return ps;
+
+        } catch (SQLException e) {
+            System.out.println("CV delete error: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    public PreparedStatement deleteLanguage(int CVID, Connection con) {
+        String sql = "DELETE FROM CV_Language "
+                + "WHERE CVID = ? ";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, CVID);
+            return ps;
+
+        } catch (SQLException e) {
+            System.out.println("CV delete error: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    public PreparedStatement deleteEducation(int CVID, Connection con) {
+        String sql = "DELETE FROM CV_Education "
+                + "WHERE CVID = ? ";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, CVID);
+            return ps;
+
+        } catch (SQLException e) {
+            System.out.println("CV delete error: " + e.getMessage());
+        }
+
+        return null;
+    }
+
+    public PreparedStatement deleteSocialMedia(int CVID, Connection con) {
+        String sql = "DELETE FROM CV_SocialMedia "
+                + "WHERE CVID = ? ";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, CVID);
+            return ps;
+
+        } catch (SQLException e) {
+            System.out.println("CV delete error: " + e.getMessage());
+        }
+
+        return null;
     }
 
     public static void main(String[] args) {
         CVDAO dao = new CVDAO();
-//        CVDTO dto;
-//        dto = dao.loadCV(2);
-//        System.out.println(dto.toString());
+        CVDTO dto = new CVDTO();
 
-//        ArrayList<SkillDTO> skillList = new ArrayList<>();
-//        skillList.add(new SkillDTO(0, "test skill 1", "test skill description", 0));
-//        skillList.add(new SkillDTO(0, "test skill 2", "test skill description", 0));
-//        ArrayList<InterestDTO> interestList = new ArrayList<>();
-//        interestList.add(new InterestDTO(0, "test 1", 0));
-//        interestList.add(new InterestDTO(0, "test 2", 0));
-//        ArrayList<CertificateDTO> certificateList = new ArrayList<>();
-//        certificateList.add(new CertificateDTO(0, "test 1", "test 1", 0));
-//        certificateList.add(new CertificateDTO(0, "test 2", "test 2", 0));
-//        ArrayList<AchievementDTO> achievementList = new ArrayList<>();
-//        achievementList.add(new AchievementDTO(0, "test 1", "test 1", "test 1", 0));
-//        achievementList.add(new AchievementDTO(0, "test 2", "test 2", "test 2", 0));
-        
-        dao.saveCV("test 1", "test 2", "test 3", Date.valueOf("2011-04-01"), "test 5", "test3@gmail.com", "test 7", "test 8", "test 9", "male", 1, null, null, null, null, null, null, null, null);
-
-//        System.out.println(dao.getHighestCVID());
+        ArrayList<SkillDTO> skillList = new ArrayList<>();
+        skillList.add(new SkillDTO(0, "test skill 1", "test skill description", 0));
+        skillList.add(new SkillDTO(0, "test skill 2", "test skill description", 0));
+        ArrayList<InterestDTO> interestList = new ArrayList<>();
+        interestList.add(new InterestDTO(0, "test 1", 0));
+        interestList.add(new InterestDTO(0, "test 2", 0));
+        ArrayList<CertificateDTO> certificateList = new ArrayList<>();
+        certificateList.add(new CertificateDTO(0, "test 1", "test 1", 0));
+        certificateList.add(new CertificateDTO(0, "test 2", "test 2", 0));
+        ArrayList<AchievementDTO> achievementList = new ArrayList<>();
+        achievementList.add(new AchievementDTO(0, "test 1", "test 1", "test 1", 0));
+        achievementList.add(new AchievementDTO(0, "test 2", "test 2", "test 2", 0));
+        ArrayList<ExperienceDTO> experienceList = new ArrayList<>();
+        experienceList.add(new ExperienceDTO(0, "test 1", "test 2", "test 3", "test 4", 0));
+        ArrayList<LanguageDTO> languageList = new ArrayList<>();
+        languageList.add(new LanguageDTO(0, "test language 1", "test language description", 0));
+        languageList.add(new LanguageDTO(0, "test language 2", "test language description", 0));
+        ArrayList<EducationDTO> educationList = new ArrayList<>();
+        educationList.add(new EducationDTO(0, "test 1", "test 2", 1, 0));
+        ArrayList<SocialMediaDTO> socialMediaList = new ArrayList<>();
+        socialMediaList.add(new SocialMediaDTO(0, "test 1", 1, 0));
+        socialMediaList.add(new SocialMediaDTO(0, "test 2", 2, 0));
+        dto = new CVDTO(1, "test 1", "test 2", "test 3", Date.valueOf("2011-04-01"), "test 5", "test572477@gmail.com", "test 7", "test 8", "test 9", "male", 1, skillList, interestList, certificateList, achievementList, experienceList, languageList, educationList, socialMediaList);
+//        dao.updateCV(dto);
+//      skillList, interestList, certificateList, achievementList, experienceList, languageList, educationList, socialMediaList
+        Connection con = DBUtil.getConnection();
+        dao.updateCV(dto);
+        dto = dao.loadCV(1);
+        System.out.println(dto.toString());
     }
 }

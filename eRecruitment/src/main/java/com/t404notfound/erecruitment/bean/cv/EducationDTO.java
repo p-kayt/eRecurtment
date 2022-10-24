@@ -5,13 +5,13 @@ public class EducationDTO {
     private int educationID;
     private String educationName;
     private String organizationName;
-    private String status;
+    private int status;
     private int CVID;
 
     public EducationDTO() {
     }
 
-    public EducationDTO(int educationID, String educationName, String organizationName, String status, int CVID) {
+    public EducationDTO(int educationID, String educationName, String organizationName, int status, int CVID) {
         this.educationID = educationID;
         this.educationName = educationName;
         this.organizationName = organizationName;
@@ -43,11 +43,11 @@ public class EducationDTO {
         this.organizationName = organizationName;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
