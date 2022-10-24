@@ -1,5 +1,8 @@
 ﻿USE [master]
 
+--Use this query when error "Cannot drop database because it is currently in use."
+ALTER DATABASE eRecruitment SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+
 GO
 DROP DATABASE IF EXISTS eRecruitment
 
