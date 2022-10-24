@@ -4,10 +4,8 @@
  */
 package com.t404notfound.erecruitment.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MINH TRI
  */
-@WebServlet("/image/*")
-public class image extends HttpServlet {
+@WebServlet(name = "InterviewController", urlPatterns = {"/interview"})
+public class InterviewController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,8 +31,7 @@ public class image extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //Lay duong dan ben ngoai project maven
-        //Xem ham DoGet() ben duoi
+        request.setCharacterEncoding("UTF-8");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,27 +46,7 @@ public class image extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String filename = request.getPathInfo().substring(1);
-        //Lấy đường dẫn tương đối
-        String dir;
-
-        dir = request.getServletContext().getRealPath("homepage.jsp");
-        String path[] = dir.split("eRecruitment");
-        dir = path[0];
-
-//                dir += "src\\main\\webapp";
-        dir += "\\image";
-        File img = new File(dir);
-        if (!img.exists()) {
-            img.mkdir();
-        }       
-        //Lấy đường dẫn tương đối
-
-        File file = new File(dir, filename);
-        response.setHeader("Content-Type", getServletContext().getMimeType(filename));
-        response.setHeader("Content-Length", String.valueOf(file.length()));
-        response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
-        Files.copy(file.toPath(), response.getOutputStream());
+        processRequest(request, response);
     }
 
     /**

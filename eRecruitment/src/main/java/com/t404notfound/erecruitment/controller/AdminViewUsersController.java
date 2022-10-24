@@ -5,9 +5,8 @@
 package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.AdminUserDAO;
-import com.t404notfound.erecruitment.bean.UserDTO;
+import com.t404notfound.erecruitment.bean.AdminUserDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.naming.NamingException;
@@ -41,8 +40,7 @@ public class AdminViewUsersController extends HttpServlet {
         try {
             String SearchValue = request.getParameter("txtSearch").trim();
             String action = request.getParameter("action");
-            request.setAttribute("SearchValue", SearchValue);
-            ArrayList<UserDTO> list = new ArrayList<>();
+            ArrayList<AdminUserDTO> list = new ArrayList<>();
             if (action == null) {
                 request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
             } else if (action.equalsIgnoreCase("Search")) {
@@ -57,7 +55,7 @@ public class AdminViewUsersController extends HttpServlet {
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
                 }
             }
-
+            request.setAttribute("SearchValue", SearchValue);
             if (list.isEmpty()) {
                 request.setAttribute("nullMess", "No Record Matched.");
             } else {
