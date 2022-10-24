@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Savoy
  */
-@WebServlet(name = "AdminViewUsersController", urlPatterns = {"/adminViewUser"})
-public class AdminViewUsersController extends HttpServlet {
+@WebServlet(name = "UpdateStatusUsersController", urlPatterns = {"/adminUpdateUsers"})
+public class UpdateStatusUsersController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,38 +36,46 @@ public class AdminViewUsersController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = "views/admin/userlist.jsp";
+        String url = "./adminViewUser";
         try {
-            String SearchValue = request.getParameter("txtSearch").trim();
-            String action = request.getParameter("action");
-            ArrayList<AdminUserDTO> list = new ArrayList<>();
-            if (action == null) {
-                request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
-            } else if (action.equalsIgnoreCase("Search")) {
-                try {
-                    list = AdminUserDAO.getUsers(SearchValue);
-                } catch (SQLException | NamingException | ClassNotFoundException ex) {
-                }
-            } else if (action.equalsIgnoreCase("All")) {
-                try {
-                    SearchValue = "";
-                    list = AdminUserDAO.getUsers(SearchValue);
-                } catch (SQLException | NamingException | ClassNotFoundException ex) {
-                }
-            }
+            String SearchValue = request.getParameter("SearchValue").trim();
             request.setAttribute("SearchValue", SearchValue);
-            if (list.isEmpty()) {
-                request.setAttribute("nullMess", "No Record Matched.");
+            String email = request.getParameter("Email");
+            String statusString = request.getParameter("Status");
+            int status = 0;
+            ArrayList<AdminUserDTO> list = new ArrayList<>();
+
+            if (statusString.equalsIgnoreCase("Active")) {
+                status = 1;
             } else {
-                request.setAttribute("Users", list);
+                status = 2;
             }
+
+            if (status == 2) {
+                try {
+                    AdminUserDAO.updateStatus(email, 1);
+                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+
+                }
+            } else {
+                try {
+                    AdminUserDAO.updateStatus(email, 2);
+                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+
+                }
+            }
+            try {
+                list = AdminUserDAO.getUsers(SearchValue);
+            } catch (SQLException | NamingException | ClassNotFoundException ex) {
+            }
+            request.setAttribute("Users", list);
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            RequestDispatcher ReqDis = request.getRequestDispatcher(url);
+            ReqDis.forward(request, response);
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

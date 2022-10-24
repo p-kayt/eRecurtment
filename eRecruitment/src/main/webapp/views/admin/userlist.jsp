@@ -30,6 +30,7 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Gender</th>
+                        <th>Role</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -40,8 +41,75 @@
                             <td> ${current.getEmail()} </td>
                             <td> ${current.getFirstName()} </td>
                             <td> ${current.getLastName()} </td>
-                            <td> ${current.getGenderID()} </td>
-                            <td> ${current.getStatusID()} </td>
+                            <td> ${current.getGender()} </td>
+                            <td><c:choose>
+                                    <c:when test = "${current.getUserRole() == 'System Admin'}">
+                                        ${current.getUserRole()}
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:if test = "${current.getUserRole() == 'Candidate'}">
+                                            <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                <option value="Candidate">Candidate</option>
+                                                <option value="HR Staff">HR Staff</option>
+                                                <option value="HR Manager">HR Manager</option>
+                                                <option value="Interviewer">Interviewer</option>
+                                                <option disabled value="System Admin">System Admin</option>
+                                            </select>
+                                        </c:if>
+                                        <c:if test = "${current.getUserRole() == 'HR Staff'}">
+                                            <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                <option value="HR Staff">HR Staff</option>
+                                                <option value="Candidate">Candidate</option>
+                                                <option value="HR Manager">HR Manager</option>
+                                                <option value="Interviewer">Interviewer</option>
+                                                <option disabled value="System Admin">System Admin</option>
+                                            </select>
+                                        </c:if>
+                                        <c:if test = "${current.getUserRole() == 'HR Manager'}">
+                                            <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                <option value="HR Staff">HR Manager</option>
+                                                <option value="Candidate">Candidate</option>
+                                                <option value="HR Manager">HR Staff</option>
+                                                <option value="Interviewer">Interviewer</option>
+                                                <option disabled value="System Admin">System Admin</option>
+                                            </select>
+                                        </c:if>
+                                        <c:if test = "${current.getUserRole() == 'Interviewer'}">
+                                            <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                <option value="Interviewer">Interviewer</option>
+                                                <option value="Candidate">Candidate</option>
+                                                <option value="HR Manager">HR Staff</option>
+                                                <option value="HR Staff">HR Manager</option>
+                                                <option disabled value="System Admin">System Admin</option>
+                                            </select>
+                                        </c:if>
+                                        <form action = "./AdminAssignRoles" method = "POST" id = "Assign Role_${current.getEmail()}"></form>
+                                        <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Assign Role_${current.getEmail()}">
+                                        <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Assign Role_${current.getEmail()}">
+                                        <input type = "SUBMIT" name = "action" value = "Submit Change" form = "Assign Role_${current.getEmail()}">
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td> ${current.getStatus()}
+                                <c:choose> 
+                                    <c:when test = "${current.getUserRole() == 'System Admin'}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <form action = "./adminUpdateUsers" method = "POST" id = "Change Status_${current.getEmail()}"></form>
+                                        <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Change Status_${current.getEmail()}">
+                                        <input type = "HIDDEN" name = "Status" value= "${current.getStatus()}" form = "Change Status_${current.getEmail()}">
+                                        <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Change Status_${current.getEmail()}">
+                                        <c:choose> 
+                                            <c:when test = "${current.getStatus() == 'Active'}">
+                                                <input type = "SUBMIT" name = "action" value = "Set to inActive" form = "Change Status_${current.getEmail()}">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <input type = "SUBMIT" name = "action" value = "Set to Active" form = "Change Status_${current.getEmail()}">
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>
