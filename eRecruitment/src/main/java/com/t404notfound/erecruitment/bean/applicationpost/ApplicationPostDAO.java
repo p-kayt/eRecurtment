@@ -501,6 +501,52 @@ public class ApplicationPostDAO {
         }
         return null;
     }
+    
+    // search posts by 
+    public ArrayList<ApplicationPostDTO> searchApplicationPosts(String keyword) {
+        String sql = "select PostID, PostDescription, Salary, post.HiringQuantity, CreateDate, StartDate, ExpiredDate, post.PositionID, FormID, post.StatusID"
+                + " from ApplicationPost post inner join ApplicationPosition position on post.PositionID = position.PositionID"
+                + " where position.PositionName like ?";
+        try {
+            cn = DBUtil.getConnection();
+            ArrayList<ApplicationPostDTO> list = new ArrayList<>();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setNString(1, "%" + keyword + "%");
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                ApplicationPostDTO post = new ApplicationPostDTO();
+                post.setPostID(rs.getInt("PostID"));
+                post.setPostDescription(rs.getNString("PostDescription"));
+                post.setSalary(rs.getNString("Salary"));
+                post.setHiringQuantity(rs.getInt("HiringQuantity"));
+                post.setCreatedDate(rs.getDate("CreateDate"));
+                post.setStartDate(rs.getDate("StartDate"));
+                post.setExpiredDate(rs.getDate("ExpiredDate"));
+                post.setPositionID(rs.getInt("PositionID"));
+                post.setFormID(rs.getInt("FormID"));
+                post.setStatusID(rs.getInt("StatusID"));
+
+                post.setBenefitList(loadPostBenefits(post.getPostID()));
+                post.setSkillList(loadPostSkills(post.getPostID()));
+                post.setRequirementList(loadPostRequirements(post.getPostID()));
+                post.setStageList(loadPostStages(post.getPostID()));
+
+                list.add(post);
+            }
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
 
     // Delete Post
     public int deleteApplicationPost(int postID) {
@@ -545,8 +591,7 @@ public class ApplicationPostDAO {
 
         ApplicationPostDAO dao = new ApplicationPostDAO();
         
-        int res = dao.deleteApplicationPost(1);
-        System.out.println(res);
+        
 //        int res = dao.isPostExist(1);
 //        System.out.println(res);
 //        System.out.println("");
@@ -577,7 +622,7 @@ public class ApplicationPostDAO {
 //        System.out.println("");
 //        System.out.println("");
 
-//        ArrayList<ApplicationPostDTO> l = dao.listByStatus(4);
+//        ArrayList<ApplicationPostDTO> l = dao.searchApplicationPosts("test");
 //        for (ApplicationPostDTO po : l) {
 //            System.out.println(po.getPostDescription());
 //            for (PostSkillDTO s : po.getSkillList()) {

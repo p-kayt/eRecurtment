@@ -240,7 +240,9 @@ public class ApplicationPositionDAO {
         return result;
     }
 
-    public int deleteApplicationPosition(int id) {
+    // safe delete for Application position
+    // Use for Position with no existing FK reference (Post)
+    public int safeDeleteApplicationPosition(int id) {
         String sql = "delete from ApplicationPosition where PositionID = ?";
         int result = 0, check = checkPost(id);
         if(check != 0){
