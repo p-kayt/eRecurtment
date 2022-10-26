@@ -111,11 +111,9 @@ public class InterviewDTO {
 
     @Override
     public String toString() {
-        return interviewID + " " + description + " " + formatID + " " +
-                link + " " + address + " " + time + " " + stageID + " " +
-                postID + " " + inteviewStatusID + " " + bookerID;
+        return interviewID + " " + description + " " + formatID + " "
+                + link + " " + address + " " + time + " " + stageID + " "
+                + postID + " " + inteviewStatusID + " " + bookerID;
     }
-    
-    
 
 }

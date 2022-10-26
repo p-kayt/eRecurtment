@@ -8,15 +8,13 @@ package com.t404notfound.erecruitment.bean.interview;
  *
  * @author MINH TRI
  */
-public class ParticipantDTO {
+public class InterviewerDTO {
     protected int userID;
     protected int interviewID;
-    protected String interviewTime;
 
-    public ParticipantDTO(int userID, int interviewID, String interviewTime) {
+    public InterviewerDTO(int userID, int interviewID) {
         this.userID = userID;
         this.interviewID = interviewID;
-        this.interviewTime = interviewTime;
     }
 
     public int getUserID() {
@@ -34,16 +32,5 @@ public class ParticipantDTO {
     public void setInterviewID(int interviewID) {
         this.interviewID = interviewID;
     }
-
-    public String getInterviewTime() {
-        return interviewTime;
-    }
-
-    public void setInterviewTime(String interviewTime) {
-        this.interviewTime = interviewTime;
-    }
-
-    
-    
     
 }
