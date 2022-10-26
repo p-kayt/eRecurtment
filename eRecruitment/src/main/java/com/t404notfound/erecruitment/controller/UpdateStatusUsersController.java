@@ -55,13 +55,11 @@ public class UpdateStatusUsersController extends HttpServlet {
                 try {
                     AdminUserDAO.updateStatus(email, 1);
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
-
                 }
             } else {
                 try {
                     AdminUserDAO.updateStatus(email, 2);
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
-
                 }
             }
             try {
