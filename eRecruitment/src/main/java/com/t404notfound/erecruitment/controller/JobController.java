@@ -9,6 +9,7 @@ import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositio
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,6 +50,23 @@ public class JobController extends HttpServlet {
                     ArrayList<ApplicationPositionDTO> list = positionDAO.listApplicationPositions();
                     request.setAttribute("list", list);
                     request.getRequestDispatcher("views/job/position/positionlist.jsp").forward(request, response);
+                    break;
+                case "add-position":
+                    String name = request.getParameter("name");
+                    String description = request.getParameter("description");
+                    int quantity = Integer.parseInt(request.getParameter("quantity"));
+                    Date date = Date.valueOf(request.getParameter("date"));
+                    int status = Integer.parseInt(request.getParameter("status"));
+                    
+                    ApplicationPositionDTO dto = new ApplicationPositionDTO();
+                    dto.setPositionName(name);
+                    dto.setPositionDescription(description);
+                    dto.setHiringQuantity(quantity);
+                    dto.setCreatedDate(date);
+                    dto.setStatusID(status);
+                    
+                    positionDAO.addApplicationPosition(dto);
+                     
                     break;
                 default:
                     break;
