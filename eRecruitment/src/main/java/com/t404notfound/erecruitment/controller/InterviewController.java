@@ -4,6 +4,9 @@
  */
 package com.t404notfound.erecruitment.controller;
 
+import com.t404notfound.erecruitment.bean.UserDTO;
+import com.t404notfound.erecruitment.bean.interview.InterviewDAO;
+import com.t404notfound.erecruitment.bean.interview.InterviewDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -11,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,6 +36,54 @@ public class InterviewController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+
+        String format = request.getParameter("format");
+        String link = request.getParameter("link");
+        String address = request.getParameter("address");
+        String date = request.getParameter("date");
+        String hour = request.getParameter("time");
+        String stage = request.getParameter("stage");
+        String description = request.getParameter("description");
+        String action = request.getParameter("action");
+        int postID = 0;
+        if (request.getParameter("postID") != null) {
+            postID = Integer.parseInt(request.getParameter("postID"));
+        }
+
+        if (action != null && !action.equals("")) {
+            if (action.equalsIgnoreCase("bookInteview")) {
+                int formatID = Integer.parseInt(format);
+                int stageID = Integer.parseInt(stage);
+                String time = date + " " + hour;
+                InterviewDAO iDAO = new InterviewDAO();
+                boolean create = false;
+                create = iDAO.createAnInterview(description, formatID, link, address, time, stageID, postID, user.getUserID());
+                if (create) {
+                    int interviewID = iDAO.getNewestInterview();
+                    InterviewDTO interview = iDAO.getInterview(interviewID);
+                    session.setAttribute("interview", interview);
+                    request.setAttribute("action", "changeInterview");
+                    request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
+                    return;
+                } else {
+                    request.setAttribute("format", format);
+                    request.setAttribute("link", link);
+                    request.setAttribute("address", address);
+                    request.setAttribute("stage", stageID);
+                    request.setAttribute("date", date);
+                    request.setAttribute("time", hour);
+                    request.setAttribute("description", description);
+                    request.getRequestDispatcher("/views/interview/interview-modify.jsp").forward(request, response);
+                }
+            } else if (action.equalsIgnoreCase("changeInterview")) {
+                
+            }
+        } else {
+            request.getRequestDispatcher("/views/interview/interview-modify.jsp").forward(request, response);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

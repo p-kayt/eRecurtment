@@ -1,4 +1,3 @@
-
 package com.t404notfound.erecruitment.bean;
 
 import Util.DBUtil;
@@ -14,6 +13,30 @@ import javax.naming.NamingException;
  * @author Savoy
  */
 public class AdminUserDAO {
+
+    public static void checkIDArray(ArrayList<AdminUserDTO> list) {
+        if (!list.isEmpty()) {
+            for (AdminUserDTO x : list) {
+                list.remove(x);
+            }
+        }
+    }
+
+    public static void checkBooleanRoles(AdminUserDTO user) {
+        if (user.userRole.equalsIgnoreCase("Candidate")) {
+            user.isCandidate = true;
+        }
+        if (user.userRole.equalsIgnoreCase("HR Staff")) {
+            user.isHRStaff = true;
+        }
+        if (user.userRole.equalsIgnoreCase("HR Manager")) {
+            user.isHRManager = true;
+        }
+        if (user.userRole.equalsIgnoreCase("Interviewer")) {
+            user.isInterviewer = true;
+        }
+    }
+
     public static ArrayList<AdminUserDTO> getUsers(String searchValue)
             throws SQLException, NamingException, ClassNotFoundException {
         String SQLQuery = "SELECT [User].UserID, [User].Email, [User].Password, [User].FirstName, [User].LastName, Gender.GenderName, Role.RoleName, UserStatus.StatusName FROM [User] JOIN UserStatus ON [User].Status = UserStatus.StatusID JOIN User_Role ON [User].UserID = User_Role.UserID JOIN Role ON User_Role.RoleID = Role.RoleID JOIN Gender ON [User].Gender = Gender.GenderID WHERE [User].LastName LIKE ? or [User].FirstName LIKE ?";
@@ -29,8 +52,34 @@ public class AdminUserDAO {
             PreS.setString(2, "%" + searchValue + "%");
             ReS = PreS.executeQuery();
             while (ReS.next()) {
-                AdminUserDTO user = new AdminUserDTO(ReS.getInt(1), ReS.getString(2), ReS.getString(3), ReS.getString(4), ReS.getString(5), ReS.getString(6), ReS.getString(7), ReS.getString(8));
+                AdminUserDTO user = new AdminUserDTO(ReS.getInt(1), ReS.getString(2), ReS.getString(3), ReS.getString(4), ReS.getString(5), ReS.getString(6), ReS.getString(7), ReS.getString(8), false, false, false, false);
+                checkBooleanRoles(user);
+
                 users.add(user);
+
+                if (!users.isEmpty()) {
+                    int count = 0;
+                    for (AdminUserDTO u : users) {
+                        if (user.userID == u.userID) {
+                            count++;
+                            if (user.isCandidate) {
+                                u.isCandidate = true;
+                            }
+                            if (user.isHRManager) {
+                                u.isHRManager = true;
+                            }
+                            if (user.isHRStaff) {
+                                u.isHRStaff = true;
+                            }
+                            if (user.isInterviewer) {
+                                u.isInterviewer = true;
+                            }
+                        }
+                    }
+                    if (count != 1) {
+                        users.remove(user);
+                    }
+                }
             }
         } finally {
             if (conn != null) {
@@ -45,8 +94,8 @@ public class AdminUserDAO {
         }
         return users;
     }
-    
-    public static boolean updateStatus(String email, int status) 
+
+    public static boolean updateStatus(String email, int status)
             throws SQLException, NamingException, ClassNotFoundException {
         String SQLQuery = "UPDATE [User] SET [User].Status = ? FROM [User] LEFT JOIN UserStatus ON [User].Status = UserStatus.StatusID WHERE [User].Email LIKE ?";
         Connection conn = null;
@@ -72,8 +121,8 @@ public class AdminUserDAO {
         }
         return result;
     }
-    
-    public static boolean updateRoles(String email, int role) 
+
+    public static boolean updateRoles(String email, int role)
             throws SQLException, NamingException, ClassNotFoundException {
         String SQLQuery = "UPDATE User_Role SET User_Role.RoleID = ? FROM User_Role LEFT JOIN [User] ON User_Role.UserID = [User].UserID WHERE [User].Email LIKE ?";
         Connection conn = null;

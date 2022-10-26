@@ -188,6 +188,7 @@ public class ApplicationPositionDAO {
         int result = 0;
         try {
             cn = DBUtil.getConnection();
+            cn.setAutoCommit(false);
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setNString(1, dto.getPositionName());
             pst.setNString(2, dto.getPositionDescription());
@@ -196,6 +197,9 @@ public class ApplicationPositionDAO {
             pst.setInt(5, dto.getStatusID());
 
             result = pst.executeUpdate();
+            if(result != 0){
+                cn.commit();
+            }
             return result;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -216,6 +220,7 @@ public class ApplicationPositionDAO {
         int result = 0;
         try {
             cn = DBUtil.getConnection();
+            cn.setAutoCommit(false);
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setNString(1, dto.getPositionName());
             pst.setNString(2, dto.getPositionDescription());
@@ -225,6 +230,9 @@ public class ApplicationPositionDAO {
             pst.setInt(6, dto.getPositionID());
 
             result = pst.executeUpdate();
+            if(result != 0){
+                cn.commit();
+            }
             return result;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -251,10 +259,14 @@ public class ApplicationPositionDAO {
         }
         try {
             cn = DBUtil.getConnection();
+            cn.setAutoCommit(false);
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, id);
 
             result = pst.executeUpdate();
+            if(result != 0){
+                cn.commit();
+            }
             return result;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
