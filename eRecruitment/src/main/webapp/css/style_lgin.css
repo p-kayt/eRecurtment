@@ -1,7 +1,14 @@
+:root {
+    --primary: #00B074;
+    --secondary: #2B9BFF;
+    --light: #EFFDF5;
+    --dark: #2B3940;
+}
+
 .login-form .login-btn {
   width: 100%;
   font-size: large;
-  background-color: #4CAF4F;
+  background-color: #00B074;
 }
 
 .login-form a {

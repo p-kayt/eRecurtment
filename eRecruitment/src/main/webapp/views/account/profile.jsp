@@ -17,113 +17,99 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title><%=user.getFirstName()%> <%=user.getLastName()%></title>
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
+            href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap"
             rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossorigin="anonymous"
             />
-        <link rel="stylesheet" href="css/style_profile.css" />
+
+        <!-- Icon Font Stylesheet -->
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+            rel="stylesheet"
+            />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+            rel="stylesheet"
+            />
+
+        <!-- Libraries Stylesheet -->
+        <link href="lib/animate/animate.min.css" rel="stylesheet" />
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/style_profile.css"/>
+        <!--        <link href="css/style-dltemp.css" rel="stylesheet"/>-->
     </head>
     <body>
-        <header>
+        <div class="container-xxl bg-white p-0">
             <!-- navi -->
-            <nav
-                class="navbar navbar-expand-xl navbar-expand-sm justify-content-center"
-                >
-                <button
-                    class="navbar-toggler bg-dark col-6"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#Navbar"
-                    aria-controls="Navbar"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                    >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <!--  -->
-                <div class="collapse navbar-collapse col-8" id="Navbar">
-                    <ul class="navbar-nav mr-auto d-flex flex-row">
-                        <li class="nav-item active col-6">
-                            <!-- logo img -->
-                            <a class="nav-link" href="home"
-                               ><span class="fa fa-home fa-lg bg-dark"></span>Home</a
-                            >
-                        </li>
+            <c:if test="${empty user}">
+                <jsp:include page="../header/header-login.jspf" />
+            </c:if>
 
-                        <li class="nav-item col-4">
-                            <a class="nav-link hyper" href="#">Section 1</a>
-                        </li>
+            <c:if test="${not empty user}">
+                <jsp:include page="../header/header-logout.jspf" />
+            </c:if>
+            <!--Show CV-->
+            <c:if test="${not empty user}">
 
-                        <li class="nav-item col-4">
-                            <a class="nav-link hyper" href="#">Section 2</a>
-                        </li>
-
-                        <li class="nav-item col-4">
-                            <a class="nav-link hyper" href="#">Section 3</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div>
-                    <c:if test="${empty user}">
-                        <a href="login">
-                            <span class="fa fa-sign-in"></span>Login
-                        </a>
-                    </c:if>
-                    <c:if test="${not empty user}">
-                        <a href="logout">
-                            <span class="fa fa-sign-in"></span>Logout
-                        </a>
-                    </c:if>
-                </div>
-            </nav>
-
-        </header>
-
-        <c:if test="${not empty user}">
-            <div class="container">
-                <div class="d-flex flex-row mt-4">
+                <div class="d-flex flex-row mt-4 justify-content-center">
                     <div class="profile-img d-flex flex-column">
-                        <div>
-                            <img src= "${user.getAvatarURL() != null ? user.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
-                            <div class="align-self-center m-2"><%=user.getFirstName()%> <%=user.getLastName()%></div>
+                        <div class="user_name">
+                            <img class="ava_img" src= "${user.getAvatarURL() != null ? user.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                            <div ><%=user.getFirstName()%> <%=user.getLastName()%></div>
                         </div>
-                        <div>
-                            <p>PNG file</p>
-                            <form action = "profile" method ="post" enctype="multipart/form-data"> <!-- multipart phai di voi method post-->
-                                <input type="file" name="file" accept="image/png" value =""/> <br />
+                    </div>
+
+                    <div class="profile-info d-flex flex-column" class="change_form">
+                        <h4>Avatar</h4>
+                        <div class="d-flex flex-row ava_form col-12">
+                            <span class="col-2">Change Avatar</span>
+                            <form class="col-10 d-flex flex-row justify-content-around" action = "profile" method ="post" enctype="multipart/form-data"> <!-- multipart phai di voi method post-->
+                                <input class="col-9" type="file" name="file" accept="image/png" value =""/>
                                 <input type ="hidden" name="action" value="updateAvatar">
-                                <button type="submit">Update avatar</button>
+                                <button class="col-2 btn btn-primary" type="submit">Update</button>
                             </form>
                             <%--<p>Path: ${path}</p>--%>
                         </div>
                         <%-- <p>${infor != null ? infor : "Null"}</p> --%>
-                    </div>
 
-                    <div class="profile-info d-flex flex-column">
-                        <form action = "profile" method ="post" id="profileForm">
-                            <p style="color: yellow; font-weight: bold; display: block;">${updateMess}</p>
-                            <p style="color: yellow; font-weight: bold; display: block;">${updateErrorMess}</p>
-                            <label for="firstName">First name</label> <br/>
-                            <input type = "text" id="firstName" name ="firstName"
-                                   placeholder = "Enter your first name" value="<%=user.getFirstName()%>"><br/>
 
-                            <label for ="lastName">Last Name</label> <br/>
-                            <input type="text" name ="lastName" id ="lastName" value = "<%=user.getLastName()%>"
-                                   placeholder = "Enter your last name"> <br/>
+                        <form class="d-flex flex-column profile_form" action = "profile" method ="post" id="profileForm">
+                            <h4>Infomation</h4>
 
-                            <label for="gender">Gender</label> <br/>
-                            <select name="gender" id="gender">
-                                <option value = "Male" <%=user.getGenderID() == 1 ? "selected" : ""%>>Male</option>
-                                <option value = "Female" <%=user.getGenderID() == 2 ? "selected" : ""%>>Female</option>                       
-                                <option value = "Other" <%=user.getGenderID() == 3 ? "selected" : ""%>>Other</option>
-                            </select> <br/>
+
+                            <label class="col-12 d-flex flex-row justify-content-between" for="firstName">
+                                <span class="col-2">First name</span>
+                                <input class="col-10" type = "text" id="firstName" name ="firstName"
+                                       placeholder = "Enter your first name" value="<%=user.getFirstName()%>">
+                            </label>
+
+                            <label  class="col-12 d-flex flex-row justify-content-between" for ="lastName">
+                                <span class="col-2">Last Name</span>
+                                <input class="col-10" type="text" name ="lastName" id ="lastName" value = "<%=user.getLastName()%>"
+                                       placeholder = "Enter your last name">
+                            </label>
+
+                            <label  class="col-12 d-flex flex-row justify-content-start" for="gender">
+                                <span class="col-2">Gender</span>
+                                <select class="col-2" name="gender" id="gender">
+                                    <option value = "Male" <%=user.getGenderID() == 1 ? "selected" : ""%>>Male</option>
+                                    <option value = "Female" <%=user.getGenderID() == 2 ? "selected" : ""%>>Female</option>                       
+                                    <option value = "Other" <%=user.getGenderID() == 3 ? "selected" : ""%>>Other</option>
+                                </select>
+                            </label>
                             <input type="hidden" name="action" value="updateProfile">
-
-                            <button type="submit" >Save</button>
-                        </form><br/><br/>
+                            <div class="d-flex flex-row col-4">
+                                <button class="col-4 btn btn-primary" type="submit" >Save</button>
+                                <p style="color: yellow; font-weight: bold; display: block;">${updateMess}</p>
+                                <p style="color: yellow; font-weight: bold; display: block;">${updateErrorMess}</p>
+                            </div>
+                        </form>
 
                         <h3>Change password</h3>
                         <form action ="profile" method = "post" id="passwordForm">
@@ -144,36 +130,35 @@
 
 
                 </div>
-            </div>
-        </c:if>
 
-        <!--Show CV-->
+            </c:if>
 
-        <!--JavaScript-->
-        <c:if test = "${not empty user}">
-            <script>
-                function checkPassword() {
-                    var f = document.getElementById("passwordForm");
-                    var pass = document.getElementById("newPassword");
-                    var rePass = document.getElementById("rePass");
+            <!--JavaScript-->
+            <c:if test = "${not empty user}">
+                <script>
+                    function checkPassword() {
+                        var f = document.getElementById("passwordForm");
+                        var pass = document.getElementById("newPassword");
+                        var rePass = document.getElementById("rePass");
 
-                    if (pass.value === rePass.value) {
-                        f.submit();
-                    } else {
-                        document.getElementById("passwordError").style.display = "block";
-                        repass.value = null;
+                        if (pass.value === rePass.value) {
+                            f.submit();
+                        } else {
+                            document.getElementById("passwordError").style.display = "block";
+                            repass.value = null;
+                        }
                     }
-                }
 
 
-                function showCV() {
-                    var x = document.getElementById("cv");
-                    x.style.display = "block";
-                }
-            </script>
-        </c:if>
+                    function showCV() {
+                        var x = document.getElementById("cv");
+                        x.style.display = "block";
+                    }
+                </script>
+            </c:if>
 
 
+        </div>
     </body>
 </html>
 
