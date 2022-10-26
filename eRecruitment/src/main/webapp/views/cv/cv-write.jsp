@@ -65,7 +65,9 @@
                     </div>
                     <span class="fa fa-plus-circle fa-2x"></span>
                     <script>
-                        function addInterest
+                        function addInterest(){
+                            
+                        }
                     </script>
                 </div>
                 <div class="cv-element">
