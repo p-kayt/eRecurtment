@@ -26,22 +26,19 @@
                 <thead>
                     <tr>
                         <th>User ID</th>
-                        <th>Email</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Gender</th>
+                        <th>Information</th>
                         <th>Role</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var = "current" items="${requestScope.Users}" varStatus = "status" >
                         <tr>
                             <td> ${current.getUserID()} </td>
-                            <td> ${current.getEmail()} </td>
-                            <td> ${current.getFirstName()} </td>
-                            <td> ${current.getLastName()} </td>
-                            <td> ${current.getGender()} </td>
+                            <td><div> Email: ${current.getEmail()} </div>
+                                <div> Name: ${current.getFirstName()} ${current.getLastName()} </div>
+                                <div> Gender: ${current.getGender()} </div> </td>
                             <td><c:choose>
                                     <c:when test = "${current.getUserRole() == 'System Admin'}">
                                         ${current.getUserRole()}
@@ -83,14 +80,12 @@
                                                 <option disabled value="System Admin">System Admin</option>
                                             </select>
                                         </c:if>
-                                        <form action = "./AdminAssignRoles" method = "POST" id = "Assign Role_${current.getEmail()}"></form>
-                                        <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Assign Role_${current.getEmail()}">
-                                        <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Assign Role_${current.getEmail()}">
-                                        <input type = "SUBMIT" name = "action" value = "Submit Change" form = "Assign Role_${current.getEmail()}">
                                     </c:otherwise>
                                 </c:choose>
                             </td>
                             <td> ${current.getStatus()}
+                            </td>
+                            <td>
                                 <c:choose> 
                                     <c:when test = "${current.getUserRole() == 'System Admin'}">
                                     </c:when>
@@ -107,6 +102,10 @@
                                                 <input type = "SUBMIT" name = "action" value = "Set to Active" form = "Change Status_${current.getEmail()}">
                                             </c:otherwise>
                                         </c:choose>
+                                        <form action = "./AdminAssignRoles" method = "POST" id = "Assign Role_${current.getEmail()}"></form>
+                                        <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Assign Role_${current.getEmail()}">
+                                        <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Assign Role_${current.getEmail()}">
+                                        <input type = "SUBMIT" name = "action" value = "Submit Role Change" form = "Assign Role_${current.getEmail()}">
                                     </c:otherwise>
                                 </c:choose>
                             </td>

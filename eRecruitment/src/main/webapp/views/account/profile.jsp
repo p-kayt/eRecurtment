@@ -148,8 +148,7 @@
         </c:if>
 
         <!--Show CV-->
-        
-        
+
         <!--JavaScript-->
         <c:if test = "${not empty user}">
             <script>

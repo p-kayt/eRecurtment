@@ -8,7 +8,6 @@ import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.cv.CVDAO;
 import com.t404notfound.erecruitment.bean.cv.CVDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,16 +36,13 @@ public class CVController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
 
-        HttpSession session = request.getSession();
-        UserDTO user = (UserDTO) session.getAttribute("user");
         String action = request.getParameter("action");
 
         CVDAO cvdao = new CVDAO();
-        System.out.println("UserIDDDDDDDDDDDD"+ user.getUserID());
-        CVDTO cvdto = cvdao.loadCVByUserID(user.getUserID());
+        CVDTO cvdto = cvdao.loadCV(1);
         
         request.setAttribute("cv", cvdto);
-        request.getRequestDispatcher("profile").forward(request, response);
+        request.getRequestDispatcher("views/cv/cv-read.jsp").forward(request, response);
     }
     
     public static void main(String[] args) {

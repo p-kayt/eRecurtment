@@ -56,12 +56,19 @@
                     <span class="fa fa-plus-circle fa-2x"></span>
                 </div>
                 <div class="cv-element">
-                    <h3> Interest </h3>
                     <div>
-                        <div><b>Name: </b> <input type="text" placeholder="What is your interest?" name=""></div>
-                        <div><b>Description: </b> <input type="text" placeholder="Tell something about that interest" name=""></div>
+                        <h3> Interest </h3>
+                        <div>
+                            <div><b>Name: </b> <input type="text" placeholder="What is your interest?" name=""></div>
+                            <div><b>Description: </b> <input type="text" placeholder="Tell something about that interest" name=""></div>
+                        </div>
                     </div>
                     <span class="fa fa-plus-circle fa-2x"></span>
+                    <script>
+                        function addInterest(){
+                            
+                        }
+                    </script>
                 </div>
                 <div class="cv-element">
                     <h3> Experience </h3>
