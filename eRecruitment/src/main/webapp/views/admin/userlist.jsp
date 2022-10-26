@@ -19,7 +19,6 @@
             <input type = "SUBMIT" name = "action" value = "All">
         </form>
 
-
         <p style="font-weight: bold; font-size: 20px">${nullMess}</p>
         <c:if test = "${not empty requestScope.Users}">
             <table border="1">
@@ -46,7 +45,7 @@
                                     <c:otherwise>
                                         <div>
                                             <label for="isCandidate">Candidate </label>
-                                            <input type="checkbox" onclick="return false;" id="isCandidate" name="Assign Role_${current.getEmail()}" value="Candidate" 
+                                            <input type="checkbox" id="isCandidate" name="isCandidate" value="true" form = "Assign Role_${current.getEmail()}" 
                                                    <c:if test="${current.isIsCandidate()}">
                                                        checked
                                                    </c:if>
@@ -54,7 +53,7 @@
                                         </div>
                                         <div>
                                             <label for="isHRStaff">HR Staff </label>
-                                            <input type="checkbox" onclick="return false;" id="isHRStaff" name="Assign Role_${current.getEmail()}" value="HR Staff"
+                                            <input type="checkbox" id="isHRStaff" name="isHRStaff" value="true" form = "Assign Role_${current.getEmail()}"
                                                    <c:if test="${current.isIsHRStaff()}">
                                                        checked
                                                    </c:if>
@@ -62,7 +61,7 @@
                                         </div>
                                         <div>
                                             <label for="isHRManager">HR Manager </label>
-                                            <input type="checkbox" onclick="return false;" id="isHRManager" name="Assign Role_${current.getEmail()}" value="HR Manager"
+                                            <input type="checkbox" id="isHRManager" name="isHRManager" value="true" form = "Assign Role_${current.getEmail()}"
                                                    <c:if test="${current.isIsHRManager()}">
                                                        checked
                                                    </c:if>
@@ -70,7 +69,7 @@
                                         </div>
                                         <div>
                                             <label for="isInterviewer">Interviewer </label>
-                                            <input type="checkbox" onclick="return false;" id="isInterviewer" name="Assign Role_${current.getEmail()}" value="Interviewer"
+                                            <input type="checkbox" id="isInterviewer" name="isInterviewer" value="true" form = "Assign Role_${current.getEmail()}"
                                                    <c:if test="${current.isIsInterviewer()}">
                                                        checked
                                                    </c:if>
@@ -102,7 +101,8 @@
                                         </div>
                                         <div></div>
                                         <div>
-                                            <form action = "" method = "POST" id = "Assign Role_${current.getEmail()}"></form>
+                                            <form action = "./AdminAssignRoles" method = "POST" id = "Assign Role_${current.getEmail()}"></form>
+                                            <input type = "HIDDEN" name = "ID" value= "${current.getUserID()}" form = "Assign Role_${current.getEmail()}">
                                             <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Assign Role_${current.getEmail()}">
                                             <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Assign Role_${current.getEmail()}">
                                             <input type = "SUBMIT" name = "action" value = "Submit Role Change" form = "Assign Role_${current.getEmail()}">

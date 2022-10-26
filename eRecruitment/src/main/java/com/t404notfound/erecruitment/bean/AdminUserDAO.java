@@ -14,14 +14,6 @@ import javax.naming.NamingException;
  */
 public class AdminUserDAO {
 
-    public static void checkIDArray(ArrayList<AdminUserDTO> list) {
-        if (!list.isEmpty()) {
-            for (AdminUserDTO x : list) {
-                list.remove(x);
-            }
-        }
-    }
-
     public static void checkBooleanRoles(AdminUserDTO user) {
         if (user.userRole.equalsIgnoreCase("Candidate")) {
             user.isCandidate = true;
@@ -133,6 +125,60 @@ public class AdminUserDAO {
             PreS = conn.prepareCall(SQLQuery);
             PreS.setInt(1, role);
             PreS.setString(2, email);
+            final int affectedRow = PreS.executeUpdate();
+            if (affectedRow > 0) {
+                result = true;
+            }
+        } catch (SQLException ex) {
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (PreS != null) {
+                PreS.close();
+            }
+        }
+        return result;
+    }
+
+    public static boolean addRoles(int id, int role)
+            throws SQLException, NamingException, ClassNotFoundException {
+        String SQLQuery = "INSERT INTO User_Role VALUES (?, ?)";
+        Connection conn = null;
+        PreparedStatement PreS = null;
+        boolean result = false;
+        try {
+            conn = DBUtil.getConnection();
+            PreS = conn.prepareCall(SQLQuery);
+            PreS.setInt(1, id);
+            PreS.setInt(2, role);
+            final int affectedRow = PreS.executeUpdate();
+            if (affectedRow > 0) {
+                result = true;
+            }
+        } catch (SQLException ex) {
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (PreS != null) {
+                PreS.close();
+            }
+        }
+        return result;
+    }
+    
+    public static boolean removeRoles(int id, int role)
+            throws SQLException, NamingException, ClassNotFoundException {
+        String SQLQuery = "DELETE FROM User_Role WHERE UserID = ? AND RoleID = ?";
+        Connection conn = null;
+        PreparedStatement PreS = null;
+        boolean result = false;
+        try {
+            conn = DBUtil.getConnection();
+            PreS = conn.prepareCall(SQLQuery);
+            PreS.setInt(1, id);
+            PreS.setInt(2, role);
             final int affectedRow = PreS.executeUpdate();
             if (affectedRow > 0) {
                 result = true;

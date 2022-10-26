@@ -41,25 +41,68 @@ public class AdminAssignRolesController extends HttpServlet {
             String SearchValue = request.getParameter("SearchValue").trim();
             request.setAttribute("SearchValue", SearchValue);
             String email = request.getParameter("Email");
-            String roleString = request.getParameter("Role");
-            int role = 0;
+            String idString = request.getParameter("ID");
+            int id = Integer.parseInt(idString);
+            String candidate = request.getParameter("isCandidate");
+            boolean isCandidate = Boolean.parseBoolean(candidate);
+            String HRStaff = request.getParameter("isHRStaff");
+            boolean isHRStaff = Boolean.parseBoolean(HRStaff);
+            String HRManager = request.getParameter("isHRManager");
+            boolean isHRManager = Boolean.parseBoolean(HRManager);
+            String interviewer = request.getParameter("isInterviewer");
+            boolean isInterviewer = Boolean.parseBoolean(interviewer);
             ArrayList<AdminUserDTO> list = new ArrayList<>();
+            request.setAttribute("fuck", candidate);
+            request.setAttribute("fuck2", interviewer);
 
-            if (roleString.equalsIgnoreCase("Candidate")) {
-                role = 1;
-            } else if (roleString.equalsIgnoreCase("HR Staff")) {
-                role = 2;
-            } else if (roleString.equalsIgnoreCase("HR Manager")) {
-                role = 3;
-            } else if (roleString.equalsIgnoreCase("Interviewer")) {
-                role = 4;
-            } else if (roleString.equalsIgnoreCase("System Admin")) {
-                role = 5;
+            if (isCandidate) {
+                try {
+                    AdminUserDAO.addRoles(id, 1);
+                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                }
+            } else {
+                try {
+                    AdminUserDAO.removeRoles(id, 1);
+                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                }
             }
-            try {
-                AdminUserDAO.updateRoles(email, role);
-            } catch (SQLException | NamingException | ClassNotFoundException ex) {
+
+            if (isHRStaff) {
+                try {
+                    AdminUserDAO.addRoles(id, 2);
+                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                }
+            } else {
+                try {
+                    AdminUserDAO.removeRoles(id, 2);
+                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                }
             }
+
+            if (isHRManager) {
+                try {
+                    AdminUserDAO.addRoles(id, 3);
+                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                }
+            } else {
+                try {
+                    AdminUserDAO.removeRoles(id, 3);
+                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                }
+            }
+
+            if (isInterviewer) {
+                try {
+                    AdminUserDAO.addRoles(id, 4);
+                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                }
+            } else {
+                try {
+                    AdminUserDAO.removeRoles(id, 4);
+                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                }
+            }
+
             try {
                 list = AdminUserDAO.getUsers(SearchValue);
             } catch (SQLException | NamingException | ClassNotFoundException ex) {
