@@ -30,7 +30,7 @@
         <!-- Declare attributes from servlet -->
         <%!CVDTO cv;%>
         <%cv = (CVDTO) request.getAttribute("cv");%>
-        <c:if test = "${not empty cv}">
+        <%--<c:if test = "${not empty cv}">--%>
             <div class="cv">      
                 <div class="cv-column">
                     <div class="cv-element">
@@ -152,6 +152,6 @@
                     </div>
                 </div>
             </div>
-        </c:if>
+        <%--</c:if>--%>
     </body>
 </html>

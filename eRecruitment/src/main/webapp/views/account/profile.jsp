@@ -148,8 +148,8 @@
         </c:if>
 
         <!--Show CV-->
-        
-        
+        <jsp:include page ="../cv/cv-read.jsp"/>
+
         <!--JavaScript-->
         <c:if test = "${not empty user}">
             <script>
