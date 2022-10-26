@@ -23,7 +23,9 @@
     </head>
     <body>
         <div class="container">
+            
             <div class="login-form">
+                <h2 class="d-flex justify-content-center mb-4">Login</h2>
                 <form action="./login" method = "post">
                     <div class="form-row">
                         <div class="form-group col-12">

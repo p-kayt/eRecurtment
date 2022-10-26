@@ -23,10 +23,10 @@ public class InterviewDAO {
     //Test ok roi
     public boolean createAnInterview(String description, int formatID,
             String link, String address, String time, int stageID, int postID,
-            int inteviewStatusID, int bookerID) {
+            int bookerID) {
         String sql = "INSERT INTO Interview ([Description], OnlineLink, [Address], InterviewTime, "
                 + " StageID, PostID, FormatID, StatusID, BookerID) "
-                + " VALUES (?, ?, ?, ?, ?,?,?,?,?) ";
+                + " VALUES (?, ?, ?, ?, ?,?,?,1,?) ";
 
         try {
             Connection con = Util.DBUtil.getConnection();
@@ -40,8 +40,7 @@ public class InterviewDAO {
             ps.setInt(5, stageID);
             ps.setInt(6, postID);
             ps.setInt(7, formatID);
-            ps.setInt(8, inteviewStatusID);
-            ps.setInt(9, bookerID);
+            ps.setInt(8, bookerID);
 
             int result = ps.executeUpdate();
             if (result != 0) {
@@ -74,11 +73,8 @@ public class InterviewDAO {
                 String address = rs.getString("Address");
 
                 /* Convert date to String using DateFormat*/
-                String pattern = "YYYY/mm/dd HH:mm:ss";
-                DateFormat df = new SimpleDateFormat(pattern);
-                String time = df.format(rs.getDate("InterviewTime"));
+                String time = rs.getString("InterviewTime");
                 /* Convert date to String using DateFormat*/
-
                 int stageID = rs.getInt("StageID");
                 int postID = rs.getInt("PostID");
                 int formatID = rs.getInt("FormatID");
@@ -93,6 +89,26 @@ public class InterviewDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int getNewestInterview() {
+        int interviewID = 0;
+        String sql = "SELECT MAX(InterviewID) as InterviewID "
+                + " FROM Interview";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                interviewID = rs.getInt("InterviewID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return interviewID;
     }
 
     public boolean checkInterview(int interviewID) {
@@ -133,27 +149,6 @@ public class InterviewDAO {
         return false;
     }
 
-//    public boolean changeDescription(int interviewID, String description) {
-//        if (checkInterview(interviewID)) {
-//            String sql = "UPDATE Interview "
-//                    + " SET Description = ? "
-//                    + " WHERE InterviewID = ? ";
-//            try {
-//                Connection con = DBUtil.getConnection();
-//                PreparedStatement ps = con.prepareStatement(sql);
-//                ps.setNString(1, description);
-//                ps.setInt(2, interviewID);
-//                int rs = ps.executeUpdate();
-//                if (rs != 0) {
-//                    return true;
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return false;
-//    }
-    //ok
     public InterviewDTO updateInterview(int interviewID, String description, int formatID,
             String link, String address, String time, int stageID, int statusID) {
 
@@ -230,16 +225,15 @@ public class InterviewDAO {
         int formatID = 1;
         String link = null;
         String address = null;
-        String time = "2013-12-01 12:30:00";
+        String time = "2013-12-01 12:30";
         int stageID = 1;
-        int postID = 5;
+        int postID = 1;
         int inteviewStatusID = 1;
         int bookerID = 1;
         int interviewID = 8;
 
-//        System.out.println(dao.createAnInterview(description, formatID, link, address, time, stageID, postID, inteviewStatusID, bookerID));
-//
-//        System.out.println(dao.getInterview(7).toString());
+//        System.out.println(dao.createAnInterview(description, formatID, link, address, time, stageID, postID, bookerID));
+        System.out.println(dao.getInterview(6).toString());
 //
 //        System.out.println(dao.deleteInterview(6));
 //
@@ -247,11 +241,11 @@ public class InterviewDAO {
 //        InterviewDTO t = dao.updateInterview(interviewID, description, formatID, link, address, time, stageID, inteviewStatusID);
 //        System.out.println(t.toString());
         System.out.println("=====================================================================================");
-        ArrayList<InterviewDTO> li = dao.getInterviewList();
-        System.out.println("List interview: ");
-        for (InterviewDTO o : li) {
-            System.out.println(o.toString());
-        }
+//        ArrayList<InterviewDTO> li = dao.getInterviewList();
+//        System.out.println("List interview: ");
+//        for (InterviewDTO o : li) {
+//            System.out.println(o.toString());
+//        }
 
     }
 }
