@@ -52,8 +52,6 @@ public class AdminAssignRolesController extends HttpServlet {
             String interviewer = request.getParameter("isInterviewer");
             boolean isInterviewer = Boolean.parseBoolean(interviewer);
             ArrayList<AdminUserDTO> list = new ArrayList<>();
-            request.setAttribute("fuck", candidate);
-            request.setAttribute("fuck2", interviewer);
 
             if (isCandidate) {
                 try {
@@ -67,30 +65,33 @@ public class AdminAssignRolesController extends HttpServlet {
                 }
             }
 
-            if (isHRStaff) {
-                try {
-                    AdminUserDAO.addRoles(id, 2);
-                } catch (SQLException | NamingException | ClassNotFoundException ex) {
-                }
+            if (isHRStaff && isHRManager) {
+                request.setAttribute("errorMsg", "A person cannot be a HR Staff and HR Manager at the same time!");
             } else {
-                try {
-                    AdminUserDAO.removeRoles(id, 2);
-                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                if (isHRStaff) {
+                    try {
+                        AdminUserDAO.addRoles(id, 2);
+                    } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                    }
+                } else {
+                    try {
+                        AdminUserDAO.removeRoles(id, 2);
+                    } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                    }
+                }
+
+                if (isHRManager) {
+                    try {
+                        AdminUserDAO.addRoles(id, 3);
+                    } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                    }
+                } else {
+                    try {
+                        AdminUserDAO.removeRoles(id, 3);
+                    } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                    }
                 }
             }
-
-            if (isHRManager) {
-                try {
-                    AdminUserDAO.addRoles(id, 3);
-                } catch (SQLException | NamingException | ClassNotFoundException ex) {
-                }
-            } else {
-                try {
-                    AdminUserDAO.removeRoles(id, 3);
-                } catch (SQLException | NamingException | ClassNotFoundException ex) {
-                }
-            }
-
             if (isInterviewer) {
                 try {
                     AdminUserDAO.addRoles(id, 4);

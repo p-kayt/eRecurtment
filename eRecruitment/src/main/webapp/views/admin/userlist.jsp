@@ -20,13 +20,18 @@
         </form>
 
         <p style="font-weight: bold; font-size: 20px">${nullMess}</p>
+
+        <h3>${requestScope.errorMsg}</h3>
+
         <c:if test = "${not empty requestScope.Users}">
             <table border="1">
                 <thead>
                     <tr>
                         <th>User ID</th>
-                        <th>Information</th>
-                        <th>Role</th>
+                        <th>Email</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Gender</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -35,9 +40,10 @@
                     <c:forEach var = "current" items="${requestScope.Users}" varStatus = "status" >
                         <tr>
                             <td> ${current.getUserID()} </td>
-                            <td><div> Email: ${current.getEmail()} </div>
-                                <div> Name: ${current.getFirstName()} ${current.getLastName()} </div>
-                                <div> Gender: ${current.getGender()} </div> </td>
+                            <td> ${current.getEmail()} </td>
+                            <td> ${current.getFirstName()} </td>
+                            <td> ${current.getLastName()} </td>
+                            <td> ${current.getGender()} </td>
                             <td><c:choose>
                                     <c:when test = "${current.getUserRole() == 'System Admin'}">
                                         ${current.getUserRole()}
@@ -45,7 +51,7 @@
                                     <c:otherwise>
                                         <div>
                                             <label for="isCandidate">Candidate </label>
-                                            <input type="checkbox" id="isCandidate" name="isCandidate" value="true" form = "Assign Role_${current.getEmail()}" 
+                                            <input type="checkbox" onclick="return false;" id="isCandidate" name="isCandidate" value="true" form = "Assign Role_${current.getEmail()}" 
                                                    <c:if test="${current.isIsCandidate()}">
                                                        checked
                                                    </c:if>

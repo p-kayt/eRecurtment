@@ -15,9 +15,7 @@ import javax.naming.NamingException;
 public class AdminUserDAO {
 
     public static void checkBooleanRoles(AdminUserDTO user) {
-        if (user.userRole.equalsIgnoreCase("Candidate")) {
-            user.isCandidate = true;
-        }
+        user.isCandidate = true;
         if (user.userRole.equalsIgnoreCase("HR Staff")) {
             user.isHRStaff = true;
         }
@@ -167,7 +165,7 @@ public class AdminUserDAO {
         }
         return result;
     }
-    
+
     public static boolean removeRoles(int id, int role)
             throws SQLException, NamingException, ClassNotFoundException {
         String SQLQuery = "DELETE FROM User_Role WHERE UserID = ? AND RoleID = ?";
