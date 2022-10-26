@@ -32,6 +32,7 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Gender</th>
+                        <th>Role</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -84,8 +85,7 @@
                                     </c:otherwise>
                                 </c:choose>
                             </td>
-                            <td> ${current.getStatus()}
-                            </td>
+                            <td> ${current.getStatus()} </td>
                             <td>
                                 <c:choose> 
                                     <c:when test = "${current.getUserRole() == 'System Admin'}">
@@ -105,7 +105,6 @@
                                                 </c:otherwise>
                                             </c:choose>
                                         </div>
-                                        <div></div>
                                         <div>
                                             <form action = "./AdminAssignRoles" method = "POST" id = "Assign Role_${current.getEmail()}"></form>
                                             <input type = "HIDDEN" name = "ID" value= "${current.getUserID()}" form = "Assign Role_${current.getEmail()}">
