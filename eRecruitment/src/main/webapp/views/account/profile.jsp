@@ -72,7 +72,7 @@
                             <form class="col-10 d-flex flex-row justify-content-around" action = "profile" method ="post" enctype="multipart/form-data"> <!-- multipart phai di voi method post-->
                                 <input class="col-9" type="file" name="file" accept="image/png" value =""/>
                                 <input type ="hidden" name="action" value="updateAvatar">
-                                <button class="col-2 btn btn-primary" type="submit">Update</button>
+                                <button class="col-2 btn btn-dark" type="submit">Update</button>
                             </form>
                             <%--<p>Path: ${path}</p>--%>
                         </div>
@@ -106,25 +106,34 @@
                             <input type="hidden" name="action" value="updateProfile">
                             <div class="d-flex flex-row col-4">
                                 <button class="col-4 btn btn-primary" type="submit" >Save</button>
-                                <p style="color: yellow; font-weight: bold; display: block;">${updateMess}</p>
-                                <p style="color: yellow; font-weight: bold; display: block;">${updateErrorMess}</p>
+                                <p class="updateMsg">${updateMess}</p>
+                                <p class="updateMsg">${updateErrorMess}</p>
                             </div>
                         </form>
 
-                        <h3>Change password</h3>
-                        <form action ="profile" method = "post" id="passwordForm">
-                            <p style="color: yellow; font-weight: bold; display: block;">${changePassMess}</p>
-                            <label for="oldPassword">Enter your password</label> <br/>
-                            <input type="password" name="oldPassword" id="oldPassword" value="${oldPassword}"/> <br/>
-                            <p style="color: red; font-weight: bold; display: block;">${passwordErrMess1}</p>
-                            <label for="newPassword">Enter new password</label> <br/>
-                            <input type="password" name="newPassword" id="newPassword" value="${newPassword}" /> <br/>
-                            <p style="color: red; font-weight: bold; display: block;">${passwordErrMess2}</p>
-                            <label for="rePass">Confirm password</label> <br/>
-                            <input type ="password" name="rePass" id="rePass" /> <br/>
-                            <p id ="passwordError" style="color: red; font-weight: bold; display: none;">Password does not match!</p>
+                        <h4>Change password</h4>
+                        <form class="password_form" action ="profile" method = "post" id="passwordForm">
+                            <p class="updateMsg">${changePassMess}</p>
+                            <label class="d-flex flex-row justify-content-start" for="oldPassword">
+                                <span class="col-3"> Enter your password </span>
+                                <input class="col-3" type="password" name="oldPassword" id="oldPassword" value="${oldPassword}"/>
+                                <p class="text-danger">${passwordErrMess1}</p>
+                            </label>
+                            
+                            <label class="d-flex flex-row justify-content-start" for="newPassword">
+                                <span class="col-3">Enter new password </span>
+                                <input class="col-3" type="password" name="newPassword" id="newPassword" value="${newPassword}" />
+                                <p class="text-danger">${passwordErrMess2}</p>
+                            </label>
+                           
+                            <label class="d-flex flex-row justify-content-start" for="rePass">
+                                <span class="col-3">Confirm password</span>
+                                <input class="col-3" type ="password" name="rePass" id="rePass" />
+                                <p class="text-danger d-none">Password does not match!</p>
+                            </label>
+                            
                             <input type="hidden" name="action" value="changePass">
-                            <button onclick="checkPassword()" type="button">Save</button>
+                            <button class="btn btn-primary" onclick="checkPassword()" type="button">Save</button>
                         </form>
                     </div>
 
