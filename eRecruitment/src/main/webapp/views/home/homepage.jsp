@@ -3,7 +3,7 @@
     contentType="text/html" pageEncoding="UTF-8"%> <%@ taglib prefix="c"
                                                           uri="http://java.sun.com/jsp/jstl/core" %>
     <!DOCTYPE html>
-    <html lang="en">
+    <html lang="vi">
         <head>
             <meta charset="utf-8" />
             <title>ERecruitment</title>
@@ -82,17 +82,13 @@
                                     <div class="row justify-content-start">
                                         <div class="col-10 col-lg-8">
                                             <h1 class="display-3 text-white animated slideInDown mb-4">
-                                                Find The Perfect Job That You Deserved
+                                                Tìm công việc hoàn hảo cho bạn
                                             </h1>
-                                            <p class="fs-5 fw-medium text-white mb-4 pb-2">
-                                                Vero elitr justo clita lorem. Ipsum dolor at sed stet sit
-                                                diam no. Kasd rebum ipsum et diam justo clita et kasd
-                                                rebum sea elitr.
-                                            </p>
+                                            
                                             <a
                                                 href=""
                                                 class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
-                                                >Search A Job</a
+                                                >Tìm ngay</a
                                             >
                                         </div>
                                     </div>
@@ -109,23 +105,15 @@
                                     <div class="row justify-content-start">
                                         <div class="col-10 col-lg-8">
                                             <h1 class="display-3 text-white animated slideInDown mb-4">
-                                                Find The Best Startup Job That Fit You
+                                                Khởi nghiệp phù hợp nhất
                                             </h1>
-                                            <p class="fs-5 fw-medium text-white mb-4 pb-2">
-                                                Vero elitr justo clita lorem. Ipsum dolor at sed stet sit
-                                                diam no. Kasd rebum ipsum et diam justo clita et kasd
-                                                rebum sea elitr.
-                                            </p>
+                                            
                                             <a
                                                 href=""
                                                 class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
-                                                >Search A Job</a
+                                                >Tìm ngay</a
                                             >
-                                            <a
-                                                href=""
-                                                class="btn btn-secondary py-md-3 px-md-5 animated slideInRight"
-                                                >Find A Talent</a
-                                            >
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -149,7 +137,7 @@
                                         <input
                                             type="text"
                                             class="form-control border-0"
-                                            placeholder="Keyword"
+                                            placeholder="Tìm kiếm"
                                             />
                                     </div>
                                     <div class="col-md-4">
@@ -163,7 +151,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <button class="btn btn-dark border-0 w-100">Search</button>
+                                <button class="btn btn-dark border-0 w-100">Tìm kiếm</button>
                             </div>
                         </div>
                     </div>
@@ -174,7 +162,7 @@
                 <div class="container-xxl py-5">
                     <div class="container">
                         <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
-                            Job Listing
+                            Danh sách việc làm
                         </h1>
                         <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
                             <ul
@@ -186,7 +174,7 @@
                                         data-bs-toggle="pill"
                                         href="#tab-1"
                                         >
-                                        <h6 class="mt-n1 m-0">Featured</h6>
+                                        <h6 class="mt-n1 m-0">Đề xuất</h6>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -195,7 +183,7 @@
                                         data-bs-toggle="pill"
                                         href="#tab-2"
                                         >
-                                        <h6 class="mt-n1 mb-0">Full Time</h6>
+                                        <h6 class="mt-n1 mb-0">Toàn thời gian</h6>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -204,7 +192,7 @@
                                         data-bs-toggle="pill"
                                         href="#tab-3"
                                         >
-                                        <h6 class="mt-n1 mb-0">Part Time</h6>
+                                        <h6 class="mt-n1 mb-0">Bán thời gian</h6>
                                     </a>
                                 </li>
                             </ul>
@@ -213,9 +201,9 @@
                                 <div id="tab-1" class="tab-pane fade show p-0 active">
 
                                     <div class="d-flex flex-row">
-                                        <div class="job-item p-4 m-3 ">
+                                        <div class="job-item p-4 m-3">
                                             <div class="row g-4">
-                                                <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                                <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
                                                     <div class="text-start ps-4">
                                                         <h5 class="mb-3">Software Engineer</h5>
@@ -238,13 +226,13 @@
                                                     </div>
                                                 </div>
                                                 <div
-                                                    class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center"
+                                                    class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
                                                     >
                                                     <div class="d-flex mb-3">
                                                         <a class="btn btn-light btn-square me-3" href=""
                                                            ><i class="far fa-heart text-primary"></i
                                                             ></a>
-                                                        <a class="btn btn-primary" href="">Apply Now</a>
+                                                        <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
                                                     </div>
                                                     <small class="text-truncate"
                                                            ><i class="far fa-calendar-alt text-primary me-2"></i
@@ -256,7 +244,7 @@
 
                                         <div class="job-item p-4 m-3">
                                             <div class="row g-4">
-                                                <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                                <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
                                                     <div class="text-start ps-4">
                                                         <h5 class="mb-3">Marketing Manager</h5>
@@ -279,13 +267,13 @@
                                                     </div>
                                                 </div>
                                                 <div
-                                                    class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center"
+                                                    class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
                                                     >
                                                     <div class="d-flex mb-3">
                                                         <a class="btn btn-light btn-square me-3" href=""
                                                            ><i class="far fa-heart text-primary"></i
                                                             ></a>
-                                                        <a class="btn btn-primary" href="">Apply Now</a>
+                                                        <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
                                                     </div>
                                                     <small class="text-truncate"
                                                            ><i class="far fa-calendar-alt text-primary me-2"></i
@@ -300,7 +288,7 @@
                                     <div class="d-flex flex-row">
                                         <div class="job-item p-4 m-3 ">
                                             <div class="row g-4">
-                                                <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                                <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
                                                     <div class="text-start ps-4">
                                                         <h5 class="mb-3">Software Engineer</h5>
@@ -323,7 +311,7 @@
                                                     </div>
                                                 </div>
                                                 <div
-                                                    class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center"
+                                                    class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
                                                     >
                                                     <div class="d-flex mb-3">
                                                         <a class="btn btn-light btn-square me-3" href=""
@@ -341,7 +329,7 @@
 
                                         <div class="job-item p-4 m-3">
                                             <div class="row g-4">
-                                                <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                                <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
                                                     <div class="text-start ps-4">
                                                         <h5 class="mb-3">Marketing Manager</h5>
@@ -364,7 +352,7 @@
                                                     </div>
                                                 </div>
                                                 <div
-                                                    class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center"
+                                                    class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
                                                     >
                                                     <div class="d-flex mb-3">
                                                         <a class="btn btn-light btn-square me-3" href=""
@@ -385,7 +373,7 @@
                                         <nav aria-label="Page navigation">
                                             <ul class="pagination">
                                                 <li class="page-item">
-                                                    <a class="page-link" href="#">Previous</a>
+                                                    <a class="page-link" href="#">Trước</a>
                                                 </li>
                                                 <li class="page-item">
                                                     <a class="page-link" href="#">1</a>
@@ -397,7 +385,7 @@
                                                     <a class="page-link" href="#">3</a>
                                                 </li>
                                                 <li class="page-item">
-                                                    <a class="page-link" href="#">Next</a>
+                                                    <a class="page-link" href="#">Tiếp theo</a>
                                                 </li>
                                             </ul>
                                         </nav>
@@ -579,7 +567,7 @@
                                         <nav aria-label="Page navigation">
                                             <ul class="pagination">
                                                 <li class="page-item">
-                                                    <a class="page-link" href="#">Previous</a>
+                                                    <a class="page-link" href="#">Trước</a>
                                                 </li>
                                                 <li class="page-item">
                                                     <a class="page-link" href="#">1</a>
@@ -591,7 +579,7 @@
                                                     <a class="page-link" href="#">3</a>
                                                 </li>
                                                 <li class="page-item">
-                                                    <a class="page-link" href="#">Next</a>
+                                                    <a class="page-link" href="#">Tiếp theo</a>
                                                 </li>
                                             </ul>
                                         </nav>
@@ -773,7 +761,7 @@
                                         <nav aria-label="Page navigation">
                                             <ul class="pagination">
                                                 <li class="page-item">
-                                                    <a class="page-link" href="#">Previous</a>
+                                                    <a class="page-link" href="#">Trước</a>
                                                 </li>
                                                 <li class="page-item">
                                                     <a class="page-link" href="#">1</a>
@@ -785,7 +773,7 @@
                                                     <a class="page-link" href="#">3</a>
                                                 </li>
                                                 <li class="page-item">
-                                                    <a class="page-link" href="#">Next</a>
+                                                    <a class="page-link" href="#">Tiếp theo</a>
                                                 </li>
                                             </ul>
                                         </nav>
