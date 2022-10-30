@@ -13,42 +13,65 @@
         <title>Position List</title>
     </head>
     <body>
+        <div>
+            <div>
+                <form action="./job" method="post">
+                    <input type="submit" value="Add Postion">
+                    <input type="hidden" name="action" value="load-add-position">
+                </form>
+            </div>
+        </div>
+        </br>
+        <div>
+            <div>
+                <form action="./job" method="post">
+                    <input type="text" name="keyword" value="${requestScope.keyword}" placeholder="Enter position name...">
+                    <input type="submit" value="Search">
+                    <input type="hidden" name="action" value="search-position">
+                </form>
+            </div>
+        </div>
+        </br>
         <c:if test = "${not empty requestScope.list}">
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Position ID</th>
-                        <th>Position Name</th>
-                        <th>Position Description</th>
-                        <th>Hiring Quantity</th>
-                        <th>Created Date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var = "current" items="${requestScope.list}" varStatus = "status" >
-                        <tr>
-                            <td> ${current.positionID} </td>
-                            <td> ${current.positionName} </td>
-                            <td> ${current.positionDescription} </td>
-                            <td> ${current.hiringQuantity} </td>
-                            <td> ${current.createdDate} </td>
-                            <c:if test = "${current.statusID == 1}">
-                                <td> inActive </td>
-                            </c:if>
-                            <c:if test = "${current.statusID == 2}">
-                                <td> Pending </td>
-                            </c:if>
-                            <c:if test = "${current.statusID == 3}">
-                                <td> Hiring </td>
-                            </c:if>
-                            <c:if test = "${current.statusID == 4}">
-                                <td> Closed </td>
-                            </c:if>       
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>                
+            <div>
+                <div>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Position ID</th>
+                                <th>Position Name</th>
+                                <th>Position Description</th>
+                                <th>Hiring Quantity</th>
+                                <th>Created Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var = "current" items="${requestScope.list}" varStatus = "status" >
+                                <tr>
+                                    <td> <a href="job?action=position-detail&id=${current.positionID}">${current.positionID}</a> </td>
+                                    <td> ${current.positionName} </td>
+                                    <td> ${current.positionDescription} </td>
+                                    <td> ${current.hiringQuantity} </td>
+                                    <td> ${current.createdDate} </td>
+                                    <c:if test = "${current.statusID == 1}">
+                                        <td> inActive </td>
+                                    </c:if>
+                                    <c:if test = "${current.statusID == 2}">
+                                        <td> Pending </td>
+                                    </c:if>
+                                    <c:if test = "${current.statusID == 3}">
+                                        <td> Hiring </td>
+                                    </c:if>
+                                    <c:if test = "${current.statusID == 4}">
+                                        <td> Closed </td>
+                                    </c:if>       
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table> 
+                </div>
+            </div>
         </c:if>
     </body>
 </html>

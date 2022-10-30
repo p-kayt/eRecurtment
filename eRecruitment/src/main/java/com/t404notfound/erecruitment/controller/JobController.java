@@ -42,14 +42,29 @@ public class JobController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             ApplicationPositionDAO positionDAO = new ApplicationPositionDAO();
             ApplicationPostDAO postDAO = new ApplicationPostDAO();
-            
+
             String action = request.getParameter("action");
             HttpSession session = request.getSession();
-            switch(action){
+            switch (action) {
+                case "load-add-position":
+                    request.getRequestDispatcher("views/job/position/add-position.jsp").forward(request, response);
+                    break;
                 case "position-list":
                     ArrayList<ApplicationPositionDTO> list = positionDAO.listApplicationPositions();
                     request.setAttribute("list", list);
                     request.getRequestDispatcher("views/job/position/positionlist.jsp").forward(request, response);
+                    break;
+                case "search-position":
+                    String keyword = request.getParameter("keyword");
+                    request.setAttribute("keyword", keyword);
+                    list = positionDAO.searchApplicationPositions(keyword);
+                    if (list != null) {
+                        request.setAttribute("list", list);
+                        request.getRequestDispatcher("views/job/position/positionlist.jsp").forward(request, response);
+                    } else {
+                        log("SEARCH POSITION FAILED!");
+                        request.getRequestDispatcher("./job?action=position-list").forward(request, response);
+                    }
                     break;
                 case "add-position":
                     String name = request.getParameter("name");
@@ -57,16 +72,59 @@ public class JobController extends HttpServlet {
                     int quantity = Integer.parseInt(request.getParameter("quantity"));
                     Date date = Date.valueOf(request.getParameter("date"));
                     int status = Integer.parseInt(request.getParameter("status"));
-                    
+
                     ApplicationPositionDTO dto = new ApplicationPositionDTO();
                     dto.setPositionName(name);
                     dto.setPositionDescription(description);
                     dto.setHiringQuantity(quantity);
                     dto.setCreatedDate(date);
                     dto.setStatusID(status);
-                    
-                    positionDAO.addApplicationPosition(dto);
-                     
+
+                    int result = positionDAO.addApplicationPosition(dto);
+                    if (result == 1) {
+                        request.getRequestDispatcher("./job?action=position-list").forward(request, response);
+                    } else {
+                        // ko add duoc se gui error mesage
+                        log("ADD POSITION FAILED!");
+                        request.getRequestDispatcher("./job?action=position-list").forward(request, response);
+                    }
+
+                    break;
+                case "position-detail":
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    ApplicationPositionDTO position = positionDAO.loadApplicationPositions(id);
+                    request.setAttribute("position", position);
+                    if (position != null) {
+                        request.getRequestDispatcher("views/job/position/position-detail.jsp").forward(request, response);
+                    } else {
+                        log("LOAD POSITION FAILED!");
+                        request.getRequestDispatcher("./job?action=position-list").forward(request, response);
+                    }
+
+                    break;
+                case "edit-position":
+                    id = Integer.parseInt(request.getParameter("id"));
+                    name = request.getParameter("name");
+                    description = request.getParameter("description");
+                    quantity = Integer.parseInt(request.getParameter("quantity"));
+                    date = Date.valueOf(request.getParameter("date"));
+                    status = Integer.parseInt(request.getParameter("status"));
+
+                    dto = new ApplicationPositionDTO();
+                    dto.setPositionID(id);
+                    dto.setPositionName(name);
+                    dto.setPositionDescription(description);
+                    dto.setHiringQuantity(quantity);
+                    dto.setCreatedDate(date);
+                    dto.setStatusID(status);
+
+                    result = positionDAO.updateApplicationPosition(dto);
+                    if (result == 1) {
+                        request.getRequestDispatcher("./job?action=position-list").forward(request, response);
+                    } else {
+                        log("EDIT POSITION FAILED!");
+                        request.getRequestDispatcher("./job?action=position-list").forward(request, response);
+                    }
                     break;
                 default:
                     break;
