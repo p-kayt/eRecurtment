@@ -151,12 +151,12 @@ public class InterviewDAO {
         return false;
     }
 
-    public InterviewDTO updateInterview(int interviewID, String description, int formatID,
-            String link, String address, String time, int stageID, int statusID) {
+    public InterviewDTO updateInterview(int interviewID, String description, String link, String address,
+            String time, int maxCandidate, int stageID, int formatID, int statusID) {
 
         if (checkInterview(interviewID)) {
             String sql = "UPDATE Interview "
-                    + " SET [Description] = ?, OnlineLink = ?, [Address] = ?, InterviewTime = ?, StageID =?, "
+                    + " SET [Description] = ?, OnlineLink = ?, [Address] = ?, InterviewTime = ?, MaxCandidate = ?, StageID =?, "
                     + " FormatID = ?, StatusID = ? "
                     + " WHERE InterviewID = ? ";
 
@@ -167,10 +167,11 @@ public class InterviewDAO {
                 ps.setString(2, link);
                 ps.setString(3, address);
                 ps.setString(4, time);
-                ps.setInt(5, stageID);
-                ps.setInt(6, formatID);
-                ps.setInt(7, statusID);
-                ps.setInt(8, interviewID);
+                ps.setInt(5, maxCandidate);
+                ps.setInt(6, stageID);
+                ps.setInt(7, formatID);
+                ps.setInt(8, statusID);
+                ps.setInt(9, interviewID);
 
                 int rs = ps.executeUpdate();
                 if (rs > 0) {
@@ -197,19 +198,18 @@ public class InterviewDAO {
                 String link = rs.getString("OnlineLink");
                 String address = rs.getString("Address");
 
+               /* Convert date to String using DateFormat*/
+                String time = rs.getString("InterviewTime");
                 /* Convert date to String using DateFormat*/
-                String pattern = "YYYY/mm/dd HH:mm:ss";
-                DateFormat df = new SimpleDateFormat(pattern);
-                String time = df.format(rs.getDate("InterviewTime"));
-                /* Convert date to String using DateFormat*/
-
+                
+                int maxCandidate = rs.getInt("MaxCandidate");
                 int stageID = rs.getInt("StageID");
                 int postID = rs.getInt("PostID");
                 int formatID = rs.getInt("FormatID");
                 int statusID = rs.getInt("StatusID");
                 int bookerID = rs.getInt("BookerID");
 
-                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, stageID, postID, statusID, bookerID);
+                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, maxCandidate, stageID, postID, interviewID, bookerID);
                 list.add(tmp);
             }
             return list;
@@ -228,6 +228,7 @@ public class InterviewDAO {
         String link = null;
         String address = null;
         String time = "2013-12-01 12:30";
+        int maxCandidate = 10;
         int stageID = 1;
         int postID = 1;
         int inteviewStatusID = 1;

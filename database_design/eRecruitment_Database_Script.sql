@@ -878,11 +878,11 @@ CREATE TABLE Interview(
 )
 
 GO
-INSERT INTO Interview([Description], OnlineLink, [Address], InterviewTime, StageID, PostID, FormatID, StatusID, BookerID)
-	VALUES(N'Candidate''s Skills and Knowledge', 'https://meet.google.com/', NULL, '2022-10-20 10:00', 2, 3, 2, 3, 4)
+INSERT INTO Interview([Description], OnlineLink, [Address], InterviewTime, MaxCandidate, StageID, PostID, FormatID, StatusID, BookerID)
+	VALUES(N'Candidate''s Skills and Knowledge', 'https://meet.google.com/', NULL, '2022-10-20 10:00',10, 2, 3, 2, 3, 4);
 
-INSERT INTO Interview([Description], OnlineLink, [Address], InterviewTime, StageID, PostID, FormatID, StatusID, BookerID)
-	VALUES(N'Contract Negotiation', 'https://meet.google.com/', NULL, '2022-10-25 22:00', 2, 3, 2, 1, 4)
+INSERT INTO Interview([Description], OnlineLink, [Address], InterviewTime, MaxCandidate, StageID, PostID, FormatID, StatusID, BookerID)
+	VALUES(N'Contract Negotiation', 'https://meet.google.com/', NULL, '2022-10-25 22:00',10, 2, 3, 2, 1, 4)
 
 
 -- Bảng chứa thông tin thêm của buổi PV (Interview)
