@@ -856,6 +856,7 @@ CREATE TABLE Interview(
 	OnlineLink VARCHAR(512) NULL,
 	[Address] NVARCHAR(200) NULL,
 	InterviewTime SMALLDATETIME NULL,
+	MaxCandidate INT NOT NULL,
 
 	StageID INT NOT NULL,
 	PostID INT NOT NULL,

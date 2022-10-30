@@ -21,12 +21,12 @@ import java.util.ArrayList;
 public class InterviewDAO {
 
     //Test ok roi
-    public boolean createAnInterview(String description, int formatID,
-            String link, String address, String time, int stageID, int postID,
+    public boolean createAnInterview(String description, String link, String address,
+            String time, int maxCandidate, int stageID, int postID, int formatID,
             int bookerID) {
-        String sql = "INSERT INTO Interview ([Description], OnlineLink, [Address], InterviewTime, "
+        String sql = "INSERT INTO Interview ([Description], OnlineLink, [Address], InterviewTime, MaxCandidate, "
                 + " StageID, PostID, FormatID, StatusID, BookerID) "
-                + " VALUES (?, ?, ?, ?, ?,?,?,1,?) ";
+                + " VALUES (?, ?, ?, ?, ?, ?,?,?,1,?) ";
 
         try {
             Connection con = Util.DBUtil.getConnection();
@@ -37,10 +37,11 @@ public class InterviewDAO {
 
             // time must be in format 'yyyy-mm-dd hh:mm:ss'
             ps.setString(4, time);
-            ps.setInt(5, stageID);
-            ps.setInt(6, postID);
-            ps.setInt(7, formatID);
-            ps.setInt(8, bookerID);
+            ps.setInt(5, maxCandidate);
+            ps.setInt(6, stageID);
+            ps.setInt(7, postID);
+            ps.setInt(8, formatID);
+            ps.setInt(9, bookerID);
 
             int result = ps.executeUpdate();
             if (result != 0) {
@@ -75,13 +76,14 @@ public class InterviewDAO {
                 /* Convert date to String using DateFormat*/
                 String time = rs.getString("InterviewTime");
                 /* Convert date to String using DateFormat*/
+                int maxCadidate = rs.getInt("MaxCandidate");
                 int stageID = rs.getInt("StageID");
                 int postID = rs.getInt("PostID");
                 int formatID = rs.getInt("FormatID");
                 int statusID = rs.getInt("StatusID");
                 int bookerID = rs.getInt("BookerID");
 
-                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, stageID, postID, statusID, bookerID);
+                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, maxCadidate, stageID, postID, interviewID, bookerID);
                 return tmp;
             }
         } catch (Exception e) {

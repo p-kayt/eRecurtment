@@ -19,22 +19,32 @@ public class InterviewDTO {
     protected String link;  //only when format is online (formatID = 2)
     protected String address; //only when format is offline (formatID = 1)
     protected String time;   // date time
+    protected int maxCandidate;
     protected int stageID;
     protected int postID;
     protected int inteviewStatusID;  //pending/ occured...
     protected int bookerID; // ID of person who create this interview
 
-    public InterviewDTO(int interviewID, String description, int formatID, String link, String address, String time, int stageID, int postID, int inteviewStatusID, int bookerID) {
+    public InterviewDTO(int interviewID, String description, int formatID, String link, String address, String time, int maxCandidate, int stageID, int postID, int inteviewStatusID, int bookerID) {
         this.interviewID = interviewID;
         this.description = description;
         this.formatID = formatID;
         this.link = link;
         this.address = address;
         this.time = time;
+        this.maxCandidate = maxCandidate;
         this.stageID = stageID;
         this.postID = postID;
         this.inteviewStatusID = inteviewStatusID;
         this.bookerID = bookerID;
+    }
+
+    public int getMaxCandidate() {
+        return maxCandidate;
+    }
+
+    public void setMaxCandidate(int maxCandidate) {
+        this.maxCandidate = maxCandidate;
     }
 
     public int getInterviewID() {
