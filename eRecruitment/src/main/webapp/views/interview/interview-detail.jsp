@@ -86,7 +86,66 @@
         </header>
 
         <section>
+            <c:if test="${(interview != null)}"> 
+                <div>
+                    <div> 
+                        <p>Mô tả bài đăng ${postDescription}</p>
+                    </div>
+                </div>
+                <div>
+                    <form action="interview" method = "post" id="form1">
+                        <%int statusID = interview.getInteviewStatusID();%>
+                        <select id = "statusID" name= "statusID">
+                            <option value = "1" <%=(statusID == 1) ? "selected" : ""%> >Booked</option>
+                            <option value = "2" <%=(statusID == 2) ? "selected" : ""%>>Canceled</option>
+                            <option value = "3" <%=(statusID == 3) ? "selected" : ""%>>Have Occured</option>
+                        </select> <br />
 
+                        <label for="stageID">Tên vòng phỏng vấn</label>
+                        <%--Need fix this, must load stage from database--%>
+                        <select name = "stage" id="stage">
+                            <%int stageID = interview.getStageID();%>
+                            <option value = "1" <%=(stageID == 1) ? "selected" : ""%>>Vòng 1</option>
+                            <option value = "2" <%=(stageID == 2) ? "selected" : ""%>>Vòng 2</option>
+                            <option value = "3" <%=(stageID == 3) ? "selected" : ""%>>Vòng 3</option>
+                        </select>   <br/>
+
+                        <label for="description">Mô tả</label> <br />
+                        <textarea rows="4" cols="60" name="description" form="form1"><%=interview.getDescription()%></textarea> <br/>
+
+                        <label for="format">Hình thức</label>
+                        <%int formatID = interview.getFormatID();%>
+                        <select id = "format" name= "format">
+                            <option value = "1" <%=(formatID == 1) ? "selected" : ""%>>Offline</option>
+                            <option value="2" <%=(formatID == 2) ? "selected" : ""%>>Online</option>
+                        </select> <br />
+
+                        <%
+                            String[] datetime = interview.getTime().split("\\s");
+                            String date = datetime[0];
+                            String hour = datetime[1];
+                        %>
+                        <label for="date" >Ngày</label>
+                        <input type="date" name="date" value = <%=date%> required> <br/>
+
+                        <label for="time">Giờ</label>
+                        <input type="time" name="time" value = <%=hour%> required> <br/>
+
+                        <label for = "link">Link</label>
+                        <input type = "url" name="link" id="link" value="<%=interview.getLink()%>" > <br/>
+
+                        <label for="address" >Địa chỉ</label>
+                        <input type="text" name="address" id="address" value="<%=interview.getAddress()%>" > <br />
+
+                        <label for="maxCandidate">Số ứng viên tối đa</label>
+                        <input type="number" name="maxCandidate" min="1" value = "<%=interview.getMaxCandidate()%>" required> <br/>
+
+                        <label for="booker">Người tạo</label>
+                        <input type="text" value="Người tạo" disabled>
+
+                    </form>
+                </div>
+            </c:if>
         </section>
 
     </body>

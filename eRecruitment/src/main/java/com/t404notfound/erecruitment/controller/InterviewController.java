@@ -44,6 +44,7 @@ public class InterviewController extends HttpServlet {
         String address = request.getParameter("address");
         String date = request.getParameter("date");
         String hour = request.getParameter("time");
+        String maxCandidateString = request.getParameter("maxCandidate");
         String stage = request.getParameter("stage");
         String description = request.getParameter("description");
         String action = request.getParameter("action");
@@ -56,10 +57,12 @@ public class InterviewController extends HttpServlet {
             if (action.equalsIgnoreCase("bookInteview")) {
                 int formatID = Integer.parseInt(format);
                 int stageID = Integer.parseInt(stage);
+                int maxCandidate = Integer.parseInt(maxCandidateString);
+                int bookerID = user.getUserID();
                 String time = date + " " + hour;
                 InterviewDAO iDAO = new InterviewDAO();
                 boolean create = false;
-                create = iDAO.createAnInterview(description, formatID, link, address, time, stageID, postID, user.getUserID());
+                create = iDAO.createAnInterview(description, link, address, time, maxCandidate, stageID, postID, formatID, bookerID);
                 if (create) {
                     int interviewID = iDAO.getNewestInterview();
                     InterviewDTO interview = iDAO.getInterview(interviewID);
@@ -74,14 +77,15 @@ public class InterviewController extends HttpServlet {
                     request.setAttribute("stage", stageID);
                     request.setAttribute("date", date);
                     request.setAttribute("time", hour);
+                    request.setAttribute("maxCandidate", maxCandidate);
                     request.setAttribute("description", description);
-                    request.getRequestDispatcher("/views/interview/interview-modify.jsp").forward(request, response);
+                    request.getRequestDispatcher("/views/interview/interview-create.jsp").forward(request, response);
                 }
-            } else if (action.equalsIgnoreCase("changeInterview")) {
-                
+            } else if (action.equalsIgnoreCase("interviewDetail")) {
+                request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
             }
         } else {
-            request.getRequestDispatcher("/views/interview/interview-modify.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/interview/interview-create.jsp").forward(request, response);
         }
 
     }

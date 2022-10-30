@@ -98,8 +98,11 @@
                 <label for="date" >Ngày</label>
                 <input type="date" name="date" value = "${date}" required> <br/>
 
-                <label for="time">Thời gian</label>
+                <label for="time">Giờ</label>
                 <input type="time" name="time" value = "${time}" required> <br/>
+                
+                <label for="maxCandidate">Số ứng viên tối đa</label>
+                <input type="number" name="maxCandidate" min="1" value = "${(maxCandidate == null) ? 10 : maxCandidate}" required> <br/>
 
                 <label for="stage">Vòng phỏng vấn</label>
                 <select name = "stage" id="stage">
