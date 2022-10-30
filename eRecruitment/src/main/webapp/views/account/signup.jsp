@@ -25,107 +25,110 @@
         <div class="container">
             <div class="login-form">
                 <form action = "signup" method="post" id="signupForm">
+                    <h2 class="d-flex justify-content-center mb-4">Đăng Ký</h2>
                     <div class="form-row">
                         <div class="form-group col-12">
-                            <label class="" for="email"
-                                   >Email</label
+                            <label class="form-control form-control-sm mr-1" for="email"
+                                   >Email
+                                <input
+                                    type="email"
+
+                                    id="email"
+                                    name = "email"
+                                    value= "${email}"
+                                    placeholder="@gmail.com"
+                                    required
+                                    />
+                            </label
                             >
-                            <input
-                                type="email"
-                                class="form-control form-control-sm mr-1"
-                                id="email"
-                                name = "email"
-                                value= "${email}"
-                                placeholder="@gmail.com"
-                                required
-                                />
                         </div>
-                        <div id="emailError" style="color: red; display: block;" >
+                        <div id="emailError" class="text-danger" >
                             <p>${EmailErrorMess}</p>
                         </div>
 
                         <div class="form-group col-12">
-                            <label class="" for="firstName"
-                                   >First Name</label
-                            >
-                            <input
-                                type="text"
-                                class="form-control form-control-sm mr-1"
-                                id="firstName"
-                                name = "firstName"
-                                value = "${firstName}"
-                                placeholder="Enter your first name"
-                                required
-                                />
+                            <label class="form-control form-control-sm mr-1" for="firstName">
+                                Họ
+
+                                <input
+                                    type="text"
+
+                                    id="firstName"
+                                    name = "firstName"
+                                    value = "${firstName}"
+                                    placeholder="Họ"
+                                    required
+                                    />
+                            </label>
                         </div>
 
                         <div class="form-group col-12">
-                            <label class="" for="lastName"
-                                   >Last Name</label
-                            >
-                            <input
-                                type="text"
-                                class="form-control form-control-sm mr-1"
-                                id="lastName"
-                                name="lastName"
-                                value="${lastName}"
-                                placeholder="Enter your last name"
-                                required
-                                />
+                            <label class="form-control form-control-sm mr-1" for="lastName">
+                                Tên
+                                <input
+                                    type="text"
+
+                                    id="lastName"
+                                    name="lastName"
+                                    value="${lastName}"
+                                    placeholder="Tên"
+                                    required
+                                    />
+                            </label>
+                        </div>
+
+                        <div class="form-group col-12  d-flex flex-row">
+                            Giới tính
+                            <div class="col-8  d-flex flex-row">
+                                <input type="radio" id="male" name="gender" value="Nam" checked>
+                                <label for="male">Nam</label>
+                                
+                                <input type="radio" id="female" name="gender" value="Nữ">
+                                  <label for="female">Nữ</label>
+                                  
+                                <input type="radio" id="other" name="gender" value="Khác">
+                                  <label for="other">Khác</label>
+                            </div>
                         </div>
 
                         <div class="form-group col-12">
-                            <label class="" for="gender"
-                                   >Gender</label
-                            >
-                            <select id="gender" name="gender">
-                                <option value="male" selected>Male</option>
+                            <label class="form-control form-control-sm mr-1" for="password">
+                                Mật khẩu
+                                <input
+                                    type="password"
 
-                                <option value="female">Female</option>
-
-                                <option value="other">Other</option>
-
-                            </select>
+                                    id="password"
+                                    name="password"
+                                    placeholder="Mật khẩu"
+                                    required
+                                    />
+                            </label>
                         </div>
 
                         <div class="form-group col-12">
-                            <label class="" for="password"
-                                   >Password</label
-                            >
-                            <input
-                                type="password"
-                                class="form-control form-control-sm mr-1"
-                                id="password"
-                                name="password"
-                                placeholder="Password"
-                                required
-                                />
-                        </div>
+                            <label class="form-control form-control-sm mr-1" for="confirm-password">
+                                Xác nhận mật khẩu
+                                <input
+                                    type= "password"
 
-                        <div class="form-group col-12">
-                            <label class="" for="confirm-password"
-                                   >Confirm Password</label
-                            >
-                            <input
-                                type= "password"
-                                class="form-control form-control-sm mr-1"
-                                id="confirm-password"
-                                placeholder="Confirm Password"
-                                required
-                                />
+                                    id="confirm-password"
+                                    placeholder="Xác nhận mật khẩu"
+                                    required
+                                    />
+                            </label>
                         </div>
-                        <div style="color: red; display: none;" id="checkPass">
-                            <p>Password does not match</p>
+                        <div class="text-danger d-none" id="checkPass">
+                            <p>Mật khẩu không trùng khớp</p>
                         </div>
 
                     </div>
                     <div class="form-row">
                         <button type="button" class="btn btn-primary btn-sm ml-1 login-btn" onclick="checkForm()"> 
-                            Sign up
+                            Đăng ký
                         </button>
                     </div>
-                    <div class = "mt-2" style = "color:red;">
-                        <p>Already have account? <a class= "text-primary" href="login?action=login">Log in </a></p>
+                    <div class = "mt-2 text-danger">
+                        <p>Đã có tài khoản? <a class= "text-primary" href="login?action=login">Đăng nhập</a></p>
                     </div>
                 </form>
             </div>

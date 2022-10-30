@@ -25,12 +25,12 @@
         <div class="container">
             
             <div class="login-form">
-                <h2 class="d-flex justify-content-center mb-4">Login</h2>
+                <h2 class="d-flex justify-content-center mb-4">Đăng Nhập</h2>
                 <form action="./login" method = "post">
                     <div class="form-row">
                         <div class="form-group col-12">
                             <label class="" for="email"
-                                   >Username or Email</label
+                                   >Email</label
                             >
                             <input
                                 type="email"
@@ -38,40 +38,40 @@
                                 id="email"
                                 name = "email"
                                 value = "${email}"
-                                placeholder="Username or Email"
+                                placeholder="Email"
                                 required
                                 />
                         </div>
                         <div class="form-group col-12">
                             <label class="" for="password"
-                                   >Password</label
+                                   >Mật Khẩu</label
                             >
                             <input
                                 type="password"
                                 class="form-control form-control-sm mr-1"
                                 name ="password"
                                 id="password"
-                                placeholder="Password"
+                                placeholder="Mật khẩu"
                                 required
                                 />
 
                             <input type="hidden" name = "action" value="login">
 
-                            <a href="">Forgot password?</a>
+                            <a href="">Quên mật khẩu?</a>
                         </div>
                     </div>
                     <div class="form-row">
                         <button type="submit" class="btn btn-primary btn-sm ml-1 login-btn">
-                            Login
+                           Đăng nhập
                         </button>
                     </div>
 
-                    <div style="color: red">
-                        <p>${errorMessage}</p>
-                    </div>
+                    
+                        <p class="text-danger">${errorMessage}</p>
+                    
 
                     <div class="form-row justify-content-center m-2">
-                        <a href="./signup">Sign up</a>
+                        <a href="./signup">Đăng ký</a>
                     </div>
                 </form>
             </div>

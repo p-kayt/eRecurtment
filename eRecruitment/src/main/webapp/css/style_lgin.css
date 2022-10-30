@@ -6,34 +6,50 @@
 }
 
 .login-form .login-btn {
-  width: 100%;
-  font-size: large;
-  background-color: #00B074;
+    width: 100%;
+    font-size: large;
+    background-color: #00B074;
 }
 
 .login-form a {
-  font-size: smaller;
+    font-size: smaller;
 }
 
 .login-form {
-  position: relative;
-  max-width: 450px;
-  background: #ffffff;
-  margin: 0 auto;
-  margin-top: 15%;
-  margin-bottom: 15%;
-  padding: 45px;
-  text-align: left;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    position: relative;
+    max-width: 450px;
+    background: #ffffff;
+    margin: 0 auto;
+    margin-top: 15%;
+    margin-bottom: 15%;
+    padding: 45px;
+    text-align: left;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
+
 .login-form input {
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.login-form input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 5px;
+    vertical-align: text-bottom;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    background: #fff no-repeat center center;
+}
+
+.login-form label{
+    margin-right:10px;
+    border: none;
 }

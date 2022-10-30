@@ -1,4 +1,6 @@
-﻿USE [master]
+﻿-- Made and Edit By Nguyễn Thái Hòa
+-- Review by Members of team 404NotFound
+USE [master]
 
 --Use this query when error "Cannot drop database because it is currently in use."
 ALTER DATABASE eRecruitment SET SINGLE_USER WITH ROLLBACK IMMEDIATE
@@ -11,10 +13,38 @@ CREATE DATABASE eRecruitment
 
 GO
 USE eRecruitment
+-- ===================================================================================================================
+-- ==================== 1 SỐ THÔNG TIN CẦN LƯU Ý KHI TẠO APP (DTO & DAO, REQUEST PARAMETERS, ...) ====================
+-- * Các bảng đa số sử dụng ID là các khóa chính - những ID này sẽ được database tự động add thêm theo thứ tự tăng dần
+--	-> khi ADD thêm thông tin vào bảng có sử dụng ID -> KO TẠO CÂU QUERY CÓ THÊM ID 
+
+-- * Đa số các bảng có giá trị thời gian thì sử dụng DATE (năm/tháng/ngày), trừ các bảng liên quan tới Interview thì sử
+--	dụng SMALLDATETIME (năm/tháng/ngày/giờ/phút/giây)
+
+-- * Các bảng sẽ được các bảng khác tham chiếu tới rất nhiều (đặc biệt bảng User, ApplicationPost). Cần lưu ý trong việc
+--	DELETE thông tin.
+
+-- * Các cột như NAME, DESCRIPTION,... đa số sử dụng kiểu dữ liệu NVARCHAR -> Lưu ý khi viết các Class DAO (getNString)
+--	và bắt các request parameter.
+
+-- * Các cột chứa ĐƯỜNG DẪN (LINK) sử dụng VARCHAR
+
+-- * Mức lương của vị trí sử dụng NVARCHAR - giúp cho người tạo bài đăng có customize được mức lương (1 - 10$, Arround 10$, 
+--	Negotiatable,...)
+
+-- * Database chưa có Trigger để auto-update các giá trị khi có giá trị khác thay đổi (vd: HiringQuantity) -> Sẽ update
+--	thêm (Nếu có thêm thời gian) -> Cần phải viết câu query để update
+
+-- * BẢNG User_Role: Theo SRS thì chỉ có user với role HR Staff thì mới có 2 Role cùng 1 lúc (HR Staff + Interviewer), các 
+--	user với các role còn lại sẽ chỉ có 1 role 
+-- ===================================================================================================================
 
 --------------------------
 -- Account/User Section --
 --------------------------
+
+-- Bảng chứa danh sách các role cho người dùng
+-- bao gồm RoleID: ID của role; RoleName: Tên của role.
 GO
 CREATE TABLE [Role](
 	RoleID INT IDENTITY(1,1) NOT NULL,
@@ -30,6 +60,9 @@ INSERT INTO [Role](RoleName) VALUES('HR Manager')
 INSERT INTO [Role](RoleName) VALUES('Interviewer')
 INSERT INTO [Role](RoleName) VALUES('System Admin')
 
+-- Bảng chứa các status (trạng thái) của tài khoản người dùng (user)
+-- bao gồm StatusID: ID của status;
+--	StatusName: Tên của status.
 GO
 CREATE TABLE UserStatus(
 	StatusID INT IDENTITY(1,1) NOT NULL,
@@ -42,6 +75,9 @@ GO
 INSERT INTO UserStatus(StatusName) VALUES('Active')
 INSERT INTO UserStatus(StatusName) VALUES('inActive')
 
+-- Bảng chưa danh sách các giới tính
+-- bao gồm GenderID: ID của giới tính;
+--	GenderName: Tên giới tính.
 GO
 CREATE TABLE Gender(
 	GenderID INT IDENTITY(1,1) NOT NULL,
@@ -55,6 +91,16 @@ INSERT INTO Gender(GenderName) VALUES('Male')
 INSERT INTO Gender(GenderName) VALUES('Female')
 INSERT INTO Gender(GenderName) VALUES('Other')
 
+-- Bảng chứa danh sách người dùng
+-- bao gồm UserID: ID của người dùng; 
+--	Email: email của người dùng (dùng để đăng kí tài khoản và đăng nhập| Ko được trùng);
+--	Password: Mật khẩu của người dùng; 
+--	Avatar: Chứa link dẫn tới ảnh đại diện của người dùng (ảnh được lưu trong folder của app);
+--	FirstName: tên của người dùng
+--	LastName: Họ (và tên đệm) của người dùng
+--		Khóa ngoại:
+--	Gender: Chứa ID giới tính tham chiếu tới bảng Gender
+--	Status: Chứa ID status tham chiếu tới bảng UserStatus
 GO
 CREATE TABLE [User](
 	UserID INT IDENTITY(1,1) NOT NULL,
@@ -85,6 +131,12 @@ INSERT INTO [User](Email, [Password], Avatar, FirstName, LastName, Gender, [Stat
 INSERT INTO [User](Email, [Password], Avatar, FirstName, LastName, Gender, [Status]) VALUES ('testInterviewer@gmail.com', '111111', NULL, N'Interviewer', N'Test', 1, 1)
 INSERT INTO [User](Email, [Password], Avatar, FirstName, LastName, Gender, [Status]) VALUES ('testSystemAdmin@gmail.com', '111111', NULL, N'System Admin', N'Test', 1, 1)
 
+-- Bảng chứa các Role tương ứng với User
+-- Thiết kế theo nguyên tắc mỗi User có thể có nhiều Role (mqh N_N)
+-- bao gồm:
+--		Khóa ngoại:
+--	UserID: Chứa ID của người dùng tham chiếu tới bảng User
+--	RoleID: Chứa ID của role tham chiếu tới bảng Role
 GO
 CREATE TABLE User_Role(
 	UserID INT NOT NULL,
@@ -109,6 +161,24 @@ INSERT INTO User_Role(UserID, RoleID) VALUES (7, 5)
 --------------------------
 -- CV Section --
 --------------------------
+
+-- Bảng chứa thông tin CV của người dùng
+-- CV sẽ gồm các bảng phụ chứa thêm thông tin của CV
+-- Mỗi 1 người dùng chỉ có 1 CV (1 Candidate -> 1 CV)
+-- Chỉ có candidate thì mới có CV
+-- bao gồm: CVID: ID của CV
+--	FirstName: tên của ứng viên
+--	LastName: Họ (và tên đệm) của ứng viên
+--	Avatar: Link dẫn tới ảnh đại diện của ứng viên (ảnh đại diện được lưu trong folder của app)
+--	Dob: Ngày sinh của ứng viên
+--	Introduction: Giới thiệu ngắn về ứng viên
+--	Email: Email của ứng viên. Ko được trùng
+--	PhoneNumber: Số điện thoại của ứng viên
+--	 Address: Địa chỉ của ứng viên (Số nhà, Đường, Phường\Xã\Huyện)
+--	City: thành phố của ứng viên
+--		Khóa ngoại:
+--	Gender: Chứa ID giới tính tham chiếu tới bảng Gender
+--	UserID: Chứa ID của người dùng (ứng viên) tham chiếu tới bảng User
 GO
 CREATE TABLE CV(
 	CVID INT IDENTITY(1,1) NOT NULL,
@@ -140,7 +210,12 @@ INSERT INTO CV(FirstName, LastName, Avatar, Dob, Introduction, Email, PhoneNumbe
 INSERT INTO CV(FirstName, LastName, Avatar, Dob, Introduction, Email, PhoneNumber, [Address], City, Gender, UserID)
 	VALUES(N'Test Candidate', N'Curriculum Vitae', NULL, '2000-01-01', N'This is a test CV for the web application eRecruitment. The purpose of this CV is testing functions of the web application such as: View CV, update CV,...', 'testCandidate2@gmail.com', '0911111222', N'1 D2 Khu Cong Nghe Cao', N'Ho Chi Minh', 1, 1)
 
-
+-- Bảng phụ của CV chứa thông tin kỹ năng của ứng viên
+-- bao gồm: SkilID: ID của kỹ năng
+--	SkillName: Tên kỹ năng
+--	SkillDescription: Mô tả của kỹ năng
+--		Khóa ngoại: 
+--	CVID: ID của CV tham chiếu tới bảng CV
 GO
 CREATE TABLE CV_Skill(
 	SkillID INT IDENTITY(1,1) NOT NULL,
@@ -160,7 +235,11 @@ INSERT INTO CV_Skill(SkillName, SkillDescription, CVID) VALUES (N'Java', N'Inter
 INSERT INTO CV_Skill(SkillName, SkillDescription, CVID) VALUES (N'C#', N'Beginer Level', 1)
 INSERT INTO CV_Skill(SkillName, SkillDescription, CVID) VALUES (N'Chicken Herding', N'Professor Level', 1)
 
-
+-- Bảng phụ của CV chứa sở thích của ứng viên
+-- bao gồm: InterestID: ID của sở thích
+--	InterestName: Tên của sở thích
+--		Khóa ngoại: 
+--	CVID: ID của CV tham chiếu tới bảng CV
 GO
 CREATE TABLE CV_Interest(
 	InterestID INT IDENTITY(1,1) NOT NULL,
@@ -179,6 +258,12 @@ INSERT INTO CV_Interest(InterestName, CVID) VALUES (N'Manga', 1)
 INSERT INTO CV_Interest(InterestName, CVID) VALUES (N'Anime', 1)
 INSERT INTO CV_Interest(InterestName, CVID) VALUES (N'Food', 1)
 
+-- Bảng phụ của CV chứa các chứng chỉ của ứng viên
+-- bao gồm: CertificateID: ID của chứng chỉ
+--	CertificateName: tên chứng chỉ
+--	CertificateLink: đường link dẫn đến chứng chỉ
+--		Khóa ngoại: 
+--	CVID: ID của CV tham chiếu tới bảng CV
 GO
 CREATE TABLE CV_Certificate(
 	CertificateID INT IDENTITY(1,1) NOT NULL,
@@ -196,6 +281,13 @@ GO
 INSERT INTO CV_Certificate(CertificateName, CertificateLink, CVID) VALUES (N'Ielts', 'https://ielts.idp.com/results/check-your-result', 1)
 INSERT INTO CV_Certificate(CertificateName, CertificateLink, CVID) VALUES (N'Business Advisor', 'https://thanhnien.vn/dung-de-bi-lua-ga-post1481000.html', 1)
 
+-- Bảng phụ của CV chứa các thành tựu của ứng viên (Project, giải thưởng)
+-- bao gồm: AchievementID: ID của thành tựu
+--	AchievementName: tên của thành tựu
+--	AchievementDescription: Mô tả của thành tựu
+--	AchievementLink: Đường link dẫn tới thành tựu của ứng viên
+--		Khóa ngoại: 
+--	CVID: ID của CV tham chiếu tới bảng CV
 GO
 CREATE TABLE CV_Achievement(
 	AchievementID INT IDENTITY(1,1) NOT NULL,
@@ -214,6 +306,14 @@ GO
 INSERT INTO CV_Achievement(AchievementName, AchievementDescription, AchievementLink, CVID) VALUES (N'Manga Hub', N'A website for reading manga online', 'https://github.com/MHTteam/Read-Manga-Online-Website', 1)
 
 
+-- Bảng phụ của CV chứa kinh nghiệm làm việc của ứng viên
+-- bao gồm: ExperienceID: ID của kinh nghiệm
+--	JobtTitle: chức danh của công việc
+--	OrganizationName: tên của tổ chức
+--	ExperienceDescription: Mô tả của kinh nghiệm làm việc
+--	ExperienceDuration: thời gian làm công việc
+--		Khóa ngoại: 
+--	CVID: ID của CV tham chiếu tới bảng CV
 GO
 CREATE TABLE CV_Experience(
 	ExperienceID INT IDENTITY(1,1) NOT NULL,
@@ -232,6 +332,12 @@ CREATE TABLE CV_Experience(
 GO
 INSERT INTO CV_Experience(JobTitle, OrganizationName, ExperienceDescription, ExperienceDuration, CVID) VALUES (N'Chicken Herding', N'University Of F', N'Herding young, inexperience, newly born chicken into the world of Incident Technology (IT) at the University of F (UF)', N'20 Years', 1)
 
+-- Bảng phụ của CV chứa kỹ năng ngôn ngữ của ứng viên
+-- bao gồm: LanguageID: ID của ngôn ngữ
+--	LanguageName: tên ngôn ngữ
+--	LanguageDescription: Mô tả ngôn ngữ (trình độ,...)
+--		Khóa ngoại: 
+--	CVID: ID của CV tham chiếu tới bảng CV
 GO
 CREATE TABLE CV_Language(
 	LanguageID INT IDENTITY(1,1) NOT NULL,
@@ -248,6 +354,10 @@ CREATE TABLE CV_Language(
 GO
 INSERT INTO CV_Language(LanguageName, LanguageDescription, CVID) VALUES (N'English', N'Ielts 10 Cham', 1)
 
+-- Bảng phụ gồm các tình trạng học vấn
+-- Dùng để bảng CV_Education tham chiếu tới - là 1 bảng phụ dùng phục vụ cho CV
+-- bao gồm: StatusID: ID của status
+--	StatusName: tên của status
 GO
 CREATE TABLE EducationStatus(
 	StatusID INT IDENTITY(1,1) NOT NULL,
@@ -260,6 +370,13 @@ GO
 INSERT INTO EducationStatus(StatusName) VALUES('Complete')
 INSERT INTO EducationStatus(StatusName) VALUES('In-progress')
 
+-- Bảng phụ của CV chứa thông tin học vấn của ứng viên
+-- bao gồm: EducationID: ID của mức học vấn
+--	EducationName: tên của mức học vấn
+--	OrganizationName: tên của tổ chức mà ứng viên tham gia học vấn
+--		Khóa ngoại: 
+--	StatusID: Chứa ID của tình trạng học vấn, tham chiếu tới bảng EducationStatus
+--	CVID: ID của CV tham chiếu tới bảng CV
 GO
 CREATE TABLE CV_Education(
 	EducationID INT IDENTITY(1,1) NOT NULL,
@@ -282,7 +399,10 @@ INSERT INTO CV_Education(EducationName, OrganizationName, StatusID, CVID) VALUES
 
 GO
 
-
+-- Bảng phụ gồm các nền tảng Website mạng xã hội
+-- Dùng để bảng CV_SocialMedia tham chiếu tới - là 1 bảng phụ dùng phục vụ cho CV
+-- bao gồm: PlatformID: ID của nền tảng
+--	PlatformName: tên của nền tảng
 CREATE TABLE [Platform](
 	PlatformID INT IDENTITY(1,1) NOT NULL,
 	PlatformName VARCHAR(30) NOT NULL,
@@ -297,6 +417,12 @@ INSERT INTO [Platform](PlatformName) VALUES('Twitter')
 INSERT INTO [Platform](PlatformName) VALUES('GitHub')
 INSERT INTO [Platform](PlatformName) VALUES('Personal Website')
 
+-- Bảng phụ của CV chứa thông tin liên quan tới mạng xã hội của ứng viên
+-- bao gồm: SocialMediaID: ID của thông tin mxh
+--	SocialMediaLink: đường link dẫn tới trang mxh của ứng viên
+--		Khóa ngoại: 
+--	PlatformID: chứa ID thông tin của nền tảng mxh, tham chiếu tới bảng Platform
+--	CVID: ID của CV tham chiếu tới bảng CV
 GO
 CREATE TABLE CV_SocialMedia(
 	SocialMediaID INT IDENTITY(1,1) NOT NULL,
@@ -318,6 +444,11 @@ INSERT INTO CV_SocialMedia(SocialMediaLink, PlatformID, CVID) VALUES ('https://g
 ----------------------------------
 -- Application Position Section --
 ----------------------------------
+
+-- Bảng chứa status của các vị trí công việc (Application Position) và bài post tuyển dụng cho vị trí tương ứng (Application Post)
+-- Dùng để bảng ApplicationPosition và ApplicationPost tham chiếu để lấy status
+-- bao gồm: StatusID: ID của status
+--	StatusName: tên của status
 GO
 CREATE TABLE PositionStatus(
 	StatusID INT IDENTITY(1,1) NOT NULL,
@@ -332,6 +463,14 @@ INSERT INTO PositionStatus(StatusName) VALUES ('Pending')
 INSERT INTO PositionStatus(StatusName) VALUES ('Hiring')
 INSERT INTO PositionStatus(StatusName) VALUES ('Closed')
 
+-- Bảng chứa các vị trí công việc (Application Position) mà công ty cần tuyển dụng
+-- bao gồm: PositionID: ID của vị trí 
+--	PositionName: tên vị trí
+--	PositionDescription: Mô tả vị trí
+--	HiringQuantity: Số lượng mà vị trí đó cần yêu cầu
+--	CreatedDate: Ngày khởi tạo vị trí
+--		Khóa ngoại:
+--	StatusID: Chứa ID status của vị trí, tham chiếu tới bảng PositionStatus
 GO
 CREATE TABLE ApplicationPosition(
 	PositionID INT IDENTITY(1,1) NOT NULL,
@@ -355,6 +494,9 @@ INSERT INTO ApplicationPosition(PositionName, PositionDescription, HiringQuantit
 -- Application Post Section --
 ----------------------------------
 
+-- Bảng chứa các hình thức làm việc của công việc (Fulltime, partime,...)
+-- bao gồm: FormID: ID của hình thức
+--	FormName: tên hình thức làm việc
 GO
 CREATE TABLE WorkingForm(
 	FormID INT IDENTITY(1,1) NOT NULL,
@@ -372,7 +514,20 @@ INSERT INTO WorkingForm(FormName) VALUES ('Part Time - Online')
 INSERT INTO WorkingForm(FormName) VALUES ('Part Time - Hybrid')
 
 
-
+-- Bảng chứa các bài đăng tuyển dụng của 1 vị trí làm việc (Application Position)
+-- Bảng có những bảng phụ chứa thêm các thông tin của bài đăng
+-- Mỗi vị trí có thể có nhiều bài đăng
+-- bao gồm: PostID: ID của bài đăng
+--	PostDescription: Mô tả bài đăng
+--	Salary: Mức lương - nhập bằng chữ
+--	HiringQuantity: Số lượng người tuyển dụng - Ko được lớn hơn so với số người tuyển dụng của vị trí
+--	CreateDate: Ngày khởi tạo bài đăng
+--	StartDate: Ngày bắt đầu tuyển dụng - đến ngày này thì ứng viên mới được apply vào bài đăng này
+--	ExpiredDate: Ngày kết thúc tuyển dụng - qua ngày này sẽ ko nhận thêm ứng viên nào apply vào bài đăng này
+--		Khóa ngoại:
+--	PosiotionID: Chứa ID vị trí công việc tương ứng của bài đăng, tham chiếu tới bảng ApplicationPosition
+--	FormID: Chứa ID hình thức làm việc tương ứng của bài đăng, tham chiếu tới bảng WorkingForm
+--	StatusID: Chứa ID status của bài đăng, tham chiếu tới bảng PositionStatus
 GO
 CREATE TABLE ApplicationPost(
 	PostID INT IDENTITY(1,1) NOT NULL,
@@ -439,6 +594,12 @@ Thu thập ý kiến phản hồi và xây dựng các hướng giải quyết c
 Nghiên cứu, tìm hiểu các công nghệ về HTML/CSS Javascript mới nhất để áp dụng cái tiến sản phẩm', 
 N'Around $3000', 10, '2022-10-7', '2022-10-10', '2022-10-13', 2, 1, 4)
 
+-- Bảng phụ chứa thêm thông tin cho các bài đăng tuyển dụng (Application Post)
+-- Chứa thông tin phúc lợi của bài đăng tuyển dụng
+-- bao gồm: BenefitID: ID của phúc lơi
+--	Benefit: mô tả phúc lợi
+--		Khóa ngoại:
+--	PostID: Chứa ID của bài đăng tương ứng, tham chiếu tới bảng ApplicationPost
  GO
 CREATE TABLE ApplicationBenefit(
 	BenefitID INT IDENTITY(1,1) NOT NULL,
@@ -473,6 +634,13 @@ INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Full social, healthy an
 
 INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Attractive salary package and 100% Gross Salary in probation period', 3)
 
+-- Bảng phụ chứa thêm thông tin cho các bài đăng tuyển dụng (Application Post)
+-- Chứa các kỹ năng mà bài đăng tuyển dụng yêu cầu
+-- bao gồm: SkillID: ID của kỹ năng
+--	SkillName: tên kỹ năng
+--	SkillDescription: Mô tả kỹ năng
+--		Khóa ngoại:
+--	PostID: Chứa ID của bài đăng tương ứng, tham chiếu tới bảng ApplicationPost
 GO
 CREATE TABLE ApplicationSkill(
 	SkillID INT IDENTITY(1,1) NOT NULL,
@@ -497,6 +665,12 @@ INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Java
 
 INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Front-End', N'5+ Years', 3)
 
+-- Bảng phụ chứa thêm thông tin cho các bài đăng tuyển dụng (Application Post)
+-- Chứa các yêu cầu của bài đăng tuyển dụng cần cho vị trí tương ứng
+-- bao gồm: RequirementID: ID của yêu cầu
+--	Requirement: mô tả yêu cầu
+--		Khóa ngoại:
+--	PostID: Chứa ID của bài đăng tương ứng, tham chiếu tới bảng ApplicationPost
 GO
 CREATE TABLE ApplicationRequirement(
 	RequirementID INT IDENTITY(1,1) NOT NULL,
@@ -523,6 +697,11 @@ INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Proficiency in 
 INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'A Bachelor’s Degree in any relevant major (e.g. Information Technology, Computer Science, etc.)', 3)
 
 
+-- Bảng phụ chứa các vòng của quá trình tuyển dụng
+-- Sử dụng để các bảng tham chiếu
+-- để biết được quá trình tuyển dụng gồm những vòng nào
+-- bao gồm: StageID: ID của vòng
+--	StageName: Tên của vòng
 GO
 CREATE TABLE Stage(
 	StageID INT IDENTITY(1,1) NOT NULL,
@@ -536,6 +715,13 @@ INSERT INTO Stage(StageName) VALUES('CV Applying')
 INSERT INTO Stage(StageName) VALUES('Interview')
 INSERT INTO Stage(StageName) VALUES('Finish')
 
+-- Bảng phụ chứa thêm thông tin cho các bài đăng tuyển dụng (Application Post)
+-- Chứa thông tin các vòng mà ứng viên cần phải trải qua của bài đăng ứng tuyển tương ứng
+-- bao gồm: ID: ID vòng của bài đăng tương ứng
+--	Description: Mô tả thông tin của vòng tương ứng
+--		Khóa ngoại:
+--	PostID: Chứa ID của bài đăng tương ứng, tham chiếu tới bảng ApplicationPost
+--	StageID: chứa ID của vòng, tham chiếu tới bảng Stage
 GO
 CREATE TABLE Application_Stage(
 	ID INT IDENTITY(1,1) NOT NULL,
@@ -564,6 +750,9 @@ INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Applying 
 INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Candidate''s Skills and Knowledge', 3, 2)
 INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Contract Negotiation', 3, 2)
 
+-- Bảng chứa các status của quá trình ứng tuyển của ứng viên
+-- bao gồm: StatusID: ID của status
+--	StatusName: tên của status
 GO
 CREATE TABLE ApplicationStatus(
 	StatusID INT IDENTITY(1,1) NOT NULL,
@@ -578,6 +767,14 @@ INSERT INTO ApplicationStatus(StatusName) VALUES ('Cancelled')
 INSERT INTO ApplicationStatus(StatusName) VALUES ('Fail')
 INSERT INTO ApplicationStatus(StatusName) VALUES ('Success')
 
+-- Bảng chứa quá trình ứng tuyển của ứng viên với các bài đăng tuyển dụng
+-- bao gồm: ApplicationID: ID của quá trình tuyển dụng
+--	ApplyDate: ngày ứng tuyển
+--		Khóa ngoại:
+--	StatusID: Chứa ID status của quá trình tuyển dụng, tham chiếu tới bảng ApplicationStatus - Sẽ được update theo quá trình ứng viên đậu, hủy, phỏng vấn pass/fail,...
+--	StageID: Chứa ID của vòng ứng tuyển mà ứng viên đang ở trong quá trình tuyển dụng - tương ứng với các vòng của bài đăng tuyển dụng tương ứng, tham chiếu tới bảng Stage
+--	UserID: Chứa ID của ứng viên (người dùng), tham chiếu tới bảng User
+-- PostID: Chứa ID của bài đăng tuyển dụng tương ứng, tham chiếu tới bảng ApplicationPost
 GO
 CREATE TABLE [Application](
 	ApplicationID INT IDENTITY(1,1) NOT NULL,
@@ -608,6 +805,9 @@ INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('
 ----------------------------------
 -- Interview Section --
 ----------------------------------
+-- Bảng chứa status của buổi phỏng vấn
+-- bao gồm: StatusID: ID của status
+--	StatusName: Tên của status
 GO
 CREATE TABLE InterviewStatus(
 	StatusID INT IDENTITY(1,1) NOT NULL,
@@ -621,6 +821,9 @@ INSERT INTO InterviewStatus(StatusName) VALUES ('Booked')
 INSERT INTO InterviewStatus(StatusName) VALUES ('Cancelled')
 INSERT INTO InterviewStatus(StatusName) VALUES ('Have Occurred')
 
+-- Bảng chứa các hình thức phỏng vấn (On/Off)
+-- bao gồm: FormatID: ID format
+--	FormatName: tên format
 GO
 CREATE TABLE InterviewFormat(
 	FormatID INT IDENTITY(1,1) NOT NULL,
@@ -633,6 +836,19 @@ GO
 INSERT INTO InterviewFormat(FormatName) VALUES ('Offline')
 INSERT INTO InterviewFormat(FormatName) VALUES ('Online')
 
+-- Bảng chứa thông tin buổi phỏng vấn 
+-- Gồm các bảng phụ chứa thêm thông tin của những người tham gia buổi PV
+-- bao gồm: InterviewID: ID của buổi phỏng vấn
+--	Description: Mô tả buổi PV
+--	OnlineLink: Link của buổi PV (Nếu PV qua hình thức Online)
+--	Address: Địa chỉ của buổi PV (Nếu PV qua hình thức Offline)
+--	InterviewTIme: thời gian bắt đầu PV
+--		Khóa ngoại:
+--	StageID: Chứa ID vòng của buổi PV, tham chiếu tới bảng Stage
+--	PostID: Chứa ID của bài đăng tuyển dụng tương ứng, tham chiếu tới bảng ApplicationPost
+--	FormatID: Chứa ID hình thức của buổi PV, tham chiếu tới bảng InterviewFormat
+--	StatusID: Chứa ID status của buổi PV, tham chiếu tới bảng InterviewStatus
+--	BookerID: Chứa ID của người lên lịch buổi PV (HR Staff), tham chiếu tới bảng User
 GO
 CREATE TABLE Interview(
 	InterviewID INT IDENTITY(1,1) NOT NULL,
@@ -668,8 +884,15 @@ INSERT INTO Interview([Description], OnlineLink, [Address], InterviewTime, Stage
 	VALUES(N'Contract Negotiation', 'https://meet.google.com/', NULL, '2022-10-25 22:00', 2, 3, 2, 1, 4)
 
 
+-- Bảng chứa thông tin thêm của buổi PV (Interview)
+-- chứa thông tin của những người sẽ PV ứng viên
+-- bao gồm:	InterviewerID: ID của người PV
+--		Khóa ngoại:
+--	UserID: ID của người PV, tham chiếu tới bảng User
+--	InterviewID: ID của buổi PV, tham chiếu tới bảng Interview
 GO
 CREATE TABLE Interviewer(
+	InterviewerID INT IDENTITY(1,1) NOT NULL,
 	UserID INT NOT NULL,
 	InterviewID INT NOT NULL,
 
@@ -686,8 +909,17 @@ INSERT INTO Interviewer(UserID, InterviewID) VALUES(5, 1)
 INSERT INTO Interviewer(UserID, InterviewID) VALUES(5, 2)
 INSERT INTO Interviewer(UserID, InterviewID) VALUES(6, 2)
 
+-- Bảng chứa thông tin thêm của buổi PV (Interview)
+-- chứa thông tin của ứng viên tham gia buổi PV
+-- bao gồm:	ParticipantID: ID của ứng viên
+--	InterviewTime: thời gian bắt đầu PV của ứng viên - mỗi ứng viên trong cùng 1 buổi PV
+--														có thể có thời gian PV khác nhau (cách nhau 30p,...)
+--		Khóa ngoại:
+--	UserID: ID của ứng viên, tham chiếu tới bảng User
+--	InterviewID: ID của buổi PV, tham chiếu tới bảng Interview
 GO
 CREATE TABLE Participant(
+	ParticipantID INT IDENTITY(1,1) NOT NULL,
 	UserID INT NOT NULL,
 	InterviewID INT NOT NULL,
 	InterviewTime SMALLDATETIME NULL,
@@ -702,6 +934,15 @@ GO
 INSERT INTO Participant(UserID, InterviewID, InterviewTime) VALUES(1, 1, '2022-10-20 10:00')
 INSERT INTO Participant(UserID, InterviewID, InterviewTime) VALUES(1, 2, '2022-10-25 22:00')
 
+-- Bảng chứa thông tin đánh giá ứng viên trong buổi PV
+-- 1 kết quả đánh giá sẽ cho 1 ứng viên (Participant), do 1 người đánh giá (Interviewer) và trong 1 buổi PV
+-- bao gồm: EvaluationID: ID của bản đánh giá viên
+--	EvaluationDescription: mô tả đánh giá ứng viên
+--	Score: Điểm đánh giá ứng viên - theo thang điểm 10
+--		Khóa ngoại: 
+--	InterviewerID: Chứa ID của người đánh giá (Interviewer), tham chiếu tới bảng Interviewer
+--	ParticipantID: Chứa ID của ứng viên (Participant), tham chiếu tới bảng Participant
+--	InterviewID: Chứa ID của buổi PV tương ứng, tham chiếu tới bảng Interview
 GO
 CREATE TABLE Evaluation(
 	EvaluationID INT IDENTITY(1,1) NOT NULL,

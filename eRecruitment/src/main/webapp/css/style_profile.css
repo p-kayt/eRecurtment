@@ -44,7 +44,7 @@ body{
 
 .ava_form{
     display: inline-block;
-/*    border: solid #00B074 1px;*/
+    /*    border: solid #00B074 1px;*/
     justify-content: center;
     align-items: center;
     color: black;
@@ -91,5 +91,11 @@ body{
 
 
 .profile_form {
-    
+
+}
+
+.updateMsg{
+    color: yellow; 
+    font-weight: bold; 
+    display: block;
 }
