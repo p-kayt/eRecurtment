@@ -173,9 +173,9 @@ public class ProfileController extends HttpServlet {
                     }
                 }
             }
-            CVDAO cvdao = new CVDAO();
-            CVDTO cvdto = cvdao.loadCVByUserID(user.getUserID());
-            session.setAttribute("cv", user);
+//            CVDAO cvdao = new CVDAO();
+//            CVDTO cvdto = cvdao.loadCVByUserID(user.getUserID());
+//            session.setAttribute("cv", user);
             //System.out.println(cvdto.toString());
         }
 

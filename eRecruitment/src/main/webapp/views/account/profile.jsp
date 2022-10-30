@@ -131,6 +131,11 @@
 
                 </div>
 
+                <<form action="cv" method = "post">
+                    <input type="hidden" name="action" value="viewMyCV">
+                    <button class="col-2 btn btn-primary" type="submit">View CV</button>
+                </form>
+
             </c:if>
 
             <!--JavaScript-->

@@ -35,18 +35,32 @@ public class CVController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-
+        
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
         String action = request.getParameter("action");
 
         CVDAO cvdao = new CVDAO();
-        CVDTO cvdto = cvdao.loadCV(1);
-        
-        request.setAttribute("cv", cvdto);
-        request.getRequestDispatcher("views/cv/cv-read.jsp").forward(request, response);
+        CVDTO cvdto = new CVDTO();
+        if (user != null) {
+            if (action.equalsIgnoreCase("viewMyCV")) {
+                cvdto = cvdao.loadCVByUserID(user.getUserID());
+                request.setAttribute("cv", cvdto);
+            }
+        }
+        request.getRequestDispatcher("/views/cv/cv-read.jsp").forward(request, response);
+    //        
+        //        CVDTO cvdto = cvdao.loadCV(1);
+        //        
+        //        request.setAttribute("cv", cvdto);
+        //        request.getRequestDispatcher("views/cv/cv-write.jsp").forward(request, response);
+        {
+            
+        }
     }
-    
+
     public static void main(String[] args) {
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
