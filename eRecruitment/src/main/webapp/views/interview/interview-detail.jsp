@@ -141,13 +141,29 @@
                         <input type="number" name="maxCandidate" min="1" value = "<%=interview.getMaxCandidate()%>" required> <br/>
 
                         <label for="booker">Người tạo</label>
-                        <input type="text" value="Người tạo" disabled>
+                        <input type="text" value="Người tạo" disabled> <br/>
+
+                        <input type="hidden" name="action" value="updateInterview" > 
+
 
                     </form>
+
+                    <form>
+                        
+                    </form>
+
+                    <button type = "button" onclick = "UpdateInterview()">Cập nhật phỏng vấn</button>
                 </div>
             </c:if>
         </section>
 
+
+        <script>
+            function UpdateInterview() {
+                var f = document.getElementById("form1");
+                f.submit();
+            }
+        </script>
     </body>
 </html>
 
