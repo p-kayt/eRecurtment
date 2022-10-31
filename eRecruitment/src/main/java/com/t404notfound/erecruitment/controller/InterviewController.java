@@ -73,7 +73,7 @@ public class InterviewController extends HttpServlet {
                     session.setAttribute("interview", interview);
                     session.setAttribute("interviewID", interviewID);
                     request.setAttribute("action", "interviewDetail");
-                    session.setAttribute("booker", user.getFirstName() + " " + user.getLastName());
+                    request.setAttribute("booker", user.getFirstName() + " " + user.getLastName());
                     request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
                     return;
                 } else {
@@ -89,22 +89,7 @@ public class InterviewController extends HttpServlet {
                 }
             } else if (action.equalsIgnoreCase("interviewDetail")) {
 
-                InterviewerDAO interviewerDAO = new InterviewerDAO();
-                int interviewID = ((Integer) session.getAttribute("interviewID")).intValue();
-                ArrayList<UserDTO> listInterviewer = interviewerDAO.getInterviewer(interviewID);
-                session.setAttribute("listMainInterviewer", listInterviewer);
-                request.setAttribute("interviewID", interviewID);
                 request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
-
-            } else if (action.equalsIgnoreCase("showListInterviewer")) {
-
-                InterviewerDAO iDAO = new InterviewerDAO();
-                int interviewID = ((Integer) session.getAttribute("interviewID")).intValue();
-                ArrayList<UserDTO> listInterviewer = iDAO.getAvailableInterviewer(interviewID);
-                session.setAttribute("listInterviewer", listInterviewer);
-                request.setAttribute("interviewID", interviewID);
-                request.getRequestDispatcher("/views/interview/interviewer-list.jsp").forward(request, response);
-
             } else if (action.equalsIgnoreCase("addInterviewer")) {
 
                 int userID = Integer.parseInt((String) request.getParameter("userID"));
@@ -152,7 +137,7 @@ public class InterviewController extends HttpServlet {
                 return;
             }
         } else {
-            request.getRequestDispatcher("/views/interview/interview_create.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/interview/interview-create.jsp").forward(request, response);
         }
 
     }
