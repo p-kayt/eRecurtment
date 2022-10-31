@@ -788,8 +788,8 @@ CREATE TABLE [Application](
 	CONSTRAINT PK_Application PRIMARY KEY (ApplicationID),
 	CONSTRAINT FK_Application_from_ApplicationStatus FOREIGN KEY (StatusID)
 		REFERENCES ApplicationStatus (StatusID),
-	CONSTRAINT FK_Application_from_Stage FOREIGN KEY (StageID)
-		REFERENCES Stage (StageID),
+	CONSTRAINT FK_Application_from_Application_Stage FOREIGN KEY (StageID)
+		REFERENCES Application_Stage (ID),
 	CONSTRAINT FK_Application_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Application_from_ApplicationPost FOREIGN KEY (PostID)
