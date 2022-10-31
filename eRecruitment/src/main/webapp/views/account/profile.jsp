@@ -151,6 +151,17 @@
 
                 </div>
 
+                <button class="col-2 btn btn-primary" type="button" onclick="showCV()">View CV</button>
+                <div id="cv" style="display: none">
+                    <jsp:include page="../cv/cv-read.jsp" />
+                    <c:if test = "${empty cv}">
+                        <form action="cv" method = "post">
+                            <input type="hidden" name="action" value="createMyCV">
+                            <button class="col-2 btn btn-primary" type="submit">Create CV</button>
+                        </form>
+                    </c:if>
+                </div>
+
 
 
             </c:if>

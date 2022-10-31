@@ -20,11 +20,11 @@ import java.util.ArrayList;
 public class ParticipantDAO {
 
     //Add a candidate to aninterview
-    public boolean addCandidate(int userID, int interviewID, String time) {
+    public boolean addCandidate(int userID, int interviewID, String time, int resultID) {
         //if user exists, then return false
         if (!checkCandidate(userID, interviewID)) {
-            String sql = "INSERT INTO Participant (UserID, InterviewID, InterviewTime) "
-                    + " VALUES (?, ?, ?)";
+            String sql = "INSERT INTO Participant (UserID, InterviewID, InterviewTime, ResultID) "
+                    + " VALUES (?, ?, ?, ?)";
 
             try {
                 Connection con = DBUtil.getConnection();
@@ -32,6 +32,7 @@ public class ParticipantDAO {
                 ps.setInt(1, userID);
                 ps.setInt(2, interviewID);
                 ps.setString(3, time);
+                ps.setInt(4, resultID);
                 //time must be in format yyyy-mm-yy hh:mm:ss
                 int rs = ps.executeUpdate();
                 if (rs > 0) {
@@ -59,11 +60,10 @@ public class ParticipantDAO {
             while (rs.next()) {
                 int userID = rs.getInt("UserID");
                 /* Convert date to String using DateFormat*/
-                String pattern = "YYYY/mm/dd HH:mm:ss";
-                DateFormat df = new SimpleDateFormat(pattern);
-                String time = df.format(rs.getDate("InterviewTime"));
+                String time = rs.getString("InterviewTime");
                 /* Convert date to String using DateFormat*/
-                ParticipantDTO tmp = new ParticipantDTO(userID, interviewID, time);
+                int resultID = rs.getInt("ResultID");
+                ParticipantDTO tmp = new ParticipantDTO(userID, interviewID, time, resultID);
                 list.add(tmp);
             }
             return list;
@@ -109,5 +109,11 @@ public class ParticipantDAO {
             e.printStackTrace();
         }
         return false;
+    }
+    
+    
+    
+    public static void main(String[] args) {
+            
     }
 }

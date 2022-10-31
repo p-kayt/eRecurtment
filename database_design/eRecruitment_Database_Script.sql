@@ -897,7 +897,7 @@ CREATE TABLE Interviewer(
 	UserID INT NOT NULL,
 	InterviewID INT NOT NULL,
 
-	CONSTRAINT PK_Interviewer PRIMARY KEY (InterviewerID),
+	CONSTRAINT PK_Interviewer PRIMARY KEY (UserID, InterviewID),
 	CONSTRAINT FK_Interviewer_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Interviewer_from_Interview FOREIGN KEY (InterviewID)
@@ -944,7 +944,7 @@ CREATE TABLE Participant(
 	InterviewTime SMALLDATETIME NULL,
 	ResultID INT NOT NULL,
 
-	CONSTRAINT PK_Participant PRIMARY KEY (ParticipantID),
+	CONSTRAINT PK_Participant PRIMARY KEY (UserID, InterviewID),
 	CONSTRAINT FK_Participant_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Participant_from_Interview FOREIGN KEY (InterviewID)
