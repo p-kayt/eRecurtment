@@ -46,7 +46,16 @@
         <c:if test="${empty requestScope.position}">
             <h3>Cannot load position</h3>
         </c:if>
-
+            <c:if test="${not empty requestScope.postList}">
+                <div>
+                    <div>
+                        <h4>danh sách v?</h4>
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+            </c:if>
 
     </body>
 </html>
