@@ -17,7 +17,6 @@
         <meta content="" name="keywords" />
         <meta content="" name="description" />
 
-        <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -25,7 +24,6 @@
             rel="stylesheet"
             />
 
-        <!-- Icon Font Stylesheet -->
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
             rel="stylesheet"
@@ -35,15 +33,13 @@
             rel="stylesheet"
             />
 
-        <!-- Libraries Stylesheet -->
         <link href="lib/animate/animate.min.css" rel="stylesheet" />
         <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
 
-        <!-- Customized Bootstrap Stylesheet -->
         <link href="css/bootstrap.min.css" rel="stylesheet" />
 
-        <!-- Template Stylesheet -->
         <link href="css/style-dltemp.css" rel="stylesheet" />
+        <!---->
     </head>
     <body>
 
@@ -59,50 +55,66 @@
             </c:if>
 
             <section>
-                <form action = "interview" method = "post" id = "form1">
-                    <div cq>
-                        <div class="col-12 d-flex flex-row">
+                <div class="interview-form d-flex flex-column justify-content-center align-middle m-4 p-5 border border-2 shadow">
+                    <form action = "interview" method = "post" id = "form1">
+
+                        <div class="col-5 d-flex flex-row justify-content-between m-2">
                             <span>Hình thức</span>
-                            <input type="radio" id="online" name="format" value="1" checked>
-                            <label for="online">Online</label>
-
-                            <input type="radio" id="ofline" name="format" value="2">
-                            <label for="ofline">Offline</label>
-
+                            <div>
+                                <input type="radio" id="online" name="format" value="1" checked>
+                                <label for="online">Online</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="ofline" name="format" value="2">
+                                <label for="ofline">Offline</label>
+                            </div>
                         </div>
 
-                        <label for = "link">Link</label>
-                        <input type = "url" name="link" id="link" >
+                        <div class="m-2">
+                            <label class="col-2" for = "link">Link</label>
+                            <input class="col-8" type = "url" name="link" id="link" >
+                        </div>
 
-                        <label for="address" >Địa chỉ</label>
-                        <input type="text" name="address" id="address" >
+                        <div class="m-2">
+                            <label class="col-2" for="address" >Địa chỉ</label>
+                            <input class="col-8" type="text" name="address" id="address" >
+                        </div>
 
+                        <div class="m-2">
+                            <label class="col-2" for="date" >Ngày</label>
+                            <input class="col-2" type="date" name="date" value = "${date}" required> <br/>
+                        </div>
 
-                        <label for="date" >Ngày</label>
-                        <input type="date" name="date" value = "${date}" required> <br/>
+                        <div class="m-2">
+                            <label class="col-2" for="time">Giờ</label>
+                            <input class="col-2" type="time" name="time" value = "${time}" required> <br/>
+                        </div>
 
-                        <label for="time">Giờ</label>
-                        <input type="time" name="time" value = "${time}" required> <br/>
+                        <div class="m-2">
+                            <label class="col-2" for="maxCandidate">Số ứng viên tối đa</label>
+                            <input class="col-2" type="number" name="maxCandidate" min="1" value = "${(maxCandidate == null) ? 10 : maxCandidate}" required> <br/>
+                        </div>
 
-                        <label for="maxCandidate">Số ứng viên tối đa</label>
-                        <input type="number" name="maxCandidate" min="1" value = "${(maxCandidate == null) ? 10 : maxCandidate}" required> <br/>
+                        <div class="m-2">
+                            <label class="col-2" for="stage">Vòng phỏng vấn</label>
+                            <select class="col-3" name = "stage" id="stage">
+                                <option value = "1" ${stage == 1 ? "selected" : ""}>Vòng 1</option>
+                                <option value = "2" ${stage == 2 ? "selected" : ""}>Vòng 2</option>
+                                <option value = "3" ${stage == 3 ? "selected" : ""}>Vòng 3</option>
+                            </select>
+                        </div>
 
-                        <label for="stage">Vòng phỏng vấn</label>
-                        <select name = "stage" id="stage">
-                            <option value = "1" ${stage == 1 ? "selected" : ""}>Vòng 1</option>
-                            <option value = "2" ${stage == 2 ? "selected" : ""}>Vòng 2</option>
-                            <option value = "3" ${stage == 3 ? "selected" : ""}>Vòng 3</option>
-                        </select>   <br/>
-
+                        <div class="m-2">
+                            <label for="description">Mô tả</label> <br />
+                            <textarea class="col-8" rows="4" cols="60" name="description" form="form1">${description}</textarea>
+                        </div>
                         <input type ="hidden" name="action" value="bookInteview">
                         <input type = "hidden" name = "postID" value = "1">
 
-                        <input type="submit" value = "Đặt lịch"> <br/><br/>
-                    </div>
-                </form>
+                        <input class="btn btn-primary col-1 m-3" type="submit" value = "Đặt lịch">
 
-                <label for="description">Mô tả</label> <br />
-                <textarea rows="4" cols="60" name="description" form="form1">${description}</textarea>
+                    </form>
+                </div>
             </section>
 
             <section>

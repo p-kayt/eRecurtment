@@ -328,7 +328,7 @@
     box-shadow: none;
 }
 
-/*** Admin ***/
+/*** Admin user list ***/
 
 .tb_head {
     background: #00B074;
@@ -345,3 +345,5 @@
 .table td{
     padding: auto;
 }
+
+/*** Interview page ***/

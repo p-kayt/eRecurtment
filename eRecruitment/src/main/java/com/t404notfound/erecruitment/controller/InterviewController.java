@@ -72,7 +72,7 @@ public class InterviewController extends HttpServlet {
                     session.setAttribute("interviewID", interviewID);
                     request.setAttribute("action", "interviewDetail");
                     request.setAttribute("booker", user.getFirstName() + " " + user.getLastName());
-                    request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
+                    request.getRequestDispatcher("/views/interview/interview_detail.jsp").forward(request, response);
                     return;
                 } else {
                     request.setAttribute("format", format);
@@ -87,7 +87,7 @@ public class InterviewController extends HttpServlet {
                 }
             } else if (action.equalsIgnoreCase("interviewDetail")) {
 
-                request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/interview/interview_detail.jsp").forward(request, response);
             } else if (action.equalsIgnoreCase("addInterviewer")) {
                 InterviewerDAO iDAO = new InterviewerDAO();
                 int interviewID = ((Integer)session.getAttribute("interviewID")).intValue();
