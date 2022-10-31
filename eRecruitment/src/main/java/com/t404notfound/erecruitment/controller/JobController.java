@@ -258,7 +258,7 @@ public class JobController extends HttpServlet {
                     postID = Integer.parseInt(request.getParameter("postID"));
                     positionID = Integer.parseInt(request.getParameter("positionID"));
                     String[] benefits = request.getParameterValues("benefit");
-                    String[] benefitIDs = request.getParameterValues("benefitID");
+                    String[] benefitIDs = request.getParameterValues("benefitID");                 
                     
                     ArrayList<Integer> beneIDs = new ArrayList<>();
                     for (int i = 0; i < benefitIDs.length; i++) {
@@ -309,6 +309,74 @@ public class JobController extends HttpServlet {
                     }
                     else{
                         msg = "Cập Nhật Quy Trình Ứng Tuyển Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    break;
+                case "delete-a-requirement":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    int requirementID = Integer.parseInt(request.getParameter("requirementID"));
+                    
+                    result = postDAO.deleteARequirement(requirementID);
+                    if (result != 0) {
+                        msg = "Xóa Yêu Cầu Công Việc Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    else{
+                        msg = "Xóa Yêu Cầu Công Việc Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    break;
+                case "delete-a-skill":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    int skillID = Integer.parseInt(request.getParameter("skillID"));
+                    
+                    result = postDAO.deleteASkill(skillID);
+                    if (result != 0) {
+                        msg = "Xóa Kỹ Năng Cần Thiết Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    else{
+                        msg = "Xóa Kỹ Năng Cần Thiết Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    break;
+                case "delete-a-benefit":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    int benefitID = Integer.parseInt(request.getParameter("benefitID"));
+                    
+                    result = postDAO.deleteABenefit(benefitID);
+                    if (result != 0) {
+                        msg = "Xóa Quyền Lợi Công Việc Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    else{
+                        msg = "Xóa Quyền Lợi Công Việc Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    break;
+                case "delete-a-stage":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    id = Integer.parseInt(request.getParameter("id"));
+                    
+                    result = postDAO.deleteAStage(id);
+                    if (result != 0) {
+                        msg = "Xóa Quy Trình Ứng Tuyển Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    else{
+                        msg = "Xóa Quy Trình Ứng Tuyển Thất Bại - Thông Tin Này Đang Được Sử Dụng Cho Quá Trình Tuyển Dụng Của Ứng Viên";
                         request.setAttribute("msg", msg);
                         request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
                     }
