@@ -5,6 +5,8 @@
 package com.t404notfound.erecruitment.bean.interview;
 
 import Util.DBUtil;
+import com.t404notfound.erecruitment.bean.UserDAO;
+import com.t404notfound.erecruitment.bean.UserDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,8 +43,45 @@ public class InterviewerDAO {
     }
 
     //Get all interviewer of an interview
-    public ArrayList<InterviewerDTO> getInterviewer(int interviewID) {
-        ArrayList<InterviewerDTO> list = new ArrayList<>();
+    //Test ok
+    public ArrayList<UserDTO> getInterviewer(int interviewID) {
+
+        ArrayList<UserDTO> list = new ArrayList<>();
+        ArrayList<Integer> listID = new ArrayList<>();
+        UserDAO dao = new UserDAO();
+
+        String sql = "SELECT UserID "
+                + " FROM Interviewer "
+                + " WHERE InterviewID = ?";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, interviewID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int userID = rs.getInt("UserID");
+
+                listID.add(userID);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (listID.size() > 0) {
+            for (int i = 0; i < listID.size(); i++) {
+                UserDTO user = dao.getUserByID(listID.get(i));
+                list.add(user);
+            }
+        }
+
+        return list;
+    }
+
+    //get all inteviewerID in this interview
+    public ArrayList<Integer> getInterviewerID(int interviewID) {
+        ArrayList<Integer> list = new ArrayList<>();
 
         String sql = "SELECT * FROM Interviewer "
                 + " WHERE InterviewID = ?";
@@ -55,8 +94,7 @@ public class InterviewerDAO {
 
             while (rs.next()) {
                 int userID = rs.getInt("UserID");
-                InterviewerDTO tmp = new InterviewerDTO(userID, interviewID);
-                list.add(tmp);
+                list.add(userID);
             }
             return list;
         } catch (Exception e) {
@@ -102,6 +140,62 @@ public class InterviewerDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    //get all interviewer that does not exist in an interview
+    //tested done
+    public ArrayList<UserDTO> getAvailableInterviewer(int interviewID) {
+        ArrayList<UserDTO> interviewerList = new ArrayList<>();
+        ArrayList<Integer> availableInterviewerIDList = new ArrayList<>();
+
+        UserDAO userDAO = new UserDAO();
+
+        //Get all InterviewID that not exist in this interview
+        String sql = " SELECT u.[UserID] "
+                + " FROM [User_Role] u "
+                + " WHERE u.RoleID = 4 AND u.UserID NOT IN (SELECT i.[UserID] "
+                + " FROM Interviewer i "
+                + " WHERE InterviewID = ?) ";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, interviewID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("UserID");
+                availableInterviewerIDList.add(id);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (availableInterviewerIDList.size() > 0) {
+            for (int i = 0; i < availableInterviewerIDList.size(); i++) {
+                UserDTO user = userDAO.getUserByID(availableInterviewerIDList.get(i));
+                interviewerList.add(user);
+            }
+        }
+
+        return interviewerList;
+    }
+
+    public static void main(String[] args) {
+        InterviewerDAO dao = new InterviewerDAO();
+        ArrayList<UserDTO> test = dao.getAvailableInterviewer(11);
+
+        System.out.println("List");
+        for (UserDTO userDTO : test) {
+            userDTO.toString();
+            System.out.println(userDTO.toString() + "\n");
+        }
+        System.out.println("======================");
+        test = dao.getInterviewer(1);
+        System.out.println("List");
+        for (UserDTO userDTO : test) {
+            userDTO.toString();
+            System.out.println(userDTO.toString() + "\n");
+        }
+        System.out.println("======================");
     }
 
 }

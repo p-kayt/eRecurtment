@@ -91,18 +91,18 @@ public class UserDTO {
     public void setStatusID(int statusID) {
         this.statusID = statusID;
     }
-    
-    public void setUserRole(ArrayList<Integer> a){
+
+    public void setUserRole(ArrayList<Integer> a) {
         this.userRole = a;
     }
-    
-    public ArrayList<Integer> getUserRole(){
+
+    public ArrayList<Integer> getUserRole() {
         return this.userRole;
     }
-    
+
     @Override
     public String toString() {
-        return "Email: " + email + ", Password: " + password + ", firstName: " + firstName
+        return "ID: " + userID + " Email: " + email + ", Password: " + password + ", firstName: " + firstName
                 + ", lastName: " + lastName + ", genderID: " + genderID + ", statusID: " + statusID;
     }
 

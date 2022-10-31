@@ -240,23 +240,6 @@
     color: var(--light);
 }
 
-/*** Job Listing ***/
-.nav-pills .nav-item .active {
-    border-bottom: 2px solid var(--primary);
-}
-
-.job-item {
-    border: 1px solid transparent;
-    border-radius: 2px;
-    box-shadow: 0 0 90px 6px rgb(231,233,235);
-    transition: .5s;
-    
-}
-
-.job-item:hover {
-    border-color: rgba(0, 0, 0, .08);
-    box-shadow: none;
-}
 
 /*** Footer ***/
 .footer .btn.btn-social {
@@ -326,3 +309,41 @@
     padding-right: 0;
     border-right: none;
 }
+
+/*** Job Listing ***/
+.nav-pills .nav-item .active {
+    border-bottom: 2px solid var(--primary);
+}
+
+.job-item {
+    border: 1px solid transparent;
+    border-radius: 2px;
+    box-shadow: 0 0 90px 6px rgb(231,233,235);
+    transition: .5s;
+    
+}
+
+.job-item:hover {
+    border-color: rgba(0, 0, 0, .08);
+    box-shadow: none;
+}
+
+/*** Admin user list ***/
+
+.tb_head {
+    background: #00B074;
+    height: 80px;
+    padding: 10px;
+    color: #EFFDF5;
+    font-size: 18px;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #EFFDF5;
+}
+
+.table td{
+    padding: auto;
+}
+
+/*** Interview page ***/
