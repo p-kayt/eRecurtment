@@ -57,7 +57,7 @@ public class AdminViewUsersController extends HttpServlet {
             }
             request.setAttribute("SearchValue", SearchValue);
             if (list.isEmpty()) {
-                request.setAttribute("nullMess", "No Record Matched.");
+                request.setAttribute("nullMsg", "No Record Matched.");
             } else {
                 request.setAttribute("Users", list);
             }
