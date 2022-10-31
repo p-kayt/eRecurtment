@@ -43,7 +43,7 @@ public class JobController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             ApplicationPositionDAO positionDAO = new ApplicationPositionDAO();
             ApplicationPostDAO postDAO = new ApplicationPostDAO();
-
+            String msg = "";
             String action = request.getParameter("action");
             HttpSession session = request.getSession();
             switch (action) {
@@ -87,10 +87,13 @@ public class JobController extends HttpServlet {
 
                     int result = positionDAO.addApplicationPosition(dto);
                     if (result == 1) {
+                        msg = "Thêm Vị Trí Thành Công";
+                        request.setAttribute("msg", msg);
                         request.getRequestDispatcher("./job?action=position-list").forward(request, response);
                     } else {
                         // ko add duoc se gui error mesage
-                        log("ADD POSITION FAILED!");
+                        msg = "Thêm Vị Trí Thất Bại";
+                        request.setAttribute("msg", msg);
                         request.getRequestDispatcher("./job?action=position-list").forward(request, response);
                     }
 
@@ -105,7 +108,6 @@ public class JobController extends HttpServlet {
                         request.setAttribute("postList", postList);
                         request.getRequestDispatcher("views/job/position/position-detail.jsp").forward(request, response);
                     } else {
-                        log("LOAD POSITION FAILED!");
                         request.getRequestDispatcher("./job?action=position-list").forward(request, response);
                     }
 
@@ -128,9 +130,12 @@ public class JobController extends HttpServlet {
 
                     result = positionDAO.updateApplicationPosition(dto);
                     if (result == 1) {
-                        request.getRequestDispatcher("./job?action=position-list").forward(request, response);
+                        msg = "Cập Nhật Vị Trí Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=position-detail&id="+ id + "").forward(request, response);
                     } else {
-                        log("EDIT POSITION FAILED!");
+                        msg = "Cập Nhật Vị Trí Thất Bại";
+                        request.setAttribute("msg", msg);
                         request.getRequestDispatcher("./job?action=position-list").forward(request, response);
                     }
                     break;

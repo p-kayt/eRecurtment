@@ -20,6 +20,14 @@
                 </div>
             </div>
             <div>
+                <!-- Thong bao khi chinh sua thong tin vi tri -->
+                <!-- Xuat hien khi bam vao chinh sua vi tri -->
+                <c:if test="${not empty requestScope.msg}">
+                    <div>
+                        <h4>${requestScope.msg}</h4>
+                    </div>
+                </c:if>
+                <!--  -->
                 <div>
                     <form action="./job" method="post">
                         <label for="id">ID</label> <input type="text" id="id" name="id" value="${requestScope.position.positionID}" readonly=""/>

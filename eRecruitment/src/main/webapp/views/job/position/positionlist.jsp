@@ -39,6 +39,13 @@
         </br>
         <c:if test = "${not empty requestScope.list}">
             <div>
+                <!-- Thong bao khi add vi tri moi, Se xuat hien sau khi add vi tri vao -->
+                <c:if test="${not empty requestScope.msg}">
+                    <div>
+                        <h4>${requestScope.msg}</h4>
+                    </div>
+                </c:if>
+                <!--  -->
                 <div>
                     <table border="1">
                         <thead>
