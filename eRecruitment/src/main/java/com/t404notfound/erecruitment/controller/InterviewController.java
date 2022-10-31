@@ -51,6 +51,7 @@ public class InterviewController extends HttpServlet {
         String stage = request.getParameter("stage");
         String description = request.getParameter("description");
         String action = request.getParameter("action");
+        String status = request.getParameter("statusID");
         int postID = 0;
         if (request.getParameter("postID") != null) {
             postID = Integer.parseInt(request.getParameter("postID"));
@@ -111,7 +112,7 @@ public class InterviewController extends HttpServlet {
                 InterviewerDAO iDAO = new InterviewerDAO();
                 boolean check = iDAO.addInterviewer(userID, interviewID);
                 /*may be bug here*/
-                /*reload list interview page*/
+ /*reload list interview page*/
                 InterviewerDAO interviewerDAO = new InterviewerDAO();
                 ArrayList<UserDTO> listInterviewer = interviewerDAO.getAvailableInterviewer(interviewID);
                 session.setAttribute("listInterviewer", listInterviewer);
@@ -126,13 +127,29 @@ public class InterviewController extends HttpServlet {
                 InterviewerDAO iDAO = new InterviewerDAO();
                 boolean check = iDAO.removeInterviewer(userID, interviewID);
                 /*may be bug here*/
-                /*reload detail page*/
+ /*reload detail page*/
                 InterviewerDAO interviewerDAO = new InterviewerDAO();
                 ArrayList<UserDTO> listInterviewer = interviewerDAO.getInterviewer(interviewID);
                 session.setAttribute("listMainInterviewer", listInterviewer);
                 request.setAttribute("interviewID", interviewID);
                 request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
                 /*reload detail page*/
+            } else if (action.equalsIgnoreCase("updateInterview")) {
+                int interviewID = ((Integer) session.getAttribute("interviewID")).intValue();
+                int formatID = Integer.parseInt(format);
+                int stageID = Integer.parseInt(stage);
+                int maxCandidate = Integer.parseInt(maxCandidateString);
+                int bookerID = user.getUserID();
+                int statusID = Integer.parseInt(status);
+                String time = date + " " + hour;
+                InterviewDAO iDAO = new InterviewDAO();
+                InterviewDTO update = iDAO.updateInterview(interviewID, description, link, address, time, maxCandidate, stageID, formatID, statusID);
+
+                session.setAttribute("interview", update);
+                request.setAttribute("action", "interviewDetail");
+                session.setAttribute("booker", user.getFirstName() + " " + user.getLastName());
+                request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
+                return;
             }
         } else {
             request.getRequestDispatcher("/views/interview/interview_create.jsp").forward(request, response);

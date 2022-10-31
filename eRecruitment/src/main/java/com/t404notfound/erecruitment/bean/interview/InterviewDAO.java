@@ -83,7 +83,7 @@ public class InterviewDAO {
                 int statusID = rs.getInt("StatusID");
                 int bookerID = rs.getInt("BookerID");
 
-                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, maxCadidate, stageID, postID, interviewID, bookerID);
+                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, maxCadidate, stageID, postID, statusID, bookerID);
                 return tmp;
             }
         } catch (Exception e) {
@@ -132,6 +132,7 @@ public class InterviewDAO {
     }
 
     //test delete Interview ok
+    //need test again
     public boolean deleteInterview(int interviewID) {
         if (checkInterview(interviewID)) {
             String sql = "DELETE Interview "

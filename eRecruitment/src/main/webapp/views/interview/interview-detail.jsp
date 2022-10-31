@@ -91,21 +91,24 @@
                 </div>
                 <div>
                     <form action="interview" method = "post" id="form1">
-                        <%int statusID = interview.getInteviewStatusID();%>
+
                         <select id = "statusID" name= "statusID">
-                            <option value = "1" <%=(statusID == 1) ? "selected" : ""%> >Booked</option>
+                            <%int statusID = interview.getInteviewStatusID();%>
+                            <option value = "1" <%=(statusID == 1) ? "selected" : ""%>>Booked</option>
                             <option value = "2" <%=(statusID == 2) ? "selected" : ""%>>Canceled</option>
                             <option value = "3" <%=(statusID == 3) ? "selected" : ""%>>Have Occured</option>
                         </select> <br />
 
                         <label for="stageID">Tên vòng phỏng vấn</label>
                         <%--Need fix this, must load stage from database--%>
-                        <select name = "stage" id="stage" disabled>
+                        <select  id="stage" disabled>
                             <%int stageID = interview.getStageID();%>
                             <option value = "1" <%=(stageID == 1) ? "selected" : ""%>>Vòng 1</option>
                             <option value = "2" <%=(stageID == 2) ? "selected" : ""%>>Vòng 2</option>
                             <option value = "3" <%=(stageID == 3) ? "selected" : ""%>>Vòng 3</option>
                         </select>   <br/>
+
+                        <input type="hidden" name = "stage" value="<%=stageID%>">
 
                         <label for="description">Mô tả</label> <br />
                         <textarea rows="4" cols="60" name="description" form="form1"><%=interview.getDescription()%></textarea> <br/>
@@ -164,6 +167,36 @@
                                             <div>
                                                 <form action="interview" method="post">
                                                     <input type="hidden" name ="action" value ="removeInterviewer">
+                                                    <input type="hidden" name ="userID" value="${i.getUserID()}" >
+                                                    <input type="submit" value="Xóa">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <div>
+                                <p>Ứng viên</p>
+                                <div>
+                                    <a href = "?action=showListCandidate">Thêm</a>
+                                </div>
+                                <div>
+                                    <c:forEach items="<%=interviewerList%>" var="i">
+                                        <div>
+                                            <div>
+                                                <img class="ava_img" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                            </div>
+                                            <div>
+                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                            </div>
+                                            <div>
+                                                <form action="interview" method="post">
+                                                    <input type="hidden" name ="action" value ="removeCanidate">
                                                     <input type="hidden" name ="userID" value="${i.getUserID()}" >
                                                     <input type="submit" value="Xóa">
                                                 </form>
