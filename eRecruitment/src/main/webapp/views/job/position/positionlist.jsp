@@ -38,11 +38,11 @@
                     <table border="1">
                         <thead>
                             <tr>
-                                <th>Position ID</th>
-                                <th>Position Name</th>
-                                <th>Position Description</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
                                 <th>Hiring Quantity</th>
-                                <th>Created Date</th>
+                                <th>Create Date</th>
                                 <th>Status</th>
                             </tr>
                         </thead>

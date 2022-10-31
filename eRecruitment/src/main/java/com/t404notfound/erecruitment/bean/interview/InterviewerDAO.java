@@ -43,10 +43,15 @@ public class InterviewerDAO {
     }
 
     //Get all interviewer of an interview
-    public ArrayList<InterviewerDTO> getInterviewer(int interviewID) {
-        ArrayList<InterviewerDTO> list = new ArrayList<>();
+    //Test ok
+    public ArrayList<UserDTO> getInterviewer(int interviewID) {
 
-        String sql = "SELECT * FROM Interviewer "
+        ArrayList<UserDTO> list = new ArrayList<>();
+        ArrayList<Integer> listID = new ArrayList<>();
+        UserDAO dao = new UserDAO();
+
+        String sql = "SELECT UserID "
+                + " FROM Interviewer "
                 + " WHERE InterviewID = ?";
 
         try {
@@ -57,15 +62,21 @@ public class InterviewerDAO {
 
             while (rs.next()) {
                 int userID = rs.getInt("UserID");
-                InterviewerDTO tmp = new InterviewerDTO(userID, interviewID);
-                list.add(tmp);
+
+                listID.add(userID);
             }
-            return list;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return null;
+        if (listID.size() > 0) {
+            for (int i = 0; i < listID.size(); i++) {
+                UserDTO user = dao.getUserByID(listID.get(i));
+                list.add(user);
+            }
+        }
+
+        return list;
     }
 
     //get all inteviewerID in this interview
@@ -178,7 +189,13 @@ public class InterviewerDAO {
             System.out.println(userDTO.toString() + "\n");
         }
         System.out.println("======================");
-      
+        test = dao.getInterviewer(1);
+        System.out.println("List");
+        for (UserDTO userDTO : test) {
+            userDTO.toString();
+            System.out.println(userDTO.toString() + "\n");
+        }
+        System.out.println("======================");
     }
 
 }

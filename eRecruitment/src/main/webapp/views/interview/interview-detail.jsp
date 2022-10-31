@@ -4,6 +4,7 @@
     Author     : MINH TRI
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.t404notfound.erecruitment.bean.interview.InterviewDTO"%>
 <%@page import="com.t404notfound.erecruitment.bean.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -13,6 +14,8 @@
     <head>
         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
         <%InterviewDTO interview = (InterviewDTO) session.getAttribute("interview");%>
+        <%ArrayList<UserDTO> interviewerList = (ArrayList<UserDTO>) session.getAttribute("listMainInterviewer");%>
+        <%String booker = (String) session.getAttribute("booker");%>
 
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -20,13 +23,7 @@
 
         <title><c:if test="${not empty user}"><%=user.getFirstName()%> <%=user.getLastName()%></c:if></title>
 
-            <link
-                rel="stylesheet"
-                href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-                integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-                crossorigin="anonymous"
-                />
-            <link rel="stylesheet" href="css/style_profile.css" />
+
         </head>
         <body>
             <header>
@@ -86,7 +83,7 @@
         </header>
 
         <section>
-            <c:if test="${(interview != null)}"> 
+            <c:if test="<%=(interview != null)%>"> 
                 <div>
                     <div> 
                         <p>Mô tả bài đăng ${postDescription}</p>
@@ -141,7 +138,7 @@
                         <input type="number" name="maxCandidate" min="1" value = "<%=interview.getMaxCandidate()%>" required> <br/>
 
 
-                        <p>Người tạo     ${booker}</p>
+                        <p>Người tạo     <%=booker%></p>
 
                         <input type="hidden" name="action" value="updateInterview" > 
 
@@ -153,7 +150,26 @@
                             <div>
                                 <p>Người phỏng vấn</p>
                                 <div>
-                                    <a href = "?action=addInterviewer">Thêm</a>
+                                    <a href = "?action=showListInterviewer">Thêm</a>
+                                </div>
+                                <div>
+                                    <c:forEach items="<%=interviewerList%>" var="i">
+                                        <div>
+                                            <div>
+                                                <img class="ava_img" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                            </div>
+                                            <div>
+                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                            </div>
+                                            <div>
+                                                <form action="interview" method="post">
+                                                    <input type="hidden" name ="action" value ="removeInterviewer">
+                                                    <input type="hidden" name ="userID" value="${i.getUserID()}" >
+                                                    <input type="submit" value="Xóa">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>

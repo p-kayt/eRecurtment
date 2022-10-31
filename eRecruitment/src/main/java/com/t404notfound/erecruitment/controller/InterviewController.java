@@ -8,6 +8,7 @@ import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.interview.InterviewDAO;
 import com.t404notfound.erecruitment.bean.interview.InterviewDTO;
 import com.t404notfound.erecruitment.bean.interview.InterviewerDAO;
+import com.t404notfound.erecruitment.bean.interview.InterviewerDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class InterviewController extends HttpServlet {
                     session.setAttribute("interviewID", interviewID);
                     request.setAttribute("action", "interviewDetail");
                     request.setAttribute("booker", user.getFirstName() + " " + user.getLastName());
-                    request.getRequestDispatcher("/views/interview/interview_detail.jsp").forward(request, response);
+                    request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
                     return;
                 } else {
                     request.setAttribute("format", format);
@@ -87,17 +88,39 @@ public class InterviewController extends HttpServlet {
                 }
             } else if (action.equalsIgnoreCase("interviewDetail")) {
 
-                request.getRequestDispatcher("/views/interview/interview_detail.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
             } else if (action.equalsIgnoreCase("addInterviewer")) {
+
+                int userID = Integer.parseInt((String) request.getParameter("userID"));
+                int interviewID = ((Integer) session.getAttribute("interviewID")).intValue();
                 InterviewerDAO iDAO = new InterviewerDAO();
-                int interviewID = ((Integer)session.getAttribute("interviewID")).intValue();
-                ArrayList<UserDTO> listInterviewer = iDAO.getAvailableInterviewer(interviewID);
+                boolean check = iDAO.addInterviewer(userID, interviewID);
+                /*may be bug here*/
+                /*reload list interview page*/
+                InterviewerDAO interviewerDAO = new InterviewerDAO();
+                ArrayList<UserDTO> listInterviewer = interviewerDAO.getAvailableInterviewer(interviewID);
                 session.setAttribute("listInterviewer", listInterviewer);
                 request.setAttribute("interviewID", interviewID);
                 request.getRequestDispatcher("/views/interview/interviewer-list.jsp").forward(request, response);
+                /*reload list interview page*/
+
+            } else if (action.equalsIgnoreCase("removeInterviewer")) {
+
+                int userID = Integer.parseInt((String) request.getParameter("userID"));
+                int interviewID = ((Integer) session.getAttribute("interviewID")).intValue();
+                InterviewerDAO iDAO = new InterviewerDAO();
+                boolean check = iDAO.removeInterviewer(userID, interviewID);
+                /*may be bug here*/
+                /*reload detail page*/
+                InterviewerDAO interviewerDAO = new InterviewerDAO();
+                ArrayList<UserDTO> listInterviewer = interviewerDAO.getInterviewer(interviewID);
+                session.setAttribute("listMainInterviewer", listInterviewer);
+                request.setAttribute("interviewID", interviewID);
+                request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
+                /*reload detail page*/
             }
         } else {
-            request.getRequestDispatcher("/views/interview/interview_create.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/interview/interview-create.jsp").forward(request, response);
         }
 
     }

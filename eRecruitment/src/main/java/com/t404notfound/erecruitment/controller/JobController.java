@@ -7,6 +7,7 @@ package com.t404notfound.erecruitment.controller;
 import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositionDAO;
 import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositionDTO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDAO;
+import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -94,6 +95,8 @@ public class JobController extends HttpServlet {
                     int id = Integer.parseInt(request.getParameter("id"));
                     ApplicationPositionDTO position = positionDAO.loadApplicationPositions(id);
                     request.setAttribute("position", position);
+                    ArrayList<ApplicationPostDTO> postList = postDAO.listByPosition(id);
+                    request.setAttribute("postList", postList);
                     if (position != null) {
                         request.getRequestDispatcher("views/job/position/position-detail.jsp").forward(request, response);
                     } else {
