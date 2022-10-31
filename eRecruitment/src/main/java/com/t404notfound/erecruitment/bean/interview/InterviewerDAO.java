@@ -153,7 +153,7 @@ public class InterviewerDAO {
         //Get all InterviewID that not exist in this interview
         String sql = " SELECT u.[UserID] "
                 + " FROM [User_Role] u "
-                + " WHERE u.RoleID = 4 AND u.UserID NOT IN (SELECT i.[UserID] "
+                + " WHERE (u.RoleID = 4 OR u.RoleID = 2) AND u.UserID NOT IN (SELECT i.[UserID] "
                 + " FROM Interviewer i "
                 + " WHERE InterviewID = ?) ";
 
