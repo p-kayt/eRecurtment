@@ -79,8 +79,13 @@
                 </div>
             </div>
 
-            <h3>${requestScope.errorMsg}</h3>
+            <h4>${requestScope.errorMsg}</h4>
 
+            <c:if test = "${empty requestScope.Users}">
+                <h4>${requestScope.nullMsg}</h4>
+            </c:if>
+
+            
             <c:if test = "${not empty requestScope.Users}">
                 
                 <table class="table table-hover table-bordered">
