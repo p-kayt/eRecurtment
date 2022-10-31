@@ -10,13 +10,18 @@
 <html lang="vn">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Position List</title>
+        <title>Danh Sách Vị Trí</title>
     </head>
     <body>
         <div>
             <div>
+                <h3>Danh Sách Vị Trí</h3>
+            </div>
+        </div>
+        <div>
+            <div>
                 <form action="./job" method="post">
-                    <input type="submit" value="Add Postion">
+                    <input type="submit" value="Thêm Vị Trí">
                     <input type="hidden" name="action" value="load-add-position">
                 </form>
             </div>
@@ -25,8 +30,8 @@
         <div>
             <div>
                 <form action="./job" method="post">
-                    <input type="text" name="keyword" value="${requestScope.keyword}" placeholder="Enter position name...">
-                    <input type="submit" value="Search">
+                    <input type="text" name="keyword" value="${requestScope.keyword}" placeholder="Nhập tên vị trí...">
+                    <input type="submit" value="Tìm Kiếm">
                     <input type="hidden" name="action" value="search-position">
                 </form>
             </div>
@@ -39,17 +44,23 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Hiring Quantity</th>
-                                <th>Create Date</th>
-                                <th>Status</th>
+                                <th>Tên</th>
+                                <th>Mô Tả</th>
+                                <th>Số Lượng Tuyển</th>
+                                <th>Ngày Tạo</th>
+                                <th>Trạng Thái</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach var = "current" items="${requestScope.list}" varStatus = "status" >
                                 <tr>
-                                    <td> <a href="job?action=position-detail&id=${current.positionID}">${current.positionID}</a> </td>
+                                    <td>
+                                        <form action="./job" method="post">
+                                            <input type="hidden" name="id" value="${current.positionID}">
+                                            <input type="hidden" name="action" value="position-detail">
+                                            <input type="submit" value="${current.positionID}">
+                                        </form>
+                                    </td>
                                     <td> ${current.positionName} </td>
                                     <td> ${current.positionDescription} </td>
                                     <td> ${current.hiringQuantity} </td>

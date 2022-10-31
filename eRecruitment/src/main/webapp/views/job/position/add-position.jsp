@@ -10,24 +10,26 @@
 <html lang="vn">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add Position</title>
+        <title>Thêm Vị Trí Mới</title>
     </head>
     <body>
         <div>
             <div>
-                <h3>Add a New Position</h3>
+                <h3>Thêm Vị Trí Mới</h3>
             </div>
+        </div>
+        <div>
             <div>
                 <form action="./job" method="post">
-                    <label for="name">Name:</label> <input type="text" id="name" name="name" value="" />
+                    <label for="name">Tên</label> <input type="text" id="name" name="name" value="" placeholder="Nhập tên vị trí..."/>
                     </br>
-                    <label for="description">Description:</label> <input type="text" id="description" name="description" value="" />
+                    <label for="description">Mô Tả</label> <input type="text" id="description" name="description" value="" placeholder="Nhập mô tả vị trí..."/>
                     </br>
-                    <label for="quantity">Hiring Quantity:</label> <input type="number" id="quantity" name="quantity" value="" min="0" max="999999"/>
+                    <label for="quantity">Số Lượng Tuyển</label> <input type="number" id="quantity" name="quantity" value="" min="0" max="999999" placeholder="Nhập số lượng tuyển"/>
                     </br>
-                    <label for="date">Created Date:</label> <input type="date" id="date" name="date" value=""/>
+                    <label for="date">Ngày Tạo</label> <input type="date" id="date" name="date" value=""/>
                     </br>
-                    <label for="status">Status: </label>
+                    <label for="status">Trạng Thái </label>
                     <select id="status" name="status">
                         <option value="1">inActive</option>
                         <option value="2">Pending</option>
@@ -36,7 +38,7 @@
                     </select>
                     </br>
                     <input type="hidden" name="action" value="add-position">
-                    <input type="submit" value="Submit">
+                    <input type="submit" value="Thêm Vị Trí">
                 </form>
             </div>
         </div>
