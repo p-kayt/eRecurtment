@@ -39,6 +39,7 @@ public class JobController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             ApplicationPositionDAO positionDAO = new ApplicationPositionDAO();
@@ -155,7 +156,41 @@ public class JobController extends HttpServlet {
                     break;
                 // NOT FINISHED
                 case "edit-post":
-                   
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    String postDescription = request.getParameter("postDescription");
+                    String salary = request.getParameter("salary");
+                    int hiringQuantity = Integer.parseInt(request.getParameter("hiringQuantity"));
+                    Date createdDate = Date.valueOf(request.getParameter("createdDate"));
+                    Date startDate = Date.valueOf(request.getParameter("startDate"));
+                    Date expiredDate = Date.valueOf(request.getParameter("expiredDate"));
+                    int formID = Integer.parseInt(request.getParameter("formID"));
+                    int statusID = Integer.parseInt(request.getParameter("statusID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    
+                    ApplicationPostDTO editingPost = new ApplicationPostDTO();
+                    editingPost.setPostID(postID);
+                    editingPost.setPostDescription(postDescription);
+                    editingPost.setSalary(salary);
+                    editingPost.setHiringQuantity(hiringQuantity);
+                    editingPost.setCreatedDate(createdDate);
+                    editingPost.setStartDate(startDate);
+                    editingPost.setExpiredDate(expiredDate);
+                    editingPost.setFormID(formID);
+                    editingPost.setStatusID(statusID);
+                    editingPost.setPositionID(positionID);
+                    
+                    result = postDAO.updatePost(editingPost);
+                    if(result == 1){
+                        msg = "Cập Nhật Bài Đăng Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                        
+                    }else{
+                        msg = "Cập Nhật Bài Đăng Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    
                     break;
                 // NOT FINISHED
                 case "edit-post-requirements":

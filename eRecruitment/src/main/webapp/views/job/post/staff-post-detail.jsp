@@ -20,9 +20,16 @@
                 </div>
             </div>
             <div>
+                <!-- Thong bao ket qua cap nhat bai dang, Se xuat hien sau khi cap nhat bai dang -->
+                <c:if test="${not empty requestScope.msg}">
+                    <div>
+                        <h4>${requestScope.msg}</h4>
+                    </div>
+                </c:if>
+                <!--  -->
                 <div>
                     <form action="./job" method="post">
-                        <label for="id">ID</label> <input type="text" id="id" name="id" value="${requestScope.post.postID}" readonly=""/>
+                        <label for="postID">ID</label> <input type="text" id="postID" name="postID" value="${requestScope.post.postID}" readonly=""/>
                         </br>
                         <label for="name">Tên Vị Trí</label> <input type="text" id="name" name="name" value="${requestScope.position.positionName}" readonly=""/>
                         </br>

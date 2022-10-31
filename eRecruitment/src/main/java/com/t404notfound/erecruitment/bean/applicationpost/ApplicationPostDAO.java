@@ -522,7 +522,7 @@ public class ApplicationPostDAO {
     // Methods for updating Post's info
 
     // updating post's benefits
-    private int updatePostBenefits(ArrayList<PostBenefitDTO> list) {
+    public int updatePostBenefits(ArrayList<PostBenefitDTO> list) {
         String sql = "update ApplicationBenefit set Benefit = ? where BenefitID = ?";
         int result = 0;
         try {
@@ -549,7 +549,7 @@ public class ApplicationPostDAO {
     }
 
     // updating post's skills
-    private int updatePostSkills(ArrayList<PostSkillDTO> list) {
+    public int updatePostSkills(ArrayList<PostSkillDTO> list) {
         String sql = "update ApplicationSkill set SkillName = ?, SkillDescription = ? where SkillID = ?";
         int result = 0;
         try {
@@ -577,7 +577,7 @@ public class ApplicationPostDAO {
     }
 
     // updating post's requirements
-    private int updatePostRequirements(ArrayList<PostRequirementDTO> list) {
+    public int updatePostRequirements(ArrayList<PostRequirementDTO> list) {
         String sql = "update ApplicationRequirement set Requirement = ? where RequirementID = ?";
         int result = 0;
         try {
@@ -604,7 +604,7 @@ public class ApplicationPostDAO {
     }
 
     // updating post's stages
-    private int updatePostStages(ArrayList<PostStageDTO> list) {
+    public int updatePostStages(ArrayList<PostStageDTO> list) {
         String sql = "update Application_Stage set Description = ?, StageID = ? where ID = ?";
         int result = 0;
         try {
@@ -931,7 +931,7 @@ public class ApplicationPostDAO {
     }
 
     // update post
-    public int updatePost(ApplicationPostDTO post) {
+    public int updatePostAll(ApplicationPostDTO post) {
         int result = 0;
         String sql = "update ApplicationPost set PostDescription = ?, Salary = ?, HiringQuantity = ?, CreateDate = ?, StartDate = ?, ExpiredDate = ?, PositionID = ?, FormID = ?, StatusID = ? where PostID = ?";
         try {
@@ -958,6 +958,41 @@ public class ApplicationPostDAO {
                 updatePostStages(post.getStageList());
                 return result;
             }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return result;
+    }
+    
+    public int updatePost(ApplicationPostDTO post) {
+        int result = 0;
+        String sql = "update ApplicationPost set PostDescription = ?, Salary = ?, HiringQuantity = ?, CreateDate = ?, StartDate = ?, ExpiredDate = ?, PositionID = ?, FormID = ?, StatusID = ? where PostID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+
+            pst.setNString(1, post.getPostDescription());
+            pst.setNString(2, post.getSalary());
+            pst.setInt(3, post.getHiringQuantity());
+            pst.setDate(4, post.getCreatedDate());
+            pst.setDate(5, post.getStartDate());
+            pst.setDate(6, post.getExpiredDate());
+            pst.setInt(7, post.getPositionID());
+            pst.setInt(8, post.getFormID());
+            pst.setInt(9, post.getStatusID());
+
+            pst.setInt(10, post.getPostID());
+
+            result = pst.executeUpdate();
+            return result;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
