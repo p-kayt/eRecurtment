@@ -210,7 +210,7 @@ public class InterviewDAO {
                 int statusID = rs.getInt("StatusID");
                 int bookerID = rs.getInt("BookerID");
 
-                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, maxCandidate, stageID, postID, interviewID, bookerID);
+                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, maxCandidate, stageID, postID, statusID, bookerID);
                 list.add(tmp);
             }
             return list;

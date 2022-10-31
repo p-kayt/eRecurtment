@@ -89,7 +89,21 @@ public class InterviewController extends HttpServlet {
                 }
             } else if (action.equalsIgnoreCase("interviewDetail")) {
 
+                InterviewerDAO interviewerDAO = new InterviewerDAO();
+                int interviewID = ((Integer) session.getAttribute("interviewID")).intValue();
+                ArrayList<UserDTO> listInterviewer = interviewerDAO.getInterviewer(interviewID);
+                session.setAttribute("listMainInterviewer", listInterviewer);
+                request.setAttribute("interviewID", interviewID);
                 request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
+            } else if (action.equalsIgnoreCase("showListInterviewer")) {
+
+                InterviewerDAO iDAO = new InterviewerDAO();
+                int interviewID = ((Integer) session.getAttribute("interviewID")).intValue();
+                ArrayList<UserDTO> listInterviewer = iDAO.getAvailableInterviewer(interviewID);
+                session.setAttribute("listInterviewer", listInterviewer);
+                request.setAttribute("interviewID", interviewID);
+                request.getRequestDispatcher("/views/interview/interviewer-list.jsp").forward(request, response);
+
             } else if (action.equalsIgnoreCase("addInterviewer")) {
 
                 int userID = Integer.parseInt((String) request.getParameter("userID"));
