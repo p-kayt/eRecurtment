@@ -8,6 +8,7 @@ import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.cv.CVDAO;
 import com.t404notfound.erecruitment.bean.cv.CVDTO;
 import java.io.IOException;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,26 +36,48 @@ public class CVController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+
         HttpSession session = request.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
         String action = request.getParameter("action");
+        String introduction = request.getParameter("introduction");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String gender = request.getParameter("gender");
+        //Date dob = Date.valueOf(request.getParameter("dob"));
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String address = request.getParameter("address");
+        String city = request.getParameter("city");
 
         CVDAO cvdao = new CVDAO();
         CVDTO cvdto = new CVDTO();
         if (user != null) {
-            if (action.equalsIgnoreCase("createMyCV")) {
-                request.getRequestDispatcher("/views/cv/cv-write.jsp").forward(request, response);
+
+            switch (action) {
+                case "createMyCV":
+                    request.getRequestDispatcher("/views/cv/cv-write.jsp").forward(request, response);
+                    break;
+                case "createCV":
+                    
+                    cvdto = new CVDTO(0, firstName, lastName, city, new Date(01,01,2001), introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
+                    cvdao.saveCV(cvdto);
+                    cvdto = cvdao.loadCVByUserID(user.getUserID());
+                    request.setAttribute("cv", cvdto);
+                    request.getRequestDispatcher("/profile").forward(request, response);
+                    break;
+                default:
+                    request.getRequestDispatcher("/home").forward(request, response);
             }
         }
-        
-    //        
+
+        //        
         //        CVDTO cvdto = cvdao.loadCV(1);
         //        
         //        request.setAttribute("cv", cvdto);
         //        request.getRequestDispatcher("views/cv/cv-write.jsp").forward(request, response);
         {
-            
+
         }
     }
 

@@ -388,14 +388,30 @@ public class CVDAO {
 //            System.out.println(result);
             int CVID = getHighestCVID(con);
 //            System.out.println(getHighestCVID());
-            saveSkill(cv.getSkills(), CVID, con).executeUpdate();
-            saveInterest(cv.getInterests(), CVID, con).executeUpdate();
-            saveCertificate(cv.getCertificates(), CVID, con).executeUpdate();
-            saveAchievement(cv.getAchievements(), CVID, con).executeUpdate();
-            saveExperience(cv.getExperiences(), CVID, con).executeUpdate();
-            saveLanguage(cv.getLanguages(), CVID, con).executeUpdate();
-            saveEducation(cv.getEducations(), CVID, con).executeUpdate();
-            saveSocialMedia(cv.getSocialMedias(), CVID, con).executeUpdate();
+            if (cv.getSkills() != null) {
+                saveSkill(cv.getSkills(), CVID, con).executeUpdate();
+            }
+            if (cv.getInterests() != null) {
+                saveInterest(cv.getInterests(), CVID, con).executeUpdate();
+            }
+            if (cv.getCertificates() != null) {
+                saveCertificate(cv.getCertificates(), CVID, con).executeUpdate();
+            }
+            if (cv.getAchievements() != null) {
+                saveAchievement(cv.getAchievements(), CVID, con).executeUpdate();
+            }
+            if (cv.getEducations() != null) {
+                saveExperience(cv.getExperiences(), CVID, con).executeUpdate();
+            }
+            if (cv.getLanguages() != null) {
+                saveLanguage(cv.getLanguages(), CVID, con).executeUpdate();
+            }
+            if (cv.getEducations() != null) {
+                saveEducation(cv.getEducations(), CVID, con).executeUpdate();
+            }
+            if (cv.getSocialMedias() != null) {
+                saveSocialMedia(cv.getSocialMedias(), CVID, con).executeUpdate();
+            }
             con.commit();
 
             return result;
@@ -687,25 +703,40 @@ public class CVDAO {
             ps.setInt(10, genderID);
 
             int CVID = cv.getCVID();
-            deleteSkill(CVID, con).executeUpdate();
-            deleteInterest(CVID, con).executeUpdate();
-            deleteCertificate(CVID, con).executeUpdate();
-            deleteAchievement(CVID, con).executeUpdate();
-            deleteExperience(CVID, con).executeUpdate();
-            deleteLanguage(CVID, con).executeUpdate();
-            deleteEducation(CVID, con).executeUpdate();
-            deleteSocialMedia(CVID, con).executeUpdate();
 
-            saveSkill(cv.getSkills(), CVID, con).executeUpdate();
-            saveInterest(cv.getInterests(), CVID, con).executeUpdate();
-            saveCertificate(cv.getCertificates(), CVID, con).executeUpdate();
-            saveAchievement(cv.getAchievements(), CVID, con).executeUpdate();
-            saveExperience(cv.getExperiences(), CVID, con).executeUpdate();
-            saveLanguage(cv.getLanguages(), CVID, con).executeUpdate();
-            saveEducation(cv.getEducations(), CVID, con).executeUpdate();
-            saveSocialMedia(cv.getSocialMedias(), CVID, con).executeUpdate();
+            if (cv.getSkills() != null) {
+                deleteSkill(CVID, con).executeUpdate();
+                saveSkill(cv.getSkills(), CVID, con).executeUpdate();
+            }
+            if (cv.getInterests() != null) {
+                deleteInterest(CVID, con).executeUpdate();
+                saveInterest(cv.getInterests(), CVID, con).executeUpdate();
+            }
+            if (cv.getCertificates() != null) {
+                deleteCertificate(CVID, con).executeUpdate();
+                saveCertificate(cv.getCertificates(), CVID, con).executeUpdate();
+            }
+            if (cv.getAchievements() != null) {
+                deleteAchievement(CVID, con).executeUpdate();
+                saveAchievement(cv.getAchievements(), CVID, con).executeUpdate();
+            }
+            if (cv.getEducations() != null) {
+                deleteExperience(CVID, con).executeUpdate();
+                saveExperience(cv.getExperiences(), CVID, con).executeUpdate();
+            }
+            if (cv.getLanguages() != null) {
+                deleteLanguage(CVID, con).executeUpdate();
+                saveLanguage(cv.getLanguages(), CVID, con).executeUpdate();
+            }
+            if (cv.getEducations() != null) {
+                deleteEducation(CVID, con).executeUpdate();
+                saveEducation(cv.getEducations(), CVID, con).executeUpdate();
+            }
+            if (cv.getSocialMedias() != null) {
+                deleteSocialMedia(CVID, con).executeUpdate();
+                saveSocialMedia(cv.getSocialMedias(), CVID, con).executeUpdate();
+            }
 
-            
             ps.setInt(11, cv.getCVID());
             result = ps.executeUpdate();
 
@@ -929,11 +960,11 @@ public class CVDAO {
         ArrayList<SocialMediaDTO> socialMediaList = new ArrayList<>();
         socialMediaList.add(new SocialMediaDTO(0, "test 1", 1, 0));
         socialMediaList.add(new SocialMediaDTO(0, "test 2", 2, 0));
-        dto = new CVDTO(1, "test 1", "test 2", "test 3", Date.valueOf("2011-04-01"), "test 5", "test572477@gmail.com", "test 7", "test 8", "test 9", "male", 1, skillList, interestList, certificateList, achievementList, experienceList, languageList, educationList, socialMediaList);
+        dto = new CVDTO(1, "test 1", "test 2", "test 3", Date.valueOf("2011-04-01"), "test 5", "test572477@gmail.com", "test 7", "test 8", "test 9", "male", 1, null, null, null, null, null, null, null, null);
 //        dao.updateCV(dto);
 //      skillList, interestList, certificateList, achievementList, experienceList, languageList, educationList, socialMediaList
         Connection con = DBUtil.getConnection();
-        dao.updateCV(dto);
+        dao.saveCV(dto);
         dto = dao.loadCV(1);
         System.out.println(dto.toString());
     }
