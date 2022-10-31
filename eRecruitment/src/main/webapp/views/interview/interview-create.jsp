@@ -120,6 +120,7 @@
             <label for="description">Mô tả</label> <br />
             <textarea rows="4" cols="60" name="description" form="form1">${description}</textarea>
         </section>
+        
         <section>
             <h1>Date time</h1>
             <p>${datetime}</p>

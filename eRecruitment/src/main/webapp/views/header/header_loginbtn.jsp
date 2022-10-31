@@ -1,4 +1,18 @@
-<header>
+<%-- 
+    Document   : header_loginbtn
+    Created on : Oct 31, 2022, 10:34:13 AM
+    Author     : ASUS
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <header>
     <!-- navi -->
     <nav
         class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0"
@@ -19,7 +33,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="home" class="nav-item nav-link active">Trang ch?</a>
+                <a href="home" class="nav-item nav-link active">Trang chủ</a>
                 <!-- <div class="nav-item dropdown">
                   <a
                     href="#"
@@ -35,9 +49,11 @@
             </div>
             <div>
                 <a href="login" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">
-                    <span>??ng nh?p</span>
+                    <span>Đăng nhập</span>
                 </a>
             </div>
     </nav>
     <!-- Navbar End -->
 </header>
+    </body>
+</html>

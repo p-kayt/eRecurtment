@@ -79,13 +79,13 @@ public class InterviewController extends HttpServlet {
                     request.setAttribute("time", hour);
                     request.setAttribute("maxCandidate", maxCandidate);
                     request.setAttribute("description", description);
-                    request.getRequestDispatcher("/views/interview/interview-create.jsp").forward(request, response);
+                    request.getRequestDispatcher("/views/interview/interview_create.jsp").forward(request, response);
                 }
             } else if (action.equalsIgnoreCase("interviewDetail")) {
                 request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
             }
         } else {
-            request.getRequestDispatcher("/views/interview/interview-create.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/interview/interview_create.jsp").forward(request, response);
         }
 
     }
