@@ -788,8 +788,8 @@ CREATE TABLE [Application](
 	CONSTRAINT PK_Application PRIMARY KEY (ApplicationID),
 	CONSTRAINT FK_Application_from_ApplicationStatus FOREIGN KEY (StatusID)
 		REFERENCES ApplicationStatus (StatusID),
-	CONSTRAINT FK_Application_from_Stage FOREIGN KEY (StageID)
-		REFERENCES Stage (StageID),
+	CONSTRAINT FK_Application_from_Application_Stage FOREIGN KEY (StageID)
+		REFERENCES Application_Stage (ID),
 	CONSTRAINT FK_Application_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Application_from_ApplicationPost FOREIGN KEY (PostID)
@@ -797,10 +797,10 @@ CREATE TABLE [Application](
 )
 
 GO
-INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 1, 2, 2)
-INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-13', 1, 1, 3, 2)
+INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 4, 2, 2)
+INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-13', 1, 4, 3, 2)
 
-INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 2, 1, 3)
+INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 9, 1, 3)
 
 ----------------------------------
 -- Interview Section --
@@ -897,7 +897,7 @@ CREATE TABLE Interviewer(
 	UserID INT NOT NULL,
 	InterviewID INT NOT NULL,
 
-	CONSTRAINT PK_Interviewer PRIMARY KEY (InterviewerID),
+	CONSTRAINT PK_Interviewer PRIMARY KEY (UserID, InterviewID),
 	CONSTRAINT FK_Interviewer_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Interviewer_from_Interview FOREIGN KEY (InterviewID)
@@ -944,7 +944,7 @@ CREATE TABLE Participant(
 	InterviewTime SMALLDATETIME NULL,
 	ResultID INT NOT NULL,
 
-	CONSTRAINT PK_Participant PRIMARY KEY (ParticipantID),
+	CONSTRAINT PK_Participant PRIMARY KEY (UserID, InterviewID),
 	CONSTRAINT FK_Participant_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Participant_from_Interview FOREIGN KEY (InterviewID)

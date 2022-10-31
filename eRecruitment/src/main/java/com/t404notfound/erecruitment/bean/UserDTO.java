@@ -20,9 +20,9 @@ public class UserDTO {
     protected String lastName;
     protected int genderID;
     protected int statusID;
-    protected ArrayList<Integer> userRole = new ArrayList<>();
+    protected int userRole;
 
-    public UserDTO(int userID, String email, String password, String firstName, String lastName, int genderID, int statusID) {
+    public UserDTO(int userID, String email, String password, String firstName, String lastName, int genderID, int statusID, int userRole) {
         this.userID = userID;
         this.email = email;
         this.password = password;
@@ -30,6 +30,7 @@ public class UserDTO {
         this.lastName = lastName;
         this.genderID = genderID;
         this.statusID = statusID;
+        this.userRole = userRole;
     }
 
     public int getUserID() {
@@ -92,18 +93,18 @@ public class UserDTO {
         this.statusID = statusID;
     }
 
-    public void setUserRole(ArrayList<Integer> a) {
-        this.userRole = a;
+    public int getUserRole() {
+        return userRole;
     }
 
-    public ArrayList<Integer> getUserRole() {
-        return this.userRole;
+    public void setUserRole(int userRole) {
+        this.userRole = userRole;
     }
 
     @Override
     public String toString() {
         return "ID: " + userID + " Email: " + email + ", Password: " + password + ", firstName: " + firstName
-                + ", lastName: " + lastName + ", genderID: " + genderID + ", statusID: " + statusID;
+                + ", lastName: " + lastName + ", genderID: " + genderID + ", statusID: " + statusID + ", RoleID: " + userRole;
     }
 
 }

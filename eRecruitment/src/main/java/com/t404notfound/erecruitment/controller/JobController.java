@@ -43,12 +43,16 @@ public class JobController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             ApplicationPositionDAO positionDAO = new ApplicationPositionDAO();
             ApplicationPostDAO postDAO = new ApplicationPostDAO();
-
+            String msg = "";
             String action = request.getParameter("action");
             HttpSession session = request.getSession();
             switch (action) {
                 case "load-add-position":
                     request.getRequestDispatcher("views/job/position/add-position.jsp").forward(request, response);
+                    break;
+                // NOT FINISHED
+                case "load-add-post":
+                    
                     break;
                 case "position-list":
                     ArrayList<ApplicationPositionDTO> list = positionDAO.listApplicationPositions();
@@ -83,10 +87,13 @@ public class JobController extends HttpServlet {
 
                     int result = positionDAO.addApplicationPosition(dto);
                     if (result == 1) {
+                        msg = "Thêm Vị Trí Thành Công";
+                        request.setAttribute("msg", msg);
                         request.getRequestDispatcher("./job?action=position-list").forward(request, response);
                     } else {
                         // ko add duoc se gui error mesage
-                        log("ADD POSITION FAILED!");
+                        msg = "Thêm Vị Trí Thất Bại";
+                        request.setAttribute("msg", msg);
                         request.getRequestDispatcher("./job?action=position-list").forward(request, response);
                     }
 
@@ -94,13 +101,13 @@ public class JobController extends HttpServlet {
                 case "position-detail":
                     int id = Integer.parseInt(request.getParameter("id"));
                     ApplicationPositionDTO position = positionDAO.loadApplicationPositions(id);
-                    request.setAttribute("position", position);
                     ArrayList<ApplicationPostDTO> postList = postDAO.listByPosition(id);
-                    request.setAttribute("postList", postList);
-                    if (position != null) {
+
+                    if (position != null && postList != null) {
+                        request.setAttribute("position", position);
+                        request.setAttribute("postList", postList);
                         request.getRequestDispatcher("views/job/position/position-detail.jsp").forward(request, response);
                     } else {
-                        log("LOAD POSITION FAILED!");
                         request.getRequestDispatcher("./job?action=position-list").forward(request, response);
                     }
 
@@ -123,11 +130,48 @@ public class JobController extends HttpServlet {
 
                     result = positionDAO.updateApplicationPosition(dto);
                     if (result == 1) {
-                        request.getRequestDispatcher("./job?action=position-list").forward(request, response);
+                        msg = "Cập Nhật Vị Trí Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=position-detail&id="+ id + "").forward(request, response);
                     } else {
-                        log("EDIT POSITION FAILED!");
+                        msg = "Cập Nhật Vị Trí Thất Bại";
+                        request.setAttribute("msg", msg);
                         request.getRequestDispatcher("./job?action=position-list").forward(request, response);
                     }
+                    break;
+                case "staff-post-detail":
+                    int positionID = Integer.parseInt(request.getParameter("positionID"));
+                    position = positionDAO.loadApplicationPositions(positionID);
+                    int postID = Integer.parseInt(request.getParameter("postID"));
+                    ApplicationPostDTO post = postDAO.loadApplicationPost(postID);
+
+                    if (position != null && post != null) {
+                        request.setAttribute("position", position);
+                        request.setAttribute("post", post);
+                        request.getRequestDispatcher("views/job/post/staff-post-detail.jsp").forward(request, response);
+                    } else {
+                        request.getRequestDispatcher("./job?action=position-list").forward(request, response);
+                    }
+                    break;
+                // NOT FINISHED
+                case "edit-post":
+                   
+                    break;
+                // NOT FINISHED
+                case "edit-post-requirements":
+                   
+                    break;
+                // NOT FINISHED
+                case "edit-post-skills":
+                   
+                    break;
+                // NOT FINISHED
+                case "edit-post-benefits":
+                   
+                    break;
+                // NOT FINISHED
+                case "edit-post-stages":
+                   
                     break;
                 default:
                     break;
