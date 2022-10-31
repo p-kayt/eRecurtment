@@ -43,12 +43,11 @@ public class CVController extends HttpServlet {
         CVDAO cvdao = new CVDAO();
         CVDTO cvdto = new CVDTO();
         if (user != null) {
-            if (action.equalsIgnoreCase("viewMyCV")) {
-                cvdto = cvdao.loadCVByUserID(user.getUserID());
-                request.setAttribute("cv", cvdto);
+            if (action.equalsIgnoreCase("createMyCV")) {
+                request.getRequestDispatcher("/views/cv/cv-write.jsp").forward(request, response);
             }
         }
-        request.getRequestDispatcher("/views/cv/cv-read.jsp").forward(request, response);
+        
     //        
         //        CVDTO cvdto = cvdao.loadCV(1);
         //        
