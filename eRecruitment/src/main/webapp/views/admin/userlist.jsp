@@ -49,11 +49,11 @@
         <div class="container-xxl bg-white p-0">
             <!--      header with nav -->
             <c:if test="${empty user}">
-                <jsp:include page="../header/header-loginbtn.jsp" />
+                <jsp:include page="../header/header_loginbtn.jsp" />
             </c:if>
 
             <c:if test="${not empty user}">
-                <jsp:include page="../header/header-logoutbtn.jsp" />
+                <jsp:include page="../header/header_logoutbtn.jsp" />
             </c:if>
 
 
@@ -95,7 +95,7 @@
                             <th scope="col" class="col-3 pb-4">Email</th>
                             <th scope="col" class="col-2 pb-4">First Name</th>
                             <th scope="col" class="col-1 pb-4">Last Name</th>
-                            <!--                            <th class="col-1">Gender</th>-->
+                            <th scope="col" class="col-1 pb-4">Gender</th>
                             <th scope="col" class="col-2 pb-4">Role</th>
                             <th scope="col" class="col-1 text-center pb-4">Status</th>
                             <th scope="col" class="col-2 text-center pb-4">Action</th>
@@ -108,47 +108,52 @@
                                 <td class="align-middle"> ${current.getEmail()} </td>
                                 <td class="align-middle"> ${current.getFirstName()} </td>
                                 <td class="align-middle"> ${current.getLastName()} </td>
-<!--                                <td> ${current.getGender()} </td>-->
-                                <td class="align-middle"><c:choose>
+                                <td class="align-middle"> ${current.getGender()} </td>
+                                <td><c:choose>
                                         <c:when test = "${current.getUserRole() == 'System Admin'}">
                                             ${current.getUserRole()}
                                         </c:when>
                                         <c:otherwise>
-                                            <div class="d-flex flex-row">
-                                                <label class="col-6" for="isCandidate">Candidate </label>
-                                                <input class="col-6 mb-1" type="checkbox" onclick="return false;" id="isCandidate" name="isCandidate" value="true" form = "Assign Role_${current.getEmail()}" 
-                                                       <c:if test="${current.isIsCandidate()}">
-                                                           checked
-                                                       </c:if>
-                                                       >
-                                            </div>
-                                            <div class="d-flex flex-row">
-                                                <label class="col-6"  for="isHRStaff">HR Staff </label>
-                                                <input class="col-6 mb-1"  type="checkbox" id="isHRStaff" name="isHRStaff" value="true" form = "Assign Role_${current.getEmail()}"
-                                                       <c:if test="${current.isIsHRStaff()}">
-                                                           checked
-                                                       </c:if>
-                                                       >
-                                            </div>
-                                            <div class="d-flex flex-row">
-                                                <label class="col-6"  for="isHRManager">HR Manager </label>
-                                                <input class="col-6 mb-1"  type="checkbox" id="isHRManager" name="isHRManager" value="true" form = "Assign Role_${current.getEmail()}"
-                                                       <c:if test="${current.isIsHRManager()}">
-                                                           checked
-                                                       </c:if>
-                                                       >
-                                            </div>
-                                            <div class="d-flex flex-row">
-                                                <label class="col-6"  for="isInterviewer">Interviewer </label>
-                                                <input class="col-6 mb-1"  type="checkbox" id="isInterviewer" name="isInterviewer" value="true" form = "Assign Role_${current.getEmail()}"
-                                                       <c:if test="${current.isIsInterviewer()}">
-                                                           checked
-                                                       </c:if>
-                                                       >
-                                            </div>
+                                            <c:if test = "${current.getUserRole() == 'Candidate'}">
+                                                <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                    <option value="Candidate">Candidate</option>
+                                                    <option value="HR Staff">HR Staff</option>
+                                                    <option value="HR Manager">HR Manager</option>
+                                                    <option value="Interviewer">Interviewer</option>
+                                                    <option disabled value="System Admin">System Admin</option>
+                                                </select>
+                                            </c:if>
+                                            <c:if test = "${current.getUserRole() == 'HR Staff'}">
+                                                <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                    <option value="HR Staff">HR Staff</option>
+                                                    <option value="Candidate">Candidate</option>
+                                                    <option value="HR Manager">HR Manager</option>
+                                                    <option value="Interviewer">Interviewer</option>
+                                                    <option disabled value="System Admin">System Admin</option>
+                                                </select>
+                                            </c:if>
+                                            <c:if test = "${current.getUserRole() == 'HR Manager'}">
+                                                <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                    <option value="HR Staff">HR Manager</option>
+                                                    <option value="Candidate">Candidate</option>
+                                                    <option value="HR Manager">HR Staff</option>
+                                                    <option value="Interviewer">Interviewer</option>
+                                                    <option disabled value="System Admin">System Admin</option>
+                                                </select>
+                                            </c:if>
+                                            <c:if test = "${current.getUserRole() == 'Interviewer'}">
+                                                <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                    <option value="Interviewer">Interviewer</option>
+                                                    <option value="Candidate">Candidate</option>
+                                                    <option value="HR Manager">HR Staff</option>
+                                                    <option value="HR Staff">HR Manager</option>
+                                                    <option disabled value="System Admin">System Admin</option>
+                                                </select>
+                                            </c:if>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
+
                                 <td class="text-center align-middle"> ${current.getStatus()} </td>
                                 <td class="d-flex flex-column col-12">
                                     <c:choose> 
@@ -171,7 +176,6 @@
                                             </div>
                                             <div class="col-11">
                                                 <form action = "./AdminAssignRoles" method = "POST" id = "Assign Role_${current.getEmail()}"></form>
-                                                <input type = "HIDDEN" name = "ID" value= "${current.getUserID()}" form = "Assign Role_${current.getEmail()}">
                                                 <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Assign Role_${current.getEmail()}">
                                                 <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Assign Role_${current.getEmail()}">
                                                 <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Submit Role Change" form = "Assign Role_${current.getEmail()}">

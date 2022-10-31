@@ -6,7 +6,10 @@ package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.AdminUserDAO;
 import com.t404notfound.erecruitment.bean.AdminUserDTO;
+import com.t404notfound.erecruitment.bean.interview.ManagerParticipantDAO;
+import com.t404notfound.erecruitment.bean.interview.ManagerParticipantDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.naming.NamingException;
@@ -21,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Savoy
  */
-@WebServlet(name = "AdminAssignRolesController", urlPatterns = {"/AdminAssignRoles"})
-public class AdminAssignRolesController extends HttpServlet {
+@WebServlet(name = "ManagerAcceptDecline", urlPatterns = {"/ManagerAcceptDecline"})
+public class ManagerAcceptDecline extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,41 +39,38 @@ public class AdminAssignRolesController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = "./adminViewUser";
+        String url = "./ManagerViewCandidates";
         try {
             String SearchValue = request.getParameter("SearchValue").trim();
             request.setAttribute("SearchValue", SearchValue);
             String email = request.getParameter("Email");
-            String roleString = request.getParameter("Role");
-            int role = 0;
-            ArrayList<AdminUserDTO> list = new ArrayList<>();
+            String action = request.getParameter("action");
+            int status = 0;
+            ArrayList<ManagerParticipantDTO> list = new ArrayList<>();
 
-            if (roleString.equalsIgnoreCase("Candidate")) {
-                role = 1;
-            } else if (roleString.equalsIgnoreCase("HR Staff")) {
-                role = 2;
-            } else if (roleString.equalsIgnoreCase("HR Manager")) {
-                role = 3;
-            } else if (roleString.equalsIgnoreCase("Interviewer")) {
-                role = 4;
-            } else if (roleString.equalsIgnoreCase("System Admin")) {
-                role = 5;
+            if (action.equalsIgnoreCase("Accept")) {
+                status = 4;
+            } else if (action.equalsIgnoreCase("Decline")) {
+                status = 3;
+            } else if (action.equalsIgnoreCase("Undo")) {
+                status = 1;
             }
+            
             try {
-                AdminUserDAO.updateRoles(email, role);
+                ManagerParticipantDAO.updateStatus(email, status);
             } catch (SQLException | NamingException | ClassNotFoundException ex) {
             }
+
             try {
-                list = AdminUserDAO.getUsers(SearchValue);
+                list = ManagerParticipantDAO.getParticipants(SearchValue);
             } catch (SQLException | NamingException | ClassNotFoundException ex) {
             }
-            request.setAttribute("Users", list);
+            request.setAttribute("Candidates", list);
         } finally {
             RequestDispatcher ReqDis = request.getRequestDispatcher(url);
             ReqDis.forward(request, response);
         }
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
