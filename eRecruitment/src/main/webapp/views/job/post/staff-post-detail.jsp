@@ -75,6 +75,14 @@
                     <form action="./job" method="post">
                         <input type="hidden" name="postID" value="${requestScope.post.postID}">
                         <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                        <input type="hidden" name="action" value="add-requirements">
+                        <input type="submit" value="Thêm Yêu Cầu">
+                    </form>
+                </div>
+                <div>
+                    <form action="./job" method="post">
+                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                         <input type="hidden" name="action" value="edit-post-requirements">
                         <c:forEach var="req" items="${requestScope.post.requirementList}" varStatus="status">
                             <div>
@@ -93,6 +101,14 @@
             <div>
                 <div>
                     <h3>Kỹ Năng Cần Thiết</h3>
+                </div>
+                <div>
+                    <form action="./job" method="post">
+                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                        <input type="hidden" name="action" value="add-skills">
+                        <input type="submit" value="Thêm Kỹ Năng">
+                    </form>
                 </div>
                 <div>
                     <form action="./job" method="post">
@@ -118,6 +134,14 @@
                     <h3>Quyền Lợi Công Việc</h3>
                 </div>
                 <div>
+                    <form action="./job" method="post">
+                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                        <input type="hidden" name="action" value="add-benefits">
+                        <input type="submit" value="Thêm Quyền Lợi">
+                    </form>
+                </div>
+                <div>
                     <div>
                         <form action="./job" method="post">
                             <input type="hidden" name="postID" value="${requestScope.post.postID}">
@@ -141,6 +165,14 @@
             <div>
                 <div>
                     <h3>Quy Trình Ứng Tuyển</h3>
+                </div>
+                <div>
+                    <form action="./job" method="post">
+                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                        <input type="hidden" name="action" value="add-stages">
+                        <input type="submit" value="Thêm Quy Trình">
+                    </form>
                 </div>
                 <div>
                     <form action="./job" method="post">

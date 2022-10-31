@@ -381,6 +381,18 @@ public class JobController extends HttpServlet {
                         request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
                     }
                     break;
+                // NOT FINISHED   
+                case "add-requirements":
+                    break;
+                // NOT FINISHED 
+                case "add-skills":
+                    break;
+                // NOT FINISHED 
+                case "add-benefits":
+                    break;
+                // NOT FINISHED 
+                case "add-stages":
+                    break;
                 default:
                     break;
             }
