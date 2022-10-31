@@ -34,10 +34,17 @@
                                 <c:forEach items="<%=interviewerList%>" var="i">
                                     <div>
                                         <div>
-                                            <img class="ava_img" src= "${user.getAvatarURL() != null ? user.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                            <img class="ava_img" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
                                         </div>
                                         <div>
-                                            
+                                            <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                        </div>
+                                        <div>
+                                            <form action="interview" method="post">
+                                                <input type="hidden" name ="action" value ="addInterviewer">
+                                                <input type="hidden" name ="userID" value="${i.getUserID()}" >
+                                                <input type="submit" value="Thêm">
+                                            </form>
                                         </div>
                                     </div>
                                 </c:forEach>
@@ -51,9 +58,9 @@
                 </c:otherwise>
             </c:choose>
 
-            <!--test-->
-            <p style="color:yellow" >${interviewID}</p>
-            <!--test-->
+            <div>
+                <a href = "?action=interviewDetail">Quay về</a>
+            </div>
         </div>
 
 
