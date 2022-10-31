@@ -74,6 +74,7 @@
                 <div>
                     <form action="./job" method="post">
                         <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                         <input type="hidden" name="action" value="edit-post-requirements">
                         <c:forEach var="req" items="${requestScope.post.requirementList}" varStatus="status">
                             <div>
@@ -93,6 +94,7 @@
                 <div>
                     <form action="./job" method="post">
                         <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                         <input type="hidden" name="action" value="edit-post-skills">
                         <c:forEach var="skill" items="${requestScope.post.skillList}" varStatus="status">
                             <input type="hidden" name="skillID" value="${skill.skillID}">
@@ -113,6 +115,7 @@
                     <div>
                         <form action="./job" method="post">
                             <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                            <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                             <input type="hidden" name="action" value="edit-post-benefits">
                             <c:forEach var="bene" items="${requestScope.post.benefitList}" varStatus="status">
                                 <div>
@@ -133,6 +136,7 @@
                 <div>
                     <form action="./job" method="post">
                         <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                         <input type="hidden" name="action" value="edit-post-stages">
                         <c:forEach var="stage" items="${requestScope.post.stageList}" varStatus="status">
                             <input type="hidden" name="id" value="${stage.id}">
@@ -140,8 +144,8 @@
                                 <option value="1" <c:if test="${stage.stageID == 1}">selected</c:if>>CV Applying</option>
                                 <option value="2" <c:if test="${stage.stageID == 2}">selected</c:if>>Interview</option>
                                 <option value="3" <c:if test="${stage.stageID == 3}">selected</c:if>>Finish</option>
-                            </select>
-                            <input type="text" name="description" value="${stage.description}">
+                                </select>
+                                <input type="text" name="description" value="${stage.description}">
                             </br>
                         </c:forEach>
                         <input type="submit" value="Cập Nhật Quy Trình Ứng Tuyển">    

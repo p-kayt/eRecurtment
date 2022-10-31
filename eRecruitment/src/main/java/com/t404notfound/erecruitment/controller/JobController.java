@@ -8,6 +8,10 @@ import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositio
 import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositionDTO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDAO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDTO;
+import com.t404notfound.erecruitment.bean.applicationpost.PostBenefitDTO;
+import com.t404notfound.erecruitment.bean.applicationpost.PostRequirementDTO;
+import com.t404notfound.erecruitment.bean.applicationpost.PostSkillDTO;
+import com.t404notfound.erecruitment.bean.applicationpost.PostStageDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -53,7 +57,7 @@ public class JobController extends HttpServlet {
                     break;
                 // NOT FINISHED
                 case "load-add-post":
-                    
+
                     break;
                 case "position-list":
                     ArrayList<ApplicationPositionDTO> list = positionDAO.listApplicationPositions();
@@ -133,7 +137,7 @@ public class JobController extends HttpServlet {
                     if (result == 1) {
                         msg = "Cập Nhật Vị Trí Thành Công";
                         request.setAttribute("msg", msg);
-                        request.getRequestDispatcher("./job?action=position-detail&id="+ id + "").forward(request, response);
+                        request.getRequestDispatcher("./job?action=position-detail&id=" + id + "").forward(request, response);
                     } else {
                         msg = "Cập Nhật Vị Trí Thất Bại";
                         request.setAttribute("msg", msg);
@@ -166,7 +170,7 @@ public class JobController extends HttpServlet {
                     int formID = Integer.parseInt(request.getParameter("formID"));
                     int statusID = Integer.parseInt(request.getParameter("statusID"));
                     positionID = Integer.parseInt(request.getParameter("positionID"));
-                    
+
                     ApplicationPostDTO editingPost = new ApplicationPostDTO();
                     editingPost.setPostID(postID);
                     editingPost.setPostDescription(postDescription);
@@ -178,35 +182,136 @@ public class JobController extends HttpServlet {
                     editingPost.setFormID(formID);
                     editingPost.setStatusID(statusID);
                     editingPost.setPositionID(positionID);
-                    
+
                     result = postDAO.updatePost(editingPost);
-                    if(result == 1){
+                    log("RESULT AFTER DO UPDATE REQUIREMENTS: " + result);
+                    if (result == 1) {
                         msg = "Cập Nhật Bài Đăng Thành Công";
                         request.setAttribute("msg", msg);
                         request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
-                        
-                    }else{
+
+                    } else {
                         msg = "Cập Nhật Bài Đăng Thất Bại";
                         request.setAttribute("msg", msg);
                         request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
                     }
-                    
+
                     break;
-                // NOT FINISHED
                 case "edit-post-requirements":
-                   
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    String[] requirements = request.getParameterValues("requirement");
+                    String[] requirementIDs = request.getParameterValues("requirementID");
+
+                    ArrayList<Integer> reqIDs = new ArrayList<>();
+                    for (int i = 0; i < requirementIDs.length; i++) {
+                        reqIDs.add(Integer.parseInt(requirementIDs[i]));
+                    }
+
+                    ArrayList<PostRequirementDTO> reqList = new ArrayList<>();
+                    for (int i = 0; i < requirements.length; i++) {
+                        reqList.add(new PostRequirementDTO(reqIDs.get(i), requirements[i], postID));
+                    }
+
+                    result = postDAO.updatePostRequirements(reqList);
+                    if (result != 0) {
+                        msg = "Cập Nhật Yêu Cầu Công Việc Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    else{
+                        msg = "Cập Nhật Yêu Cầu Công Việc Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
                     break;
-                // NOT FINISHED
                 case "edit-post-skills":
-                   
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    
+                    String[] skillName = request.getParameterValues("skillName");
+                    String[] skillDescription = request.getParameterValues("skillDescription");
+                    String[] skillIDs = request.getParameterValues("skillID");
+                    
+                    ArrayList<Integer> skillIDsList = new ArrayList<>();
+                    for (int i = 0; i < skillIDs.length; i++) {
+                        skillIDsList.add(Integer.parseInt(skillIDs[i]));
+                    }
+                    
+                    ArrayList<PostSkillDTO> skillList = new ArrayList<>();
+                    for (int i = 0; i < skillName.length; i++) {
+                        skillList.add(new PostSkillDTO(skillIDsList.get(i), skillName[i], skillDescription[i], postID));
+                    }
+                    result = postDAO.updatePostSkills(skillList);
+                    if (result != 0) {
+                        msg = "Cập Nhật Kỹ Năng Cần Thiết Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    else{
+                        msg = "Cập Nhật Kỹ Năng Cần Thiết Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
                     break;
-                // NOT FINISHED
                 case "edit-post-benefits":
-                   
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    String[] benefits = request.getParameterValues("benefit");
+                    String[] benefitIDs = request.getParameterValues("benefitID");
+                    
+                    ArrayList<Integer> beneIDs = new ArrayList<>();
+                    for (int i = 0; i < benefitIDs.length; i++) {
+                        beneIDs.add(Integer.parseInt(benefitIDs[i]));
+                    }
+                    
+                    ArrayList<PostBenefitDTO> benefitList = new ArrayList<>();
+                    for (int i = 0; i < benefits.length; i++) {
+                        benefitList.add(new PostBenefitDTO(beneIDs.get(i), benefits[i], postID));
+                    }
+                    
+                    result = postDAO.updatePostBenefits(benefitList);
+                    if (result != 0) {
+                        msg = "Cập Nhật Quyền Lợi Công Việc Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    else{
+                        msg = "Cập Nhật Quyền Lợi Công Việc Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
                     break;
-                // NOT FINISHED
                 case "edit-post-stages":
-                   
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    String[] ids = request.getParameterValues("id");
+                    String[] stageIDs = request.getParameterValues("stageID");
+                    String[] descriptions = request.getParameterValues("description");
+                    
+                    ArrayList<Integer> idList = new ArrayList<>();
+                    ArrayList<Integer> stageIDList = new ArrayList<>();
+                    for (int i = 0; i < ids.length; i++) {
+                        idList.add(Integer.parseInt(ids[i]));
+                        stageIDList.add(Integer.parseInt(stageIDs[i]));
+                    }
+                    
+                    ArrayList<PostStageDTO> stageList = new ArrayList<>();
+                    for (int i = 0; i < descriptions.length; i++) {
+                        stageList.add(new PostStageDTO(idList.get(i), descriptions[i], postID, stageIDList.get(i)));
+                    }
+                    
+                    result = postDAO.updatePostStages(stageList);
+                    if (result != 0) {
+                        msg = "Cập Nhật Quy Trình Ứng Tuyển Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    else{
+                        msg = "Cập Nhật Quy Trình Ứng Tuyển Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
                     break;
                 default:
                     break;

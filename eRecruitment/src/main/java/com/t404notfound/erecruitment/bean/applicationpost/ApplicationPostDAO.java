@@ -1010,6 +1010,14 @@ public class ApplicationPostDAO {
     public static void main(String[] args) {
 
         ApplicationPostDAO dao = new ApplicationPostDAO();
+        ArrayList<PostRequirementDTO> reqlist = new ArrayList<>();
+        PostRequirementDTO req1 = new PostRequirementDTO(7, "test", 2);
+        reqlist.add(req1);
+        PostRequirementDTO req2 = new PostRequirementDTO(8, "test edit 2", 2);
+        reqlist.add(req2);
+        
+        int result = dao.updatePostRequirements(reqlist);
+        System.out.println(result);
 //        long millis = System.currentTimeMillis();
 //        Date now = new Date(millis);
 //        ApplicationPostDTO post = new ApplicationPostDTO(0, "Description", "Salary", 10, now, now, now, 1, 1, 4, null, null, null, null);
@@ -1039,6 +1047,7 @@ public class ApplicationPostDAO {
 
         System.out.println("");
         System.out.println("");
+        
 //        ArrayList<ApplicationPostDTO> l = dao.searchApplicationPosts("test");
 //        for (ApplicationPostDTO po : l) {
 //            System.out.println(po.getPostDescription());
