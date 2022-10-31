@@ -61,11 +61,11 @@
                 Spinner End -->
                 <!--      header with nav -->
                 <c:if test="${empty user}">
-                    <jsp:include page="../header/header-login.jspf" />
+                    <jsp:include page="../header/header_loginbtn.jsp" />
                 </c:if>
                 
                 <c:if test="${not empty user}">
-                    <jsp:include page="../header/header-logout.jspf" />
+                    <jsp:include page="../header/header_logoutbtn.jsp" />
                 </c:if>
                
 
@@ -784,7 +784,7 @@
                             </div>
                             <!-- Jobs End -->
                             <!-- footers -->
-                            <jsp:include page="../footer/footer.jspf" />
+                            <jsp:include page="../footer/footer.jsp" />
 
 
                             <!-- Back to Top -->

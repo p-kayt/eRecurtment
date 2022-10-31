@@ -15,7 +15,7 @@
     <body>
         <div>
             <div>
-                <h3>Add a New Position For Recruiting</h3>
+                <h3>Add a New Position</h3>
             </div>
             <div>
                 <form action="./job" method="post">

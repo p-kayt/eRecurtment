@@ -48,22 +48,33 @@
         <div class="container-xxl bg-white p-0">
             <!-- navi -->
             <c:if test="${empty user}">
-                <jsp:include page="../header/header-login.jspf" />
+                <jsp:include page="../header/header_loginbtn.jsp" />
             </c:if>
 
             <c:if test="${not empty user}">
-                <jsp:include page="../header/header-logout.jspf" />
+                <jsp:include page="../header/header_logoutbtn.jsp" />
             </c:if>
             <!--Show CV-->
             <c:if test="${not empty user}">
 
                 <div class="d-flex flex-row mt-4 justify-content-center">
-                    <div class="profile-img d-flex flex-column">
-                        <div class="user_name">
-                            <img class="ava_img" src= "${user.getAvatarURL() != null ? user.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
-                            <div ><%=user.getFirstName()%> <%=user.getLastName()%></div>
+                    <div class="col-3">
+                        <div class="profile-img d-flex flex-column col-12 w-auto m-auto">
+                            <div class="user_name">
+                                <img class="ava_img" src= "${user.getAvatarURL() != null ? user.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                <div ><%=user.getFirstName()%> <%=user.getLastName()%></div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 d-flex justify-content-center">
+                            <form class="col-6 mt-4" action="cv" method = "post">
+                                <input type="hidden" name="action" value="viewMyCV">
+                                <button class="btn btn-primary col-12" type="submit">View CV</button>
+                            </form>
                         </div>
                     </div>
+
+
 
                     <div class="profile-info d-flex flex-column" class="change_form">
                         <h4>Avatar</h4>
@@ -119,19 +130,19 @@
                                 <input class="col-3" type="password" name="oldPassword" id="oldPassword" value="${oldPassword}"/>
                                 <p class="text-danger">${passwordErrMess1}</p>
                             </label>
-                            
+
                             <label class="d-flex flex-row justify-content-start" for="newPassword">
                                 <span class="col-3">Enter new password </span>
                                 <input class="col-3" type="password" name="newPassword" id="newPassword" value="${newPassword}" />
                                 <p class="text-danger">${passwordErrMess2}</p>
                             </label>
-                           
+
                             <label class="d-flex flex-row justify-content-start" for="rePass">
                                 <span class="col-3">Confirm password</span>
                                 <input class="col-3" type ="password" name="rePass" id="rePass" />
                                 <p class="text-danger d-none">Password does not match!</p>
                             </label>
-                            
+
                             <input type="hidden" name="action" value="changePass">
                             <button class="btn btn-primary" onclick="checkPassword()" type="button">Save</button>
                         </form>
@@ -140,10 +151,7 @@
 
                 </div>
 
-                <<form action="cv" method = "post">
-                    <input type="hidden" name="action" value="viewMyCV">
-                    <button class="col-2 btn btn-primary" type="submit">View CV</button>
-                </form>
+
 
             </c:if>
 
@@ -173,6 +181,7 @@
 
 
         </div>
+        <jsp:include page="../footer/footer.jsp" />
     </body>
 </html>
 

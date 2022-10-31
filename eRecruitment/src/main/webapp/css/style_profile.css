@@ -18,11 +18,12 @@ body{
 }
 
 .profile-img{
+    
     background: rgb(0,176,116);
-    height: 450px;
+    height: 400px;
     width: 400px;
     margin: 0;
-    box-shadow: #EFFDF5;
+    
 }
 
 .profile-img img{
@@ -38,7 +39,7 @@ body{
 }
 
 .ava_img{
-    width: 200%;
+    width: 100%;
     height: auto;
 }
 

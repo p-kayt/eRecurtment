@@ -82,7 +82,7 @@
                             <div class="col-8  d-flex flex-row">
                                 <input type="radio" id="male" name="gender" value="Nam" checked>
                                 <label for="male">Nam</label>
-                                
+
                                 <input type="radio" id="female" name="gender" value="Nữ">
                                   <label for="female">Nữ</label>
                                   

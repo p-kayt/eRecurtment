@@ -49,15 +49,15 @@
         <div class="container-xxl bg-white p-0">
             <!--      header with nav -->
             <c:if test="${empty user}">
-                <jsp:include page="../header/header-login.jspf" />
+                <jsp:include page="../header/header-loginbtn.jsp" />
             </c:if>
 
             <c:if test="${not empty user}">
-                <jsp:include page="../header/header-logout.jspf" />
+                <jsp:include page="../header/header-logoutbtn.jsp" />
             </c:if>
 
-            
-            
+
+
             <div
                 class="container-fluid bg-primary mb-5 wow fadeIn"
                 data-wow-delay="0.1s"
@@ -85,9 +85,9 @@
                 <h4>${requestScope.nullMsg}</h4>
             </c:if>
 
-            
+
             <c:if test = "${not empty requestScope.Users}">
-                
+
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr class="tb_head col-12 rounded-9 justify-content-around">
@@ -95,7 +95,7 @@
                             <th scope="col" class="col-3 pb-4">Email</th>
                             <th scope="col" class="col-2 pb-4">First Name</th>
                             <th scope="col" class="col-1 pb-4">Last Name</th>
-<!--                            <th class="col-1">Gender</th>-->
+                            <!--                            <th class="col-1">Gender</th>-->
                             <th scope="col" class="col-2 pb-4">Role</th>
                             <th scope="col" class="col-1 text-center pb-4">Status</th>
                             <th scope="col" class="col-2 text-center pb-4">Action</th>
@@ -169,7 +169,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                             </div>
-                                                <div class="col-11">
+                                            <div class="col-11">
                                                 <form action = "./AdminAssignRoles" method = "POST" id = "Assign Role_${current.getEmail()}"></form>
                                                 <input type = "HIDDEN" name = "ID" value= "${current.getUserID()}" form = "Assign Role_${current.getEmail()}">
                                                 <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Assign Role_${current.getEmail()}">
@@ -187,5 +187,6 @@
 
 
         </div>
+        <jsp:include page="../footer/footer.jsp" />
     </body>
 </html>
