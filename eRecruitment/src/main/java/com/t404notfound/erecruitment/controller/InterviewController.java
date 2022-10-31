@@ -7,8 +7,10 @@ package com.t404notfound.erecruitment.controller;
 import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.interview.InterviewDAO;
 import com.t404notfound.erecruitment.bean.interview.InterviewDTO;
+import com.t404notfound.erecruitment.bean.interview.InterviewerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -67,7 +69,9 @@ public class InterviewController extends HttpServlet {
                     int interviewID = iDAO.getNewestInterview();
                     InterviewDTO interview = iDAO.getInterview(interviewID);
                     session.setAttribute("interview", interview);
-                    request.setAttribute("action", "changeInterview");
+                    session.setAttribute("interviewID", interviewID);
+                    request.setAttribute("action", "interviewDetail");
+                    request.setAttribute("booker", user.getFirstName() + " " + user.getLastName());
                     request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
                     return;
                 } else {
@@ -82,7 +86,15 @@ public class InterviewController extends HttpServlet {
                     request.getRequestDispatcher("/views/interview/interview_create.jsp").forward(request, response);
                 }
             } else if (action.equalsIgnoreCase("interviewDetail")) {
+
                 request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
+            } else if (action.equalsIgnoreCase("addInterviewer")) {
+                InterviewerDAO iDAO = new InterviewerDAO();
+                int interviewID = ((Integer)session.getAttribute("interviewID")).intValue();
+                ArrayList<UserDTO> listInterviewer = iDAO.getAvailableInterviewer(interviewID);
+                session.setAttribute("listInterviewer", listInterviewer);
+                request.setAttribute("interviewID", interviewID);
+                request.getRequestDispatcher("/views/interview/interviewer-list.jsp").forward(request, response);
             }
         } else {
             request.getRequestDispatcher("/views/interview/interview_create.jsp").forward(request, response);

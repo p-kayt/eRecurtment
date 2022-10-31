@@ -897,6 +897,7 @@ CREATE TABLE Interviewer(
 	UserID INT NOT NULL,
 	InterviewID INT NOT NULL,
 
+	CONSTRAINT PK_Interviewer PRIMARY KEY (InterviewerID),
 	CONSTRAINT FK_Interviewer_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Interviewer_from_Interview FOREIGN KEY (InterviewID)
@@ -919,21 +920,42 @@ INSERT INTO Interviewer(UserID, InterviewID) VALUES(6, 2)
 --	UserID: ID của ứng viên, tham chiếu tới bảng User
 --	InterviewID: ID của buổi PV, tham chiếu tới bảng Interview
 GO
+
+CREATE TABLE InterviewResult(
+	ResultID INT NOT NULL PRIMARY KEY,
+	ResultName VARCHAR(20) NOT NULL
+)
+GO
+-- Các ứng viên sẽ có trạng thái kèm theo buổi phỏng vấn
+-- Đang chờ phỏng vấn, miễn phỏng vấn, pass, fail
+INSERT INTO InterviewResult (ResultID, ResultName) VALUES (1,'waiting')
+GO
+INSERT INTO InterviewResult (ResultID, ResultName) VALUES (2,'nointerview')
+GO
+INSERT INTO InterviewResult (ResultID, ResultName) VALUES (3,'pass')
+GO
+INSERT INTO InterviewResult (ResultID, ResultName) VALUES (4,'fail')
+GO
+
 CREATE TABLE Participant(
 	ParticipantID INT IDENTITY(1,1) NOT NULL,
 	UserID INT NOT NULL,
 	InterviewID INT NOT NULL,
 	InterviewTime SMALLDATETIME NULL,
+	ResultID INT NOT NULL,
 
+	CONSTRAINT PK_Participant PRIMARY KEY (ParticipantID),
 	CONSTRAINT FK_Participant_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Participant_from_Interview FOREIGN KEY (InterviewID)
-		REFERENCES Interview (InterviewID)
+		REFERENCES Interview (InterviewID),
+	CONSTRAINT FK_Participant_from_InterviewResult FOREIGN KEY (ResultID)
+		REFERENCES InterviewResult (ResultID)
 )
 
 GO
-INSERT INTO Participant(UserID, InterviewID, InterviewTime) VALUES(1, 1, '2022-10-20 10:00')
-INSERT INTO Participant(UserID, InterviewID, InterviewTime) VALUES(1, 2, '2022-10-25 22:00')
+INSERT INTO Participant(UserID, InterviewID, InterviewTime, ResultID) VALUES(1, 1, '2022-10-20 10:00', 1)
+INSERT INTO Participant(UserID, InterviewID, InterviewTime, ResultID) VALUES(1, 2, '2022-10-25 22:00', 1)
 
 -- Bảng chứa thông tin đánh giá ứng viên trong buổi PV
 -- 1 kết quả đánh giá sẽ cho 1 ứng viên (Participant), do 1 người đánh giá (Interviewer) và trong 1 buổi PV

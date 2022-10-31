@@ -103,7 +103,7 @@
 
                         <label for="stageID">Tên vòng phỏng vấn</label>
                         <%--Need fix this, must load stage from database--%>
-                        <select name = "stage" id="stage">
+                        <select name = "stage" id="stage" disabled>
                             <%int stageID = interview.getStageID();%>
                             <option value = "1" <%=(stageID == 1) ? "selected" : ""%>>Vòng 1</option>
                             <option value = "2" <%=(stageID == 2) ? "selected" : ""%>>Vòng 2</option>
@@ -140,14 +140,37 @@
                         <label for="maxCandidate">Số ứng viên tối đa</label>
                         <input type="number" name="maxCandidate" min="1" value = "<%=interview.getMaxCandidate()%>" required> <br/>
 
-                        <label for="booker">Người tạo</label>
-                        <input type="text" value="Người tạo" disabled>
+
+                        <p>Người tạo     ${booker}</p>
+
+                        <input type="hidden" name="action" value="updateInterview" > 
+
 
                     </form>
+
+                    <div>
+                        <div>
+                            <div>
+                                <p>Người phỏng vấn</p>
+                                <div>
+                                    <a href = "?action=addInterviewer">Thêm</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type = "button" onclick = "UpdateInterview()">Cập nhật phỏng vấn</button>
                 </div>
             </c:if>
         </section>
 
+
+        <script>
+            function UpdateInterview() {
+                var f = document.getElementById("form1");
+                f.submit();
+            }
+        </script>
     </body>
 </html>
 
