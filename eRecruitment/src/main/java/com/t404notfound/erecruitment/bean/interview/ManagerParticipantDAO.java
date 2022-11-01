@@ -5,8 +5,6 @@
 package com.t404notfound.erecruitment.bean.interview;
 
 import Util.DBUtil;
-import static com.t404notfound.erecruitment.bean.AdminUserDAO.checkBooleanRoles;
-import com.t404notfound.erecruitment.bean.AdminUserDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

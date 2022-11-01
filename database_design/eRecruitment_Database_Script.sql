@@ -154,7 +154,6 @@ INSERT INTO User_Role(UserID, RoleID) VALUES (2, 1)
 INSERT INTO User_Role(UserID, RoleID) VALUES (3, 1)
 INSERT INTO User_Role(UserID, RoleID) VALUES (4, 2)
 INSERT INTO User_Role(UserID, RoleID) VALUES (5, 3)
-INSERT INTO User_Role(UserID, RoleID) VALUES (5, 4)
 INSERT INTO User_Role(UserID, RoleID) VALUES (6, 4)
 INSERT INTO User_Role(UserID, RoleID) VALUES (7, 5)
 

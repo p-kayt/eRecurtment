@@ -14,19 +14,6 @@ import javax.naming.NamingException;
  */
 public class AdminUserDAO {
 
-    public static void checkBooleanRoles(AdminUserDTO user) {
-        user.isCandidate = true;
-        if (user.userRole.equalsIgnoreCase("HR Staff")) {
-            user.isHRStaff = true;
-        }
-        if (user.userRole.equalsIgnoreCase("HR Manager")) {
-            user.isHRManager = true;
-        }
-        if (user.userRole.equalsIgnoreCase("Interviewer")) {
-            user.isInterviewer = true;
-        }
-    }
-
     public static ArrayList<AdminUserDTO> getUsers(String searchValue)
             throws SQLException, NamingException, ClassNotFoundException {
         String SQLQuery = "SELECT [User].UserID, [User].Email, [User].Password, [User].FirstName, [User].LastName, Gender.GenderName, Role.RoleName, UserStatus.StatusName FROM [User] JOIN UserStatus ON [User].Status = UserStatus.StatusID JOIN User_Role ON [User].UserID = User_Role.UserID JOIN Role ON User_Role.RoleID = Role.RoleID JOIN Gender ON [User].Gender = Gender.GenderID WHERE [User].LastName LIKE ? or [User].FirstName LIKE ?";
@@ -42,8 +29,7 @@ public class AdminUserDAO {
             PreS.setString(2, "%" + searchValue + "%");
             ReS = PreS.executeQuery();
             while (ReS.next()) {
-                AdminUserDTO user = new AdminUserDTO(ReS.getInt(1), ReS.getString(2), ReS.getString(3), ReS.getString(4), ReS.getString(5), ReS.getString(6), ReS.getString(7), ReS.getString(8), false, false, false, false);
-                checkBooleanRoles(user);
+                AdminUserDTO user = new AdminUserDTO(ReS.getInt(1), ReS.getString(2), ReS.getString(3), ReS.getString(4), ReS.getString(5), ReS.getString(6), ReS.getString(7), ReS.getString(8));
 
                 users.add(user);
 
@@ -52,18 +38,6 @@ public class AdminUserDAO {
                     for (AdminUserDTO u : users) {
                         if (user.userID == u.userID) {
                             count++;
-                            if (user.isCandidate) {
-                                u.isCandidate = true;
-                            }
-                            if (user.isHRManager) {
-                                u.isHRManager = true;
-                            }
-                            if (user.isHRStaff) {
-                                u.isHRStaff = true;
-                            }
-                            if (user.isInterviewer) {
-                                u.isInterviewer = true;
-                            }
                         }
                     }
                     if (count != 1) {
