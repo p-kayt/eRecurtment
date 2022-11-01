@@ -99,6 +99,8 @@
                 <div>
                     <span class="fa fa-plus-circle fa-2x" onclick="addRequirementFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"></span>
                 </div>
+                <div id="addRequirementButton">
+                </div>
                 <div id="addRequirementList">
                 </div>
             </div>
@@ -131,8 +133,14 @@
                         </c:if>
                     </form> 
                 </div>
+                <div>
+                    <span class="fa fa-plus-circle fa-2x" onclick="addSkillFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"></span>
+                </div>
+                <div id="addSkillButton">
+                </div>
+                <div id="addSkillList">
+                </div>
             </div>
-
             <div>
                 <div>
                     <h3>Quyền Lợi Công Việc</h3>
@@ -145,32 +153,32 @@
                         <input type="submit" value="Thêm Quyền Lợi">
                     </form>
                 </div>
+
                 <div>
-                    <div>
-                        <form action="./job" method="post">
-                            <input type="hidden" name="postID" value="${requestScope.post.postID}">
-                            <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
-                            <input type="hidden" name="action" value="edit-post-benefits">
-                            <c:forEach var="bene" items="${requestScope.post.benefitList}" varStatus="status">
-                                <div>
-                                    <input type="hidden" name="benefitID" value="${bene.benefitID}">
-                                    <input type="text" name="benefit" value="${bene.benefit}">
-                                    <a href="./job?action=delete-a-benefit&postID=${requestScope.post.postID}&positionID=${requestScope.position.positionID}&benefitID=${bene.benefitID}">Xóa</a>
-                                </div>
-                            </c:forEach>
-                            <c:if test="${not empty requestScope.post.benefitList}">
-                                <input type="submit" value="Cập Nhật Quyền Lợi Công Việc"> 
-                            </c:if>
-                        </form>   
-                    </div>
-                    <div>
-                        <span class="fa fa-plus-circle fa-2x" onclick="addBenefitFromEditPost((${requestScope.post.postID}, ${requestScope.position.positionID})"></span>
-                    </div>
-                    <div id="addBenefitList">
-                    </div>
+                    <form action="./job" method="post">
+                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                        <input type="hidden" name="action" value="edit-post-benefits">
+                        <c:forEach var="bene" items="${requestScope.post.benefitList}" varStatus="status">
+                            <div>
+                                <input type="hidden" name="benefitID" value="${bene.benefitID}">
+                                <input type="text" name="benefit" value="${bene.benefit}">
+                                <a href="./job?action=delete-a-benefit&postID=${requestScope.post.postID}&positionID=${requestScope.position.positionID}&benefitID=${bene.benefitID}">Xóa</a>
+                            </div>
+                        </c:forEach>
+                        <c:if test="${not empty requestScope.post.benefitList}">
+                            <input type="submit" value="Cập Nhật Quyền Lợi Công Việc"> 
+                        </c:if>
+                    </form>   
+                </div>
+                <div>
+                    <span class="fa fa-plus-circle fa-2x" onclick="addBenefitFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"></span>
+                </div>
+                <div id="addBenefitButton">
+                </div>
+                <div id="addBenefitList">
                 </div>
             </div>
-
             <div>
                 <div>
                     <h3>Quy Trình Ứng Tuyển</h3>
@@ -205,6 +213,13 @@
                         </c:if>
                     </form> 
                 </div>
+                <div>
+                    <span class="fa fa-plus-circle fa-2x" onclick="addStageFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"></span>
+                </div>
+                <div id="addStageButton">
+                </div>
+                <div id="addStageList">
+                </div>     
             </div>
         </c:if>
         <script src="js/job-utility.js"></script>

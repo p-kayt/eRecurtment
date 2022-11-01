@@ -404,12 +404,28 @@ public class JobController extends HttpServlet {
                         request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
                     }               
                     break;
-                // NOT FINISHED 
                 case "add-skills":
                     postID = Integer.parseInt(request.getParameter("postID"));
                     positionID = Integer.parseInt(request.getParameter("positionID"));
+                    skillName = request.getParameterValues("skillName");
+                    skillDescription = request.getParameterValues("skillDescription");
+                    
+                    skillList = new ArrayList<>();
+                    for (int i = 0; i < skillName.length; i++) {
+                        skillList.add(new PostSkillDTO(0, skillName[i], skillDescription[i], postID));
+                    }
+                    result = postDAO.addPostSkills(skillList, postID);
+                    if(result == 1){
+                        msg = "Thêm Kỹ Năng Cần Thiết Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    else{
+                        msg = "Thêm Kỹ Năng Cần Thiết Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }  
                     break;
-                // NOT FINISHED 
                 case "add-benefits":
                     postID = Integer.parseInt(request.getParameter("postID"));
                     positionID = Integer.parseInt(request.getParameter("positionID"));
@@ -432,8 +448,32 @@ public class JobController extends HttpServlet {
                         request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
                     }  
                     break;
-                // NOT FINISHED 
                 case "add-stages":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    
+                    String[] stageIDString = request.getParameterValues("stageID");
+                    descriptions = request.getParameterValues("description");
+                    
+                    stageIDList = new ArrayList<>();
+                    for (int i = 0; i < stageIDString.length; i++) {
+                        stageIDList.add(Integer.parseInt(stageIDString[i]));
+                    }
+                    stageList = new ArrayList<>();
+                    for (int i = 0; i < descriptions.length; i++) {
+                        stageList.add(new PostStageDTO(0, descriptions[i], postID, stageIDList.get(i)));
+                    }
+                    result = postDAO.addPostStages(stageList, postID);
+                    if(result == 1){
+                        msg = "Thêm Quy Trình Ứng Tuyển Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    else{
+                        msg = "Thêm Quy Trình Ứng Tuyển Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }  
                     break;
                 // NOT FINISHED 
                 case "add-post":

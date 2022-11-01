@@ -12,7 +12,7 @@ function addRequirement() {
     root = document.getElementById("requirementList");
     root.appendChild(div);
 }
-;
+
 
 function removeRequirement() {
     if (requirementCount > 0) {
@@ -21,8 +21,8 @@ function removeRequirement() {
         requirementCount--;
     }
 }
-;
 
+//===============================================================
 var postReq = 0;
 function addRequirementFromEditPost(postID, positionID) {
     if (postReq == 0) {
@@ -69,8 +69,9 @@ function addRequirementFromEditPost(postID, positionID) {
         inputDiv.appendChild(input3);
         inputDiv.appendChild(reqDiv);
 
-
-        submitDiv.innerHTML = '<div><span class="fa fa-minus-circle fa-2x" onclick="removeRequirementFromEditPost()"></span></div>';
+        root = document.getElementById("addRequirementButton");
+        root.innerHTML = '<div><span class="fa fa-minus-circle fa-2x" onclick="removeRequirementFromEditPost()"></span></div>';
+        
         submitDiv.appendChild(submit);
         form.appendChild(inputDiv);
         form.appendChild(submitDiv);
@@ -99,6 +100,8 @@ function removeRequirementFromEditPost() {
     } else if (postReq == 1) {
         var element = document.getElementById("addRequirementFromEditPostContainer");
         element.parentNode.removeChild(element);
+        var elementBtn = document.getElementById("addRequirementButton");
+        elementBtn.innerHTML = '';
         postReq--;
     }
 }
@@ -149,9 +152,10 @@ function addBenefitFromEditPost(postID, positionID) {
         inputDiv.appendChild(input2);
         inputDiv.appendChild(input3);
         inputDiv.appendChild(beneDiv);
-
-
-        submitDiv.innerHTML = '<div><span class="fa fa-minus-circle fa-2x" onclick="removeBenefitFromEditPost()"></span></div>';
+        
+        root = document.getElementById("addBenefitButton");
+        root.innerHTML = '<div><span class="fa fa-minus-circle fa-2x" onclick="removeBenefitFromEditPost()"></span></div>';
+        
         submitDiv.appendChild(submit);
         form.appendChild(inputDiv);
         form.appendChild(submitDiv);
@@ -180,6 +184,8 @@ function removeBenefitFromEditPost() {
     } else if (postBene == 1) {
         var element = document.getElementById("addBenefitFromEditPostContainer");
         element.parentNode.removeChild(element);
+        var elementBtn = document.getElementById("addBenefitButton");
+        elementBtn.innerHTML = '';
         postBene--;
     }
 }
@@ -194,15 +200,15 @@ function addSkillFromEditPost(postID, positionID) {
         div.id = 'addSkillFromEditPostContainer';
 
         const inputDiv = document.createElement("div");
-        inputDiv.id = 'inputBenefitContainer';
+        inputDiv.id = 'inputSkillContainer';
 
         const submitDiv = document.createElement("div");
-        submitDiv.id = 'submitBenefitContainer';
+        submitDiv.id = 'submitSkillContainer';
 
         const form = document.createElement("form");
         form.action = './job';
         form.method = 'post';
-        form.id = 'addBenefitForm';
+        form.id = 'addSkillForm';
 
         const input1 = document.createElement("input");
         input1.type = 'hidden';
@@ -217,11 +223,11 @@ function addSkillFromEditPost(postID, positionID) {
         const input3 = document.createElement("input");
         input3.type = 'hidden';
         input3.name = 'action';
-        input3.value = 'add-benefits';
+        input3.value = 'add-skills';
 
-        const beneDiv = document.createElement("div");
-        beneDiv.id = 'benefitContainer' + postBene;
-        beneDiv.innerHTML = '<label for="benefit">Quyền Lợi</label><input type="text" id="benefit" name="benefit" value="" placeholder="">';
+        const skillDiv = document.createElement("div");
+        skillDiv.id = 'skillContainer' + postSkill;
+        skillDiv.innerHTML = '<div><label for="skillName">Kỹ Năng</label><input type="text" id="skillName" name="skillName" value="" placeholder=""></div><div><label for="skillDescription">Mô Tả</label><input type="text" id="skillDescription" name="skillDescription" value="" placeholder=""></div>';
 
         const submit = document.createElement('input');
         submit.type = 'submit';
@@ -230,39 +236,126 @@ function addSkillFromEditPost(postID, positionID) {
         inputDiv.appendChild(input1);
         inputDiv.appendChild(input2);
         inputDiv.appendChild(input3);
-        inputDiv.appendChild(beneDiv);
+        inputDiv.appendChild(skillDiv);
 
+        root = document.getElementById("addSkillButton");
+        root.innerHTML = '<div><span class="fa fa-minus-circle fa-2x" onclick="removeSkillFromEditPost()"></span></div>';
 
-        submitDiv.innerHTML = '<div><span class="fa fa-minus-circle fa-2x" onclick="removeBenefitFromEditPost()"></span></div>';
         submitDiv.appendChild(submit);
         form.appendChild(inputDiv);
         form.appendChild(submitDiv);
         div.appendChild(form);
-        root = document.getElementById("addBenefitList");
+        root = document.getElementById("addSkillList");
         root.appendChild(div);
     } else {
-        postBene++;
-        addMoreBenefit(postBene);
+        postSkill++;
+        addMoreSkill(postSkill);
     }
 }
 
-function addMoreBenefit(postBene) {
-    const beneDiv = document.createElement("div");
-    beneDiv.id = 'benefitContainer' + postBene;
-    beneDiv.innerHTML = '<label for="benefit">Quyền Lợi</label><input type="text" id="benefit" name="benefit" value="" placeholder="">';
-    root = document.getElementById("inputBenefitContainer");
-    root.appendChild(beneDiv);
+function addMoreSkill(postSkill) {
+    const skillDiv = document.createElement("div");
+    skillDiv.id = 'skillContainer' + postSkill;
+    skillDiv.innerHTML = '<div><label for="skillName">Kỹ Năng</label><input type="text" id="skillName" name="skillName" value="" placeholder=""></div><div><label for="skillDescription">Mô Tả</label><input type="text" id="skillDescription" name="skillDescription" value="" placeholder=""></div>';
+    root = document.getElementById("inputSkillContainer");
+    root.appendChild(skillDiv);
 }
 
-function removeBenefitFromEditPost() {
-    if (postBene > 1) {
-        var element = document.getElementById("benefitContainer" + postBene);
+function removeSkillFromEditPost() {
+    if (postSkill > 1) {
+        var element = document.getElementById("skillContainer" + postSkill);
         element.parentNode.removeChild(element);
-        postBene--;
-    } else if (postBene == 1) {
-        var element = document.getElementById("addBenefitFromEditPostContainer");
+        postSkill--;
+    } else if (postSkill == 1) {
+        var element = document.getElementById("addSkillFromEditPostContainer");
         element.parentNode.removeChild(element);
-        postBene--;
+        var elementBtn = document.getElementById("addSkillButton");
+        elementBtn.innerHTML = '';
+        postSkill--;
     }
 }
 
+
+//==================================================
+var postStage = 0;
+function addStageFromEditPost(postID, positionID) {
+    if (postStage == 0) {
+        postStage++;
+        const div = document.createElement("div");
+        div.id = 'addStageFromEditPostContainer';
+
+        const inputDiv = document.createElement("div");
+        inputDiv.id = 'inputStageContainer';
+
+        const submitDiv = document.createElement("div");
+        submitDiv.id = 'submitStageContainer';
+
+        const form = document.createElement("form");
+        form.action = './job';
+        form.method = 'post';
+        form.id = 'addStageForm';
+
+        const input1 = document.createElement("input");
+        input1.type = 'hidden';
+        input1.name = 'postID';
+        input1.value = postID;
+
+        const input2 = document.createElement("input");
+        input2.type = 'hidden';
+        input2.name = 'positionID';
+        input2.value = positionID;
+
+        const input3 = document.createElement("input");
+        input3.type = 'hidden';
+        input3.name = 'action';
+        input3.value = 'add-stages';
+
+        const stageDiv = document.createElement("div");
+        stageDiv.id = 'stageContainer' + postStage;
+        stageDiv.innerHTML = '<div><label for="stageID">Vòng Ứng Tuyển</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả</label><input type="text" id="description" name="description" value="" placeholder=""></div>';
+
+        const submit = document.createElement('input');
+        submit.type = 'submit';
+        submit.value = 'Thêm';
+
+        inputDiv.appendChild(input1);
+        inputDiv.appendChild(input2);
+        inputDiv.appendChild(input3);
+        inputDiv.appendChild(stageDiv);
+
+        root = document.getElementById("addStageButton");
+        root.innerHTML = '<div><span class="fa fa-minus-circle fa-2x" onclick="removeStageFromEditPost()"></span></div>';
+
+        submitDiv.appendChild(submit);
+        form.appendChild(inputDiv);
+        form.appendChild(submitDiv);
+        div.appendChild(form);
+        root = document.getElementById("addStageList");
+        root.appendChild(div);
+    } else {
+        postStage++;
+        addMoreStage(postStage);
+    }
+}
+
+function addMoreStage(postStage) {
+    const stageDiv = document.createElement("div");
+    stageDiv.id = 'stageContainer' + postStage;
+    stageDiv.innerHTML = '<div><label for="stageID">Vòng Ứng Tuyển</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả</label><input type="text" id="description" name="description" value="" placeholder=""></div>';
+    root = document.getElementById("inputStageContainer");
+    root.appendChild(stageDiv);
+}
+
+function removeStageFromEditPost() {
+    if (postStage > 1) {
+        var element = document.getElementById("stageContainer" + postStage);
+        element.parentNode.removeChild(element);
+        postStage--;
+    } else if (postStage == 1) {
+        var element = document.getElementById("addStageFromEditPostContainer");
+        element.parentNode.removeChild(element);
+        var elementBtn = document.getElementById("addStageButton");
+        elementBtn.innerHTML = '';
+        postStage--;
+    }
+}
