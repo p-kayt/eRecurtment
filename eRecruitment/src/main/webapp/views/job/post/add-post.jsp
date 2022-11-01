@@ -40,15 +40,15 @@
                         </div>
                         <div>
                             <label for="postDescription">Mô Tả</label>
-                            <input type="text" id="postDescription" name="postDescription" value="" placeholder="">
+                            <input type="text" id="postDescription" name="postDescription" value="" placeholder="Nhập mô tả bài đăng...">
                         </div>
                         <div>
                             <label for="salary">Mức Lương</label>
-                            <input type="text" id="salary" name="salary" value="" placeholder="">
+                            <input type="text" id="salary" name="salary" value="" placeholder="Nhập lương (1 - 100, khoảng 100, ...)">
                         </div>
                         <div>
                             <label for="hiringQuantity">Số Lượng Tuyển</label>
-                            <input type="number" id="hiringQuantity" name="hiringQuantity" value="" placeholder="" min="0" max="${requestScope.position.hiringQuantity}">
+                            <input type="number" id="hiringQuantity" name="hiringQuantity" value="" placeholder="1" min="0" max="${requestScope.position.hiringQuantity}">
                         </div>
                         <div>
                             <label for="createdDate">Ngày Tạo</label>
@@ -87,8 +87,7 @@
                         <div>
                             <h3>Yêu Cầu Công Việc</h3>
                         </div>
-                        <div id="requirementList">
-                            
+                        <div id="requirementList"> 
                         </div>
                         <div>
                             <span class="fa fa-plus-circle fa-2x" onclick="addRequirement()"></span>
@@ -101,44 +100,39 @@
                         <div>
                             <h3>Kỹ Năng Cần Thiết</h3>
                         </div>
+                        <div id="skillList"> 
+                        </div>
                         <div>
-                            <div>
-                                <label for="skillName">Kỹ Năng</label>
-                                <input type="text" id="skillName" name="skillName" value="" placeholder="">
-                            </div>
-                            <div>
-                                <label for="skillDescription">Mô Tả</label>
-                                <input type="text" id="skillDescription" name="skillDescription" value="" placeholder="">
-                            </div>
+                            <span class="fa fa-plus-circle fa-2x" onclick="addSkill()"></span>
+                        </div>
+                        <div>
+                            <span class="fa fa-minus-circle fa-2x" onclick="removeSkill()"></span>
                         </div>
                     </div>
                     <div>
                         <div>
                             <h3>Quyền Lợi Công Việc</h3>
                         </div>
+                        <div id="benefitList"> 
+                        </div>
                         <div>
-                            <label for="benefit">Quyền Lợi</label>
-                            <input type="text" id="benefit" name="benefit" value="" placeholder="">
+                            <span class="fa fa-plus-circle fa-2x" onclick="addBenefit()"></span>
+                        </div>
+                        <div>
+                            <span class="fa fa-minus-circle fa-2x" onclick="removeBenefit()"></span>
                         </div>
                     </div>
                     <div>
                         <div>
                             <h3>Quy Trình Ứng Tuyển</h3>
                         </div>
+                        <div id="stageList"> 
+                        </div>
                         <div>
-                            <div>
-                                <label for="stageID">Vòng Ứng Tuyển</label>
-                                <select id="stageID" name="stageID">
-                                    <option value="1" selected>CV Applying</option>
-                                    <option value="2">Interview</option>
-                                    <option value="3">Finish</option>
-                                    <option value="4">Final Evaluation</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="description">Mô Tả</label>
-                                <input type="text" id="description" name="description" value="" placeholder="">
-                            </div>
+                            <span class="fa fa-plus-circle fa-2x" onclick="addStage()"></span>
+                        </div>
+                        <div>
+                            <span class="fa fa-minus-circle fa-2x" onclick="removeStage()"></span>
                         </div>
                     </div>
 
@@ -149,7 +143,7 @@
         </div>
         <script type="text/javascript">
             function getCurrentDate() {
-                let currentDate = new Date().toJSON().slice(0, 10);
+                var currentDate = new Date().toJSON().slice(0, 10);
                 return currentDate;
             }
             var createdDate = document.getElementById("createdDate");

@@ -8,7 +8,7 @@ function addRequirement() {
     requirementCount++;
     const div = document.createElement("div");
     div.id = 'requirementContainer' + requirementCount;
-    div.innerHTML = '<label for="requirement">Yêu Cầu ' + requirementCount.toString() + '</label><input type="text" id="requirement" name="requirement" value="" placeholder="">';
+    div.innerHTML = '<label for="requirement">Yêu Cầu ' + requirementCount.toString() + '</label><input type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc...">';
     root = document.getElementById("requirementList");
     root.appendChild(div);
 }
@@ -19,6 +19,63 @@ function removeRequirement() {
         var element = document.getElementById("requirementContainer" + requirementCount);
         element.parentNode.removeChild(element);
         requirementCount--;
+    }
+}
+
+var benefitCount = 0;
+function addBenefit() {
+    benefitCount++;
+    const div = document.createElement("div");
+    div.id = 'benefitContainer' + benefitCount;
+    div.innerHTML = '<label for="benefit">Quyền Lợi ' + benefitCount.toString() + '</label><input type="text" id="benefit" name="benefit" value="" placeholder="Nhập quyền lợi...">';
+    root = document.getElementById("benefitList");
+    root.appendChild(div);
+}
+
+
+function removeBenefit() {
+    if (benefitCount > 0) {
+        var element = document.getElementById("benefitContainer" + benefitCount);
+        element.parentNode.removeChild(element);
+        benefitCount--;
+    }
+}
+
+var skillCount = 0;
+function addSkill() {
+    skillCount++;
+    const div = document.createElement("div");
+    div.id = 'skillContainer' + skillCount;
+    div.innerHTML = '<div><label for="skillName">Kỹ Năng ' + skillCount.toString() + '</label><input type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng..."></div><div><label for="skillDescription">Mô Tả ' + skillCount.toString() + '</label><input type="text" id="skillDescription" name="skillDescription" value="" placeholder="Nhập mô tả kỹ năng..."></div>'
+    root = document.getElementById("skillList");
+    root.appendChild(div);
+}
+
+
+function removeSkill() {
+    if (skillCount > 0) {
+        var element = document.getElementById("skillContainer" + skillCount);
+        element.parentNode.removeChild(element);
+        skillCount--;
+    }
+}
+
+var stageCount = 0;
+function addStage() {
+    stageCount++;
+    const div = document.createElement("div");
+    div.id = 'stageContainer' + stageCount;
+    div.innerHTML = '<div><label for="stageID">Vòng Ứng Tuyển ' + stageCount.toString() + '</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả ' + stageCount.toString() + '</label><input type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>';
+    root = document.getElementById("stageList");
+    root.appendChild(div);
+}
+
+
+function removeStage() {
+    if (stageCount > 0) {
+        var element = document.getElementById("stageContainer" + stageCount);
+        element.parentNode.removeChild(element);
+        stageCount--;
     }
 }
 
@@ -58,7 +115,7 @@ function addRequirementFromEditPost(postID, positionID) {
 
         const reqDiv = document.createElement("div");
         reqDiv.id = 'requirementContainer' + postReq;
-        reqDiv.innerHTML = '<label for="requirement">Yêu Cầu</label><input type="text" id="requirement" name="requirement" value="" placeholder="">';
+        reqDiv.innerHTML = '<label for="requirement">Yêu Cầu</label><input type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc...">';
 
         const submit = document.createElement('input');
         submit.type = 'submit';
@@ -87,7 +144,7 @@ function addRequirementFromEditPost(postID, positionID) {
 function addMoreRequirement(postReq) {
     const reqDiv = document.createElement("div");
     reqDiv.id = 'requirementContainer' + postReq;
-    reqDiv.innerHTML = '<label for="requirement">Yêu Cầu</label><input type="text" id="requirement" name="requirement" value="" placeholder="">';
+    reqDiv.innerHTML = '<label for="requirement">Yêu Cầu</label><input type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc...">';
     root = document.getElementById("inputRequirementContainer");
     root.appendChild(reqDiv);
 }
@@ -142,7 +199,7 @@ function addBenefitFromEditPost(postID, positionID) {
 
         const beneDiv = document.createElement("div");
         beneDiv.id = 'benefitContainer' + postBene;
-        beneDiv.innerHTML = '<label for="benefit">Quyền Lợi</label><input type="text" id="benefit" name="benefit" value="" placeholder="">';
+        beneDiv.innerHTML = '<label for="benefit">Quyền Lợi</label><input type="text" id="benefit" name="benefit" value="" placeholder="Nhập quyền lợi...">';
 
         const submit = document.createElement('input');
         submit.type = 'submit';
@@ -171,7 +228,7 @@ function addBenefitFromEditPost(postID, positionID) {
 function addMoreBenefit(postBene) {
     const beneDiv = document.createElement("div");
     beneDiv.id = 'benefitContainer' + postBene;
-    beneDiv.innerHTML = '<label for="benefit">Quyền Lợi</label><input type="text" id="benefit" name="benefit" value="" placeholder="">';
+    beneDiv.innerHTML = '<label for="benefit">Quyền Lợi</label><input type="text" id="benefit" name="benefit" value="" placeholder="Nhập quyền lợi...">';
     root = document.getElementById("inputBenefitContainer");
     root.appendChild(beneDiv);
 }
@@ -227,7 +284,7 @@ function addSkillFromEditPost(postID, positionID) {
 
         const skillDiv = document.createElement("div");
         skillDiv.id = 'skillContainer' + postSkill;
-        skillDiv.innerHTML = '<div><label for="skillName">Kỹ Năng</label><input type="text" id="skillName" name="skillName" value="" placeholder=""></div><div><label for="skillDescription">Mô Tả</label><input type="text" id="skillDescription" name="skillDescription" value="" placeholder=""></div>';
+        skillDiv.innerHTML = '<div><label for="skillName">Kỹ Năng</label><input type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng..."></div><div><label for="skillDescription">Mô Tả</label><input type="text" id="skillDescription" name="skillDescription" value="" placeholder="Nhập mô tả kỹ năng..."></div>';
 
         const submit = document.createElement('input');
         submit.type = 'submit';
@@ -256,7 +313,7 @@ function addSkillFromEditPost(postID, positionID) {
 function addMoreSkill(postSkill) {
     const skillDiv = document.createElement("div");
     skillDiv.id = 'skillContainer' + postSkill;
-    skillDiv.innerHTML = '<div><label for="skillName">Kỹ Năng</label><input type="text" id="skillName" name="skillName" value="" placeholder=""></div><div><label for="skillDescription">Mô Tả</label><input type="text" id="skillDescription" name="skillDescription" value="" placeholder=""></div>';
+    skillDiv.innerHTML = '<div><label for="skillName">Kỹ Năng</label><input type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng..."></div><div><label for="skillDescription">Mô Tả</label><input type="text" id="skillDescription" name="skillDescription" value="Nhập mô tả kỹ năng..." placeholder=""></div>';
     root = document.getElementById("inputSkillContainer");
     root.appendChild(skillDiv);
 }
@@ -312,7 +369,7 @@ function addStageFromEditPost(postID, positionID) {
 
         const stageDiv = document.createElement("div");
         stageDiv.id = 'stageContainer' + postStage;
-        stageDiv.innerHTML = '<div><label for="stageID">Vòng Ứng Tuyển</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả</label><input type="text" id="description" name="description" value="" placeholder=""></div>';
+        stageDiv.innerHTML = '<div><label for="stageID">Vòng Ứng Tuyển</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả</label><input type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>';
 
         const submit = document.createElement('input');
         submit.type = 'submit';
@@ -341,7 +398,7 @@ function addStageFromEditPost(postID, positionID) {
 function addMoreStage(postStage) {
     const stageDiv = document.createElement("div");
     stageDiv.id = 'stageContainer' + postStage;
-    stageDiv.innerHTML = '<div><label for="stageID">Vòng Ứng Tuyển</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả</label><input type="text" id="description" name="description" value="" placeholder=""></div>';
+    stageDiv.innerHTML = '<div><label for="stageID">Vòng Ứng Tuyển</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả</label><input type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>';
     root = document.getElementById("inputStageContainer");
     root.appendChild(stageDiv);
 }
