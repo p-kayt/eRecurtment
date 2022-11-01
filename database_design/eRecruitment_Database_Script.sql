@@ -713,6 +713,7 @@ GO
 INSERT INTO Stage(StageName) VALUES('CV Applying')
 INSERT INTO Stage(StageName) VALUES('Interview')
 INSERT INTO Stage(StageName) VALUES('Finish')
+INSERT INTO Stage(StageName) VALUES('Final Evaluation')
 
 -- Bảng phụ chứa thêm thông tin cho các bài đăng tuyển dụng (Application Post)
 -- Chứa thông tin các vòng mà ứng viên cần phải trải qua của bài đăng ứng tuyển tương ứng
