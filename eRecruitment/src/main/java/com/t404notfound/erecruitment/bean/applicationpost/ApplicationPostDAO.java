@@ -462,7 +462,7 @@ public class ApplicationPostDAO {
     // Must add post first
     // And insert with latest post ID
     // Add post's benefits
-    private int addPostBenefits(ArrayList<PostBenefitDTO> list, int postID) {
+    public int addPostBenefits(ArrayList<PostBenefitDTO> list, int postID) {
         if (list == null || list.isEmpty()) {
             return -1;
         } else {
@@ -499,7 +499,7 @@ public class ApplicationPostDAO {
     }
 
     // Add post's Skills
-    private int addPostSkills(ArrayList<PostSkillDTO> list, int postID) {
+    public int addPostSkills(ArrayList<PostSkillDTO> list, int postID) {
         if (list == null || list.isEmpty()) {
             return -1;
         } else {
@@ -537,7 +537,7 @@ public class ApplicationPostDAO {
     }
 
     // Add post's requirements
-    private int addPostRequirements(ArrayList<PostRequirementDTO> list, int postID) {
+    public int addPostRequirements(ArrayList<PostRequirementDTO> list, int postID) {
         if (list == null || list.isEmpty()) {
             return -1;
         } else {
@@ -574,7 +574,7 @@ public class ApplicationPostDAO {
     }
 
     // Add post's stages
-    private int addPostStages(ArrayList<PostStageDTO> list, int postID) {
+    public int addPostStages(ArrayList<PostStageDTO> list, int postID) {
         if (list == null || list.isEmpty()) {
             return -1;
         } else {

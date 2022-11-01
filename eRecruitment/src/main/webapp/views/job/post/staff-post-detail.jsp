@@ -10,6 +10,7 @@
 <html lang="vn">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Thông Tin Bài Đăng Tuyển Dụng</title>
     </head>
     <body>
@@ -82,14 +83,6 @@
                     <form action="./job" method="post">
                         <input type="hidden" name="postID" value="${requestScope.post.postID}">
                         <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
-                        <input type="hidden" name="action" value="add-requirements">
-                        <input type="submit" value="Thêm Yêu Cầu">
-                    </form>
-                </div>
-                <div>
-                    <form action="./job" method="post">
-                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
-                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                         <input type="hidden" name="action" value="edit-post-requirements">
                         <c:forEach var="req" items="${requestScope.post.requirementList}" varStatus="status">
                             <div>
@@ -103,8 +96,12 @@
                         </c:if>
                     </form>   
                 </div>
+                <div>
+                    <span class="fa fa-plus-circle fa-2x" onclick="addRequirementFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"></span>
+                </div>
+                <div id="addRequirementList">
+                </div>
             </div>
-
             <div>
                 <div>
                     <h3>Kỹ Năng Cần Thiết</h3>
@@ -166,6 +163,11 @@
                             </c:if>
                         </form>   
                     </div>
+                    <div>
+                        <span class="fa fa-plus-circle fa-2x" onclick="addBenefitFromEditPost((${requestScope.post.postID}, ${requestScope.position.positionID})"></span>
+                    </div>
+                    <div id="addBenefitList">
+                    </div>
                 </div>
             </div>
 
@@ -192,6 +194,7 @@
                                 <option value="1" <c:if test="${stage.stageID == 1}">selected</c:if>>CV Applying</option>
                                 <option value="2" <c:if test="${stage.stageID == 2}">selected</c:if>>Interview</option>
                                 <option value="3" <c:if test="${stage.stageID == 3}">selected</c:if>>Finish</option>
+                                <option value="4" <c:if test="${stage.stageID == 4}">selected</c:if>>Final Evaluation</option>
                                 </select>
                                 <input type="text" name="description" value="${stage.description}">
                             <a href="./job?action=delete-a-stage&postID=${requestScope.post.postID}&positionID=${requestScope.position.positionID}&id=${stage.id}">Xóa</a>
@@ -204,5 +207,6 @@
                 </div>
             </div>
         </c:if>
+        <script src="js/job-utility.js"></script>
     </body>
 </html>

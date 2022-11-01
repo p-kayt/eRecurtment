@@ -10,6 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Tạo Bài Đăng Tuyển Dụng</title>
     </head>
     <body>
@@ -35,7 +36,7 @@
                     <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                     <div>
                         <div>
-                            <h4>Thông Tin Chính</h4>
+                            <h3>Thông Tin Chính</h3>
                         </div>
                         <div>
                             <label for="postDescription">Mô Tả</label>
@@ -84,22 +85,60 @@
                     </div>
                     <div>
                         <div>
-                            <h4>Yêu Cầu Công Việc</h4>
+                            <h3>Yêu Cầu Công Việc</h3>
+                        </div>
+                        <div id="requirementList">
+                            
+                        </div>
+                        <div>
+                            <span class="fa fa-plus-circle fa-2x" onclick="addRequirement()"></span>
+                        </div>
+                        <div>
+                            <span class="fa fa-minus-circle fa-2x" onclick="removeRequirement()"></span>
                         </div>
                     </div>
                     <div>
                         <div>
-                            <h4>Kỹ Năng Cần Thiết</h4>
+                            <h3>Kỹ Năng Cần Thiết</h3>
+                        </div>
+                        <div>
+                            <div>
+                                <label for="skillName">Kỹ Năng</label>
+                                <input type="text" id="skillName" name="skillName" value="" placeholder="">
+                            </div>
+                            <div>
+                                <label for="skillDescription">Mô Tả</label>
+                                <input type="text" id="skillDescription" name="skillDescription" value="" placeholder="">
+                            </div>
                         </div>
                     </div>
                     <div>
                         <div>
-                            <h4>Quyền Lợi Công Việc</h4>
+                            <h3>Quyền Lợi Công Việc</h3>
+                        </div>
+                        <div>
+                            <label for="benefit">Quyền Lợi</label>
+                            <input type="text" id="benefit" name="benefit" value="" placeholder="">
                         </div>
                     </div>
                     <div>
                         <div>
-                            <h4>Quy Trình Ứng Tuyển</h4>
+                            <h3>Quy Trình Ứng Tuyển</h3>
+                        </div>
+                        <div>
+                            <div>
+                                <label for="stageID">Vòng Ứng Tuyển</label>
+                                <select id="stageID" name="stageID">
+                                    <option value="1" selected>CV Applying</option>
+                                    <option value="2">Interview</option>
+                                    <option value="3">Finish</option>
+                                    <option value="4">Final Evaluation</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="description">Mô Tả</label>
+                                <input type="text" id="description" name="description" value="" placeholder="">
+                            </div>
                         </div>
                     </div>
 
@@ -120,5 +159,6 @@
             var expiredDate = document.getElementById("expiredDate");
             expiredDate.min = getCurrentDate();
         </script>
+        <script src="js/job-utility.js"></script>
     </body>
 </html>
