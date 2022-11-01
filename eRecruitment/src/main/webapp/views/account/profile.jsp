@@ -154,14 +154,20 @@
 
 
                 <div id="cv" style="display: none">
-                    <jsp:include page="../cv/cv-read.jsp" />
-                    <c:if test = "${empty cv}">
-                        <form action="cv" method = "post">
-                            <input type="hidden" name="action" value="createMyCV">
-                            <button class="col-2 btn btn-primary" type="submit">Create CV</button>
-                        </form>
-                    </c:if>
-                </div>
+                        <jsp:include page="../cv/cv-read.jsp" />
+                        <c:if test = "${empty cv}">
+                            <form action="cv" method = "post">
+                                <input type="hidden" name="action" value="createMyCV">
+                                <button class="col-2 btn btn-primary" type="submit">Create CV</button>
+                            </form>
+                        </c:if>
+                        <c:if test = "${not empty cv}">
+                            <form action="cv" method = "post">
+                                <input type="hidden" name="action" value="editMyCV">
+                                <button class="col-2 btn btn-primary" type="submit">Edit CV</button>
+                            </form>
+                        </c:if>
+                    </div>
 
 
 
