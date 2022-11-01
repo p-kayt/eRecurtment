@@ -18,15 +18,11 @@ public class AdminUserDTO {
     protected String gender;
     protected String status;
     protected String userRole;
-    protected boolean isCandidate;
-    protected boolean isHRStaff;
-    protected boolean isHRManager;
-    protected boolean isInterviewer;
 
     public AdminUserDTO() {
     }
 
-    public AdminUserDTO(int userID, String email, String password, String firstName, String lastName, String gender, String userRole, String status, boolean isCandidate, boolean isHRStaff, boolean isHRManager, boolean isInterviewer) {
+    public AdminUserDTO(int userID, String email, String password, String firstName, String lastName, String gender, String userRole, String status) {
         this.userID = userID;
         this.email = email;
         this.password = password;
@@ -35,10 +31,6 @@ public class AdminUserDTO {
         this.gender = gender;
         this.status = status;
         this.userRole = userRole;
-        this.isCandidate = isCandidate;
-        this.isHRStaff = isHRStaff;
-        this.isHRManager = isHRManager;
-        this.isInterviewer = isInterviewer;
     }
 
     public int getUserID() {
@@ -113,38 +105,5 @@ public class AdminUserDTO {
         this.userRole = userRole;
     }
 
-    public boolean isIsCandidate() {
-        return isCandidate;
-    }
-
-    public void setIsCandidate(boolean isCandidate) {
-        this.isCandidate = isCandidate;
-    }
-
-    public boolean isIsHRStaff() {
-        return isHRStaff;
-    }
-
-    public void setIsHRStaff(boolean isHRStaff) {
-        this.isHRStaff = isHRStaff;
-    }
-
-    public boolean isIsHRManager() {
-        return isHRManager;
-    }
-
-    public void setIsHRManager(boolean isHRManager) {
-        this.isHRManager = isHRManager;
-    }
-
-    public boolean isIsInterviewer() {
-        return isInterviewer;
-    }
-
-    public void setIsInterviewer(boolean isInterviewer) {
-        this.isInterviewer = isInterviewer;
-    }
-    
-    
     
 }

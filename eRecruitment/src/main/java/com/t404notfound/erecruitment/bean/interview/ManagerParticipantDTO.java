@@ -14,19 +14,15 @@ public class ManagerParticipantDTO {
     protected String firstName;
     protected String lastName;
     protected String gender;
-    protected double score;
-    protected int count;
     protected String result;
     protected String appStatus;
 
-    public ManagerParticipantDTO(int userID, String email, String firstName, String lastName, String gender, double score, int count, String result, String appStatus) {
+    public ManagerParticipantDTO(int userID, String email, String firstName, String lastName, String gender, String result, String appStatus) {
         this.userID = userID;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
-        this.score = score;
-        this.count = count;
         this.result = result;
         this.appStatus = appStatus;
     }
@@ -71,22 +67,6 @@ public class ManagerParticipantDTO {
         this.gender = gender;
     }
 
-    public double getScore() {
-        return score;
-    }
-
-    public void setScore(double score) {
-        this.score = score;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
     public String getResult() {
         return result;
     }
@@ -102,7 +82,7 @@ public class ManagerParticipantDTO {
     public void setAppStatus(String appStatus) {
         this.appStatus = appStatus;
     }
-    
+
     
 
 }

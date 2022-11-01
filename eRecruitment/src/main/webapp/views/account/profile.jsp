@@ -66,7 +66,13 @@
                             </div>
 
                         </div>
-
+                        <div class="col-12 d-flex justify-content-center">
+                            <form class="col-6 mt-4" action="cv" method = "post">
+                                <!--                                <input type="hidden" name="action" value="viewMyCV">
+                                                                <button class="btn btn-primary col-12" type="submit">View CV</button>-->
+                                <button class="col-12 btn btn-primary" type="button" onclick="showCV()">View CV</button>
+                            </form>
+                        </div>
                     </div>
 
 
@@ -146,9 +152,8 @@
 
                 </div>
 
-                <div class="col-12 d-flex justify-content-center">
-                    <button id="show-cv-btn" class="col-2 btn btn-primary" type="button" onclick="showCV()">View CV</button>
-                    <div id="cv" style="display: none">
+
+                <div id="cv" style="display: none">
                         <jsp:include page="../cv/cv-read.jsp" />
                         <c:if test = "${empty cv}">
                             <form action="cv" method = "post">
@@ -163,7 +168,6 @@
                             </form>
                         </c:if>
                     </div>
-                </div>                                                               
 
 
 
@@ -188,7 +192,6 @@
 
                     function showCV() {
                         var x = document.getElementById("cv");
-                        document.getElementById("show-cv-btn").style.display = "none";
                         x.style.display = "block";
                     }
                 </script>

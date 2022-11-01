@@ -55,9 +55,11 @@ public class JobController extends HttpServlet {
                 case "load-add-position":
                     request.getRequestDispatcher("views/job/position/add-position.jsp").forward(request, response);
                     break;
-                // NOT FINISHED
                 case "load-add-post":
-
+                    int positionID = Integer.parseInt(request.getParameter("positionID"));
+                    ApplicationPositionDTO position = positionDAO.loadApplicationPositions(positionID);
+                    request.setAttribute("position", position);
+                    request.getRequestDispatcher("views/job/post/add-post.jsp").forward(request, response);
                     break;
                 case "position-list":
                     ArrayList<ApplicationPositionDTO> list = positionDAO.listApplicationPositions();
@@ -105,7 +107,7 @@ public class JobController extends HttpServlet {
                     break;
                 case "position-detail":
                     int id = Integer.parseInt(request.getParameter("id"));
-                    ApplicationPositionDTO position = positionDAO.loadApplicationPositions(id);
+                    position = positionDAO.loadApplicationPositions(id);
                     ArrayList<ApplicationPostDTO> postList = postDAO.listByPosition(id);
 
                     if (position != null && postList != null) {
@@ -145,7 +147,7 @@ public class JobController extends HttpServlet {
                     }
                     break;
                 case "staff-post-detail":
-                    int positionID = Integer.parseInt(request.getParameter("positionID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
                     position = positionDAO.loadApplicationPositions(positionID);
                     int postID = Integer.parseInt(request.getParameter("postID"));
                     ApplicationPostDTO post = postDAO.loadApplicationPost(postID);
@@ -158,7 +160,6 @@ public class JobController extends HttpServlet {
                         request.getRequestDispatcher("./job?action=position-list").forward(request, response);
                     }
                     break;
-                // NOT FINISHED
                 case "edit-post":
                     postID = Integer.parseInt(request.getParameter("postID"));
                     String postDescription = request.getParameter("postDescription");
@@ -381,20 +382,66 @@ public class JobController extends HttpServlet {
                         request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
                     }
                     break;
-                // NOT FINISHED   
                 case "add-requirements":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    
+                    requirements = request.getParameterValues("requirement");
+                    
+                    reqList = new ArrayList<>();
+                    for (int i = 0; i < requirements.length; i++) {
+                     reqList.add(new PostRequirementDTO(0, requirements[i], postID));
+                    }
+                    result = postDAO.addPostRequirements(reqList, postID);
+                    if(result == 1){
+                        msg = "Thêm Yêu Cầu Công Việc Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    else{
+                        msg = "Thêm Yêu Cầu Công Việc Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }               
                     break;
                 // NOT FINISHED 
                 case "add-skills":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
                     break;
                 // NOT FINISHED 
                 case "add-benefits":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    
+                    benefits = request.getParameterValues("benefit");
+                    
+                    benefitList = new ArrayList<>();
+                    for (int i = 0; i < benefits.length; i++) {
+                        benefitList.add(new PostBenefitDTO(0, benefits[i], postID));
+                    }
+                    result = postDAO.addPostBenefits(benefitList, postID);
+                    if(result == 1){
+                        msg = "Thêm Quyền Lợi Công Việc Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    else{
+                        msg = "Thêm Quyền Lợi Công Việc Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }  
                     break;
                 // NOT FINISHED 
                 case "add-stages":
                     break;
+                // NOT FINISHED 
+                case "add-post":
+                    log("HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                    break;
                 default:
                     break;
+                    
             }
         }
     }

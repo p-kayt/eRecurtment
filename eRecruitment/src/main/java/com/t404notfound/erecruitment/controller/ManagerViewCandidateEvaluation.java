@@ -4,8 +4,8 @@
  */
 package com.t404notfound.erecruitment.controller;
 
-import com.t404notfound.erecruitment.bean.AdminUserDAO;
-import com.t404notfound.erecruitment.bean.AdminUserDTO;
+import com.t404notfound.erecruitment.bean.interview.EvaluationDAO;
+import com.t404notfound.erecruitment.bean.interview.EvaluationDTO;
 import com.t404notfound.erecruitment.bean.interview.ManagerParticipantDAO;
 import com.t404notfound.erecruitment.bean.interview.ManagerParticipantDTO;
 import java.io.IOException;
@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Savoy
  */
-@WebServlet(name = "ManagerViewCandidates", urlPatterns = {"/ManagerViewCandidates"})
-public class ManagerViewCandidates extends HttpServlet {
+@WebServlet(name = "ManagerViewCandidateEvaluation", urlPatterns = {"/ManagerViewCandidateEvaluation"})
+public class ManagerViewCandidateEvaluation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,36 +39,28 @@ public class ManagerViewCandidates extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = "views/HRManager/candidatelist.jsp";
+        String url = "views/HRManager/evaluation.jsp";
         try {
-            String SearchValue = request.getParameter("txtSearch").trim();
+            // lát nhớ bỏ // mấy cái phía dưới
+            String SearchValue = request.getParameter("SearchValue").trim();
+            String firstName = request.getParameter("FirstName");
+            String lastName = request.getParameter("LastName");
             String action = request.getParameter("action");
-            ArrayList<ManagerParticipantDTO> list = new ArrayList<>();
+            String email = request.getParameter("Email");
+            ArrayList<EvaluationDTO> list = new ArrayList<>();
             if (action == null) {
                 request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
-            } else if (action.equalsIgnoreCase("Search")) {
+            } else  {
                 try {
-                    list = ManagerParticipantDAO.getParticipants(SearchValue);
+                    list = EvaluationDAO.getEvaluations(email);
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
                 }
-            } else if (action.equalsIgnoreCase("All")) {
-                try {
-                    SearchValue = "";
-                    list = ManagerParticipantDAO.getParticipants(SearchValue);
-                } catch (SQLException | NamingException | ClassNotFoundException ex) {
-                }
-            } else if (action.equalsIgnoreCase("Back to Candidate List")) {
-                try {
-                    list = ManagerParticipantDAO.getParticipants(SearchValue);
-                } catch (SQLException | NamingException | ClassNotFoundException ex) {
-                }
-            }
+            } 
             request.setAttribute("SearchValue", SearchValue);
-            if (list.isEmpty()) {
-                request.setAttribute("nullMsg", "No Record Matched.");
-            } else {
-                request.setAttribute("Candidates", list);
-            }
+            request.setAttribute("FirstName", firstName);
+            request.setAttribute("LastName", lastName);
+            request.setAttribute("Email", email);
+            request.setAttribute("Evaluations", list);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

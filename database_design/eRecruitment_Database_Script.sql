@@ -154,7 +154,6 @@ INSERT INTO User_Role(UserID, RoleID) VALUES (2, 1)
 INSERT INTO User_Role(UserID, RoleID) VALUES (3, 1)
 INSERT INTO User_Role(UserID, RoleID) VALUES (4, 2)
 INSERT INTO User_Role(UserID, RoleID) VALUES (5, 3)
-INSERT INTO User_Role(UserID, RoleID) VALUES (5, 4)
 INSERT INTO User_Role(UserID, RoleID) VALUES (6, 4)
 INSERT INTO User_Role(UserID, RoleID) VALUES (7, 5)
 
@@ -713,6 +712,7 @@ GO
 INSERT INTO Stage(StageName) VALUES('CV Applying')
 INSERT INTO Stage(StageName) VALUES('Interview')
 INSERT INTO Stage(StageName) VALUES('Finish')
+INSERT INTO Stage(StageName) VALUES('Final Evaluation')
 
 -- Bảng phụ chứa thêm thông tin cho các bài đăng tuyển dụng (Application Post)
 -- Chứa thông tin các vòng mà ứng viên cần phải trải qua của bài đăng ứng tuyển tương ứng

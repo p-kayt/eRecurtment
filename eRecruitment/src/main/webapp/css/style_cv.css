@@ -9,8 +9,7 @@
     height: 200px;
     width: 200px;
     border-radius: 50%;
-    border: #000 1px solid;
-    display: inline-block;
+    border: none;
 }
 
 .cv input {
@@ -26,6 +25,7 @@
 .cv .cv-column {
     width: 50%;
     display: block;
+    border: none;
 }
 
 .cv .cv-element {
