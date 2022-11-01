@@ -18,13 +18,9 @@ import javax.naming.NamingException;
  */
 public class ManagerParticipantDAO {
 
-    public static double calculateAverageScore(ManagerParticipantDTO p) {
-        return p.score / p.count;
-    }
-
     public static ArrayList<ManagerParticipantDTO> getParticipants(String searchValue)
             throws SQLException, NamingException, ClassNotFoundException {
-        String SQLQuery = "SELECT [User].UserID, [User].Email, [User].FirstName, [User].LastName, Gender.GenderName, AVG(CAST(Evaluation.Score AS float)) AS AvgScore, COUNT(Evaluation.Score) AS CountInterview, InterviewResult.ResultName, ApplicationStatus.StatusName\n"
+        String SQLQuery = "SELECT [User].UserID, [User].Email, [User].FirstName, [User].LastName, Gender.GenderName, InterviewResult.ResultName, ApplicationStatus.StatusName\n"
                 + "FROM [User] JOIN Participant ON [User].UserID = Participant.UserID\n"
                 + "JOIN InterviewResult ON Participant.ResultID = InterviewResult.ResultID\n"
                 + "JOIN Gender ON [User].Gender = Gender.GenderID\n"
@@ -47,7 +43,7 @@ public class ManagerParticipantDAO {
             PreS.setString(2, "%" + searchValue + "%");
             ReS = PreS.executeQuery();
             while (ReS.next()) {
-                ManagerParticipantDTO participant = new ManagerParticipantDTO(ReS.getInt(1), ReS.getString(2), ReS.getString(3), ReS.getString(4), ReS.getString(5), ReS.getDouble(6), ReS.getInt(7), ReS.getString(8), ReS.getString(9));
+                ManagerParticipantDTO participant = new ManagerParticipantDTO(ReS.getInt(1), ReS.getString(2), ReS.getString(3), ReS.getString(4), ReS.getString(5), ReS.getString(6), ReS.getString(7));
                 participants.add(participant);
 
                 if (!participants.isEmpty()) {
@@ -55,8 +51,6 @@ public class ManagerParticipantDAO {
                     for (ManagerParticipantDTO p : participants) {
                         if (p.userID == participant.userID) {
                             count++;
-                            p.score = p.score + participant.score;
-                            p.score = calculateAverageScore(p);
                         }
                     }
                     if (count != 1) {

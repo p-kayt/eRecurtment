@@ -31,7 +31,6 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Gender</th>
-                        <th>Average Score</th>
                         <th>Application Status</th>
                         <th>Action</th>
                     </tr>
@@ -44,7 +43,6 @@
                             <td> ${current.getFirstName()} </td>
                             <td> ${current.getLastName()} </td>
                             <td> ${current.getGender()} </td>
-                            <td> ${current.getScore()} </td>
                             <td>${current.getAppStatus()} </td>
                             <td>
                                 <c:if test = "${current.getAppStatus() == 'In-progress'}">
