@@ -45,26 +45,24 @@
                             <td> ${current.getGender()} </td>
                             <td>${current.getAppStatus()} </td>
                             <td>
+                                <form action = "./ManagerAcceptDecline" method = "POST" id = "Change Status_${current.getEmail()}"></form>
+                                <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Change Status_${current.getEmail()}">
+                                <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Change Status_${current.getEmail()}">
                                 <c:if test = "${current.getAppStatus() == 'In-progress'}">
-                                    <form action = "./ManagerAcceptDecline" method = "POST" id = "Change Status_${current.getEmail()}"></form>
-                                    <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Change Status_${current.getEmail()}">
-                                    <input type = "HIDDEN" name = "Status" value= "${current.getAppStatus()}" form = "Change Status_${current.getEmail()}">
-                                    <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Change Status_${current.getEmail()}">
+                                    <form action = "./ManagerViewCandidateEvaluation" method ="POST" id = "View Evaluation_${current.getEmail()}"></form>
+                                    <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "View Evaluation_${current.getEmail()}">
+                                    <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "View Evaluation_${current.getEmail()}">
+                                    <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "View Evaluation_${current.getEmail()}">
+                                    <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "View Evaluation_${current.getEmail()}">
+                                    <input type = "SUBMIT" name = "action" value = "View Interview Result" form = "View Evaluation_${current.getEmail()}">
+                                    
                                     <input type = "SUBMIT" name = "action" value = "Accept" form = "Change Status_${current.getEmail()}">
                                     <input type = "SUBMIT" name = "action" value = "Decline" form = "Change Status_${current.getEmail()}">
                                 </c:if>
                                 <c:if test = "${current.getAppStatus() == 'Fail'}">
-                                    <form action = "./ManagerAcceptDecline" method = "POST" id = "Change Status_${current.getEmail()}"></form>
-                                    <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Change Status_${current.getEmail()}">
-                                    <input type = "HIDDEN" name = "Status" value= "${current.getAppStatus()}" form = "Change Status_${current.getEmail()}">
-                                    <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Change Status_${current.getEmail()}">
                                     <input type = "SUBMIT" name = "action" value = "Undo" form = "Change Status_${current.getEmail()}">
                                 </c:if>
                                 <c:if test = "${current.getAppStatus() == 'Success'}">
-                                    <form action = "./ManagerAcceptDecline" method = "POST" id = "Change Status_${current.getEmail()}"></form>
-                                    <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Change Status_${current.getEmail()}">
-                                    <input type = "HIDDEN" name = "Status" value= "${current.getAppStatus()}" form = "Change Status_${current.getEmail()}">
-                                    <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Change Status_${current.getEmail()}">
                                     <input type = "SUBMIT" name = "action" value = "Undo" form = "Change Status_${current.getEmail()}">
                                 </c:if>
                             </td>
