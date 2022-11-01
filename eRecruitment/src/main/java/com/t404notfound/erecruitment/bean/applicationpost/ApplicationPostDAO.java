@@ -362,7 +362,100 @@ public class ApplicationPostDAO {
         }
         return result;
     }
+
     //============================================================================================================================================
+    public int deleteABenefit(int benefitID) {
+        String sql = "delete from ApplicationBenefit where BenefitID = ?";
+        int result = 0;
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, benefitID);
+            result = pst.executeUpdate();
+            return result;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return result;
+    }
+    
+    public int deleteASkill(int skillID){
+        String sql = "delete from ApplicationSkill where SkillID = ?";
+        int result = 0;
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, skillID);
+            result = pst.executeUpdate();
+            return result;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return result;
+    }
+    
+    public int deleteARequirement(int reqID){
+        String sql = "delete from ApplicationRequirement where RequirementID = ?";
+        int result = 0;
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, reqID);
+            result = pst.executeUpdate();
+            return result;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return result;
+    }
+    // Careful when using this method
+    // tables have references to this table
+    public int deleteAStage(int ID){
+        String sql = "delete from Application_Stage where ID = ?";
+        int result = 0;
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, ID);
+            result = pst.executeUpdate();
+            return result;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return result;
+    }
 
     //============================================================================================================================================
     // Methods for adding Post related info
@@ -930,48 +1023,6 @@ public class ApplicationPostDAO {
         return result;
     }
 
-    // update post
-    public int updatePostAll(ApplicationPostDTO post) {
-        int result = 0;
-        String sql = "update ApplicationPost set PostDescription = ?, Salary = ?, HiringQuantity = ?, CreateDate = ?, StartDate = ?, ExpiredDate = ?, PositionID = ?, FormID = ?, StatusID = ? where PostID = ?";
-        try {
-            cn = DBUtil.getConnection();
-            PreparedStatement pst = cn.prepareStatement(sql);
-
-            pst.setNString(1, post.getPostDescription());
-            pst.setNString(2, post.getSalary());
-            pst.setInt(3, post.getHiringQuantity());
-            pst.setDate(4, post.getCreatedDate());
-            pst.setDate(5, post.getStartDate());
-            pst.setDate(6, post.getExpiredDate());
-            pst.setInt(7, post.getPositionID());
-            pst.setInt(8, post.getFormID());
-            pst.setInt(9, post.getStatusID());
-
-            pst.setInt(10, post.getPostID());
-
-            result = pst.executeUpdate();
-            if (result != 0) {
-                updatePostBenefits(post.getBenefitList());
-                updatePostSkills(post.getSkillList());
-                updatePostRequirements(post.getRequirementList());
-                updatePostStages(post.getStageList());
-                return result;
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
-        return result;
-    }
-    
     public int updatePost(ApplicationPostDTO post) {
         int result = 0;
         String sql = "update ApplicationPost set PostDescription = ?, Salary = ?, HiringQuantity = ?, CreateDate = ?, StartDate = ?, ExpiredDate = ?, PositionID = ?, FormID = ?, StatusID = ? where PostID = ?";
@@ -1010,6 +1061,14 @@ public class ApplicationPostDAO {
     public static void main(String[] args) {
 
         ApplicationPostDAO dao = new ApplicationPostDAO();
+        ArrayList<PostRequirementDTO> reqlist = new ArrayList<>();
+        PostRequirementDTO req1 = new PostRequirementDTO(7, "test", 2);
+        reqlist.add(req1);
+        PostRequirementDTO req2 = new PostRequirementDTO(8, "test edit 2", 2);
+        reqlist.add(req2);
+
+        int result = dao.updatePostRequirements(reqlist);
+        System.out.println(result);
 //        long millis = System.currentTimeMillis();
 //        Date now = new Date(millis);
 //        ApplicationPostDTO post = new ApplicationPostDTO(0, "Description", "Salary", 10, now, now, now, 1, 1, 4, null, null, null, null);
@@ -1039,6 +1098,7 @@ public class ApplicationPostDAO {
 
         System.out.println("");
         System.out.println("");
+
 //        ArrayList<ApplicationPostDTO> l = dao.searchApplicationPosts("test");
 //        for (ApplicationPostDTO po : l) {
 //            System.out.println(po.getPostDescription());
