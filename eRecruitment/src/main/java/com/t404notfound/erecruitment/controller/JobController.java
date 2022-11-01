@@ -57,7 +57,9 @@ public class JobController extends HttpServlet {
                     break;
                 // NOT FINISHED
                 case "load-add-post":
-
+                    int positionID = Integer.parseInt(request.getParameter("positionID"));
+                    ApplicationPositionDTO position = positionDAO.loadApplicationPositions(positionID);
+                    request.getRequestDispatcher("views/job/post/add-post.jsp").forward(request, response);
                     break;
                 case "position-list":
                     ArrayList<ApplicationPositionDTO> list = positionDAO.listApplicationPositions();
@@ -105,7 +107,7 @@ public class JobController extends HttpServlet {
                     break;
                 case "position-detail":
                     int id = Integer.parseInt(request.getParameter("id"));
-                    ApplicationPositionDTO position = positionDAO.loadApplicationPositions(id);
+                    position = positionDAO.loadApplicationPositions(id);
                     ArrayList<ApplicationPostDTO> postList = postDAO.listByPosition(id);
 
                     if (position != null && postList != null) {
@@ -145,7 +147,7 @@ public class JobController extends HttpServlet {
                     }
                     break;
                 case "staff-post-detail":
-                    int positionID = Integer.parseInt(request.getParameter("positionID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
                     position = positionDAO.loadApplicationPositions(positionID);
                     int postID = Integer.parseInt(request.getParameter("postID"));
                     ApplicationPostDTO post = postDAO.loadApplicationPost(postID);
