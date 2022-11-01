@@ -32,13 +32,13 @@
         <%cv = (CVDTO) request.getAttribute("cv");%>
         <c:choose>
             <c:when test = "${not empty cv}">
-                <div class="cv">      
-                    <div class="cv-column">
+                <div class="cv m-auto p-5">      
+                    <div class="cv-column border border-1 shadow">
                         <div class="cv-element">
                             <!-- Avatar -->
-                            <img src="../image/sample-avatar.jpg"/>
+                            <img src="image/avatar/default.png"/>
                         </div>
-                        <div class="cv-element">
+                        <div class="cv-element border-bottom shadow">
                             <h3> Introduction </h3>
                             <span><%=cv.getIntroduction()%></span>
                             <br>
@@ -52,7 +52,7 @@
                             <div><b>Address: </b> <%=cv.getAddress()%></div>
                             <div><b>City: </b> <%=cv.getCity()%></div>
                         </div>
-                        <div class="cv-element">
+                        <div class="cv-element  border-bottom shadow">
                             <h3> Education </h3>
                             <% for (int i = 0; i < cv.getEducations().size(); i += 1) {%>
                             <div>
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                     <div class="cv-column" style="background: #80bdff">
-                        <div class="cv-element">
+                        <div class="cv-element border-bottom-dark shadow">
                             <h3> Interest </h3>
                             <% for (int i = 0; i < cv.getInterests().size(); i += 1) {%>
                             <div>
@@ -90,7 +90,7 @@
                             <br>
                             <% }%> 
                         </div>
-                        <div class="cv-element">
+                        <div class="cv-element border-bottom-dark shadow">
                             <h3> Experience </h3>
                             <% for (int i = 0; i < cv.getExperiences().size(); i += 1) {%>
                             <div>
@@ -103,7 +103,7 @@
                             </div>
                             <% }%> 
                         </div>
-                        <div class="cv-element">
+                        <div class="cv-element border-bottom-dark shadow">
                             <h3> Language </h3>
                             <% for (int i = 0; i < cv.getExperiences().size(); i += 1) {%>
                             <div>
@@ -115,7 +115,7 @@
                             <br>
                             <% }%> 
                         </div>
-                        <div class="cv-element">
+                        <div class="cv-element border-bottom-dark shadow">
                             <h3> Certificate </h3>
                             <% for (int i = 0; i < cv.getCertificates().size(); i += 1) {%>
                             <div>
@@ -127,7 +127,7 @@
                             <br>
                             <% }%> 
                         </div> 
-                        <div class="cv-element">
+                        <div class="cv-element border-bottom-dark shadow">
                             <h3> Achievement </h3>
                             <% for (int i = 0; i < cv.getAchievements().size(); i += 1) {%>
                             <div>

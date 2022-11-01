@@ -43,31 +43,15 @@
         <body>
             <%UserDTO user = (UserDTO) session.getAttribute("user");%>
             <div class="container-xxl bg-white p-0">
-                <!-- Spinner Start
-          
-                <div
-                  id="spinner"
-                  class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
-                >
-                  <div
-                    class="spinner-border text-primary"
-                    style="width: 3rem; height: 3rem"
-                    role="status"
-                  >
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </div>
-          
-                Spinner End -->
                 <!--      header with nav -->
                 <c:if test="${empty user}">
                     <jsp:include page="../header/header_loginbtn.jsp" />
                 </c:if>
-                
+
                 <c:if test="${not empty user}">
                     <jsp:include page="../header/header_logoutbtn.jsp" />
                 </c:if>
-               
+
 
                 <!-- Carousel Start -->
                 <div class="container-fluid p-0">
@@ -84,7 +68,7 @@
                                             <h1 class="display-3 text-white animated slideInDown mb-4">
                                                 Tìm công việc hoàn hảo cho bạn
                                             </h1>
-                                            
+
                                             <a
                                                 href=""
                                                 class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
@@ -107,13 +91,13 @@
                                             <h1 class="display-3 text-white animated slideInDown mb-4">
                                                 Khởi nghiệp phù hợp nhất
                                             </h1>
-                                            
+
                                             <a
                                                 href=""
                                                 class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
                                                 >Tìm ngay</a
                                             >
-                                           
+
                                         </div>
                                     </div>
                                 </div>
@@ -792,16 +776,19 @@
                                ><i class="bi bi-arrow-up"></i
                                 ></a>
                         </div>
+                    </div>
+                </div>
+            </div>
 
-                        <!-- JavaScript Libraries -->
-                        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-                        <script src="lib/wow/wow.min.js"></script>
-                        <script src="lib/easing/easing.min.js"></script>
-                        <script src="lib/waypoints/waypoints.min.js"></script>
-                        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+            <!-- JavaScript Libraries -->
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="lib/wow/wow.min.js"></script>
+            <script src="lib/easing/easing.min.js"></script>
+            <script src="lib/waypoints/waypoints.min.js"></script>
+            <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-                        <!--Javascript -->
-                        <script src="js/main.js"></script>
-                        </body>
-                    </html>
+            <!--Javascript -->
+            <script src="js/main.js"></script>
+        </body>
+    </html>
