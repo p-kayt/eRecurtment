@@ -954,7 +954,7 @@ CREATE TABLE Participant(
 )
 
 GO
-INSERT INTO Participant(UserID, InterviewID, InterviewTime, ResultID) VALUES(1, 1, '2022-10-20 10:00', 1)
+INSERT INTO Participant(UserID, InterviewID, InterviewTime, ResultID) VALUES(1, 1, '2022-10-20 10:00', 3)
 INSERT INTO Participant(UserID, InterviewID, InterviewTime, ResultID) VALUES(1, 2, '2022-10-25 22:00', 1)
 
 -- Bảng chứa thông tin đánh giá ứng viên trong buổi PV
