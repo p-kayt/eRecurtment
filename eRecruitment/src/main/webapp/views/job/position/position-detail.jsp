@@ -181,11 +181,11 @@
                     </table>
                 </div>
             </c:if>
-
             <div class="d-flex justify-content-end mb-5 p-3">
                 <form action="./job" method="post">
                     <input class="btn btn-primary" type="submit" value="Tạo Bài Đăng">
                     <input type="hidden" name="action" value="load-add-post">
+                    <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                 </form>
             </div>
 <!--            <div>

@@ -16,7 +16,7 @@
         <c:if test="${not empty requestScope.post and not empty requestScope.position}">
             <div>
                 <div>
-                    <h2>Thông Tin Bài Đăng Tuyển Dụng</h2>
+                    <h1>Thông Tin Bài Đăng Tuyển Dụng</h1>
                 </div>
             </div>
             <div>
@@ -28,45 +28,50 @@
                 </c:if>
                 <!--  -->
                 <div>
-                    <form action="./job" method="post">
-                        <label for="postID">ID</label> <input type="text" id="postID" name="postID" value="${requestScope.post.postID}" readonly=""/>
-                        </br>
-                        <label for="name">Tên Vị Trí</label> <input type="text" id="name" name="name" value="${requestScope.position.positionName}" readonly=""/>
-                        </br>
-                        <label for="postDescription">Mô Tả</label> <input type="text" id="postDescription" name="postDescription" value="${requestScope.post.postDescription}"/>
-                        </br>
-                        <label for="salary">Mức Lương</label> <input type="text" id="salary" name="salary" value="${requestScope.post.salary}"/>
-                        </br>
-                        <label for="hiringQuantity">Số Lượng Tuyển</label> <input type="number" id="hiringQuantity" name="hiringQuantity" value="${requestScope.post.hiringQuantity}" min="0" max="${requestScope.position.hiringQuantity}"/>
-                        </br>
-                        <label for="createdDate">Ngày Tạo</label> <input type="date" id="createdDate" name="createdDate" value="${requestScope.post.createdDate}" readonly=""/>
-                        </br>
-                        <label for="startDate">Ngày Bắt Đầu</label> <input type="date" id="startDate" name="startDate" value="${requestScope.post.startDate}"/>
-                        </br>
-                        <label for="expiredDate">Ngày Kết Thúc</label> <input type="date" id="expiredDate" name="expiredDate" value="${requestScope.post.expiredDate}"/>
-                        </br>
-                        <label for="formID">Hình Thức</label>
-                        <select id="formID" name="formID">
-                            <option value="1" <c:if test = "${requestScope.post.formID == 1}">selected</c:if> >Full Time - Offline</option>
-                            <option value="2" <c:if test = "${requestScope.post.formID == 2}">selected</c:if> >Full Time - Online</option>
-                            <option value="3" <c:if test = "${requestScope.post.formID == 3}">selected</c:if> >Full Time - Hybrid</option>
-                            <option value="4" <c:if test = "${requestScope.post.formID == 4}">selected</c:if> >Part Time - Offline</option>
-                            <option value="5" <c:if test = "${requestScope.post.formID == 5}">selected</c:if> >Part Time - Online</option>
-                            <option value="6" <c:if test = "${requestScope.post.formID == 6}">selected</c:if> >Part Time - Hybrid</option>
-                            </select>
+                    <div>
+                        <h3>Thông Tin Chính</h3>
+                    </div>
+                    <div>
+                        <form action="./job" method="post">
+                            <label for="postID">ID</label> <input type="text" id="postID" name="postID" value="${requestScope.post.postID}" readonly=""/>
                             </br>
-                            <label for="statusID">Trạng Thái</label>
-                            <select id="statusID" name="statusID">
-                                <option value="1" <c:if test = "${requestScope.post.statusID == 1}">selected</c:if> >inActive</option>
-                            <option value="2" <c:if test = "${requestScope.post.statusID == 2}">selected</c:if> >Pending</option>
-                            <option value="3" <c:if test = "${requestScope.post.statusID == 3}">selected</c:if> >Hiring</option>
-                            <option value="4" <c:if test = "${requestScope.post.statusID == 4}">selected</c:if> >Closed</option>
-                            </select>
-                            <input type="hidden" name="positionID" value="${requestScope.post.positionID}">
-                        <input type="hidden" name="action" value="edit-post">
-                        </br>
-                        <input type="submit" value="Cập Nhật Bài Đăng">
-                    </form>
+                            <label for="name">Tên Vị Trí</label> <input type="text" id="name" name="name" value="${requestScope.position.positionName}" readonly=""/>
+                            </br>
+                            <label for="postDescription">Mô Tả</label> <input type="text" id="postDescription" name="postDescription" value="${requestScope.post.postDescription}"/>
+                            </br>
+                            <label for="salary">Mức Lương</label> <input type="text" id="salary" name="salary" value="${requestScope.post.salary}"/>
+                            </br>
+                            <label for="hiringQuantity">Số Lượng Tuyển</label> <input type="number" id="hiringQuantity" name="hiringQuantity" value="${requestScope.post.hiringQuantity}" min="0" max="${requestScope.position.hiringQuantity}"/>
+                            </br>
+                            <label for="createdDate">Ngày Tạo</label> <input type="date" id="createdDate" name="createdDate" value="${requestScope.post.createdDate}" readonly=""/>
+                            </br>
+                            <label for="startDate">Ngày Bắt Đầu</label> <input type="date" id="startDate" name="startDate" value="${requestScope.post.startDate}"/>
+                            </br>
+                            <label for="expiredDate">Ngày Kết Thúc</label> <input type="date" id="expiredDate" name="expiredDate" value="${requestScope.post.expiredDate}"/>
+                            </br>
+                            <label for="formID">Hình Thức</label>
+                            <select id="formID" name="formID">
+                                <option value="1" <c:if test = "${requestScope.post.formID == 1}">selected</c:if> >Full Time - Offline</option>
+                                <option value="2" <c:if test = "${requestScope.post.formID == 2}">selected</c:if> >Full Time - Online</option>
+                                <option value="3" <c:if test = "${requestScope.post.formID == 3}">selected</c:if> >Full Time - Hybrid</option>
+                                <option value="4" <c:if test = "${requestScope.post.formID == 4}">selected</c:if> >Part Time - Offline</option>
+                                <option value="5" <c:if test = "${requestScope.post.formID == 5}">selected</c:if> >Part Time - Online</option>
+                                <option value="6" <c:if test = "${requestScope.post.formID == 6}">selected</c:if> >Part Time - Hybrid</option>
+                                </select>
+                                </br>
+                                <label for="statusID">Trạng Thái</label>
+                                <select id="statusID" name="statusID">
+                                    <option value="1" <c:if test = "${requestScope.post.statusID == 1}">selected</c:if> >inActive</option>
+                                <option value="2" <c:if test = "${requestScope.post.statusID == 2}">selected</c:if> >Pending</option>
+                                <option value="3" <c:if test = "${requestScope.post.statusID == 3}">selected</c:if> >Hiring</option>
+                                <option value="4" <c:if test = "${requestScope.post.statusID == 4}">selected</c:if> >Closed</option>
+                                </select>
+                                <input type="hidden" name="positionID" value="${requestScope.post.positionID}">
+                            <input type="hidden" name="action" value="edit-post">
+                            </br>
+                            <input type="submit" value="Cập Nhật Bài Đăng">
+                        </form>
+                    </div>
                 </div>
             </div>
             <div>

@@ -55,10 +55,10 @@ public class JobController extends HttpServlet {
                 case "load-add-position":
                     request.getRequestDispatcher("views/job/position/add-position.jsp").forward(request, response);
                     break;
-                // NOT FINISHED
                 case "load-add-post":
                     int positionID = Integer.parseInt(request.getParameter("positionID"));
                     ApplicationPositionDTO position = positionDAO.loadApplicationPositions(positionID);
+                    request.setAttribute("position", position);
                     request.getRequestDispatcher("views/job/post/add-post.jsp").forward(request, response);
                     break;
                 case "position-list":
@@ -160,7 +160,6 @@ public class JobController extends HttpServlet {
                         request.getRequestDispatcher("./job?action=position-list").forward(request, response);
                     }
                     break;
-                // NOT FINISHED
                 case "edit-post":
                     postID = Integer.parseInt(request.getParameter("postID"));
                     String postDescription = request.getParameter("postDescription");
@@ -395,8 +394,13 @@ public class JobController extends HttpServlet {
                 // NOT FINISHED 
                 case "add-stages":
                     break;
+                // NOT FINISHED 
+                case "add-post":
+                    log("HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                    break;
                 default:
                     break;
+                    
             }
         }
     }
