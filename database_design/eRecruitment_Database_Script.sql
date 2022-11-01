@@ -199,8 +199,7 @@ CREATE TABLE CV(
 	CONSTRAINT FK_CV_from_Gender FOREIGN KEY (Gender)
 		REFERENCES Gender(GenderID),
 	CONSTRAINT FK_CV_from_User FOREIGN KEY (UserID)
-		REFERENCES [User](UserID),
-	CONSTRAINT Email_Check_CV CHECK(Email LIKE '%___@___%')
+		REFERENCES [User](UserID)
 )
 
 GO

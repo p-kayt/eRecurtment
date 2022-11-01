@@ -361,15 +361,52 @@ public class CVDAO {
             con.setAutoCommit(false);
 
             ps = con.prepareStatement(sql);
-            ps.setNString(1, cv.getFirstName());
-            ps.setNString(2, cv.getLastName());
-            ps.setNString(3, cv.getAvatar());
-            ps.setDate(4, cv.getDob());
-            ps.setNString(5, cv.getIntroduction());
-            ps.setNString(6, cv.getEmail());
-            ps.setNString(7, cv.getPhoneNumber());
-            ps.setNString(8, cv.getAddress());
-            ps.setNString(9, cv.getCity());
+            if (cv.getFirstName() != null) {
+                ps.setNString(1, cv.getFirstName());
+            } else {
+                ps.setNString(1, "");
+            }
+            if (cv.getFirstName() != null) {
+                ps.setNString(2, cv.getLastName());
+            } else {
+                ps.setNString(2, "");
+            }
+            if (cv.getFirstName() != null) {
+                ps.setNString(3, cv.getAvatar());
+            } else {
+               ps.setNString(3, "");
+            }
+            if (cv.getFirstName() != null) {
+                ps.setDate(4, cv.getDob());
+            } else {
+                ps.setDate(4, new Date(0, 0, 0));
+            }
+            if (cv.getFirstName() != null) {
+               ps.setNString(5, cv.getIntroduction());
+            } else {
+                ps.setNString(5, "");
+            }
+            if (cv.getFirstName() != null) {
+               ps.setNString(6, cv.getEmail());
+            } else {
+                ps.setNString(6, "username@domainname.extension");
+            }
+            if (cv.getFirstName() != null) {
+                ps.setNString(7, cv.getPhoneNumber());
+            } else {
+                ps.setNString(7, "");
+            }
+            if (cv.getFirstName() != null) {
+                ps.setNString(8, cv.getAddress());
+            } else {
+                ps.setNString(8, "");
+            }
+            if (cv.getFirstName() != null) {
+                ps.setNString(9, cv.getCity());
+            } else {
+                ps.setNString(9, "");
+            }
+
             int genderID = 1;
             switch (cv.getGender().toLowerCase()) {
                 case "female":
@@ -679,15 +716,51 @@ public class CVDAO {
             con.setAutoCommit(false);
 
             ps = con.prepareStatement(sql);
-            ps.setNString(1, cv.getFirstName());
-            ps.setNString(2, cv.getLastName());
-            ps.setNString(3, cv.getAvatar());
-            ps.setDate(4, cv.getDob());
-            ps.setNString(5, cv.getIntroduction());
-            ps.setNString(6, cv.getEmail());
-            ps.setNString(7, cv.getPhoneNumber());
-            ps.setNString(8, cv.getAddress());
-            ps.setNString(9, cv.getCity());
+            if (cv.getFirstName() != null) {
+                ps.setNString(1, cv.getFirstName());
+            } else {
+                ps.setNString(1, "");
+            }
+            if (cv.getFirstName() != null) {
+                ps.setNString(2, cv.getLastName());
+            } else {
+                ps.setNString(2, "");
+            }
+            if (cv.getFirstName() != null) {
+                ps.setNString(3, cv.getAvatar());
+            } else {
+               ps.setNString(3, "");
+            }
+            if (cv.getFirstName() != null) {
+                ps.setDate(4, cv.getDob());
+            } else {
+                ps.setDate(4, new Date(0, 0, 0));
+            }
+            if (cv.getFirstName() != null) {
+               ps.setNString(5, cv.getIntroduction());
+            } else {
+                ps.setNString(5, "");
+            }
+            if (cv.getFirstName() != null) {
+               ps.setNString(6, cv.getEmail());
+            } else {
+                ps.setNString(6, "username@domainname.extension");
+            }
+            if (cv.getFirstName() != null) {
+                ps.setNString(7, cv.getPhoneNumber());
+            } else {
+                ps.setNString(7, "");
+            }
+            if (cv.getFirstName() != null) {
+                ps.setNString(8, cv.getAddress());
+            } else {
+                ps.setNString(8, "");
+            }
+            if (cv.getFirstName() != null) {
+                ps.setNString(9, cv.getCity());
+            } else {
+                ps.setNString(9, "");
+            }
             int genderID = 1;
             switch (cv.getGender().toLowerCase()) {
                 case "female":

@@ -44,7 +44,7 @@ public class CVController extends HttpServlet {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String gender = request.getParameter("gender");
-        //Date dob = Date.valueOf(request.getParameter("dob"));
+//        Date dob = Date.valueOf(request.getParameter("dob"));
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         String address = request.getParameter("address");
@@ -59,8 +59,20 @@ public class CVController extends HttpServlet {
                     request.getRequestDispatcher("/views/cv/cv-write.jsp").forward(request, response);
                     break;
                 case "createCV":
+                    cvdto = new CVDTO(0, firstName, lastName, city, null, introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
+                    cvdao.saveCV(cvdto);
+                    cvdto = cvdao.loadCVByUserID(user.getUserID());
+                    request.setAttribute("cv", cvdto);
+                    request.getRequestDispatcher("/profile").forward(request, response);
+                    break;
+                case "editMyCV":
+                    cvdto = cvdao.loadCVByUserID(user.getUserID());
+                    request.setAttribute("cv", cvdto);
+                    request.getRequestDispatcher("/views/cv/cv-write.jsp").forward(request, response);
+                    break;
+                case "editCV":
                     
-                    cvdto = new CVDTO(0, firstName, lastName, city, new Date(01,01,2001), introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
+                    cvdto = new CVDTO(0, firstName, lastName, city, null, introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
                     cvdao.saveCV(cvdto);
                     cvdto = cvdao.loadCVByUserID(user.getUserID());
                     request.setAttribute("cv", cvdto);
@@ -68,6 +80,7 @@ public class CVController extends HttpServlet {
                     break;
                 default:
                     request.getRequestDispatcher("/home").forward(request, response);
+                    break;
             }
         }
 

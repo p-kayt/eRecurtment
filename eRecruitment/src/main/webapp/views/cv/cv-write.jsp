@@ -4,6 +4,7 @@
     Author     : Huu Minh
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,6 +17,8 @@
         <link rel="stylesheet" href="css/style_cv.css" type="text/css">
     </head>
     <body>
+        
+        
         <form action="cv" method="get">    
             
             <div class="cv">
@@ -28,9 +31,9 @@
                     <div class="cv-element">
                         <h3> Introduction </h3>
                         <input type="text"
-                               value = "${introduction}"
+                               value = "${requestScope.cv.introduction}"
                                placeholder="Say something about yourself" 
-                               name="">
+                               name="introduction">
                         <br>
                         <!-- Basic information -->
                         <div><b>First name: </b> <input
@@ -44,7 +47,7 @@
                                 type="text"
                                 id="lastName"
                                 name = "lastName"
-                                value = "${lastName}"
+                                value = "${requestScope.cv.lastName}"
                                 placeholder="Enter your last name"
                                 /></div>
                         <div><b>Gender: </b> <input type="radio" id="male" name="gender" value="Male" checked>
