@@ -53,7 +53,7 @@ public class image extends HttpServlet {
         //Lấy đường dẫn tương đối
         String dir;
 
-        dir = request.getServletContext().getRealPath("homepage.jsp");
+        dir = request.getServletContext().getRealPath("");
         String path[] = dir.split("eRecruitment");
         dir = path[0];
 
