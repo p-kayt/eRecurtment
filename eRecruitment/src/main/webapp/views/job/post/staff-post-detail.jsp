@@ -156,6 +156,12 @@
                             </div>
                         </div>
                     </form>
+                    <!-- Form chua thong tin de tao buoi phong van Interview -->
+                    <form action="" method="post">
+                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                        <input class="btn btn-primary" type="submit" value="Tạo buổi phỏng vấn">
+                    </form>
+                    <!--  -->
                 </div>
                 <div  class="d-flex flex-column mb-4">
                     <div class="m-auto">

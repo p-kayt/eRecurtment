@@ -108,38 +108,41 @@
             <!-- Carousel End -->
 
             <!-- Search Start -->
-            <div
-                class="container-fluid bg-primary mb-5 wow fadeIn"
-                data-wow-delay="0.1s"
-                style="padding: 35px"
-                >
-                <div class="container">
-                    <div class="row g-2 d-flex justify-content-around">
-                        <div class="col-md-10">
-                            <div class="row g-2 d-flex justify-content-around">
-                                <div class="col-md-8">
-                                    <input
-                                        type="text"
-                                        class="form-control border-0"
-                                        placeholder="Tìm kiếm"
-                                        />
-                                </div>
-                                <div class="col-md-4">
-                                    <select class="form-select border-0">
-                                        <option selected>Category</option>
-                                        <option value="1">Category 1</option>
-                                        <option value="2">Category 2</option>
-                                        <option value="3">Category 3</option>
-                                    </select>
+            <form action="./post" method="post">
+                <input type="hidden" name="action" value="search-posts">
+                <div
+                    class="container-fluid bg-primary mb-5 wow fadeIn"
+                    data-wow-delay="0.1s"
+                    style="padding: 35px"
+                    >
+                    <div class="container">
+                        <div class="row g-2 d-flex justify-content-around">
+                            <div class="col-md-10">
+                                <div class="row g-2 d-flex justify-content-around">
+                                    <div class="col-md-8">
+                                        <input
+                                            type="text"
+                                            class="form-control border-0"
+                                            name="keyword"
+                                            placeholder="Tìm kiếm theo tên vị trí..."
+                                            />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="form-select border-0" name="statusID">
+                                            <option value="2">Pending</option>
+                                            <option value="3" selected>Hiring</option>
+                                            <option value="4">Closed</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-dark border-0 w-100">Tìm kiếm</button>
+                            <div class="col-md-2">
+                                <button class="btn btn-dark border-0 w-100">Tìm kiếm</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
             <!-- Search End -->
 
             <!-- Jobs Start -->
