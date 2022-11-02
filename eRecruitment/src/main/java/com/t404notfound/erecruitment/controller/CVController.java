@@ -4,10 +4,17 @@
  */
 package com.t404notfound.erecruitment.controller;
 
+import com.t404notfound.erecruitment.bean.UserDAO;
 import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.cv.CVDAO;
 import com.t404notfound.erecruitment.bean.cv.CVDTO;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,12 +22,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Huu Minh
  */
 @WebServlet(name = "CVController", urlPatterns = {"/cv"})
+@javax.servlet.annotation.MultipartConfig
 public class CVController extends HttpServlet {
 
     /**
@@ -40,18 +49,17 @@ public class CVController extends HttpServlet {
         HttpSession session = request.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
         String action = request.getParameter("action");
+
         int CVID = 0;
-        if (request.getParameter("CVID") != null) CVID = Integer.parseInt(request.getParameter("CVID"));
-        String introduction = request.getParameter("introduction");
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-//        String avatar = "";
-        String gender = request.getParameter("gender");
-        String dob = request.getParameter("date");
-        String email = request.getParameter("email");
-        String phoneNumber = request.getParameter("phoneNumber");
-        String address = request.getParameter("address");
-        String city = request.getParameter("city");
+        String introduction;
+        String firstName;
+        String lastName;
+        String gender;
+        String dob;
+        String email;
+        String phoneNumber;
+        String address;
+        String city;
 
         CVDAO cvdao = new CVDAO();
         CVDTO cvdto = new CVDTO();
@@ -63,7 +71,21 @@ public class CVController extends HttpServlet {
                     request.getRequestDispatcher("/views/cv/cv-write.jsp").forward(request, response);
                     break;
                 case "createCV":
-                    cvdto = new CVDTO(0, firstName, lastName, "", dob, introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
+
+                    CVID = 0;
+                    if (request.getParameter("CVID") != null) {
+                        CVID = Integer.parseInt(request.getParameter("CVID"));
+                    }
+                    introduction = request.getParameter("introduction");
+                    firstName = request.getParameter("firstName");
+                    lastName = request.getParameter("lastName");
+                    gender = request.getParameter("gender");
+                    dob = request.getParameter("date");
+                    email = request.getParameter("email");
+                    phoneNumber = request.getParameter("phoneNumber");
+                    address = request.getParameter("address");
+                    city = request.getParameter("city");
+                    cvdto = new CVDTO(0, firstName, lastName, dob, introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
                     cvdao.saveCV(cvdto);
                     cvdto = cvdao.loadCVByUserID(user.getUserID());
                     request.setAttribute("cv", cvdto);
@@ -75,13 +97,83 @@ public class CVController extends HttpServlet {
                     request.setAttribute("cv", cvdto);
                     request.getRequestDispatcher("/views/cv/cv-write.jsp").forward(request, response);
                     break;
-                case "editCV":    
-                    
-                    cvdto = new CVDTO(CVID, firstName, lastName, "", dob, introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
+                case "editCV":
+                    CVID = 0;
+                    if (request.getParameter("CVID") != null) {
+                        CVID = Integer.parseInt(request.getParameter("CVID"));
+                    }
+                    introduction = request.getParameter("introduction");
+                    firstName = request.getParameter("firstName");
+                    lastName = request.getParameter("lastName");
+                    gender = request.getParameter("gender");
+                    dob = request.getParameter("date");
+                    email = request.getParameter("email");
+                    phoneNumber = request.getParameter("phoneNumber");
+                    address = request.getParameter("address");
+                    city = request.getParameter("city");
+                    cvdto = new CVDTO(CVID, firstName, lastName, dob, introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
                     cvdao.updateCV(cvdto);
                     cvdto = cvdao.loadCVByUserID(user.getUserID());
                     request.setAttribute("cv", cvdto);
                     request.getRequestDispatcher("/profile").forward(request, response);
+                    break;
+                case "updateAvatar":
+
+//                    request.setAttribute("infor", "Hello");
+                    //Lấy đường dẫn tương đối
+                    String dir;
+
+                    dir = request.getServletContext().getRealPath("homepage.jsp");
+                    String path[] = dir.split("eRecruitment");
+                    dir = path[0];
+
+                    dir += "\\image";
+                    File img = new File(dir);
+                    if (!img.exists()) {
+                        img.mkdir();
+                    }
+                    dir += "\\cv_avatar";
+                    File avatar = new File(dir);
+                    if (!avatar.exists()) {
+                        avatar.mkdir();
+                    }
+                    dir += "\\" + user.getFirstName().trim() + user.getLastName().trim();
+                    File image = new File(dir);
+                    if (!image.exists()) {
+                        image.mkdir();
+                    }
+                    //Lấy đường dẫn tương đối
+
+                    //tạo file .png và ghi đè img vào
+                    String fileName = "cv_avatar";
+                    File file = File.createTempFile(fileName, ".png", image);
+
+                    try {
+                        Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
+                        try ( InputStream input = filePart.getInputStream()) {
+                            Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    //tạo file .png và ghi đè img vào
+
+                    //rename img
+                    Path source = Paths.get(file.getParentFile() + "\\" + file.getName());
+
+                    Files.move(source, source.resolveSibling("cv_avatar.png"),
+                            StandardCopyOption.REPLACE_EXISTING);
+                    //rename img
+
+                    String url = "image/cv_avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/cv_avatar.png";
+                    if (cvdao.changeAvatar(url, user.getUserID())) {
+                        cvdto.setAvatar(url);
+                        cvdto = cvdao.loadCVByUserID(user.getUserID());
+                        request.setAttribute("cv", cvdto);
+                        response.sendRedirect(request.getContextPath() + "/profile");
+                    }
                     break;
                 default:
                     request.getRequestDispatcher("/home").forward(request, response);

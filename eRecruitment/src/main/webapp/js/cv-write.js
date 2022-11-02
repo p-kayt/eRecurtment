@@ -178,5 +178,8 @@ function removeAchievement() {
     }
 }
 
+function submitFormIncludeImage() {
+    
+}
 
 
