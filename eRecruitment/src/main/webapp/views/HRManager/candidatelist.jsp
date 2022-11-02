@@ -61,7 +61,7 @@
                     <h1 class="display-3 text-white mb-3 animated slideInDown">Danh sách ứng viên</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb text-uppercase">
-                            <li class="breadcrumb-item"><a href="job?action=position-list">Danh sách ứng viên</a></li>
+                            <li class="breadcrumb-item"><a href="#">Danh sách ứng viên</a></li>
                         </ol>
                     </nav> 
                 </div>
@@ -86,14 +86,14 @@
                     </form>
                 </div>
             </div>
-
-            <div>
-                <h4>
-                    <c:if test = "${requestScope.AppResult != 'Undo' && requestScope.AppResult != null}">
+            <c:if test = "${requestScope.AppResult != 'Undo' && requestScope.AppResult != null}">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
+                    <h5>
                         Candidate ${requestScope.FirstName} ${requestScope.LastName}'s application has been ${requestScope.AppResult}
-                    </c:if>
-                </h4>
-            </div>
+                        
+                    </h5>
+                </div>
+            </c:if>
 
             <c:if test = "${empty requestScope.Candidates}">
                 <h4>${requestScope.nullMsg}</h4>  
@@ -103,7 +103,7 @@
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr class="tb_head col-12 rounded-9 justify-content-around">
-                            <th scope="col" class="col-1 text-center pb-4">User ID</th>
+                            <th scope="col" class="col-2 text-center pb-4">User ID</th>
                             <th scope="col" class="col-3 pb-4">Email</th>
                             <th scope="col" class="col-2 pb-4">First Name</th>
                             <th scope="col" class="col-1 pb-4">Last Name</th>
@@ -120,7 +120,7 @@
                                 <td class="align-middle"> ${current.getFirstName()} </td>
                                 <td class="align-middle"> ${current.getLastName()} </td>
                                 <td class="align-middle text-center"> ${current.getGender()} </td>
-                                
+
 
                                 <td class="align-middle text-center">${current.getAppStatus()} </td>
                                 <td class="align-middle d-flex flex-column">
@@ -140,11 +140,8 @@
                                         <input class="btn btn-primary m-1" type = "SUBMIT" name = "action" value = "Accept" form = "Change Status_${current.getEmail()}">
                                         <input class="btn btn-dark m-1" type = "SUBMIT" name = "action" value = "Decline" form = "Change Status_${current.getEmail()}">
                                     </c:if>
-                                    <c:if test = "${current.getAppStatus() == 'Fail'}">
-                                        <input type = "SUBMIT" name = "action" value = "Undo" form = "Change Status_${current.getEmail()}">
-                                    </c:if>
-                                    <c:if test = "${current.getAppStatus() == 'Success'}">
-                                        <input type = "SUBMIT" name = "action" value = "Undo" form = "Change Status_${current.getEmail()}">
+                                    <c:if test = "${current.getAppStatus() == 'Fail' || current.getAppStatus() == 'Success'}">
+                                        <input  class="btn btn-success m-1" type = "SUBMIT" name = "action" value = "Undo" form = "Change Status_${current.getEmail()}">
                                     </c:if>
                                 </td>
                             </tr>
@@ -158,18 +155,23 @@
 
 
         <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    </div>
+        <div>
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        </div>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!--Javascript -->
-    <script src="js/main.js"></script>
-</body>
+        <!--Javascript -->
+        <script src="js/main.js"></script>
+        <script>
+                
+    
+        </script>
+    </body>
 </html>

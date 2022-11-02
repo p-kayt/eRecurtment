@@ -90,7 +90,7 @@
                             <a href="./job?action=position-list" class="nav-item nav-link">Quản lý tuyển dụng</a>
                         </c:if>
                         <c:if test = "${user.getUserRole() == 3}">
-                            <a href="./ManagerViewCandidates" class="nav-item nav-link">Phê duyệt ứng viên</a>
+                            <a href="./ManagerViewCandidates?txtSearch=&action=All" class="nav-item nav-link">Phê duyệt ứng viên</a>
                         </c:if>
                         <c:if test = "${user.getUserRole() == 5}">
                             <a href="./adminViewUser" class="nav-item nav-link">Quản lý các user</a>
