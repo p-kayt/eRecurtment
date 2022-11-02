@@ -24,6 +24,7 @@ public class ApplicationPostDTO implements Serializable {
     private int positionID;
     private int formID;
     private int statusID;
+    private String positionName;
 
     private ArrayList<PostBenefitDTO> benefitList;
     private ArrayList<PostSkillDTO> skillList;
@@ -49,6 +50,16 @@ public class ApplicationPostDTO implements Serializable {
         this.requirementList = requirementList;
         this.stageList = stageList;
     }
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
+    
+    
 
     public int getPostID() {
         return postID;

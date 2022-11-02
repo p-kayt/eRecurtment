@@ -4,8 +4,12 @@
  */
 package com.t404notfound.erecruitment.controller;
 
+import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositionDAO;
+import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDAO;
+import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,6 +37,15 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+        
+        ApplicationPositionDAO positionDAO = new ApplicationPositionDAO();
+        ApplicationPostDAO postDAO = new ApplicationPostDAO();
+        
+        ArrayList<ApplicationPostDTO> fulltime = postDAO.listFullTimePost();
+        request.setAttribute("fulltime", fulltime);
+        ArrayList<ApplicationPostDTO> parttime = postDAO.listPartTimePost();
+        request.setAttribute("parttime", parttime);
+        
 
         request.getRequestDispatcher("views/home/homepage.jsp").forward(request, response);
     }
