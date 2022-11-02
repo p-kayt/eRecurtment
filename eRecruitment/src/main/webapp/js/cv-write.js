@@ -178,8 +178,8 @@ function removeAchievement() {
     }
 }
 
-function submitFormIncludeImage() {
-    
+function submitFormImage() {
+    document.getElementById("upload-image").submit();
 }
 
 

@@ -32,8 +32,8 @@
         <%cv = (CVDTO) request.getAttribute("cv");%>
         <c:choose>
             <c:when test = "${not empty cv}">
-                <div class="cv m-auto d"> 
-                    
+                <div id="element" class="cv m-auto d"> 
+
                     <div class="cv-column border border-1 shadow">
                         <div class="cv-element">
                             <!-- Avatar -->
@@ -154,6 +154,8 @@
                         </div>
                     </div>
                 </div>
+                <div class="html2pdf__page-break"></div>
+                <button onclick="saveCV()">Save to your device</button>
             </c:when>  
             <c:otherwise>
                 <h3>CV not found</h3>
@@ -161,4 +163,18 @@
         </c:choose>
 
     </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.js"></script>
+</html>
+
+<script>
+                function saveCV() {
+                    var element = document.getElementById('element');
+                    html2pdf(element, {
+                        filename: 'yourCV.pdf',
+                        image: {type: 'png', quality: 0.98},
+                        html2canvas: {scale: 2, logging: true, dpi: 192, letterRendering: true},
+                        jsPDF: {unit: 'mm', format: 'a4', orientation: 'portrait'}
+                    })
+                }
+</script>
 </html>

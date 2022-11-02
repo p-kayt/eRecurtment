@@ -116,6 +116,7 @@ public class CVController extends HttpServlet {
                     cvdto = cvdao.loadCVByUserID(user.getUserID());
                     request.setAttribute("cv", cvdto);
                     request.getRequestDispatcher("/profile").forward(request, response);
+                    
                     break;
                 case "updateAvatar":
 
@@ -172,7 +173,7 @@ public class CVController extends HttpServlet {
                         cvdto.setAvatar(url);
                         cvdto = cvdao.loadCVByUserID(user.getUserID());
                         request.setAttribute("cv", cvdto);
-                        response.sendRedirect(request.getContextPath() + "/profile");
+                        request.getRequestDispatcher("/profile").forward(request, response);
                     }
                     break;
                 default:
