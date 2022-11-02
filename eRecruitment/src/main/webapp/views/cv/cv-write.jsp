@@ -23,22 +23,20 @@
         <%cv = (CVDTO) request.getAttribute("cv");%>
 
 
-        <form id="upload-image" action="cv" enctype="multipart/form-data" method="post">
-            <div class="cv-element image-upload">
 
-                <input id="file-input" type="file" name="file" accept="image/png" value ="" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"/>
-                <input type ="hidden" name="action" value="updateAvatar">
-                <button class="btn btn-dark" type="submit">Confirm image</button>
-            </div>
-        </form>
 
         <form action="cv" method="post" enctype="multipart/form-data">    
             <div class="cv">
-
-                <input type="hidden"
-                       value = "${requestScope.cv.CVID}"
-                       name="CVID">    
                 <div class="cv-column">
+                    <div class="cv-element image-upload">
+
+                        <input id="file-input" type="file" name="file" accept="image/png" value ="" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"/>
+
+                    </div>
+
+                    <input type="hidden"
+                           value = "${requestScope.cv.CVID}"
+                           name="CVID">    
                     <div class="cv-element">
                         <label for="file-input">
                             <img id="output" class="ava_img" src= "${cv.avatar != null ? cv.avatar : 'image/avatar/default.png'}" alt="avatar" />
@@ -222,15 +220,7 @@
 
         <script src="js/cv-write.js"></script>
         <script>
-                    function updateAlert() {
-                        alert("Your CV has been updated!");
-                    }
-                    function imageAlert() {
-                        alert("Your CV image has been updated!");
-                    }
-                    function createAlert() {
-                        alert("Your CV has been created!");
-                    }
+
         </script>
     </body>
 </html>

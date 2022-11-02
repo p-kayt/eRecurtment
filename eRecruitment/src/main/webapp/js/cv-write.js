@@ -9,7 +9,7 @@ function addEducation() {
     const div = document.createElement("div");
     div.id = 'education' + educationCount.toString();
     const div1 = document.createElement("div");
-    div1.innerHTML = '<b>Course ' + educationCount + ': </b> <input type="text" placeholder="What was you learning there?" name="">';
+    div1.innerHTML = '<b>Course ' + educationCount + ': </b> <input type="text" placeholder="What was you learning there?" name="education">';
     const div2 = document.createElement("div");
     div2.innerHTML = '<b>Organization: </b> <input type="text" placeholder="Enter your school/univercity/... name" name="">';
     const div3 = document.createElement("div");
@@ -182,4 +182,13 @@ function submitFormImage() {
     document.getElementById("upload-image").submit();
 }
 
+function updateAlert() {
+    alert("Your CV has been updated!");
+}
+function imageAlert() {
+    alert("Your CV image has been updated!");
+}
+function createAlert() {
+    alert("Your CV has been created!");
+}
 

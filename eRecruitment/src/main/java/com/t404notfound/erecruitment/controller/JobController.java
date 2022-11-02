@@ -480,6 +480,7 @@ public class JobController extends HttpServlet {
                     for (int i = 0; i < requirements.length; i++) {
                         reqList.add(new PostRequirementDTO(0, requirements[i], 0));
                     }
+                    
 
                     String[] skillNames = request.getParameterValues("skillName");
                     String[] skillDescriptions = request.getParameterValues("skillDescription");
