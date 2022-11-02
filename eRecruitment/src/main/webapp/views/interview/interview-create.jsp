@@ -4,6 +4,7 @@
     Author     : MINH TRI
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.t404notfound.erecruitment.bean.UserDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,6 +12,9 @@
 <html lang = "vi">
     <head>
         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
+        <%ArrayList<String> interviewStage = (ArrayList<String>) request.getAttribute("interviewStage");%>
+        <%ArrayList<String> interviewFormat = (ArrayList<String>) request.getAttribute("interviewFormat");%>
+
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -86,8 +90,11 @@
             <form action = "interview" method = "post" id = "form1">
                 <label for="format">Hình thức</label>
                 <select id = "format" name= "format">
-                    <option value = "1" selected>Offline</option>
-                    <option value="2">Online</option>
+                    <c:if test ="<%=(interviewFormat != null)%>" >
+                        <c:forEach items="<%=interviewFormat%>" var="i" varStatus="count">
+                            <option value = "${count.index + 1}" ${(format == (count.index + 1)) ? "selected" : ""}>${i}</option>   
+                        </c:forEach>
+                    </c:if>
                 </select> <br />
                 <label for = "link">Link</label>
                 <input type = "url" name="link" id="link" > <br/>
@@ -100,19 +107,21 @@
 
                 <label for="time">Giờ</label>
                 <input type="time" name="time" value = "${time}" required> <br/>
-                
+
                 <label for="maxCandidate">Số ứng viên tối đa</label>
                 <input type="number" name="maxCandidate" min="1" value = "${(maxCandidate == null) ? 10 : maxCandidate}" required> <br/>
 
                 <label for="stage">Vòng phỏng vấn</label>
                 <select name = "stage" id="stage">
-                    <option value = "1" ${stage == 1 ? "selected" : ""}>Vòng 1</option>
-                    <option value = "2" ${stage == 2 ? "selected" : ""}>Vòng 2</option>
-                    <option value = "3" ${stage == 3 ? "selected" : ""}>Vòng 3</option>
+                    <c:if test ="<%=(interviewStage != null)%>" >
+                        <c:forEach items="<%=interviewStage%>" var="i" varStatus="count">
+                            <option value = "${count.index + 1}" ${(stage == (count.index + 1)) ? "selected" : ""}>${i}</option>   
+                        </c:forEach>
+                    </c:if>
                 </select>   <br/>
 
                 <input type ="hidden" name="action" value="bookInteview">
-                <input type = "hidden" name = "postID" value = "1">
+                <input type = "hidden" name = "postID" value = "${postID}">
 
                 <input type="submit" value = "Đặt lịch"> <br/><br/>
             </form>
@@ -120,11 +129,8 @@
             <label for="description">Mô tả</label> <br />
             <textarea rows="4" cols="60" name="description" form="form1">${description}</textarea>
         </section>
-        
-        <section>
-            <h1>Date time</h1>
-            <p>${datetime}</p>
-        </section>
+
+
 
 
         <!--Check format: if format is offline then link is require, else, address is require-->

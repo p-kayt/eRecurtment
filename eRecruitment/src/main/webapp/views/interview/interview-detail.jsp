@@ -16,6 +16,9 @@
         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
         <%InterviewDTO interview = (InterviewDTO) request.getAttribute("interview");%>
         <%String booker = (String) request.getAttribute("booker");%>
+        <%ArrayList<String> interviewStage = (ArrayList<String>) request.getAttribute("interviewStage");%>
+        <%ArrayList<String> interviewStatus = (ArrayList<String>) request.getAttribute("interviewStatus");%>
+        <%ArrayList<String> interviewFormat = (ArrayList<String>) request.getAttribute("interviewFormat");%>
 
         <%ArrayList<UserDTO> interviewerList = (ArrayList<UserDTO>) request.getAttribute("listMainInterviewer");%>
 
@@ -99,22 +102,25 @@
                     <form action="interview" method = "post" id="form1">
 
                         <select id = "statusID" name= "statusID">
-                            <%int statusID = interview.getInteviewStatusID();%>
-                            <option value = "1" <%=(statusID == 1) ? "selected" : ""%>>Booked</option>
-                            <option value = "2" <%=(statusID == 2) ? "selected" : ""%>>Canceled</option>
-                            <option value = "3" <%=(statusID == 3) ? "selected" : ""%>>Have Occured</option>
+                            <c:if test ="<%=(interviewStatus != null)%>" >
+                                <c:forEach items="<%=interviewStatus%>" var="i" varStatus="count">
+                                    <option value = "${count.index + 1}" ${(count.index + 1) == interview.inteviewStatusID ? "selected" : ""} >${i}</option>   
+                                </c:forEach>
+                            </c:if>
                         </select> <br />
 
                         <label for="stageID">Tên vòng phỏng vấn</label>
                         <%--Need fix this, must load stage from database--%>
-                        <select  id="stage" disabled>
-                            <%int stageID = interview.getStageID();%>
-                            <option value = "1" <%=(stageID == 1) ? "selected" : ""%>>Vòng 1</option>
-                            <option value = "2" <%=(stageID == 2) ? "selected" : ""%>>Vòng 2</option>
-                            <option value = "3" <%=(stageID == 3) ? "selected" : ""%>>Vòng 3</option>
+                        <select  id="stage" name ="stage" disabled>
+                            <c:if test ="<%=(interviewStage != null)%>" >
+                                <c:forEach items="<%=interviewStage%>" var="i" varStatus="count">
+                                    <option value = "${count.index + 1}" ${(count.index + 1) == interview.stageID ? "selected" : ""} >${i}</option>   
+                                </c:forEach>
+                            </c:if>
+
                         </select>   <br/>
 
-                        <input type="hidden" name = "stage" value="<%=stageID%>">
+                        <input type="hidden" name = "stage" value="${interview.stageID}">
 
                         <label for="description">Mô tả</label> <br />
                         <textarea rows="4" cols="60" name="description" form="form1"><%=interview.getDescription()%></textarea> <br/>
@@ -122,8 +128,11 @@
                         <label for="format">Hình thức</label>
                         <%int formatID = interview.getFormatID();%>
                         <select id = "format" name= "format">
-                            <option value = "1" <%=(formatID == 1) ? "selected" : ""%>>Offline</option>
-                            <option value="2" <%=(formatID == 2) ? "selected" : ""%>>Online</option>
+                            <c:if test ="<%=(interviewFormat != null)%>" >
+                                <c:forEach items="<%=interviewFormat%>" var="i" varStatus="count">
+                                    <option value = "${count.index + 1}" ${((count.index + 1) == interview.formatID) ? "selected" : ""}>${i}</option>   
+                                </c:forEach>
+                            </c:if>
                         </select> <br />
 
                         <%
@@ -145,7 +154,7 @@
 
                         <label for="maxCandidate">Số ứng viên tối đa</label>
                         <input type="number" name="maxCandidate" min="1" value = "<%=interview.getMaxCandidate()%>" required> <br/>
-                        <input type="hidden" name="interviewID" value="${interviewID}}" >
+                        <input type="hidden" name="interviewID" value="${interviewID}" >
 
 
                         <p>Người tạo     <%=booker%></p>

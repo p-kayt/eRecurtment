@@ -57,6 +57,8 @@ public class InterviewController extends HttpServlet {
         int postID = 0;
         if (request.getParameter("postID") != null) {
             postID = Integer.parseInt(request.getParameter("postID"));
+        } else {
+            postID = 1;
         }
 
         if (action != null && !action.equals("")) {
@@ -74,10 +76,19 @@ public class InterviewController extends HttpServlet {
                     InterviewDTO interview = iDAO.getInterview(interviewID);
                     request.setAttribute("interview", interview);
                     request.setAttribute("interviewID", interviewID);
+                    request.setAttribute("postID", postID);
 
                     //set action attribute to load interview detail
 //                    request.setAttribute("action", "interviewDetail");
                     //set action attribute to load interview detail
+                    InterviewDAO dao = new InterviewDAO();
+                    ArrayList<String> interviewStage = dao.getInterviewStage(postID);
+                    ArrayList<String> interviewStatus = dao.getInterviewStatus();
+                    ArrayList<String> interviewFormat = dao.getInterviewFormat();
+                    request.setAttribute("interviewFormat", interviewFormat);
+                    request.setAttribute("interviewStatus", interviewStatus);
+                    request.setAttribute("interviewStage", interviewStage);
+
                     request.setAttribute("booker", user.getFirstName() + " " + user.getLastName());
                     request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
                     return;
@@ -92,6 +103,16 @@ public class InterviewController extends HttpServlet {
                     request.setAttribute("time", hour);
                     request.setAttribute("maxCandidate", maxCandidate);
                     request.setAttribute("description", description);
+                    request.setAttribute("postID", postID);
+
+                    InterviewDAO dao = new InterviewDAO();
+                    ArrayList<String> interviewStage = dao.getInterviewStage(postID);
+                    ArrayList<String> interviewStatus = dao.getInterviewStatus();
+                    ArrayList<String> interviewFormat = dao.getInterviewFormat();
+                    request.setAttribute("interviewFormat", interviewFormat);
+                    request.setAttribute("interviewStatus", interviewStatus);
+                    request.setAttribute("interviewStage", interviewStage);
+
                     request.getRequestDispatcher("/views/interview/interview_create.jsp").forward(request, response);
                 }
             } else if (action.equalsIgnoreCase("interviewDetail")) {
@@ -117,12 +138,21 @@ public class InterviewController extends HttpServlet {
                 ArrayList<UserDTO> listCandidate = participantDAO.getListCandidateByResult(interviewID, 1);
                 request.setAttribute("listMainCandidate", listCandidate);
                 //get list candidate
-                
+
                 //get list candidate that have not to interview
                 ArrayList<UserDTO> listNoInterviewCandidate = participantDAO.getListCandidateByResult(interviewID, 2);
                 request.setAttribute("listNoInterviewCandidate", listNoInterviewCandidate);
                 //get list candidate that have not to interview
 
+                InterviewDAO dao = new InterviewDAO();
+                ArrayList<String> interviewStage = dao.getInterviewStage(postID);
+                ArrayList<String> interviewStatus = dao.getInterviewStatus();
+                ArrayList<String> interviewFormat = dao.getInterviewFormat();
+                request.setAttribute("interviewFormat", interviewFormat);
+                request.setAttribute("interviewStatus", interviewStatus);
+                request.setAttribute("interviewStage", interviewStage);
+
+                request.setAttribute("postID", postID);
                 request.setAttribute("interviewID", interviewID);
                 request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
                 return;
@@ -131,6 +161,7 @@ public class InterviewController extends HttpServlet {
                 InterviewerDAO iDAO = new InterviewerDAO();
                 int interviewID = Integer.parseInt(request.getParameter("interviewID"));
                 ArrayList<UserDTO> listInterviewer = iDAO.getAvailableInterviewer(interviewID);
+                request.setAttribute("postID", postID);
                 request.setAttribute("listInterviewer", listInterviewer);
                 request.setAttribute("interviewID", interviewID);
                 request.getRequestDispatcher("/views/interview/interviewer-list.jsp").forward(request, response);
@@ -145,6 +176,7 @@ public class InterviewController extends HttpServlet {
                 /*reload list interview page*/
                 InterviewerDAO interviewerDAO = new InterviewerDAO();
                 ArrayList<UserDTO> listInterviewer = interviewerDAO.getAvailableInterviewer(interviewID);
+                request.setAttribute("postID", postID);
                 request.setAttribute("listInterviewer", listInterviewer);
                 request.setAttribute("interviewID", interviewID);
                 request.getRequestDispatcher("/views/interview/interviewer-list.jsp").forward(request, response);
@@ -162,6 +194,16 @@ public class InterviewController extends HttpServlet {
 
                 InterviewDAO interviewDAO = new InterviewDAO();
                 InterviewDTO interview = interviewDAO.getInterview(interviewID);
+
+                InterviewDAO dao = new InterviewDAO();
+                ArrayList<String> interviewStage = dao.getInterviewStage(postID);
+                ArrayList<String> interviewStatus = dao.getInterviewStatus();
+                ArrayList<String> interviewFormat = dao.getInterviewFormat();
+                request.setAttribute("interviewFormat", interviewFormat);
+                request.setAttribute("interviewStatus", interviewStatus);
+                request.setAttribute("interviewStage", interviewStage);
+
+                request.setAttribute("postID", postID);
                 request.setAttribute("booker", user.getFirstName() + " " + user.getLastName());
                 request.setAttribute("interview", interview);
                 request.setAttribute("listMainInterviewer", listInterviewer);
@@ -179,7 +221,38 @@ public class InterviewController extends HttpServlet {
                 InterviewDAO iDAO = new InterviewDAO();
                 InterviewDTO update = iDAO.updateInterview(interviewID, description, link, address, time, maxCandidate, stageID, formatID, statusID);
 
+                /*Load list participant and interviewer*/
+                InterviewerDAO interviewerDAO = new InterviewerDAO();
+                ParticipantDAO participantDAO = new ParticipantDAO();
+                //get Interviewer of this interview
+                ArrayList<UserDTO> listInterviewer = interviewerDAO.getInterviewer(interviewID);
+                //get list interviewer
+                request.setAttribute("listMainInterviewer", listInterviewer);
+
+                ArrayList<ParticipantDTO> listParticipant = participantDAO.getParticipant(interviewID);
+                request.setAttribute("listParticipant", listParticipant);
+
+                //get list candidate
+                ArrayList<UserDTO> listCandidate = participantDAO.getListCandidateByResult(interviewID, 1);
+                request.setAttribute("listMainCandidate", listCandidate);
+                //get list candidate
+
+                //get list candidate that have not to interview
+                ArrayList<UserDTO> listNoInterviewCandidate = participantDAO.getListCandidateByResult(interviewID, 2);
+                request.setAttribute("listNoInterviewCandidate", listNoInterviewCandidate);
+                //get list candidate that have not to interview
+                /*Load list participant and interviewer*/
+
+                InterviewDAO dao = new InterviewDAO();
+                ArrayList<String> interviewStage = dao.getInterviewStage(postID);
+                ArrayList<String> interviewStatus = dao.getInterviewStatus();
+                ArrayList<String> interviewFormat = dao.getInterviewFormat();
+                request.setAttribute("interviewFormat", interviewFormat);
+                request.setAttribute("interviewStatus", interviewStatus);
+                request.setAttribute("interviewStage", interviewStage);
+
                 request.setAttribute("interviewID", interviewID);
+                request.setAttribute("postID", postID);
                 request.setAttribute("interview", update);
                 request.setAttribute("booker", user.getFirstName() + " " + user.getLastName());
                 request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
@@ -194,6 +267,7 @@ public class InterviewController extends HttpServlet {
                 int iStageID = interview.getStageID();
                 ArrayList<UserDTO> listCandidate = pDAO.getAvailablePariticipant(iPostID, iStageID);
 
+                request.setAttribute("postID", postID);
                 request.setAttribute("interview", interview);
                 request.setAttribute("listCandidate", listCandidate);
                 request.setAttribute("interviewID", interviewID);
@@ -221,6 +295,7 @@ public class InterviewController extends HttpServlet {
                 int iStageID = interview.getStageID();
                 ArrayList<UserDTO> listCandidate = pDAO.getAvailablePariticipant(iPostID, iStageID);
 
+                request.setAttribute("postID", postID);
                 request.setAttribute("interview", interview);
                 request.setAttribute("listCandidate", listCandidate);
                 request.setAttribute("interviewID", interviewID);
@@ -239,6 +314,15 @@ public class InterviewController extends HttpServlet {
 
                 ArrayList<UserDTO> listCandidate = pDAO.getListCandidate(interviewID);
 
+                InterviewDAO dao = new InterviewDAO();
+                ArrayList<String> interviewStage = dao.getInterviewStage(postID);
+                ArrayList<String> interviewStatus = dao.getInterviewStatus();
+                ArrayList<String> interviewFormat = dao.getInterviewFormat();
+                request.setAttribute("interviewFormat", interviewFormat);
+                request.setAttribute("interviewStatus", interviewStatus);
+                request.setAttribute("interviewStage", interviewStage);
+
+                request.setAttribute("postID", postID);
                 request.setAttribute("interview", interview);
                 request.setAttribute("listMainCandidate", listCandidate);
                 request.setAttribute("interviewID", interviewID);
@@ -247,6 +331,15 @@ public class InterviewController extends HttpServlet {
                 /*reload list candidate page*/
             }
         } else {
+            InterviewDAO dao = new InterviewDAO();
+            ArrayList<String> interviewStage = dao.getInterviewStage(postID);
+            ArrayList<String> interviewStatus = dao.getInterviewStatus();
+            ArrayList<String> interviewFormat = dao.getInterviewFormat();
+
+            request.setAttribute("postID", postID);
+            request.setAttribute("interviewFormat", interviewFormat);
+            request.setAttribute("interviewStatus", interviewStatus);
+            request.setAttribute("interviewStage", interviewStage);
             request.getRequestDispatcher("/views/interview/interview-create.jsp").forward(request, response);
         }
 
