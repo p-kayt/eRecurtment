@@ -60,19 +60,19 @@ public class AdminAssignRolesController extends HttpServlet {
 
             if (roleString.equalsIgnoreCase("Candidate")) {
                 role = 1;
-                result = "Candidate";
+                result = "Ứng viên";
             } else if (roleString.equalsIgnoreCase("HR Staff")) {
                 role = 2;
-                result = "HR Staff";
+                result = "Nhân viên HR";
             } else if (roleString.equalsIgnoreCase("HR Manager")) {
                 role = 3;
-                result = "HR Manager";
+                result = "Quản lý HR";
             } else if (roleString.equalsIgnoreCase("Interviewer")) {
                 role = 4;
-                result = "Interviewer";
+                result = "Người phỏng vấn";
             } else if (roleString.equalsIgnoreCase("System Admin")) {
                 role = 5;
-                result = "System Admin";
+                result = "Admin";
             }
             try {
                 AdminUserDAO.updateRoles(email, role);

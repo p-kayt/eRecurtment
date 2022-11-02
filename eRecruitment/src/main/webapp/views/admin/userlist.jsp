@@ -89,11 +89,11 @@
             </div>
 
             <c:if test = "${not empty requestScope.StatusResult}">
-                <h4>User ${requestScope.FirstName} ${requestScope.LastName} (Email: ${requestScope.Email})'s status has been set to: ${requestScope.StatusResult}!</h4>
+                <h4>Trạng thái của người dùng ${requestScope.FirstName} ${requestScope.LastName} (Email: ${requestScope.Email}) đã được chuyển sang: ${requestScope.StatusResult}!</h4>
             </c:if>
 
             <c:if test = "${not empty requestScope.RoleResult}">
-                <h4>User ${requestScope.FirstName} ${requestScope.LastName} (Email: ${requestScope.Email}) has been assigned the role: ${requestScope.RoleResult}!</h4>
+                <h4>Người dùng ${requestScope.FirstName} ${requestScope.LastName} (Email: ${requestScope.Email}) đã được cấp quyền: ${requestScope.RoleResult}!</h4>
             </c:if>
 
             <c:if test = "${empty requestScope.Users}">
@@ -106,14 +106,14 @@
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr class="tb_head col-12 rounded-9 justify-content-around">
-                            <th scope="col" class="col-1 text-center pb-4">User ID</th>
-                            <th scope="col" class="col-3 pb-4">Email</th>
-                            <th scope="col" class="col-2 pb-4">First Name</th>
-                            <th scope="col" class="col-1 pb-4">Last Name</th>
-                            <th scope="col" class="col-1 pb-4">Gender</th>
-                            <th scope="col" class="col-2 pb-4">Role</th>
-                            <th scope="col" class="col-1 text-center pb-4">Status</th>
-                            <th scope="col" class="col-2 text-center pb-4">Action</th>
+                            <th scope="col" class="col-1 text-center pb-4">ID</th>
+                            <th scope="col" class="col-3 text-center pb-4">Email</th>
+                            <th scope="col" class="col-2 text-center pb-4">Họ và tên đệm</th>
+                            <th scope="col" class="col-1 text-center pb-4">Tên</th>
+                            <th scope="col" class="col-1 text-center pb-4">Giới tính</th>
+                            <th scope="col" class="col-2 text-center pb-4">Quyền hệ thống</th>
+                            <th scope="col" class="col-1 text-center pb-4">Trạng thái</th>
+                            <th scope="col" class="col-2 text-center pb-4"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -123,53 +123,68 @@
                                 <td class="align-middle"> ${current.getEmail()} </td>
                                 <td class="align-middle"> ${current.getFirstName()} </td>
                                 <td class="align-middle"> ${current.getLastName()} </td>
-                                <td class="align-middle"> ${current.getGender()} </td>
-                                <td><c:choose>
+                                <td class="align-middle text-center"> 
+                                    <c:if test="${current.getGender() == 'Male'}">
+                                        Nam
+                                    </c:if>
+                                    <c:if test="${current.getGender() == 'Female'}">
+                                        Nữ
+                                    </c:if> 
+                                </td>
+                                <td class="align-middle">
+                                    <c:choose>
                                         <c:when test = "${current.getUserRole() == 'System Admin'}">
-                                            ${current.getUserRole()}
+                                            Admin
                                         </c:when>
                                         <c:otherwise>
                                             <c:if test = "${current.getUserRole() == 'Candidate'}">
                                                 <select name = "Role" form = "Assign Role_${current.getEmail()}">
-                                                    <option value="Candidate">Candidate</option>
-                                                    <option value="HR Staff">HR Staff</option>
-                                                    <option value="HR Manager">HR Manager</option>
-                                                    <option value="Interviewer">Interviewer</option>
-                                                    <option disabled value="System Admin">System Admin</option>
+                                                    <option value="Candidate">Ứng viên</option>
+                                                    <option value="HR Staff">Nhân viên HR</option>
+                                                    <option value="HR Manager">Quản lý HR</option>
+                                                    <option value="Interviewer">Người phỏng vấn</option>
+                                                    <option disabled value="System Admin">Admin</option>
                                                 </select>
                                             </c:if>
                                             <c:if test = "${current.getUserRole() == 'HR Staff'}">
                                                 <select name = "Role" form = "Assign Role_${current.getEmail()}">
-                                                    <option value="HR Staff">HR Staff</option>
-                                                    <option value="Candidate">Candidate</option>
-                                                    <option value="HR Manager">HR Manager</option>
-                                                    <option value="Interviewer">Interviewer</option>
-                                                    <option disabled value="System Admin">System Admin</option>
+                                                    <option value="HR Staff">Nhân viên HR</option>
+                                                    <option value="Candidate">Ứng viên</option>
+                                                    <option value="HR Manager">Quản lý HR</option>
+                                                    <option value="Interviewer">Người phỏng vấn</option>
+                                                    <option disabled value="System Admin">Admin</option>
                                                 </select>
                                             </c:if>
                                             <c:if test = "${current.getUserRole() == 'HR Manager'}">
                                                 <select name = "Role" form = "Assign Role_${current.getEmail()}">
-                                                    <option value="HR Staff">HR Manager</option>
-                                                    <option value="Candidate">Candidate</option>
-                                                    <option value="HR Manager">HR Staff</option>
-                                                    <option value="Interviewer">Interviewer</option>
-                                                    <option disabled value="System Admin">System Admin</option>
+                                                    <option value="HR Staff">Quản lý HR</option>
+                                                    <option value="Candidate">Ứng viên</option>
+                                                    <option value="HR Manager">Nhân viên HR</option>
+                                                    <option value="Interviewer">Người phỏng vấn</option>
+                                                    <option disabled value="System Admin">Admin</option>
                                                 </select>
                                             </c:if>
                                             <c:if test = "${current.getUserRole() == 'Interviewer'}">
                                                 <select name = "Role" form = "Assign Role_${current.getEmail()}">
-                                                    <option value="Interviewer">Interviewer</option>
-                                                    <option value="Candidate">Candidate</option>
-                                                    <option value="HR Manager">HR Staff</option>
-                                                    <option value="HR Staff">HR Manager</option>
-                                                    <option disabled value="System Admin">System Admin</option>
+                                                    <option value="Interviewer">Người phỏng vấn</option>
+                                                    <option value="Candidate">Ứng viên</option>
+                                                    <option value="HR Manager">Nhân viên HR</option>
+                                                    <option value="HR Staff">Quản lý HR</option>
+                                                    <option disabled value="System Admin">Admin</option>
                                                 </select>
                                             </c:if>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
 
-                                <td class="text-center align-middle"> ${current.getStatus()} </td>
+                                <td class="text-center align-middle">
+                                    <c:if test="${current.getStatus() == 'Active'}">
+                                        Tự do
+                                    </c:if>
+                                    <c:if test="${current.getStatus() == 'inActive'}">
+                                        Bị cấm
+                                    </c:if>
+                                </td>
                                 <td class="d-flex flex-column col-12">
                                     <c:choose> 
                                         <c:when test = "${current.getUserRole() == 'System Admin'}">
@@ -184,10 +199,10 @@
                                                 <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Change Status_${current.getEmail()}">
                                                 <c:choose> 
                                                     <c:when test = "${current.getStatus() == 'Active'}">
-                                                        <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Set to inActive" form = "Change Status_${current.getEmail()}">
+                                                        <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Cấm" form = "Change Status_${current.getEmail()}">
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Set to Active" form = "Change Status_${current.getEmail()}">
+                                                        <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Bỏ cấm" form = "Change Status_${current.getEmail()}">
                                                     </c:otherwise>
                                                 </c:choose>
                                             </div>
@@ -197,7 +212,7 @@
                                                 <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "Assign Role_${current.getEmail()}">
                                                 <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "Assign Role_${current.getEmail()}">
                                                 <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Assign Role_${current.getEmail()}">
-                                                <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Submit Role Change" form = "Assign Role_${current.getEmail()}">
+                                                <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Đổi quyền" form = "Assign Role_${current.getEmail()}">
                                             </div>
                                         </c:otherwise>
                                     </c:choose>

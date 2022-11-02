@@ -20,7 +20,7 @@
         <input type = "hidden" name = "txtSearch" value = "${requestScope.SearchValue}" form = "Back">
         <input type = "SUBMIT" name = "action" value = "Back to Candidate List" form = "Back">
         <c:if test="${requestScope.Evaluations.size() == 0}">
-            <h4>Currently unavailable because this candidate has cancelled their application or been disabled by System Admin.</h4>
+            <h4>Currently unavailable because this candidate has cancelled their application or been disabled by System Admin!</h4>
         </c:if>
         <c:if test="${requestScope.Evaluations.size() != 0}">
             <table border="1">

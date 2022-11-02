@@ -20,6 +20,31 @@ import java.util.logging.Logger;
  */
 public class CVDAO {
 
+        public boolean changeAvatar(String url, int userID) {
+
+        String sql = "UPDATE CV "
+                + " SET Avatar = ? "
+                + " WHERE userID = ? ";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, url);
+            ps.setInt(2, userID);
+            int rs = ps.executeUpdate();
+            if (rs > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Error when execute query.");
+            e.printStackTrace();
+            e.getMessage();
+        }
+
+        return false;
+    }
+
+    
     public CVDTO loadCVByUserID(int userID) {
         System.out.println(userID);
         String sql = "SELECT CVID, "
