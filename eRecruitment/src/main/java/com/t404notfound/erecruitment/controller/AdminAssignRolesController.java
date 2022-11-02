@@ -51,20 +51,28 @@ public class AdminAssignRolesController extends HttpServlet {
             String SearchValue = request.getParameter("SearchValue").trim();
             request.setAttribute("SearchValue", SearchValue);
             String email = request.getParameter("Email");
+            String firstName = request.getParameter("FirstName");
+            String lastName = request.getParameter("LastName");
             String roleString = request.getParameter("Role");
             int role = 0;
             ArrayList<AdminUserDTO> list = new ArrayList<>();
+            String result = "";
 
             if (roleString.equalsIgnoreCase("Candidate")) {
                 role = 1;
+                result = "Candidate";
             } else if (roleString.equalsIgnoreCase("HR Staff")) {
                 role = 2;
+                result = "HR Staff";
             } else if (roleString.equalsIgnoreCase("HR Manager")) {
                 role = 3;
+                result = "HR Manager";
             } else if (roleString.equalsIgnoreCase("Interviewer")) {
                 role = 4;
+                result = "Interviewer";
             } else if (roleString.equalsIgnoreCase("System Admin")) {
                 role = 5;
+                result = "System Admin";
             }
             try {
                 AdminUserDAO.updateRoles(email, role);
@@ -75,6 +83,10 @@ public class AdminAssignRolesController extends HttpServlet {
             } catch (SQLException | NamingException | ClassNotFoundException ex) {
             }
             request.setAttribute("Users", list);
+            request.setAttribute("FirstName", firstName);
+            request.setAttribute("LastName", lastName);
+            request.setAttribute("Email", email);
+            request.setAttribute("RoleResult", result);
         } finally {
             RequestDispatcher ReqDis = request.getRequestDispatcher(url);
             ReqDis.forward(request, response);

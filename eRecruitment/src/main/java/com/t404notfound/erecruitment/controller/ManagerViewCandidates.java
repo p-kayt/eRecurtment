@@ -54,9 +54,7 @@ public class ManagerViewCandidates extends HttpServlet {
             String SearchValue = request.getParameter("txtSearch").trim();
             String action = request.getParameter("action");
             ArrayList<ManagerParticipantDTO> list = new ArrayList<>();
-            if (action == null) {
-                request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
-            } else if (action.equalsIgnoreCase("Search")) {
+            if (action.equalsIgnoreCase("Search")) {
                 try {
                     list = ManagerParticipantDAO.getParticipants(SearchValue);
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {

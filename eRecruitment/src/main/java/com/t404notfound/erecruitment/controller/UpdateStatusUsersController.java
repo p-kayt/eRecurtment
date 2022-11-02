@@ -51,9 +51,12 @@ public class UpdateStatusUsersController extends HttpServlet {
             String SearchValue = request.getParameter("SearchValue").trim();
             request.setAttribute("SearchValue", SearchValue);
             String email = request.getParameter("Email");
+            String firstName = request.getParameter("FirstName");
+            String lastName = request.getParameter("LastName");
             String statusString = request.getParameter("Status");
             int status = 0;
             ArrayList<AdminUserDTO> list = new ArrayList<>();
+            String result = "";
 
             if (statusString.equalsIgnoreCase("Active")) {
                 status = 1;
@@ -64,12 +67,14 @@ public class UpdateStatusUsersController extends HttpServlet {
             if (status == 2) {
                 try {
                     AdminUserDAO.updateStatus(email, 1);
+                    result = "Active";
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
 
                 }
             } else {
                 try {
                     AdminUserDAO.updateStatus(email, 2);
+                    result = "inActive";
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
 
                 }
@@ -79,6 +84,10 @@ public class UpdateStatusUsersController extends HttpServlet {
             } catch (SQLException | NamingException | ClassNotFoundException ex) {
             }
             request.setAttribute("Users", list);
+            request.setAttribute("FirstName", firstName);
+            request.setAttribute("LastName", lastName);
+            request.setAttribute("Email", email);
+            request.setAttribute("StatusResult", result);
         } finally {
             RequestDispatcher ReqDis = request.getRequestDispatcher(url);
             ReqDis.forward(request, response);

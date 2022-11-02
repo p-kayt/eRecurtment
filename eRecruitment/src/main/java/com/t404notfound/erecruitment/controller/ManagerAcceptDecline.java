@@ -54,14 +54,19 @@ public class ManagerAcceptDecline extends HttpServlet {
             String SearchValue = request.getParameter("SearchValue").trim();
             request.setAttribute("SearchValue", SearchValue);
             String email = request.getParameter("Email");
+            String firstName = request.getParameter("FirstName");
+            String lastName = request.getParameter("LastName");
             String action = request.getParameter("action");
             int status = 0;
             ArrayList<ManagerParticipantDTO> list = new ArrayList<>();
+            String result = "Undo";
 
             if (action.equalsIgnoreCase("Accept")) {
                 status = 4;
+                result = "accepted!";
             } else if (action.equalsIgnoreCase("Decline")) {
                 status = 3;
+                result = "declined.";
             } else if (action.equalsIgnoreCase("Undo")) {
                 status = 1;
             }
@@ -76,6 +81,10 @@ public class ManagerAcceptDecline extends HttpServlet {
             } catch (SQLException | NamingException | ClassNotFoundException ex) {
             }
             request.setAttribute("Candidates", list);
+            request.setAttribute("FirstName", firstName);
+            request.setAttribute("LastName", lastName);
+            request.setAttribute("Email", email);
+            request.setAttribute("AppResult", result);
         } finally {
             RequestDispatcher ReqDis = request.getRequestDispatcher(url);
             ReqDis.forward(request, response);

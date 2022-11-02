@@ -47,6 +47,8 @@
             </table>
             <form action = "./ManagerAcceptDecline" method = "POST" id = "Change Status"></form>
             <input type = "HIDDEN" name = "Email" value= "${requestScope.Email}" form = "Change Status">
+            <input type = "HIDDEN" name = "FirstName" value= "${requestScope.FirstName}" form = "Change Status">
+            <input type = "HIDDEN" name = "LastName" value= "${requestScope.LastName}" form = "Change Status">
             <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Change Status">
             <input type = "SUBMIT" name = "action" value = "Accept" form = "Change Status">
             <input type = "SUBMIT" name = "action" value = "Decline" form = "Change Status">
