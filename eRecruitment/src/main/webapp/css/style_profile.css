@@ -18,9 +18,8 @@ body{
 }
 
 .profile-img{
-    
     background: rgb(0,176,116);
-    height: 400px;
+    height: 600px;
     width: 400px;
     margin: 0;
     
@@ -106,4 +105,8 @@ body{
     color: yellow; 
     font-weight: bold; 
     display: block;
+}
+
+.image-upload>input {
+  display: none;
 }
