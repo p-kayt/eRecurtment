@@ -35,3 +35,7 @@
     display: inline-block;
 }
 
+.image-upload>input {
+  display: none;
+}
+

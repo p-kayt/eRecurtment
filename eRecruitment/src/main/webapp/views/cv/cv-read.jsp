@@ -36,7 +36,7 @@
                     <div class="cv-column border border-1 shadow">
                         <div class="cv-element">
                             <!-- Avatar -->
-                            <img src="image/avatar/default.png"/>
+                            <img src="${cv.getAvatar() != null ? cv.getAvatar() : 'image/avatar/default.png'}"/>
                         </div>
                         <div class="cv-element border-bottom shadow">
                             <h3> Introduction </h3>

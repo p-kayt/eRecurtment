@@ -53,11 +53,11 @@ public class CVDTO {
     public CVDTO() {
     }
 
-    public CVDTO(int CVID, String firstName, String lastName, String avatar, String dob, String introduction, String email, String phoneNumber, String address, String city, String gender, int userID, ArrayList skills, ArrayList interests, ArrayList certificates, ArrayList achivements, ArrayList experiences, ArrayList languages, ArrayList educations, ArrayList socialMedias) {
+    public CVDTO(int CVID, String firstName, String lastName,  String dob, String introduction, String email, String phoneNumber, String address, String city, String gender, int userID, ArrayList skills, ArrayList interests, ArrayList certificates, ArrayList achivements, ArrayList experiences, ArrayList languages, ArrayList educations, ArrayList socialMedias) {
         this.CVID = CVID;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.avatar = avatar;
+//        this.avatar = avatar;
         this.dob = dob;
         this.introduction = introduction;
         this.email = email;
