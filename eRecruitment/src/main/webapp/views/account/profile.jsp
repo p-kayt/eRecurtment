@@ -64,8 +64,18 @@
                                 <img class="ava_img" src= "${user.getAvatarURL() != null ? user.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
                                 <div ><%=user.getFirstName()%> <%=user.getLastName()%></div>
                             </div>
-
+                            
+                            <div class="d-flex flex-row ava_form col-12">
+                            <span class="col-2">Change Avatar</span>
+                            <form class="col-10 d-flex flex-row justify-content-around" action = "profile" method ="post" enctype="multipart/form-data"> <!-- multipart phai di voi method post-->
+                                <input class="col-9" type="file" name="file" accept="image/png" value =""/>
+                                <input type ="hidden" name="action" value="updateAvatar">
+                                <button class="col-2 btn btn-dark" type="submit">Update</button>
+                            </form>
+                            <%--<p>Path: ${path}</p>--%>
                         </div>
+                        </div>
+                            
                         <div class="col-12 d-flex justify-content-center">
                             <form class="col-6 mt-4" action="cv" method = "post">
                                 <!--                                <input type="hidden" name="action" value="viewMyCV">
@@ -79,15 +89,7 @@
 
                     <div class="profile-info d-flex flex-column" class="change_form">
                         <h4>Avatar</h4>
-                        <div class="d-flex flex-row ava_form col-12">
-                            <span class="col-2">Change Avatar</span>
-                            <form class="col-10 d-flex flex-row justify-content-around" action = "profile" method ="post" enctype="multipart/form-data"> <!-- multipart phai di voi method post-->
-                                <input class="col-9" type="file" name="file" accept="image/png" value =""/>
-                                <input type ="hidden" name="action" value="updateAvatar">
-                                <button class="col-2 btn btn-dark" type="submit">Update</button>
-                            </form>
-                            <%--<p>Path: ${path}</p>--%>
-                        </div>
+                        
                         <%-- <p>${infor != null ? infor : "Null"}</p> --%>
 
 
