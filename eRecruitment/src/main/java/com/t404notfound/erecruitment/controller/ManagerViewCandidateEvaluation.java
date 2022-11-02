@@ -39,6 +39,7 @@ public class ManagerViewCandidateEvaluation extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         String url = "views/HRManager/evaluation.jsp";
         try {
             // lát nhớ bỏ // mấy cái phía dưới

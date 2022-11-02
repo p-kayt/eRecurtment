@@ -26,9 +26,12 @@ public class EvaluationDAO {
                 + "JOIN Evaluation ON Participant.ParticipantID = Evaluation.ParticipantID\n"
                 + "JOIN [Application] ON [Application].UserID = [User].UserID\n"
                 + "JOIN ApplicationStatus ON [Application].StatusID = ApplicationStatus.StatusID\n"
+                + "JOIN UserStatus ON [User].Status = UserStatus.StatusID\n"
                 + "WHERE [User].Email = ?\n"
                 + "AND (InterviewResult.ResultID = 3)\n"
+                + "AND (UserStatus.StatusName = 'Active')\n"
                 + "AND ([Application].StatusID = 1 OR [Application].StatusID = 3 OR [Application].StatusID = 4)";
+
         ArrayList<EvaluationDTO> evaluations = new ArrayList<>();
         Connection conn = null;
         PreparedStatement PreS = null;

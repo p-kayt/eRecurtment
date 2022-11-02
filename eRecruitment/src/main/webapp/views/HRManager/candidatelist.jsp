@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Candidate List</title>
+        <title>Danh sách ứng viên</title>
     </head>
     <body>
         <form action = "./ManagerViewCandidates" method = "POST">
@@ -55,7 +55,7 @@
                                     <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "View Evaluation_${current.getEmail()}">
                                     <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "View Evaluation_${current.getEmail()}">
                                     <input type = "SUBMIT" name = "action" value = "View Interview Result" form = "View Evaluation_${current.getEmail()}">
-                                    
+
                                     <input type = "SUBMIT" name = "action" value = "Accept" form = "Change Status_${current.getEmail()}">
                                     <input type = "SUBMIT" name = "action" value = "Decline" form = "Change Status_${current.getEmail()}">
                                 </c:if>
