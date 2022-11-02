@@ -172,6 +172,6 @@
             var expiredDate = document.getElementById("expiredDate");
             expiredDate.min = getCurrentDate();
         </script>
-        <script src="js/job-utility.js"></script>
+        <script src="js/jobutility.js"></script>
     </body>
 </html>

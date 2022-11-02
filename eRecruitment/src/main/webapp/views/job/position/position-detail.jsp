@@ -206,7 +206,7 @@
                 </div>
             </form>
         </div>
-        <script src="js/job-utility.js"></script>
+        <script src="js/jobutility.js"></script>
         <jsp:include page="../../footer/footer.jsp" />
     </body>
 </html>
