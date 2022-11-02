@@ -61,7 +61,7 @@
                 <div class="container-xxl py-5 bg-dark page-header mb-5">
                     <div class="container my-5 pt-5 pb-4">
                         <h1 class="display-3 text-white mb-3 animated slideInDown">Thông tin vị trí</h1>
-                         <nav aria-label="breadcrumb">
+                        <nav aria-label="breadcrumb">
                             <ol class="breadcrumb text-uppercase">
                                 <li class="breadcrumb-item"><a href="job?action=position-list">Danh sách vị trí</a></li>
                                 <li class="breadcrumb-item text-white active" aria-current="page">Chi tiết</li>
@@ -121,9 +121,11 @@
                                     <input type="hidden" name="action" value="edit-position">
                                     <input class="btn btn-primary" type="submit" value="Cập Nhật">
                                 </div>
+                                <div id="show-delete-position-form">
+                                    <span onclick="showPositionDeleteForm()">Xóa</span>
+                                </div>
                             </div>
                         </form>
-
                     </div>
             </c:if>
             <c:if test="${empty requestScope.position}">
@@ -188,14 +190,23 @@
                     <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                 </form>
             </div>
-<!--            <div>
-                <form action="./job" method="post">
-                    <input type="submit" value="Tạo Bài Đăng">
-                    <input type="hidden" name="action" value="load-add-post">
-                </form>
-            </div>-->
-
         </div>
+        <div id="delete-position-form-container">
+            <form action="./job" method="post">
+                <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                <input type="hidden" name="action" value="delete-position">
+                <div>
+                    <p>Bạn có chắc chắn muốn xóa vị trí này không?</p>
+                </div>
+                <div id="option-no">
+                    <span onclick="hidePositionDeleteForm()">Không</span>
+                </div>
+                <div id="option-yes">
+                    <input type="submit" value="Có">
+                </div>
+            </form>
+        </div>
+        <script src="js/job-utility.js"></script>
         <jsp:include page="../../footer/footer.jsp" />
     </body>
 </html>

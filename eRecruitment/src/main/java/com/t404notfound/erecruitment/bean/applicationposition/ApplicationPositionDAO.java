@@ -281,6 +281,34 @@ public class ApplicationPositionDAO {
         }
         return result;
     }
+    
+    public int deleteApplicationPosition(int id) {
+        String sql = "delete from ApplicationPosition where PositionID = ?";
+        int result = 0;
+        try {
+            cn = DBUtil.getConnection();
+            cn.setAutoCommit(false);
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, id);
+
+            result = pst.executeUpdate();
+            if(result != 0){
+                cn.commit();
+            }
+            return result;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return result;
+    }    
 
     public static void main(String[] args) {
         ApplicationPositionDAO dao = new ApplicationPositionDAO();

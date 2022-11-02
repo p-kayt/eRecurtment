@@ -291,6 +291,18 @@ public class ApplicationPostDAO {
         return result;
     }
 
+    private PreparedStatement getDeletePostBenefitsPST(int postID, Connection cn) {
+        String sql = "delete from ApplicationBenefit where PostID = ?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, postID);
+            return pst;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
     // delete post's skills
     private int deletePostSkills(int postID) {
         int result = -1;
@@ -313,6 +325,18 @@ public class ApplicationPostDAO {
             }
         }
         return result;
+    }
+
+    private PreparedStatement getDeletePostSkillsPST(int postID, Connection cn) {
+        String sql = "delete from ApplicationSkill where PostID = ?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, postID);
+            return pst;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     // delete post's requirements
@@ -339,6 +363,20 @@ public class ApplicationPostDAO {
         return result;
     }
 
+    private PreparedStatement getDeletePostRequirementsPST(int postID, Connection cn) {
+        String sql = "delete from ApplicationRequirement where PostID = ?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, postID);
+
+            return pst;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return null;
+    }
+
     // delete post's stages
     private int deletePostStages(int postID) {
         int result = -1;
@@ -361,6 +399,18 @@ public class ApplicationPostDAO {
             }
         }
         return result;
+    }
+
+    private PreparedStatement getDeletePostStagesPST(int postID, Connection cn) {
+        String sql = "delete from Application_Stage where PostID = ?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, postID);
+            return pst;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     //============================================================================================================================================
@@ -386,8 +436,8 @@ public class ApplicationPostDAO {
         }
         return result;
     }
-    
-    public int deleteASkill(int skillID){
+
+    public int deleteASkill(int skillID) {
         String sql = "delete from ApplicationSkill where SkillID = ?";
         int result = 0;
         try {
@@ -409,8 +459,8 @@ public class ApplicationPostDAO {
         }
         return result;
     }
-    
-    public int deleteARequirement(int reqID){
+
+    public int deleteARequirement(int reqID) {
         String sql = "delete from ApplicationRequirement where RequirementID = ?";
         int result = 0;
         try {
@@ -432,9 +482,10 @@ public class ApplicationPostDAO {
         }
         return result;
     }
+
     // Careful when using this method
     // tables have references to this table
-    public int deleteAStage(int ID){
+    public int deleteAStage(int ID) {
         String sql = "delete from Application_Stage where ID = ?";
         int result = 0;
         try {
@@ -944,37 +995,44 @@ public class ApplicationPostDAO {
 
     // Delete Post
     public int deleteApplicationPost(int postID) {
-        int result = -1;
-        // check if post is in DB
-        int check1 = checkApplication(postID), check2 = checkInterview(postID);
-        if (check1 != 0 || check2 != 0) {
-            System.out.println("FK of post existed! Cancel deletion");
+        int result = 0;
+        String sql = "delete from ApplicationPost where PostID = ?";
+        try {
+
+            cn = DBUtil.getConnection();
+            cn.setAutoCommit(false);
+
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, postID);
+            PreparedStatement deleteBenefitsPST = getDeletePostBenefitsPST(postID, cn);
+            deleteBenefitsPST.executeUpdate();
+            PreparedStatement deleteSkillsPST = getDeletePostSkillsPST(postID, cn);
+            deleteSkillsPST.executeUpdate();
+            PreparedStatement deleteRequirementsPST = getDeletePostRequirementsPST(postID, cn);
+            deleteRequirementsPST.executeUpdate();
+            PreparedStatement deleteStagesPST = getDeletePostStagesPST(postID, cn);
+            deleteStagesPST.executeUpdate();
+
+            result = pst.executeUpdate();
+
+            cn.commit();
             return result;
-        }
-        int post = isPostExist(postID);
-        if (post != 0) {
-            int delete1 = deletePostBenefits(postID);
-            int delete2 = deletePostSkills(postID);
-            int delete3 = deletePostRequirements(postID);
-            int delete4 = deletePostStages(postID);
-            if (delete1 != -1 && delete2 != -1 && delete3 != -1 && delete4 != -1) {
-                String sql = "delete from ApplicationPost where PostID = ?";
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            try {
+                if (cn != null) {
+                    cn.rollback();
+                    return 0;
+                }
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        } finally {
+            if (cn != null) {
                 try {
-                    cn = DBUtil.getConnection();
-                    PreparedStatement pst = cn.prepareStatement(sql);
-                    pst.setInt(1, postID);
-                    result = pst.executeUpdate();
-                    return result;
+                    cn.close();
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
-                } finally {
-                    if (cn != null) {
-                        try {
-                            cn.close();
-                        } catch (SQLException e) {
-                            System.out.println(e.getMessage());
-                        }
-                    }
                 }
             }
         }
@@ -1061,69 +1119,8 @@ public class ApplicationPostDAO {
     public static void main(String[] args) {
 
         ApplicationPostDAO dao = new ApplicationPostDAO();
-        ArrayList<PostRequirementDTO> reqlist = new ArrayList<>();
-        PostRequirementDTO req1 = new PostRequirementDTO(7, "test", 2);
-        reqlist.add(req1);
-        PostRequirementDTO req2 = new PostRequirementDTO(8, "test edit 2", 2);
-        reqlist.add(req2);
+//        int result = dao.deleteApplicationPost(4);
+//        System.out.println(result);
 
-        int result = dao.updatePostRequirements(reqlist);
-        System.out.println(result);
-//        long millis = System.currentTimeMillis();
-//        Date now = new Date(millis);
-//        ApplicationPostDTO post = new ApplicationPostDTO(0, "Description", "Salary", 10, now, now, now, 1, 1, 4, null, null, null, null);
-//        ArrayList<PostBenefitDTO> bene = new ArrayList<>();
-//        bene.add(new PostBenefitDTO(0, "benefit 1", 0));
-//        bene.add(new PostBenefitDTO(0, "benefit 2", 0));
-//        post.setBenefitList(bene);
-//        ArrayList<PostRequirementDTO> req = new ArrayList<>();
-//        req.add(new PostRequirementDTO(0, "req 1", 0));
-//        req.add(new PostRequirementDTO(0, "req 2", 0));
-//        post.setRequirementList(req);
-//        ArrayList<PostSkillDTO> ski = new ArrayList<>();
-//        ski.add(new PostSkillDTO(0, "ski 1", "ski d 1", 0));
-//        ski.add(new PostSkillDTO(0, "ski 2", "ski d 2", 0));
-//        post.setSkillList(ski);
-//        ArrayList<PostStageDTO> sta = new ArrayList<>();
-//        sta.add(new PostStageDTO(0, "des 1", 0, 1));
-//        sta.add(new PostStageDTO(0, "des 2", 0, 2));
-//        post.setStageList(sta);
-//
-//        int res = dao.addPost(post);
-//        if (res != 0) {
-//            System.out.println("Success");
-//        } else {
-//            System.out.println("Fail");
-//        }
-
-        System.out.println("");
-        System.out.println("");
-
-//        ArrayList<ApplicationPostDTO> l = dao.searchApplicationPosts("test");
-//        for (ApplicationPostDTO po : l) {
-//            System.out.println(po.getPostDescription());
-//            for (PostSkillDTO s : po.getSkillList()) {
-//                System.out.println(s.getSkillName());
-//                System.out.println(s.getSkillDescription());
-//                System.out.println("");
-//            }
-//            System.out.println("");
-//            for (PostBenefitDTO b : po.getBenefitList()) {
-//                System.out.println(b.getBenefit());
-//                System.out.println("");
-//            }
-//            System.out.println("");
-//            for (PostRequirementDTO r : po.getRequirementList()) {
-//                System.out.println(r.getRequirement());
-//                System.out.println("");
-//            }
-//            System.out.println("");
-//            for (PostStageDTO s : po.getStageList()) {
-//                System.out.println(s.getDescription());
-//                System.out.println("");
-//            }
-//            System.out.println("================================");
-//            System.out.println("");
-//        }
     }
 }

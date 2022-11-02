@@ -416,3 +416,20 @@ function removeStageFromEditPost() {
         postStage--;
     }
 }
+
+//=====================================================================
+function showPositionDeleteForm(){
+    document.getElementById("delete-position-form-container").style.display = "block";
+}
+
+function hidePositionDeleteForm(){
+    document.getElementById("delete-position-form-container").style.display = "none";
+}
+
+function showPostDeleteForm(){
+    document.getElementById("delete-post-form-container").style.display = "block";
+}
+
+function hidePostDeleteForm(){
+    document.getElementById("delete-post-form-container").style.display = "none";
+}
