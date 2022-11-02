@@ -27,6 +27,13 @@
                     <h1>Tạo Bài Đăng Tuyển Dụng</h1>
                 </div>
             </div>
+            <c:if test="${not empty requestScope.msg}">
+                <div>
+                    <div>
+                        <h4>${requestScope.msg}</h4>
+                    </div>
+                </div>
+            </c:if>
             <div>
                 <h3>Vị Trí:  <a href="./job?action=position-detail&id=${requestScope.position.positionID}">${requestScope.position.positionName}</a></h3>
             </div>
