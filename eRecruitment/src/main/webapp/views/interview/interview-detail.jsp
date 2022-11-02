@@ -4,6 +4,7 @@
     Author     : MINH TRI
 --%>
 
+<%@page import="com.t404notfound.erecruitment.bean.interview.ParticipantDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.t404notfound.erecruitment.bean.interview.InterviewDTO"%>
 <%@page import="com.t404notfound.erecruitment.bean.UserDTO"%>
@@ -13,9 +14,13 @@
 <html lang = "vi">
     <head>
         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
-        <%InterviewDTO interview = (InterviewDTO) session.getAttribute("interview");%>
-        <%ArrayList<UserDTO> interviewerList = (ArrayList<UserDTO>) session.getAttribute("listMainInterviewer");%>
-        <%String booker = (String) session.getAttribute("booker");%>
+        <%InterviewDTO interview = (InterviewDTO) request.getAttribute("interview");%>
+        <%String booker = (String) request.getAttribute("booker");%>
+
+        <%ArrayList<UserDTO> interviewerList = (ArrayList<UserDTO>) request.getAttribute("listMainInterviewer");%>
+
+        <%ArrayList<UserDTO> candidateList = (ArrayList<UserDTO>) request.getAttribute("listMainCandidate");%>
+        <%ArrayList<ParticipantDTO> listParticipant = (ArrayList<ParticipantDTO>) request.getAttribute("listParicipant");%>
 
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -139,6 +144,7 @@
 
                         <label for="maxCandidate">Số ứng viên tối đa</label>
                         <input type="number" name="maxCandidate" min="1" value = "<%=interview.getMaxCandidate()%>" required> <br/>
+                        <input type="hidden" name="interviewID" value="${interviewID}}" >
 
 
                         <p>Người tạo     <%=booker%></p>
@@ -153,26 +159,33 @@
                             <div>
                                 <p>Người phỏng vấn</p>
                                 <div>
-                                    <a href = "?action=showListInterviewer">Thêm</a>
+                                    <form action="interview" method="post">
+                                        <input type="hidden" name="action" value="showListInterviewer">
+                                        <input type="hidden" name="interviewID" value = "${interviewID}">
+                                        <input type="submit" value="Thêm">
+                                    </form>
                                 </div>
                                 <div>
-                                    <c:forEach items="<%=interviewerList%>" var="i">
-                                        <div>
+                                    <c:if test="<%=interviewerList != null%>">
+                                        <c:forEach items="<%=interviewerList%>" var="i">
                                             <div>
-                                                <img class="ava_img" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                                <div>
+                                                    <img class="ava_img" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                                </div>
+                                                <div>
+                                                    <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                                </div>
+                                                <div>
+                                                    <form action="interview" method="post">
+                                                        <input type="hidden" name ="action" value ="removeInterviewer">
+                                                        <input type="hidden" name ="interviewID" value ="${interviewID}">
+                                                        <input type="hidden" name ="userID" value="${i.getUserID()}" >
+                                                        <input type="submit" value="Xóa">
+                                                    </form>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
-                                            </div>
-                                            <div>
-                                                <form action="interview" method="post">
-                                                    <input type="hidden" name ="action" value ="removeInterviewer">
-                                                    <input type="hidden" name ="userID" value="${i.getUserID()}" >
-                                                    <input type="submit" value="Xóa">
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
+                                        </c:forEach>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -183,26 +196,40 @@
                             <div>
                                 <p>Ứng viên</p>
                                 <div>
-                                    <a href = "?action=showListCandidate">Thêm</a>
+                                    <form action="interview" method="post">
+                                        <input type="hidden" name="action" value="showListCandidate">
+                                        <input type="hidden" name="interviewID" value = "${interviewID}">
+                                        <input type="submit" value="Thêm">
+                                    </form>
                                 </div>
                                 <div>
-                                    <c:forEach items="<%=interviewerList%>" var="i">
-                                        <div>
+                                    <c:if test="<%=candidateList != null%>">
+                                        <c:forEach items="<%=candidateList%>" var="i">
                                             <div>
-                                                <img class="ava_img" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                                <div>
+                                                    <img class="ava_img" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                                </div>
+                                                <div>
+                                                    <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                                </div>
+                                                <div>
+                                                    <c:forEach items="<%=listParticipant%>" var="p">
+                                                        <c:if test="${p.userID == i.userID}}">
+                                                            <p>Giờ ${p.interviewTime}</p>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </div>
+                                                <div>
+                                                    <form action="interview" method="post">
+                                                        <input type="hidden" name ="action" value ="removeCandidate">
+                                                        <input type="hidden" name ="userID" value="${i.getUserID()}" >
+                                                        <input type="hidden" name ="interviewID" value ="${interviewID}">
+                                                        <input type="submit" value="Xóa">
+                                                    </form>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
-                                            </div>
-                                            <div>
-                                                <form action="interview" method="post">
-                                                    <input type="hidden" name ="action" value ="removeCanidate">
-                                                    <input type="hidden" name ="userID" value="${i.getUserID()}" >
-                                                    <input type="submit" value="Xóa">
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
+                                        </c:forEach>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -212,7 +239,6 @@
                 </div>
             </c:if>
         </section>
-
 
         <script>
             function UpdateInterview() {

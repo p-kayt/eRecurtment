@@ -5,6 +5,8 @@
 package com.t404notfound.erecruitment.bean.interview;
 
 import Util.DBUtil;
+import com.t404notfound.erecruitment.bean.UserDAO;
+import com.t404notfound.erecruitment.bean.UserDTO;
 import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,7 +49,7 @@ public class ParticipantDAO {
     }
 
     //Get all the candidate of an interview
-    public ArrayList<ParticipantDTO> getCandidate(int interviewID) {
+    public ArrayList<ParticipantDTO> getParticipant(int interviewID) {
         ArrayList<ParticipantDTO> list = new ArrayList<>();
         String sql = "SElECT * FROM Participant "
                 + " WHERE InterviewID = ?";
@@ -72,6 +74,35 @@ public class ParticipantDAO {
         }
         return null;
     }
+    
+    public ArrayList<UserDTO> getListCandidate(int interviewID) {
+
+        ArrayList<UserDTO> list = new ArrayList<>();
+        UserDAO dao = new UserDAO();
+
+        String sql = "SELECT UserID "
+                + " FROM Participant "
+                + " WHERE InterviewID = ?";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, interviewID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int userID = rs.getInt("UserID");
+
+                UserDTO tmp = dao.getUserByID(userID);
+                list.add(tmp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    
 
     //Remove candidate out of interview
     public boolean removeCandidate(int userID, int interviewID) {
@@ -110,10 +141,49 @@ public class ParticipantDAO {
         }
         return false;
     }
-    
-    
-    
+
+    //testing
+    public ArrayList<UserDTO> getAvailablePariticipant(int postID, int stageID) {
+        ArrayList<UserDTO> list = new ArrayList<>();
+        UserDAO userDAO = new UserDAO();
+
+        /*Select all UserIDs that have same postD and stageID and not exist in
+        any intevriew of this stage*/
+        String sql = "SELECT DISTINCT UserID \n"
+                + "FROM [Application]\n"
+                + "WHERE PostID = ? AND StageID = ? And UserID NOT IN ( \n"
+                + "		SELECT UserID FROM Participant\n"
+                + "		WHERE InterviewID IN (SELECT DISTINCT InterviewID FROM Interview\n"
+                + "		WHERE PostID = ? AND StageID = ?));";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, postID);
+            ps.setInt(2, stageID);
+            ps.setInt(3, postID);
+            ps.setInt(4, stageID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int userID = rs.getInt("UserID");
+                UserDTO tmp = userDAO.getUserByID(userID);
+                list.add(tmp);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
-            
+        ParticipantDAO dao = new ParticipantDAO();
+        ArrayList<UserDTO> list = dao.getAvailablePariticipant(1, 1);
+        System.out.println("===============================================================");
+        for (UserDTO u : list) {
+            System.out.println(u.toString());
+        }
+        System.out.println("===============================================================");
     }
 }

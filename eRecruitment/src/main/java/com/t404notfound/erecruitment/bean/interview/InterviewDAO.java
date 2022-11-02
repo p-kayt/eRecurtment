@@ -250,6 +250,6 @@ public class InterviewDAO {
 //        for (InterviewDTO o : li) {
 //            System.out.println(o.toString());
 //        }
-
+        System.out.println(dao.getNewestInterview());
     }
 }
