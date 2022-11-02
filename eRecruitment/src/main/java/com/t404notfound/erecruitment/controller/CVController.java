@@ -40,11 +40,14 @@ public class CVController extends HttpServlet {
         HttpSession session = request.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
         String action = request.getParameter("action");
+        int CVID = 0;
+        if (request.getParameter("CVID") != null) CVID = Integer.parseInt(request.getParameter("CVID"));
         String introduction = request.getParameter("introduction");
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
+//        String avatar = "";
         String gender = request.getParameter("gender");
-//        Date dob = Date.valueOf(request.getParameter("dob"));
+        String dob = request.getParameter("date");
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         String address = request.getParameter("address");
@@ -56,24 +59,26 @@ public class CVController extends HttpServlet {
 
             switch (action) {
                 case "createMyCV":
+                    request.setAttribute("action", "createCV");
                     request.getRequestDispatcher("/views/cv/cv-write.jsp").forward(request, response);
                     break;
                 case "createCV":
-                    cvdto = new CVDTO(0, firstName, lastName, city, null, introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
+                    cvdto = new CVDTO(0, firstName, lastName, "", dob, introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
                     cvdao.saveCV(cvdto);
                     cvdto = cvdao.loadCVByUserID(user.getUserID());
                     request.setAttribute("cv", cvdto);
                     request.getRequestDispatcher("/profile").forward(request, response);
                     break;
                 case "editMyCV":
+                    request.setAttribute("action", "editCV");
                     cvdto = cvdao.loadCVByUserID(user.getUserID());
                     request.setAttribute("cv", cvdto);
                     request.getRequestDispatcher("/views/cv/cv-write.jsp").forward(request, response);
                     break;
-                case "editCV":
+                case "editCV":    
                     
-                    cvdto = new CVDTO(0, firstName, lastName, city, null, introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
-                    cvdao.saveCV(cvdto);
+                    cvdto = new CVDTO(CVID, firstName, lastName, "", dob, introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
+                    cvdao.updateCV(cvdto);
                     cvdto = cvdao.loadCVByUserID(user.getUserID());
                     request.setAttribute("cv", cvdto);
                     request.getRequestDispatcher("/profile").forward(request, response);

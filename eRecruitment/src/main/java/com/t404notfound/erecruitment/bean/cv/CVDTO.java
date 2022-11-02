@@ -17,7 +17,7 @@ public class CVDTO {
     protected String firstName;
     protected String lastName;
     protected String avatar;
-    protected Date dob;
+    protected String dob;
     protected String introduction;
     protected String email;
     protected String phoneNumber;
@@ -53,7 +53,7 @@ public class CVDTO {
     public CVDTO() {
     }
 
-    public CVDTO(int CVID, String firstName, String lastName, String avatar, Date dob, String introduction, String email, String phoneNumber, String address, String city, String gender, int userID, ArrayList skills, ArrayList interests, ArrayList certificates, ArrayList achivements, ArrayList experiences, ArrayList languages, ArrayList educations, ArrayList socialMedias) {
+    public CVDTO(int CVID, String firstName, String lastName, String avatar, String dob, String introduction, String email, String phoneNumber, String address, String city, String gender, int userID, ArrayList skills, ArrayList interests, ArrayList certificates, ArrayList achivements, ArrayList experiences, ArrayList languages, ArrayList educations, ArrayList socialMedias) {
         this.CVID = CVID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -100,11 +100,11 @@ public class CVDTO {
         this.avatar = avatar;
     }
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 

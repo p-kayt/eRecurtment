@@ -67,7 +67,7 @@ public class CVDAO {
                 cv.setFirstName(rs.getString("FirstName"));
                 cv.setLastName(rs.getString("LastName"));
                 cv.setAvatar(rs.getString("Avatar"));
-                cv.setDob(rs.getDate("Dob"));
+                cv.setDob(rs.getString("Dob"));
                 cv.setIntroduction(rs.getString("Introduction"));
                 cv.setEmail(rs.getString("Email"));
                 cv.setPhoneNumber(rs.getString("PhoneNumber"));
@@ -366,42 +366,42 @@ public class CVDAO {
             } else {
                 ps.setNString(1, "");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getLastName() != null) {
                 ps.setNString(2, cv.getLastName());
             } else {
                 ps.setNString(2, "");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getAvatar() != null) {
                 ps.setNString(3, cv.getAvatar());
             } else {
                ps.setNString(3, "");
             }
-            if (cv.getFirstName() != null) {
-                ps.setDate(4, cv.getDob());
+            if (cv.getDob() != null) {
+                ps.setNString(4, cv.getDob());
             } else {
-                ps.setDate(4, new Date(0, 0, 0));
+                ps.setNString(4, "yyyy/mm/dd");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getIntroduction() != null) {
                ps.setNString(5, cv.getIntroduction());
             } else {
                 ps.setNString(5, "");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getEmail() != null) {
                ps.setNString(6, cv.getEmail());
             } else {
                 ps.setNString(6, "username@domainname.extension");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getPhoneNumber() != null) {
                 ps.setNString(7, cv.getPhoneNumber());
             } else {
                 ps.setNString(7, "");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getAddress() != null) {
                 ps.setNString(8, cv.getAddress());
             } else {
                 ps.setNString(8, "");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getCity() != null) {
                 ps.setNString(9, cv.getCity());
             } else {
                 ps.setNString(9, "");
@@ -721,42 +721,42 @@ public class CVDAO {
             } else {
                 ps.setNString(1, "");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getLastName() != null) {
                 ps.setNString(2, cv.getLastName());
             } else {
                 ps.setNString(2, "");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getAvatar() != null) {
                 ps.setNString(3, cv.getAvatar());
             } else {
                ps.setNString(3, "");
             }
-            if (cv.getFirstName() != null) {
-                ps.setDate(4, cv.getDob());
+            if (cv.getDob() != null) {
+                ps.setNString(4, cv.getDob());
             } else {
-                ps.setDate(4, new Date(0, 0, 0));
+                ps.setNString(4, "yyyy/mm/dd");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getIntroduction() != null) {
                ps.setNString(5, cv.getIntroduction());
             } else {
                 ps.setNString(5, "");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getEmail() != null) {
                ps.setNString(6, cv.getEmail());
             } else {
                 ps.setNString(6, "username@domainname.extension");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getPhoneNumber() != null) {
                 ps.setNString(7, cv.getPhoneNumber());
             } else {
                 ps.setNString(7, "");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getAddress() != null) {
                 ps.setNString(8, cv.getAddress());
             } else {
                 ps.setNString(8, "");
             }
-            if (cv.getFirstName() != null) {
+            if (cv.getCity() != null) {
                 ps.setNString(9, cv.getCity());
             } else {
                 ps.setNString(9, "");
@@ -1008,37 +1008,37 @@ public class CVDAO {
     }
 
     public static void main(String[] args) {
-        CVDAO dao = new CVDAO();
-        CVDTO dto = new CVDTO();
+//        CVDAO dao = new CVDAO();
+//        CVDTO dto = new CVDTO();
 
-        ArrayList<SkillDTO> skillList = new ArrayList<>();
-        skillList.add(new SkillDTO(0, "test skill 1", "test skill description", 0));
-        skillList.add(new SkillDTO(0, "test skill 2", "test skill description", 0));
-        ArrayList<InterestDTO> interestList = new ArrayList<>();
-        interestList.add(new InterestDTO(0, "test 1", 0));
-        interestList.add(new InterestDTO(0, "test 2", 0));
-        ArrayList<CertificateDTO> certificateList = new ArrayList<>();
-        certificateList.add(new CertificateDTO(0, "test 1", "test 1", 0));
-        certificateList.add(new CertificateDTO(0, "test 2", "test 2", 0));
-        ArrayList<AchievementDTO> achievementList = new ArrayList<>();
-        achievementList.add(new AchievementDTO(0, "test 1", "test 1", "test 1", 0));
-        achievementList.add(new AchievementDTO(0, "test 2", "test 2", "test 2", 0));
-        ArrayList<ExperienceDTO> experienceList = new ArrayList<>();
-        experienceList.add(new ExperienceDTO(0, "test 1", "test 2", "test 3", "test 4", 0));
-        ArrayList<LanguageDTO> languageList = new ArrayList<>();
-        languageList.add(new LanguageDTO(0, "test language 1", "test language description", 0));
-        languageList.add(new LanguageDTO(0, "test language 2", "test language description", 0));
-        ArrayList<EducationDTO> educationList = new ArrayList<>();
-        educationList.add(new EducationDTO(0, "test 1", "test 2", 1, 0));
-        ArrayList<SocialMediaDTO> socialMediaList = new ArrayList<>();
-        socialMediaList.add(new SocialMediaDTO(0, "test 1", 1, 0));
-        socialMediaList.add(new SocialMediaDTO(0, "test 2", 2, 0));
-        dto = new CVDTO(1, "test 1", "test 2", "test 3", Date.valueOf("2011-04-01"), "test 5", "test572477@gmail.com", "test 7", "test 8", "test 9", "male", 1, null, null, null, null, null, null, null, null);
+//        ArrayList<SkillDTO> skillList = new ArrayList<>();
+//        skillList.add(new SkillDTO(0, "test skill 1", "test skill description", 0));
+//        skillList.add(new SkillDTO(0, "test skill 2", "test skill description", 0));
+//        ArrayList<InterestDTO> interestList = new ArrayList<>();
+//        interestList.add(new InterestDTO(0, "test 1", 0));
+//        interestList.add(new InterestDTO(0, "test 2", 0));
+//        ArrayList<CertificateDTO> certificateList = new ArrayList<>();
+//        certificateList.add(new CertificateDTO(0, "test 1", "test 1", 0));
+//        certificateList.add(new CertificateDTO(0, "test 2", "test 2", 0));
+//        ArrayList<AchievementDTO> achievementList = new ArrayList<>();
+//        achievementList.add(new AchievementDTO(0, "test 1", "test 1", "test 1", 0));
+//        achievementList.add(new AchievementDTO(0, "test 2", "test 2", "test 2", 0));
+//        ArrayList<ExperienceDTO> experienceList = new ArrayList<>();
+//        experienceList.add(new ExperienceDTO(0, "test 1", "test 2", "test 3", "test 4", 0));
+//        ArrayList<LanguageDTO> languageList = new ArrayList<>();
+//        languageList.add(new LanguageDTO(0, "test language 1", "test language description", 0));
+//        languageList.add(new LanguageDTO(0, "test language 2", "test language description", 0));
+//        ArrayList<EducationDTO> educationList = new ArrayList<>();
+//        educationList.add(new EducationDTO(0, "test 1", "test 2", 1, 0));
+//        ArrayList<SocialMediaDTO> socialMediaList = new ArrayList<>();
+//        socialMediaList.add(new SocialMediaDTO(0, "test 1", 1, 0));
+//        socialMediaList.add(new SocialMediaDTO(0, "test 2", 2, 0));
+//        dto = new CVDTO(1, "test 1", "test 2", "test 3", Date.valueOf("2011-04-01"), "test 5", "test572477@gmail.com", "test 7", "test 8", "test 9", "male", 1, null, null, null, null, null, null, null, null);
 //        dao.updateCV(dto);
 //      skillList, interestList, certificateList, achievementList, experienceList, languageList, educationList, socialMediaList
-        Connection con = DBUtil.getConnection();
-        dao.saveCV(dto);
-        dto = dao.loadCV(1);
-        System.out.println(dto.toString());
+//        Connection con = DBUtil.getConnection();
+//        dao.updateCV(dto);
+//        dto = dao.loadCV(1);
+//        System.out.println(dto.toString());
     }
 }

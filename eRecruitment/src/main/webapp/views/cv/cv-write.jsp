@@ -17,12 +17,14 @@
         <link rel="stylesheet" href="css/style_cv.css" type="text/css">
     </head>
     <body>
-        
-        
+
+
         <form action="cv" method="get">    
-            
+
             <div class="cv">
-                
+                <input type="hidden"
+                               value = "${requestScope.cv.CVID}"
+                               name="CVID">    
                 <div class="cv-column">
                     <div class="cv-element">
                         <!-- Avatar -->
@@ -40,7 +42,7 @@
                                 type="text"
                                 id="firstName"
                                 name = "firstName"
-                                value = "${firstName}"
+                                value = "${requestScope.cv.firstName}"
                                 placeholder="Enter your first name"
                                 /></div>
                         <div><b>Last name: </b> <input
@@ -58,33 +60,33 @@
                               
                             <input type="radio" id="other" name="gender" value="Other">
                               <label for="other">Other</label></div> 
-                        <div><b>Day of birth: </b> <input type="date" name="date" value = "${dob}" > <br/></div> 
+                        <div><b>Day of birth: </b> <input type="date" name="date" value = "${requestScope.cv.dob}" > <br/></div> 
                         <div><b>Email: </b> <input
                                 type="email"
                                 id="email"
                                 name = "email"
-                                value= "${email}"
+                                value= "${requestScope.cv.email}"
                                 placeholder="Enter your email"
                                 /></div>
                         <div><b>Phone number: </b>  <input
                                 type="text"
                                 id="phoneNumber"
                                 name = "phoneNumber"
-                                value= "${phoneNumber}"
+                                value= "${requestScope.cv.phoneNumber}"
                                 placeholder="Enter your phone number"
                                 /></div>
                         <div><b>Address: </b> <input
                                 type="text"
                                 id="address"
                                 name = "address"
-                                value= "${address}"
+                                value= "${requestScope.cv.address}"
                                 placeholder="Enter your address"
                                 /></div>
                         <div><b>City: </b> <input
                                 type="text"
                                 id="city"
                                 name = "city"
-                                value= "${city}"
+                                value= "${requestScope.cv.city}"
                                 placeholder="Enter your city"
                                 /></div>
                     </div>
@@ -188,7 +190,8 @@
                                     </div>
                                 </div>-->
             </div>
-            <input type ="hidden" name="action" value="createCV">
+
+            <input type ="hidden" name="action" value="${requestScope.action}">
             <button type="submit">
                 Submit
             </button>
