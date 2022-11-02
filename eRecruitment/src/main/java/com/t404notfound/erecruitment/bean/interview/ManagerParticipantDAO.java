@@ -27,9 +27,11 @@ public class ManagerParticipantDAO {
                 + "JOIN Evaluation ON Participant.ParticipantID = Evaluation.ParticipantID\n"
                 + "JOIN [Application] ON [Application].UserID = [User].UserID\n"
                 + "JOIN ApplicationStatus ON [Application].StatusID = ApplicationStatus.StatusID\n"
+                + "JOIN UserStatus ON [User].Status = UserStatus.StatusID\n"
                 + "WHERE ([User].FirstName LIKE ? OR [User].LastName LIKE ?)\n"
                 + "AND (InterviewResult.ResultID = 3)\n"
                 + "AND ([Application].StatusID = 1 OR [Application].StatusID = 3 OR [Application].StatusID = 4)\n"
+                + "AND (UserStatus.StatusName = 'Active')\n"
                 + "GROUP BY Evaluation.InterviewID, Participant.UserID, [User].UserID, [User].Email, [User].FirstName, [User].LastName, Gender.GenderName, InterviewResult.ResultName, ApplicationStatus.StatusName";
         ArrayList<ManagerParticipantDTO> participants = new ArrayList<>();
         Connection conn = null;

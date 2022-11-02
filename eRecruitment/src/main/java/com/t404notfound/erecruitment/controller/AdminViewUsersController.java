@@ -6,6 +6,7 @@ package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.AdminUserDAO;
 import com.t404notfound.erecruitment.bean.AdminUserDTO;
+import com.t404notfound.erecruitment.bean.UserDTO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,14 +38,20 @@ public class AdminViewUsersController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         String url = "views/admin/userlist.jsp";
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (user == null) {
+            response.sendRedirect("login");
+        } else if (user.getUserRole() != 5) {
+            response.sendRedirect("home");
+        }
         try {
             String SearchValue = request.getParameter("txtSearch").trim();
             String action = request.getParameter("action");
             ArrayList<AdminUserDTO> list = new ArrayList<>();
-            if (action == null) {
-                request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
-            } else if (action.equalsIgnoreCase("Search")) {
+            if (action.equalsIgnoreCase("Search")) {
                 try {
                     list = AdminUserDAO.getUsers(SearchValue);
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {

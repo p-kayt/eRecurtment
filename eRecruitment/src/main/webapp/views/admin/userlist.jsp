@@ -78,8 +78,14 @@
                     </form>
                 </div>
             </div>
+                            
+            <c:if test = "${not empty requestScope.StatusResult}">
+                <h4>User ${requestScope.FirstName} ${requestScope.LastName} (Email: ${requestScope.Email})'s status has been set to: ${requestScope.StatusResult}!</h4>
+            </c:if>
 
-            <h4>${requestScope.errorMsg}</h4>
+            <c:if test = "${not empty requestScope.RoleResult}">
+                <h4>User ${requestScope.FirstName} ${requestScope.LastName} (Email: ${requestScope.Email}) has been assigned the role: ${requestScope.RoleResult}!</h4>
+            </c:if>
 
             <c:if test = "${empty requestScope.Users}">
                 <h4>${requestScope.nullMsg}</h4>
@@ -163,6 +169,8 @@
                                             <div class="col-11">
                                                 <form action = "./adminUpdateUsers" method = "POST" id = "Change Status_${current.getEmail()}"></form>
                                                 <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Change Status_${current.getEmail()}">
+                                                <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "Change Status_${current.getEmail()}">
+                                                <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "Change Status_${current.getEmail()}">
                                                 <input type = "HIDDEN" name = "Status" value= "${current.getStatus()}" form = "Change Status_${current.getEmail()}">
                                                 <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Change Status_${current.getEmail()}">
                                                 <c:choose> 
@@ -177,6 +185,8 @@
                                             <div class="col-11">
                                                 <form action = "./AdminAssignRoles" method = "POST" id = "Assign Role_${current.getEmail()}"></form>
                                                 <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Assign Role_${current.getEmail()}">
+                                                <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "Assign Role_${current.getEmail()}">
+                                                <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "Assign Role_${current.getEmail()}">
                                                 <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Assign Role_${current.getEmail()}">
                                                 <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Submit Role Change" form = "Assign Role_${current.getEmail()}">
                                             </div>

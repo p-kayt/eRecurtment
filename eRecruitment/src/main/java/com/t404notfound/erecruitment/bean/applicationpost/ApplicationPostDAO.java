@@ -49,7 +49,7 @@ public class ApplicationPostDAO {
 
     // Get ID of the recent added post
     // Use for insert of post's info
-    private int getLatestPostID() {
+    public int getLatestPostID() {
         String sql = "select MAX(PostID) from ApplicationPost";
         int result = -1;
         try {

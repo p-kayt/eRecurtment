@@ -6,6 +6,7 @@ package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.AdminUserDAO;
 import com.t404notfound.erecruitment.bean.AdminUserDTO;
+import com.t404notfound.erecruitment.bean.UserDTO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,14 +38,25 @@ public class UpdateStatusUsersController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         String url = "./adminViewUser";
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (user == null) {
+            response.sendRedirect("login");
+        } else if (user.getUserRole() != 5) {
+            response.sendRedirect("home");
+        }
         try {
             String SearchValue = request.getParameter("SearchValue").trim();
             request.setAttribute("SearchValue", SearchValue);
             String email = request.getParameter("Email");
+            String firstName = request.getParameter("FirstName");
+            String lastName = request.getParameter("LastName");
             String statusString = request.getParameter("Status");
             int status = 0;
             ArrayList<AdminUserDTO> list = new ArrayList<>();
+            String result = "";
 
             if (statusString.equalsIgnoreCase("Active")) {
                 status = 1;
@@ -54,12 +67,14 @@ public class UpdateStatusUsersController extends HttpServlet {
             if (status == 2) {
                 try {
                     AdminUserDAO.updateStatus(email, 1);
+                    result = "Active";
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
 
                 }
             } else {
                 try {
                     AdminUserDAO.updateStatus(email, 2);
+                    result = "inActive";
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
 
                 }
@@ -69,6 +84,10 @@ public class UpdateStatusUsersController extends HttpServlet {
             } catch (SQLException | NamingException | ClassNotFoundException ex) {
             }
             request.setAttribute("Users", list);
+            request.setAttribute("FirstName", firstName);
+            request.setAttribute("LastName", lastName);
+            request.setAttribute("Email", email);
+            request.setAttribute("StatusResult", result);
         } finally {
             RequestDispatcher ReqDis = request.getRequestDispatcher(url);
             ReqDis.forward(request, response);

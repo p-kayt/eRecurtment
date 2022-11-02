@@ -6,6 +6,7 @@ package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.AdminUserDAO;
 import com.t404notfound.erecruitment.bean.AdminUserDTO;
+import com.t404notfound.erecruitment.bean.UserDTO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,25 +38,41 @@ public class AdminAssignRolesController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         String url = "./adminViewUser";
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (user == null) {
+            response.sendRedirect("login");
+        } else if (user.getUserRole() != 5) {
+            response.sendRedirect("home");
+        }
         try {
             String SearchValue = request.getParameter("SearchValue").trim();
             request.setAttribute("SearchValue", SearchValue);
             String email = request.getParameter("Email");
+            String firstName = request.getParameter("FirstName");
+            String lastName = request.getParameter("LastName");
             String roleString = request.getParameter("Role");
             int role = 0;
             ArrayList<AdminUserDTO> list = new ArrayList<>();
+            String result = "";
 
             if (roleString.equalsIgnoreCase("Candidate")) {
                 role = 1;
+                result = "Candidate";
             } else if (roleString.equalsIgnoreCase("HR Staff")) {
                 role = 2;
+                result = "HR Staff";
             } else if (roleString.equalsIgnoreCase("HR Manager")) {
                 role = 3;
+                result = "HR Manager";
             } else if (roleString.equalsIgnoreCase("Interviewer")) {
                 role = 4;
+                result = "Interviewer";
             } else if (roleString.equalsIgnoreCase("System Admin")) {
                 role = 5;
+                result = "System Admin";
             }
             try {
                 AdminUserDAO.updateRoles(email, role);
@@ -65,6 +83,10 @@ public class AdminAssignRolesController extends HttpServlet {
             } catch (SQLException | NamingException | ClassNotFoundException ex) {
             }
             request.setAttribute("Users", list);
+            request.setAttribute("FirstName", firstName);
+            request.setAttribute("LastName", lastName);
+            request.setAttribute("Email", email);
+            request.setAttribute("RoleResult", result);
         } finally {
             RequestDispatcher ReqDis = request.getRequestDispatcher(url);
             ReqDis.forward(request, response);

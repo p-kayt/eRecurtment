@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Candidate List</title>
+        <title>Danh sách ứng viên</title>
     </head>
     <body>
         <form action = "./ManagerViewCandidates" method = "POST">
@@ -18,6 +18,15 @@
             <input type = "SUBMIT" name = "action" value = "Search">
             <input type = "SUBMIT" name = "action" value = "All">
         </form>
+
+        <div>
+            <h4>
+                <c:if test = "${requestScope.AppResult != 'Undo' && requestScope.AppResult != null}">
+                    Candidate ${requestScope.FirstName} ${requestScope.LastName}'s application has been ${requestScope.AppResult}
+                </c:if>
+            </h4>
+        </div>
+
         <c:if test = "${empty requestScope.Candidates}">
             <h4>${requestScope.nullMsg}</h4>  
         </c:if>
@@ -55,7 +64,9 @@
                                     <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "View Evaluation_${current.getEmail()}">
                                     <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "View Evaluation_${current.getEmail()}">
                                     <input type = "SUBMIT" name = "action" value = "View Interview Result" form = "View Evaluation_${current.getEmail()}">
-                                    
+
+                                    <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "Change Status_${current.getEmail()}">
+                                    <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "Change Status_${current.getEmail()}">
                                     <input type = "SUBMIT" name = "action" value = "Accept" form = "Change Status_${current.getEmail()}">
                                     <input type = "SUBMIT" name = "action" value = "Decline" form = "Change Status_${current.getEmail()}">
                                 </c:if>

@@ -4,6 +4,7 @@
  */
 package com.t404notfound.erecruitment.controller;
 
+import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.interview.EvaluationDAO;
 import com.t404notfound.erecruitment.bean.interview.EvaluationDTO;
 import com.t404notfound.erecruitment.bean.interview.ManagerParticipantDAO;
@@ -19,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -39,9 +41,16 @@ public class ManagerViewCandidateEvaluation extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         String url = "views/HRManager/evaluation.jsp";
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (user == null) {
+            response.sendRedirect("login");
+        } else if (user.getUserRole() != 3) {
+            response.sendRedirect("home");
+        }
         try {
-            // lát nhớ bỏ // mấy cái phía dưới
             String SearchValue = request.getParameter("SearchValue").trim();
             String firstName = request.getParameter("FirstName");
             String lastName = request.getParameter("LastName");

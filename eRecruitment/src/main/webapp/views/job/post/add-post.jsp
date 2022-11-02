@@ -27,6 +27,13 @@
                     <h1>Tạo Bài Đăng Tuyển Dụng</h1>
                 </div>
             </div>
+            <c:if test="${not empty requestScope.msg}">
+                <div>
+                    <div>
+                        <h4>${requestScope.msg}</h4>
+                    </div>
+                </div>
+            </c:if>
             <div>
                 <h3>Vị Trí:  <a href="./job?action=position-detail&id=${requestScope.position.positionID}">${requestScope.position.positionName}</a></h3>
             </div>
@@ -87,7 +94,10 @@
                         <div>
                             <h3>Yêu Cầu Công Việc</h3>
                         </div>
-                        <div id="requirementList"> 
+                        <div id="requirementList">
+                            <div id="requirementContainer">
+                                <label for="requirement">Yêu Cầu 1</label><input type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc...">
+                            </div>
                         </div>
                         <div>
                             <span class="fa fa-plus-circle fa-2x" onclick="addRequirement()"></span>
@@ -100,7 +110,10 @@
                         <div>
                             <h3>Kỹ Năng Cần Thiết</h3>
                         </div>
-                        <div id="skillList"> 
+                        <div id="skillList">
+                            <div id="skillContainer">
+                                <div><label for="skillName">Kỹ Năng 1'</label><input type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng..."></div><div><label for="skillDescription">Mô Tả 1</label><input type="text" id="skillDescription" name="skillDescription" value="" placeholder="Nhập mô tả kỹ năng..."></div>
+                            </div>
                         </div>
                         <div>
                             <span class="fa fa-plus-circle fa-2x" onclick="addSkill()"></span>
@@ -113,7 +126,10 @@
                         <div>
                             <h3>Quyền Lợi Công Việc</h3>
                         </div>
-                        <div id="benefitList"> 
+                        <div id="benefitList">
+                            <div id="benefitContainer">
+                                <label for="benefit">Quyền Lợi 1</label><input type="text" id="benefit" name="benefit" value="" placeholder="Nhập quyền lợi...">
+                            </div>
                         </div>
                         <div>
                             <span class="fa fa-plus-circle fa-2x" onclick="addBenefit()"></span>
@@ -126,7 +142,10 @@
                         <div>
                             <h3>Quy Trình Ứng Tuyển</h3>
                         </div>
-                        <div id="stageList"> 
+                        <div id="stageList">
+                            <div id="stageContainer">
+                                <div><label for="stageID">Vòng Ứng Tuyển 1</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả 1</label><input type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>
+                            </div>
                         </div>
                         <div>
                             <span class="fa fa-plus-circle fa-2x" onclick="addStage()"></span>

@@ -32,7 +32,8 @@
         <%cv = (CVDTO) request.getAttribute("cv");%>
         <c:choose>
             <c:when test = "${not empty cv}">
-                <div class="cv m-auto p-5">      
+                <div class="cv m-auto d"> 
+                    
                     <div class="cv-column border border-1 shadow">
                         <div class="cv-element">
                             <!-- Avatar -->
