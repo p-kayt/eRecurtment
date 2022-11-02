@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class CVDAO {
 
-        public boolean changeAvatar(String url, int userID) {
+    public boolean changeAvatar(String url, int userID) {
 
         String sql = "UPDATE CV "
                 + " SET Avatar = ? "
@@ -44,7 +44,6 @@ public class CVDAO {
         return false;
     }
 
-    
     public CVDTO loadCVByUserID(int userID) {
         System.out.println(userID);
         String sql = "SELECT CVID, "
@@ -399,7 +398,7 @@ public class CVDAO {
             if (cv.getAvatar() != null) {
                 ps.setNString(3, cv.getAvatar());
             } else {
-               ps.setNString(3, "");
+                ps.setNString(3, "");
             }
             if (cv.getDob() != null) {
                 ps.setNString(4, cv.getDob());
@@ -407,12 +406,12 @@ public class CVDAO {
                 ps.setNString(4, "yyyy/mm/dd");
             }
             if (cv.getIntroduction() != null) {
-               ps.setNString(5, cv.getIntroduction());
+                ps.setNString(5, cv.getIntroduction());
             } else {
                 ps.setNString(5, "");
             }
             if (cv.getEmail() != null) {
-               ps.setNString(6, cv.getEmail());
+                ps.setNString(6, cv.getEmail());
             } else {
                 ps.setNString(6, "username@domainname.extension");
             }
@@ -451,28 +450,52 @@ public class CVDAO {
             int CVID = getHighestCVID(con);
 //            System.out.println(getHighestCVID());
             if (cv.getSkills() != null) {
-                saveSkill(cv.getSkills(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveSkill(cv.getSkills(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }                
             }
             if (cv.getInterests() != null) {
-                saveInterest(cv.getInterests(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveInterest(cv.getInterests(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
             if (cv.getCertificates() != null) {
-                saveCertificate(cv.getCertificates(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveCertificate(cv.getCertificates(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
             if (cv.getAchievements() != null) {
-                saveAchievement(cv.getAchievements(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveAchievement(cv.getAchievements(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
             if (cv.getEducations() != null) {
-                saveExperience(cv.getExperiences(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveExperience(cv.getExperiences(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
             if (cv.getLanguages() != null) {
-                saveLanguage(cv.getLanguages(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveLanguage(cv.getLanguages(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
             if (cv.getEducations() != null) {
-                saveEducation(cv.getEducations(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveEducation(cv.getEducations(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
             if (cv.getSocialMedias() != null) {
-                saveSocialMedia(cv.getSocialMedias(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveSocialMedia(cv.getSocialMedias(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
             con.commit();
 
@@ -524,14 +547,15 @@ public class CVDAO {
         return -1;
     }
 
-    public PreparedStatement saveSkill(ArrayList<SkillDTO> skillList, int CVID, Connection con) {
+    public ArrayList<PreparedStatement> saveSkill(ArrayList<SkillDTO> skillList, int CVID, Connection con) {
         String sql = "INSERT INTO CV_Skill( "
                 + "SkillName, "
                 + "SkillDescription, "
                 + "CVID "
                 + ") VALUES (?,?,?) ";
-
+        ArrayList<PreparedStatement> psList = new ArrayList<>();
         if (skillList != null) {
+
             try {
                 for (SkillDTO x : skillList) {
 
@@ -540,42 +564,44 @@ public class CVDAO {
                     ps.setNString(2, x.getSkillDescription());
                     ps.setInt(3, CVID);
 
-                    return ps;
+                    psList.add(ps);
                 }
 
             } catch (SQLException e) {
                 System.out.println("CV save error: " + e.getMessage());
             }
         }
-        return null;
+        return psList;
     }
 
-    public PreparedStatement saveInterest(ArrayList<InterestDTO> interestList, int CVID, Connection con) {
+    public ArrayList<PreparedStatement> saveInterest(ArrayList<InterestDTO> interestList, int CVID, Connection con) {
         String sql = "INSERT INTO CV_Interest( "
                 + "InterestName, "
                 + "CVID "
                 + ") VALUES (?,?) ";
+        ArrayList<PreparedStatement> psList = new ArrayList<>();
         try {
             for (InterestDTO x : interestList) {
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setNString(1, x.getInterestName());
                 ps.setInt(2, CVID);
 
-                return ps;
+                psList.add(ps);
             }
 
         } catch (SQLException e) {
             System.out.println("CV save error: " + e.getMessage());
         }
-        return null;
+        return psList;
     }
 
-    public PreparedStatement saveCertificate(ArrayList<CertificateDTO> certificateList, int CVID, Connection con) {
+    public ArrayList<PreparedStatement> saveCertificate(ArrayList<CertificateDTO> certificateList, int CVID, Connection con) {
         String sql = "INSERT INTO CV_Certificate( "
                 + "CertificateName, "
                 + "CertificateLink, "
                 + "CVID "
                 + ") VALUES (?,?,?) ";
+        ArrayList<PreparedStatement> psList = new ArrayList<>();
         try {
             for (CertificateDTO x : certificateList) {
                 PreparedStatement ps = con.prepareStatement(sql);
@@ -583,22 +609,23 @@ public class CVDAO {
                 ps.setNString(2, x.getCertificateLink());
                 ps.setInt(3, CVID);
 
-                return ps;
+                psList.add(ps);
             }
 
         } catch (SQLException e) {
             System.out.println("CV save error: " + e.getMessage());
         }
-        return null;
+        return psList;
     }
 
-    public PreparedStatement saveAchievement(ArrayList<AchievementDTO> achievementList, int CVID, Connection con) {
+    public ArrayList<PreparedStatement> saveAchievement(ArrayList<AchievementDTO> achievementList, int CVID, Connection con) {
         String sql = "INSERT INTO CV_Achievement( "
                 + "AchievementName, "
                 + "AchievementDescription, "
                 + "AchievementLink, "
                 + "CVID "
                 + ") VALUES (?,?,?,?) ";
+        ArrayList<PreparedStatement> psList = new ArrayList<>();
         try {
             for (AchievementDTO x : achievementList) {
                 PreparedStatement ps = con.prepareStatement(sql);
@@ -607,16 +634,16 @@ public class CVDAO {
                 ps.setNString(3, x.getAchievementLink());
                 ps.setInt(4, CVID);
 
-                return ps;
+                psList.add(ps);
             }
 
         } catch (SQLException e) {
             System.out.println("CV save error: " + e.getMessage());
         }
-        return null;
+        return psList;
     }
 
-    public PreparedStatement saveExperience(ArrayList<ExperienceDTO> experienceList, int CVID, Connection con) {
+    public ArrayList<PreparedStatement> saveExperience(ArrayList<ExperienceDTO> experienceList, int CVID, Connection con) {
         String sql = "INSERT INTO CV_Experience( "
                 + "JobTitle, "
                 + "OrganizationName, "
@@ -624,6 +651,7 @@ public class CVDAO {
                 + "ExperienceDuration, "
                 + "CVID "
                 + ") VALUES (?,?,?,?,?) ";
+        ArrayList<PreparedStatement> psList = new ArrayList<>();
         try {
             for (ExperienceDTO x : experienceList) {
                 PreparedStatement ps = con.prepareStatement(sql);
@@ -633,21 +661,22 @@ public class CVDAO {
                 ps.setNString(4, x.getExperienceDuration());
                 ps.setInt(5, CVID);
 
-                return ps;
+                psList.add(ps);
             }
 
         } catch (SQLException e) {
             System.out.println("CV save error: " + e.getMessage());
         }
-        return null;
+        return psList;
     }
 
-    public PreparedStatement saveLanguage(ArrayList<LanguageDTO> languageList, int CVID, Connection con) {
+    public ArrayList<PreparedStatement> saveLanguage(ArrayList<LanguageDTO> languageList, int CVID, Connection con) {
         String sql = "INSERT INTO CV_Language( "
                 + "LanguageName, "
                 + "LanguageDescription, "
                 + "CVID "
                 + ") VALUES (?,?,?) ";
+        ArrayList<PreparedStatement> psList = new ArrayList<>();
 
         if (languageList != null) {
             try {
@@ -658,23 +687,24 @@ public class CVDAO {
                     ps.setNString(2, x.getLanguageDescription());
                     ps.setInt(3, CVID);
 
-                    return ps;
+                    psList.add(ps);
                 }
 
             } catch (SQLException e) {
                 System.out.println("CV save error: " + e.getMessage());
             }
         }
-        return null;
+        return psList;
     }
 
-    public PreparedStatement saveEducation(ArrayList<EducationDTO> educationList, int CVID, Connection con) {
+    public ArrayList<PreparedStatement> saveEducation(ArrayList<EducationDTO> educationList, int CVID, Connection con) {
         String sql = "INSERT INTO CV_Education( "
                 + "EducationName, "
                 + "OrganizationName, "
                 + "StatusID, "
                 + "CVID "
                 + ") VALUES (?,?,?,?) ";
+        ArrayList<PreparedStatement> psList = new ArrayList<>();
 
         if (educationList != null) {
             try {
@@ -686,22 +716,23 @@ public class CVDAO {
                     ps.setInt(3, x.getStatus());
                     ps.setInt(4, CVID);
 
-                    return ps;
+                    psList.add(ps);
                 }
 
             } catch (SQLException e) {
                 System.out.println("CV save error: " + e.getMessage());
             }
         }
-        return null;
+        return psList;
     }
 
-    public PreparedStatement saveSocialMedia(ArrayList<SocialMediaDTO> socialMediaList, int CVID, Connection con) {
+    public ArrayList<PreparedStatement> saveSocialMedia(ArrayList<SocialMediaDTO> socialMediaList, int CVID, Connection con) {
         String sql = "INSERT INTO CV_SocialMedia( "
                 + "SocialMediaLink, "
                 + "PlatformID, "
                 + "CVID "
                 + ") VALUES (?,?,?) ";
+        ArrayList<PreparedStatement> psList = new ArrayList<>();
         try {
             for (SocialMediaDTO x : socialMediaList) {
                 PreparedStatement ps = con.prepareStatement(sql);
@@ -709,13 +740,13 @@ public class CVDAO {
                 ps.setInt(2, x.getPlatformID());
                 ps.setInt(3, CVID);
 
-                return ps;
+                psList.add(ps);
             }
 
         } catch (SQLException e) {
             System.out.println("CV save error: " + e.getMessage());
         }
-        return null;
+        return psList;
     }
 
 //==============================================================================
@@ -754,7 +785,7 @@ public class CVDAO {
             if (cv.getAvatar() != null) {
                 ps.setNString(3, cv.getAvatar());
             } else {
-               ps.setNString(3, "");
+                ps.setNString(3, "");
             }
             if (cv.getDob() != null) {
                 ps.setNString(4, cv.getDob());
@@ -762,12 +793,12 @@ public class CVDAO {
                 ps.setNString(4, "yyyy/mm/dd");
             }
             if (cv.getIntroduction() != null) {
-               ps.setNString(5, cv.getIntroduction());
+                ps.setNString(5, cv.getIntroduction());
             } else {
                 ps.setNString(5, "");
             }
             if (cv.getEmail() != null) {
-               ps.setNString(6, cv.getEmail());
+                ps.setNString(6, cv.getEmail());
             } else {
                 ps.setNString(6, "username@domainname.extension");
             }
@@ -803,36 +834,52 @@ public class CVDAO {
             int CVID = cv.getCVID();
 
             if (cv.getSkills() != null) {
-                deleteSkill(CVID, con).executeUpdate();
-                saveSkill(cv.getSkills(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveSkill(cv.getSkills(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }                
             }
             if (cv.getInterests() != null) {
-                deleteInterest(CVID, con).executeUpdate();
-                saveInterest(cv.getInterests(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveInterest(cv.getInterests(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
             if (cv.getCertificates() != null) {
-                deleteCertificate(CVID, con).executeUpdate();
-                saveCertificate(cv.getCertificates(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveCertificate(cv.getCertificates(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
             if (cv.getAchievements() != null) {
-                deleteAchievement(CVID, con).executeUpdate();
-                saveAchievement(cv.getAchievements(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveAchievement(cv.getAchievements(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
             if (cv.getEducations() != null) {
-                deleteExperience(CVID, con).executeUpdate();
-                saveExperience(cv.getExperiences(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveExperience(cv.getExperiences(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
             if (cv.getLanguages() != null) {
-                deleteLanguage(CVID, con).executeUpdate();
-                saveLanguage(cv.getLanguages(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveLanguage(cv.getLanguages(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
             if (cv.getEducations() != null) {
-                deleteEducation(CVID, con).executeUpdate();
-                saveEducation(cv.getEducations(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveEducation(cv.getEducations(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
             if (cv.getSocialMedias() != null) {
-                deleteSocialMedia(CVID, con).executeUpdate();
-                saveSocialMedia(cv.getSocialMedias(), CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveSocialMedia(cv.getSocialMedias(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
             }
 
             ps.setInt(11, cv.getCVID());
@@ -1033,37 +1080,37 @@ public class CVDAO {
     }
 
     public static void main(String[] args) {
-//        CVDAO dao = new CVDAO();
-//        CVDTO dto = new CVDTO();
+        CVDAO dao = new CVDAO();
+        CVDTO dto = new CVDTO();
 
-//        ArrayList<SkillDTO> skillList = new ArrayList<>();
-//        skillList.add(new SkillDTO(0, "test skill 1", "test skill description", 0));
-//        skillList.add(new SkillDTO(0, "test skill 2", "test skill description", 0));
-//        ArrayList<InterestDTO> interestList = new ArrayList<>();
-//        interestList.add(new InterestDTO(0, "test 1", 0));
-//        interestList.add(new InterestDTO(0, "test 2", 0));
-//        ArrayList<CertificateDTO> certificateList = new ArrayList<>();
-//        certificateList.add(new CertificateDTO(0, "test 1", "test 1", 0));
-//        certificateList.add(new CertificateDTO(0, "test 2", "test 2", 0));
-//        ArrayList<AchievementDTO> achievementList = new ArrayList<>();
-//        achievementList.add(new AchievementDTO(0, "test 1", "test 1", "test 1", 0));
-//        achievementList.add(new AchievementDTO(0, "test 2", "test 2", "test 2", 0));
-//        ArrayList<ExperienceDTO> experienceList = new ArrayList<>();
-//        experienceList.add(new ExperienceDTO(0, "test 1", "test 2", "test 3", "test 4", 0));
-//        ArrayList<LanguageDTO> languageList = new ArrayList<>();
-//        languageList.add(new LanguageDTO(0, "test language 1", "test language description", 0));
-//        languageList.add(new LanguageDTO(0, "test language 2", "test language description", 0));
-//        ArrayList<EducationDTO> educationList = new ArrayList<>();
-//        educationList.add(new EducationDTO(0, "test 1", "test 2", 1, 0));
-//        ArrayList<SocialMediaDTO> socialMediaList = new ArrayList<>();
-//        socialMediaList.add(new SocialMediaDTO(0, "test 1", 1, 0));
-//        socialMediaList.add(new SocialMediaDTO(0, "test 2", 2, 0));
-//        dto = new CVDTO(1, "test 1", "test 2", "test 3", Date.valueOf("2011-04-01"), "test 5", "test572477@gmail.com", "test 7", "test 8", "test 9", "male", 1, null, null, null, null, null, null, null, null);
-//        dao.updateCV(dto);
+        ArrayList<SkillDTO> skillList = new ArrayList<>();
+        skillList.add(new SkillDTO(0, "test skill 1", "test skill description", 0));
+        skillList.add(new SkillDTO(0, "test skill 2", "test skill description", 0));
+        ArrayList<InterestDTO> interestList = new ArrayList<>();
+        interestList.add(new InterestDTO(0, "test 1", 0));
+        interestList.add(new InterestDTO(0, "test 2", 0));
+        ArrayList<CertificateDTO> certificateList = new ArrayList<>();
+        certificateList.add(new CertificateDTO(0, "test 1", "test 1", 0));
+        certificateList.add(new CertificateDTO(0, "test 2", "test 2", 0));
+        ArrayList<AchievementDTO> achievementList = new ArrayList<>();
+        achievementList.add(new AchievementDTO(0, "test 1", "test 1", "test 1", 0));
+        achievementList.add(new AchievementDTO(0, "test 2", "test 2", "test 2", 0));
+        ArrayList<ExperienceDTO> experienceList = new ArrayList<>();
+        experienceList.add(new ExperienceDTO(0, "test 1", "test 2", "test 3", "test 4", 0));
+        ArrayList<LanguageDTO> languageList = new ArrayList<>();
+        languageList.add(new LanguageDTO(0, "test language 1", "test language description", 0));
+        languageList.add(new LanguageDTO(0, "test language 2", "test language description", 0));
+        ArrayList<EducationDTO> educationList = new ArrayList<>();
+        educationList.add(new EducationDTO(0, "test 1", "test 2", 1, 0));
+        ArrayList<SocialMediaDTO> socialMediaList = new ArrayList<>();
+        socialMediaList.add(new SocialMediaDTO(0, "test 1", 1, 0));
+        socialMediaList.add(new SocialMediaDTO(0, "test 2", 2, 0));
+        dto = new CVDTO(1, "test 1", "test 2", "2011-04-01", "test 5", "test572477@gmail.com", "test 7", "test 8", "test 9", "male", 1, null, null, null, null, null, null, null, null);
+
 //      skillList, interestList, certificateList, achievementList, experienceList, languageList, educationList, socialMediaList
-//        Connection con = DBUtil.getConnection();
-//        dao.updateCV(dto);
-//        dto = dao.loadCV(1);
-//        System.out.println(dto.toString());
+        Connection con = DBUtil.getConnection();
+        dao.updateCV(dto);
+        dto = dao.loadCV(1);
+        System.out.println(dto.toString());
     }
 }

@@ -11,13 +11,15 @@ package com.t404notfound.erecruitment.bean.interview;
 public class EvaluationDTO {
      
     protected int interviewID;
-    protected int interviewerID;
+    protected String interviewerFirstName;
+    protected String interviewerLastName;
     protected String comment;
     protected int score;
 
-    public EvaluationDTO(int interviewID, int interviewerID, String comment, int score) {
+    public EvaluationDTO(int interviewID, String interviewerFirstName, String interviewerLastName, String comment, int score) {
         this.interviewID = interviewID;
-        this.interviewerID = interviewerID;
+        this.interviewerFirstName = interviewerFirstName;
+        this.interviewerLastName = interviewerLastName;
         this.comment = comment;
         this.score = score;
     }
@@ -30,12 +32,20 @@ public class EvaluationDTO {
         this.interviewID = interviewID;
     }
 
-    public int getInterviewerID() {
-        return interviewerID;
+    public String getInterviewerFirstName() {
+        return interviewerFirstName;
     }
 
-    public void setInterviewerID(int interviewerID) {
-        this.interviewerID = interviewerID;
+    public void setInterviewerFirstName(String interviewerFirstName) {
+        this.interviewerFirstName = interviewerFirstName;
+    }
+
+    public String getInterviewerLastName() {
+        return interviewerLastName;
+    }
+
+    public void setInterviewerLastName(String interviewerLastName) {
+        this.interviewerLastName = interviewerLastName;
     }
 
     public String getComment() {
@@ -53,5 +63,6 @@ public class EvaluationDTO {
     public void setScore(int score) {
         this.score = score;
     }
+
     
 }

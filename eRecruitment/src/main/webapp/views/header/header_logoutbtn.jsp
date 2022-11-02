@@ -93,7 +93,7 @@
                             <a href="./ManagerViewCandidates?txtSearch=&action=All" class="nav-item nav-link">Phê duyệt ứng viên</a>
                         </c:if>
                         <c:if test = "${user.getUserRole() == 5}">
-                            <a href="./adminViewUser" class="nav-item nav-link">Quản lý các user</a>
+                            <a href="./adminViewUser?txtSearch=&action=All" class="nav-item nav-link">Quản lý các user</a>
                         </c:if>
                         <a href="logout" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">
                             Đăng xuất

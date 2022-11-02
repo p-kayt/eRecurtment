@@ -74,63 +74,8 @@ public class ApplicationPostDAO {
         return result;
     }
 
-    // Check FK for Post deletion
-    // check candidate's application
-    private int checkApplication(int postID) {
-        String sql = "select PostID from Application where PostID = ?";
-        int result = 0;
-        try {
-            cn = DBUtil.getConnection();
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setInt(1, postID);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                result = 1;
-                return result;
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
-        return result;
-    }
-
-    // check Interview for post
-    private int checkInterview(int postID) {
-        String sql = "select PostID from Interview where PostID = ?";
-        int result = 0;
-        try {
-            cn = DBUtil.getConnection();
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setInt(1, postID);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                result = 1;
-                return result;
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
-        return result;
-    }
     //============================================================================================================================================
     // Methods for loading Post's info
-
     // Load post's benefits
     private ArrayList<PostBenefitDTO> loadPostBenefits(int postID) {
         String sql = "select BenefitID, Benefit, PostID from ApplicationBenefit where PostID = ?";
@@ -838,6 +783,112 @@ public class ApplicationPostDAO {
                 post.setPositionID(rs.getInt("PositionID"));
                 post.setFormID(rs.getInt("FormID"));
                 post.setStatusID(rs.getInt("StatusID"));
+
+                post.setBenefitList(loadPostBenefits(post.getPostID()));
+                post.setSkillList(loadPostSkills(post.getPostID()));
+                post.setRequirementList(loadPostRequirements(post.getPostID()));
+                post.setStageList(loadPostStages(post.getPostID()));
+
+                list.add(post);
+            }
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<ApplicationPostDTO> listFullTimePost() {
+        // select post with post working form is FULLTIME (1, 2, 3)
+        // post status is HIRING
+        // with position status is HIRING
+        // order by HIRING QUANTITY in descending order
+        String sql = "select post.PostID, post.PostDescription, post.Salary, post.HiringQuantity, post.CreateDate, post.StartDate, post.ExpiredDate, post.PositionID, post.FormID, post.StatusID, position.PositionName "
+                + "from ApplicationPost as post "
+                + "join ApplicationPosition as position on post.PositionID = position.PositionID "
+                + "where post.FormID in (1, 2, 3) "
+                + "and post.StatusID = 3 "
+                + "and position.StatusID = 3 "
+                + "order by post.HiringQuantity desc";
+        try {
+            cn = DBUtil.getConnection();
+            ArrayList<ApplicationPostDTO> list = new ArrayList<>();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                ApplicationPostDTO post = new ApplicationPostDTO();
+                post.setPostID(rs.getInt("PostID"));
+                post.setPostDescription(rs.getNString("PostDescription"));
+                post.setSalary(rs.getNString("Salary"));
+                post.setHiringQuantity(rs.getInt("HiringQuantity"));
+                post.setCreatedDate(rs.getDate("CreateDate"));
+                post.setStartDate(rs.getDate("StartDate"));
+                post.setExpiredDate(rs.getDate("ExpiredDate"));
+                post.setPositionID(rs.getInt("PositionID"));
+                post.setFormID(rs.getInt("FormID"));
+                post.setStatusID(rs.getInt("StatusID"));
+                post.setPositionName(rs.getNString("PositionName"));
+
+                post.setBenefitList(loadPostBenefits(post.getPostID()));
+                post.setSkillList(loadPostSkills(post.getPostID()));
+                post.setRequirementList(loadPostRequirements(post.getPostID()));
+                post.setStageList(loadPostStages(post.getPostID()));
+
+                list.add(post);
+            }
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
+    
+    public ArrayList<ApplicationPostDTO> listPartTimePost() {
+        // select post with post working form is PARTTIME (4,5,6)
+        // post status is HIRING
+        // with position status is HIRING
+        // order by HIRING QUANTITY in descending order
+        String sql = "select post.PostID, post.PostDescription, post.Salary, post.HiringQuantity, post.CreateDate, post.StartDate, post.ExpiredDate, post.PositionID, post.FormID, post.StatusID, position.PositionName "
+                + "from ApplicationPost as post "
+                + "join ApplicationPosition as position on post.PositionID = position.PositionID "
+                + "where post.FormID in (4, 5, 6) "
+                + "and post.StatusID = 3 "
+                + "and position.StatusID = 3 "
+                + "order by post.HiringQuantity desc";
+        try {
+            cn = DBUtil.getConnection();
+            ArrayList<ApplicationPostDTO> list = new ArrayList<>();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                ApplicationPostDTO post = new ApplicationPostDTO();
+                post.setPostID(rs.getInt("PostID"));
+                post.setPostDescription(rs.getNString("PostDescription"));
+                post.setSalary(rs.getNString("Salary"));
+                post.setHiringQuantity(rs.getInt("HiringQuantity"));
+                post.setCreatedDate(rs.getDate("CreateDate"));
+                post.setStartDate(rs.getDate("StartDate"));
+                post.setExpiredDate(rs.getDate("ExpiredDate"));
+                post.setPositionID(rs.getInt("PositionID"));
+                post.setFormID(rs.getInt("FormID"));
+                post.setStatusID(rs.getInt("StatusID"));
+                post.setPositionName(rs.getNString("PositionName"));
 
                 post.setBenefitList(loadPostBenefits(post.getPostID()));
                 post.setSkillList(loadPostSkills(post.getPostID()));

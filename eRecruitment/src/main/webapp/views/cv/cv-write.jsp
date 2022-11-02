@@ -21,24 +21,22 @@
 
         <%!CVDTO cv;%>
         <%cv = (CVDTO) request.getAttribute("cv");%>
-        <div class="cv">
-
-            <form action="cv" enctype="multipart/form-data" method="post">
-                <div class="cv-element image-upload">
-
-                    <input id="file-input" type="file" name="file" accept="image/png" value ="" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"/>
-                    <input type ="hidden" name="action" value="updateAvatar">
-                    <button class="col-2 btn btn-dark" type="submit">Update</button>
-                </div>
-            </form>
-
-            <form action="cv" method="post">    
 
 
-                <input type="hidden"
-                       value = "${requestScope.cv.CVID}"
-                       name="CVID">    
+
+
+        <form action="cv" method="post" enctype="multipart/form-data">    
+            <div class="cv">
                 <div class="cv-column">
+                    <div class="cv-element image-upload">
+
+                        <input id="file-input" type="file" name="file" accept="image/png" value ="" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"/>
+
+                    </div>
+
+                    <input type="hidden"
+                           value = "${requestScope.cv.CVID}"
+                           name="CVID">    
                     <div class="cv-element">
                         <label for="file-input">
                             <img id="output" class="ava_img" src= "${cv.avatar != null ? cv.avatar : 'image/avatar/default.png'}" alt="avatar" />
@@ -204,16 +202,26 @@
                         <span class="fa fa-plus-circle fa-2x"></span>
                     </div>
                 </div>
-        </div>
+            </div>
 
-        <input type ="hidden" name="action" value="${requestScope.action}">
-        <button type="submit">
-            Submit
-        </button>
-    </form>
+            <input type ="hidden" name="action" value="${requestScope.action}">
+            <c:if test = "${not empty cv}">
+                <button type="submit" onclick="updateAlert()">
+                    Submit
+                </button>
+            </c:if>
+            <c:if test = "${empty cv}">
+                <button type="submit" onclick="createAlert()">
+                    Submit
+                </button>
+            </c:if>
+        </form>
 
 
-    <script src="js/cv-write.js"></script>
-</body>
+        <script src="js/cv-write.js"></script>
+        <script>
+
+        </script>
+    </body>
 </html>
 

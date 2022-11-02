@@ -60,6 +60,16 @@ public class CVController extends HttpServlet {
         String phoneNumber;
         String address;
         String city;
+        
+        String dir;
+        String path[];
+        File img;
+        File avatar;
+        File image;
+        String fileName;
+        File file;
+        Path source;
+        String url;
 
         CVDAO cvdao = new CVDAO();
         CVDTO cvdto = new CVDTO();
@@ -73,9 +83,7 @@ public class CVController extends HttpServlet {
                 case "createCV":
 
                     CVID = 0;
-                    if (request.getParameter("CVID") != null) {
-                        CVID = Integer.parseInt(request.getParameter("CVID"));
-                    }
+                    
                     introduction = request.getParameter("introduction");
                     firstName = request.getParameter("firstName");
                     lastName = request.getParameter("lastName");
@@ -88,6 +96,56 @@ public class CVController extends HttpServlet {
                     cvdto = new CVDTO(0, firstName, lastName, dob, introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
                     cvdao.saveCV(cvdto);
                     cvdto = cvdao.loadCVByUserID(user.getUserID());
+
+                    dir = request.getServletContext().getRealPath("");
+                    path = dir.split("eRecruitment");
+                    dir = path[0];
+
+                    dir += "\\image";
+                    img = new File(dir);
+                    if (!img.exists()) {
+                        img.mkdir();
+                    }
+                    dir += "\\cv_avatar";
+                    avatar = new File(dir);
+                    if (!avatar.exists()) {
+                        avatar.mkdir();
+                    }
+                    dir += "\\" + user.getFirstName().trim() + user.getLastName().trim();
+                    image = new File(dir);
+                    if (!image.exists()) {
+                        image.mkdir();
+                    }
+                    //Lấy đường dẫn tương đối
+
+                    //tạo file .png và ghi đè img vào
+                    fileName = "cv_avatar";
+                    file = File.createTempFile(fileName, ".png", image);
+
+                    try {
+                        Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
+                        try ( InputStream input = filePart.getInputStream()) {
+                            Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    //tạo file .png và ghi đè img vào
+
+                    //rename img
+                    source = Paths.get(file.getParentFile() + "\\" + file.getName());
+
+                    Files.move(source, source.resolveSibling("cv_avatar.png"),
+                            StandardCopyOption.REPLACE_EXISTING);
+                    //rename img
+
+                    url = "image/cv_avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/cv_avatar.png";
+                    if (cvdao.changeAvatar(url, user.getUserID())) {
+                        cvdto.setAvatar(url);
+                        cvdto = cvdao.loadCVByUserID(user.getUserID());
+                    }
                     request.setAttribute("cv", cvdto);
                     request.getRequestDispatcher("/profile").forward(request, response);
                     break;
@@ -114,39 +172,32 @@ public class CVController extends HttpServlet {
                     cvdto = new CVDTO(CVID, firstName, lastName, dob, introduction, email, phoneNumber, address, city, gender, user.getUserID(), null, null, null, null, null, null, null, null);
                     cvdao.updateCV(cvdto);
                     cvdto = cvdao.loadCVByUserID(user.getUserID());
-                    request.setAttribute("cv", cvdto);
-                    request.getRequestDispatcher("/profile").forward(request, response);
-                    break;
-                case "updateAvatar":
+                    
 
-//                    request.setAttribute("infor", "Hello");
-                    //Lấy đường dẫn tương đối
-                    String dir;
-
-                    dir = request.getServletContext().getRealPath("homepage.jsp");
-                    String path[] = dir.split("eRecruitment");
+                    dir = request.getServletContext().getRealPath("");
+                    path = dir.split("eRecruitment");
                     dir = path[0];
 
                     dir += "\\image";
-                    File img = new File(dir);
+                    img = new File(dir);
                     if (!img.exists()) {
                         img.mkdir();
                     }
                     dir += "\\cv_avatar";
-                    File avatar = new File(dir);
+                    avatar = new File(dir);
                     if (!avatar.exists()) {
                         avatar.mkdir();
                     }
                     dir += "\\" + user.getFirstName().trim() + user.getLastName().trim();
-                    File image = new File(dir);
+                    image = new File(dir);
                     if (!image.exists()) {
                         image.mkdir();
                     }
                     //Lấy đường dẫn tương đối
 
                     //tạo file .png và ghi đè img vào
-                    String fileName = "cv_avatar";
-                    File file = File.createTempFile(fileName, ".png", image);
+                    fileName = "cv_avatar";
+                    file = File.createTempFile(fileName, ".png", image);
 
                     try {
                         Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
@@ -161,19 +212,20 @@ public class CVController extends HttpServlet {
                     //tạo file .png và ghi đè img vào
 
                     //rename img
-                    Path source = Paths.get(file.getParentFile() + "\\" + file.getName());
+                    source = Paths.get(file.getParentFile() + "\\" + file.getName());
 
                     Files.move(source, source.resolveSibling("cv_avatar.png"),
                             StandardCopyOption.REPLACE_EXISTING);
                     //rename img
 
-                    String url = "image/cv_avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/cv_avatar.png";
+                     url = "image/cv_avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/cv_avatar.png";
                     if (cvdao.changeAvatar(url, user.getUserID())) {
                         cvdto.setAvatar(url);
                         cvdto = cvdao.loadCVByUserID(user.getUserID());
-                        request.setAttribute("cv", cvdto);
-                        response.sendRedirect(request.getContextPath() + "/profile");
                     }
+                    request.setAttribute("cv", cvdto);
+                    request.getRequestDispatcher("/profile").forward(request, response);
+
                     break;
                 default:
                     request.getRequestDispatcher("/home").forward(request, response);
