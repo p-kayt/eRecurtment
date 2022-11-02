@@ -78,37 +78,34 @@
                                 <input type="text" class="form-control border-0" placeholder="Tìm kiếm" name = "txtSearch" value = "${requestScope.SearchValue}"/>
                             </div>
                             <div class="col-md-3 d-flex flex-row justify-content-around">
-                                <input class="btn btn-dark col-5" type = "SUBMIT" name = "action" value = "Search">
-                                <input class="btn btn-dark col-5" type = "SUBMIT" name = "action" value = "All">
+                                <input class="btn btn-dark col-5" type = "SUBMIT" name = "action" value = "Tìm kiếm">
+                                <input class="btn btn-dark col-6" type = "SUBMIT" name = "action" value = "Hiển thị tất cả">
                             </div>
 
                         </div>
                     </form>
                 </div>
             </div>
-            <c:if test = "${requestScope.AppResult != 'Undo' && requestScope.AppResult != null}">
-                <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
+                <c:if test = "${requestScope.AppResult != 'Undo' && requestScope.AppResult != null}">
                     <h5>
-                        Candidate ${requestScope.FirstName} ${requestScope.LastName}'s application has been ${requestScope.AppResult}
-                        
+                        Đơn ứng tuyển của ứng viên ${requestScope.FirstName} ${requestScope.LastName} đã ${requestScope.AppResult}
                     </h5>
-                </div>
-            </c:if>
-
-            <c:if test = "${empty requestScope.Candidates}">
-                <h4>${requestScope.nullMsg}</h4>  
-            </c:if>
-
+                </c:if>
+                <c:if test = "${empty requestScope.Candidates}">
+                    <h5>${requestScope.nullMsg}</h5>  
+                </c:if>
+            </div>
             <c:if test = "${not empty requestScope.Candidates}">
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr class="tb_head col-12 rounded-9 justify-content-around">
-                            <th scope="col" class="col-2 text-center pb-4">User ID</th>
+                            <th scope="col" class="col-1 text-center pb-4">ID</th>
                             <th scope="col" class="col-3 pb-4">Email</th>
-                            <th scope="col" class="col-2 pb-4">First Name</th>
-                            <th scope="col" class="col-1 pb-4">Last Name</th>
-                            <th scope="col" class="col-1 text-center pb-4">View resume</th>
-                            <th scope="col" class="col-2 text-center pb-4">Application Status</th>
+                            <th scope="col" class="col-2 pb-4">Họ và tên đệm</th>
+                            <th scope="col" class="col-1 pb-4">Tên</th>
+                            <th scope="col" class="col-3 text-center pb-4">CV & kết quả phỏng vấn</th>
+                            <th scope="col" class="col-2 text-center pb-4">Tình trạng</th>
                             <th scope="col" class="col-2 text-center pb-4">Action</th>
                         </tr>
                     </thead>
@@ -119,29 +116,38 @@
                                 <td class="align-middle"> ${current.getEmail()} </td>
                                 <td class="align-middle"> ${current.getFirstName()} </td>
                                 <td class="align-middle"> ${current.getLastName()} </td>
-                                <td class="align-middle text-center"> ${current.getGender()} </td>
-
-
-                                <td class="align-middle text-center">${current.getAppStatus()} </td>
+                                <td class="align-middle text-center"> 
+                                    <form action = "./ManagerViewCandidateEvaluation" method ="POST" id = "View Evaluation_${current.getEmail()}"></form>
+                                    <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "View Evaluation_${current.getEmail()}">
+                                    <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "View Evaluation_${current.getEmail()}">
+                                    <input type = "HIDDEN" name = "Status" value="${current.getAppStatus()}" form = "View Evaluation_${current.getEmail()}">
+                                    <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "View Evaluation_${current.getEmail()}">
+                                    <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "View Evaluation_${current.getEmail()}">
+                                    <input class= "btn btn-light border border-1 m-1" type = "SUBMIT" name = "action" value = "Xem kết quả phỏng vấn" form = "View Evaluation_${current.getEmail()}">
+                                </td>
+                                <td class="align-middle text-center">
+                                    <c:if test = "${current.getAppStatus() == 'In-progress'}">
+                                        Đang chờ
+                                    </c:if>
+                                    <c:if test = "${current.getAppStatus() == 'Success'}">
+                                        Đã duyệt
+                                    </c:if>
+                                    <c:if test = "${current.getAppStatus() == 'Fail'}">
+                                        Đã trượt
+                                    </c:if> 
+                                </td>
                                 <td class="align-middle d-flex flex-column">
                                     <form action = "./ManagerAcceptDecline" method = "POST" id = "Change Status_${current.getEmail()}"></form>
                                     <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Change Status_${current.getEmail()}">
                                     <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Change Status_${current.getEmail()}">
                                     <c:if test = "${current.getAppStatus() == 'In-progress'}">
-                                        <form action = "./ManagerViewCandidateEvaluation" method ="POST" id = "View Evaluation_${current.getEmail()}"></form>
-                                        <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "View Evaluation_${current.getEmail()}">
-                                        <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "View Evaluation_${current.getEmail()}">
-                                        <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "View Evaluation_${current.getEmail()}">
-                                        <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "View Evaluation_${current.getEmail()}">
-                                        <input class="btn btn-light border border-1 m-1" type = "SUBMIT" name = "action" value = "View Interview Result" form = "View Evaluation_${current.getEmail()}">
-
                                         <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "Change Status_${current.getEmail()}">
                                         <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "Change Status_${current.getEmail()}">
-                                        <input class="btn btn-primary m-1" type = "SUBMIT" name = "action" value = "Accept" form = "Change Status_${current.getEmail()}">
-                                        <input class="btn btn-dark m-1" type = "SUBMIT" name = "action" value = "Decline" form = "Change Status_${current.getEmail()}">
+                                        <input class="btn btn-primary m-1" type = "SUBMIT" name = "action" value = "Phê duyệt" form = "Change Status_${current.getEmail()}">
+                                        <input class="btn btn-dark m-1" type = "SUBMIT" name = "action" value = "Từ chối" form = "Change Status_${current.getEmail()}">
                                     </c:if>
                                     <c:if test = "${current.getAppStatus() == 'Fail' || current.getAppStatus() == 'Success'}">
-                                        <input  class="btn btn-success m-1" type = "SUBMIT" name = "action" value = "Undo" form = "Change Status_${current.getEmail()}">
+                                        <input  class="btn btn-success m-1" type = "SUBMIT" name = "action" value = "Hoàn tác" form = "Change Status_${current.getEmail()}">
                                     </c:if>
                                 </td>
                             </tr>
@@ -170,8 +176,8 @@
         <!--Javascript -->
         <script src="js/main.js"></script>
         <script>
-                
-    
+
+
         </script>
     </body>
 </html>

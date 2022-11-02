@@ -59,11 +59,11 @@
             <div class="container-xxl py-5 bg-dark page-header mb-5">
                 <div class="container my-5 pt-5 pb-4">
                     <h1 class="display-3 text-white mb-3 animated slideInDown">Quản lý các tài khoản</h1>
-<!--                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb text-uppercase">
-                            <li class="breadcrumb-item"><a href="job?action=position-list">Danh sách ứng viên</a></li>
-                        </ol>
-                    </nav> -->
+                    <!--                    <nav aria-label="breadcrumb">
+                                            <ol class="breadcrumb text-uppercase">
+                                                <li class="breadcrumb-item"><a href="job?action=position-list">Danh sách ứng viên</a></li>
+                                            </ol>
+                                        </nav> -->
                 </div>
             </div>
 
@@ -79,8 +79,8 @@
                                 <input type="text" class="form-control border-0" placeholder="Tìm kiếm" name = "txtSearch" value = "${requestScope.SearchValue}"/>
                             </div>
                             <div class="col-md-3 d-flex flex-row justify-content-around">
-                                <input class="btn btn-dark col-5" type = "SUBMIT" name = "action" value = "Search">
-                                <input class="btn btn-dark col-5" type = "SUBMIT" name = "action" value = "All">
+                                <input class="btn btn-dark col-5" type = "SUBMIT" name = "action" value = "Tìm kiếm">
+                                <input class="btn btn-dark col-6" type = "SUBMIT" name = "action" value = "Hiển thị tất cả">
                             </div>
 
                         </div>
@@ -88,143 +88,135 @@
                 </div>
             </div>
 
-            <c:if test = "${not empty requestScope.StatusResult}">
-                <h4>Trạng thái của người dùng ${requestScope.FirstName} ${requestScope.LastName} (Email: ${requestScope.Email}) đã được chuyển sang: ${requestScope.StatusResult}!</h4>
-            </c:if>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
+                <c:if test = "${not empty requestScope.StatusResult}">
+                    <h5>Trạng thái của người dùng ${requestScope.FirstName} ${requestScope.LastName} (Email: ${requestScope.Email}) đã được chuyển sang: ${requestScope.StatusResult}!</h5>
+                </c:if>
 
-            <c:if test = "${not empty requestScope.RoleResult}">
-                <h4>Người dùng ${requestScope.FirstName} ${requestScope.LastName} (Email: ${requestScope.Email}) đã được cấp quyền: ${requestScope.RoleResult}!</h4>
-            </c:if>
+                <c:if test = "${not empty requestScope.RoleResult}">
+                    <h5>Người dùng ${requestScope.FirstName} ${requestScope.LastName} (Email: ${requestScope.Email}) đã được cấp quyền: ${requestScope.RoleResult}!</h5>
+                </c:if>
 
-            <c:if test = "${empty requestScope.Users}">
-                <h4>${requestScope.nullMsg}</h4>
-            </c:if>
+                <c:if test = "${empty requestScope.Users}">
+                    <h5>${requestScope.nullMsg}</h5>
+                </c:if>
+            </div>
 
+                <c:if test = "${not empty requestScope.Users}">
 
-            <c:if test = "${not empty requestScope.Users}">
-
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr class="tb_head col-12 rounded-9 justify-content-around">
-                            <th scope="col" class="col-1 text-center pb-4">ID</th>
-                            <th scope="col" class="col-3 text-center pb-4">Email</th>
-                            <th scope="col" class="col-2 text-center pb-4">Họ và tên đệm</th>
-                            <th scope="col" class="col-1 text-center pb-4">Tên</th>
-                            <th scope="col" class="col-1 text-center pb-4">Giới tính</th>
-                            <th scope="col" class="col-2 text-center pb-4">Quyền hệ thống</th>
-                            <th scope="col" class="col-1 text-center pb-4">Trạng thái</th>
-                            <th scope="col" class="col-2 text-center pb-4"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var = "current" items="${requestScope.Users}" varStatus = "status" >
-                            <tr>
-                                <th scope="row" class="align-middle text-center"> ${current.getUserID()} </th>
-                                <td class="align-middle"> ${current.getEmail()} </td>
-                                <td class="align-middle"> ${current.getFirstName()} </td>
-                                <td class="align-middle"> ${current.getLastName()} </td>
-                                <td class="align-middle text-center"> 
-                                    <c:if test="${current.getGender() == 'Male'}">
-                                        Nam
-                                    </c:if>
-                                    <c:if test="${current.getGender() == 'Female'}">
-                                        Nữ
-                                    </c:if> 
-                                </td>
-                                <td class="align-middle">
-                                    <c:choose>
-                                        <c:when test = "${current.getUserRole() == 'System Admin'}">
-                                            Admin
-                                        </c:when>
-                                        <c:otherwise>
-                                            <c:if test = "${current.getUserRole() == 'Candidate'}">
-                                                <select name = "Role" form = "Assign Role_${current.getEmail()}">
-                                                    <option value="Candidate">Ứng viên</option>
-                                                    <option value="HR Staff">Nhân viên HR</option>
-                                                    <option value="HR Manager">Quản lý HR</option>
-                                                    <option value="Interviewer">Người phỏng vấn</option>
-                                                    <option disabled value="System Admin">Admin</option>
-                                                </select>
-                                            </c:if>
-                                            <c:if test = "${current.getUserRole() == 'HR Staff'}">
-                                                <select name = "Role" form = "Assign Role_${current.getEmail()}">
-                                                    <option value="HR Staff">Nhân viên HR</option>
-                                                    <option value="Candidate">Ứng viên</option>
-                                                    <option value="HR Manager">Quản lý HR</option>
-                                                    <option value="Interviewer">Người phỏng vấn</option>
-                                                    <option disabled value="System Admin">Admin</option>
-                                                </select>
-                                            </c:if>
-                                            <c:if test = "${current.getUserRole() == 'HR Manager'}">
-                                                <select name = "Role" form = "Assign Role_${current.getEmail()}">
-                                                    <option value="HR Staff">Quản lý HR</option>
-                                                    <option value="Candidate">Ứng viên</option>
-                                                    <option value="HR Manager">Nhân viên HR</option>
-                                                    <option value="Interviewer">Người phỏng vấn</option>
-                                                    <option disabled value="System Admin">Admin</option>
-                                                </select>
-                                            </c:if>
-                                            <c:if test = "${current.getUserRole() == 'Interviewer'}">
-                                                <select name = "Role" form = "Assign Role_${current.getEmail()}">
-                                                    <option value="Interviewer">Người phỏng vấn</option>
-                                                    <option value="Candidate">Ứng viên</option>
-                                                    <option value="HR Manager">Nhân viên HR</option>
-                                                    <option value="HR Staff">Quản lý HR</option>
-                                                    <option disabled value="System Admin">Admin</option>
-                                                </select>
-                                            </c:if>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-
-                                <td class="text-center align-middle">
-                                    <c:if test="${current.getStatus() == 'Active'}">
-                                        Tự do
-                                    </c:if>
-                                    <c:if test="${current.getStatus() == 'inActive'}">
-                                        Bị cấm
-                                    </c:if>
-                                </td>
-                                <td class="d-flex flex-column col-12">
-                                    <c:choose> 
-                                        <c:when test = "${current.getUserRole() == 'System Admin'}">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <div class="col-11">
-                                                <form action = "./adminUpdateUsers" method = "POST" id = "Change Status_${current.getEmail()}"></form>
-                                                <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Change Status_${current.getEmail()}">
-                                                <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "Change Status_${current.getEmail()}">
-                                                <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "Change Status_${current.getEmail()}">
-                                                <input type = "HIDDEN" name = "Status" value= "${current.getStatus()}" form = "Change Status_${current.getEmail()}">
-                                                <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Change Status_${current.getEmail()}">
-                                                <c:choose> 
-                                                    <c:when test = "${current.getStatus() == 'Active'}">
-                                                        <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Cấm" form = "Change Status_${current.getEmail()}">
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Bỏ cấm" form = "Change Status_${current.getEmail()}">
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </div>
-                                            <div class="col-11">
-                                                <form action = "./AdminAssignRoles" method = "POST" id = "Assign Role_${current.getEmail()}"></form>
-                                                <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Assign Role_${current.getEmail()}">
-                                                <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "Assign Role_${current.getEmail()}">
-                                                <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "Assign Role_${current.getEmail()}">
-                                                <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Assign Role_${current.getEmail()}">
-                                                <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Đổi quyền" form = "Assign Role_${current.getEmail()}">
-                                            </div>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="tb_head col-12 rounded-9 justify-content-around">
+                                <th scope="col" class="col-1 text-center pb-4">ID</th>
+                                <th scope="col" class="col-3 text-center pb-4">Email</th>
+                                <th scope="col" class="col-2 text-center pb-4">Họ và tên đệm</th>
+                                <th scope="col" class="col-1 text-center pb-4">Tên</th>
+                                <th scope="col" class="col-2 text-center pb-4">Quyền hệ thống</th>
+                                <th scope="col" class="col-1 text-center pb-4">Trạng thái</th>
+                                <th scope="col" class="col-2 text-center pb-4">Action</th>
                             </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>                
-            </c:if>
+                        </thead>
+                        <tbody>
+                            <c:forEach var = "current" items="${requestScope.Users}" varStatus = "status" >
+                                <tr>
+                                    <th scope="row" class="align-middle text-center"> ${current.getUserID()} </th>
+                                    <td class="align-middle"> ${current.getEmail()} </td>
+                                    <td class="align-middle"> ${current.getFirstName()} </td>
+                                    <td class="align-middle"> ${current.getLastName()} </td>
+                                    <td class="align-middle">
+                                        <c:choose>
+                                            <c:when test = "${current.getUserRole() == 'System Admin'}">
+                                                Admin
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:if test = "${current.getUserRole() == 'Candidate'}">
+                                                    <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                        <option value="Candidate">Ứng viên</option>
+                                                        <option value="HR Staff">Nhân viên HR</option>
+                                                        <option value="HR Manager">Quản lý HR</option>
+                                                        <option value="Interviewer">Người phỏng vấn</option>
+                                                        <option disabled value="System Admin">Admin</option>
+                                                    </select>
+                                                </c:if>
+                                                <c:if test = "${current.getUserRole() == 'HR Staff'}">
+                                                    <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                        <option value="HR Staff">Nhân viên HR</option>
+                                                        <option value="Candidate">Ứng viên</option>
+                                                        <option value="HR Manager">Quản lý HR</option>
+                                                        <option value="Interviewer">Người phỏng vấn</option>
+                                                        <option disabled value="System Admin">Admin</option>
+                                                    </select>
+                                                </c:if>
+                                                <c:if test = "${current.getUserRole() == 'HR Manager'}">
+                                                    <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                        <option value="HR Staff">Quản lý HR</option>
+                                                        <option value="Candidate">Ứng viên</option>
+                                                        <option value="HR Manager">Nhân viên HR</option>
+                                                        <option value="Interviewer">Người phỏng vấn</option>
+                                                        <option disabled value="System Admin">Admin</option>
+                                                    </select>
+                                                </c:if>
+                                                <c:if test = "${current.getUserRole() == 'Interviewer'}">
+                                                    <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                        <option value="Interviewer">Người phỏng vấn</option>
+                                                        <option value="Candidate">Ứng viên</option>
+                                                        <option value="HR Manager">Nhân viên HR</option>
+                                                        <option value="HR Staff">Quản lý HR</option>
+                                                        <option disabled value="System Admin">Admin</option>
+                                                    </select>
+                                                </c:if>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+
+                                    <td class="text-center align-middle">
+                                        <c:if test="${current.getStatus() == 'Active'}">
+                                            Tự do
+                                        </c:if>
+                                        <c:if test="${current.getStatus() == 'inActive'}">
+                                            Bị cấm
+                                        </c:if>
+                                    </td>
+                                    <td class="d-flex flex-column col-12">
+                                        <c:choose> 
+                                            <c:when test = "${current.getUserRole() == 'System Admin'}">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="col-11">
+                                                    <form action = "./adminUpdateUsers" method = "POST" id = "Change Status_${current.getEmail()}"></form>
+                                                    <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Change Status_${current.getEmail()}">
+                                                    <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "Change Status_${current.getEmail()}">
+                                                    <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "Change Status_${current.getEmail()}">
+                                                    <input type = "HIDDEN" name = "Status" value= "${current.getStatus()}" form = "Change Status_${current.getEmail()}">
+                                                    <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Change Status_${current.getEmail()}">
+                                                    <c:choose> 
+                                                        <c:when test = "${current.getStatus() == 'Active'}">
+                                                            <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Cấm" form = "Change Status_${current.getEmail()}">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Bỏ cấm" form = "Change Status_${current.getEmail()}">
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
+                                                <div class="col-11">
+                                                    <form action = "./AdminAssignRoles" method = "POST" id = "Assign Role_${current.getEmail()}"></form>
+                                                    <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Assign Role_${current.getEmail()}">
+                                                    <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "Assign Role_${current.getEmail()}">
+                                                    <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "Assign Role_${current.getEmail()}">
+                                                    <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Assign Role_${current.getEmail()}">
+                                                    <input class="btn btn-primary m-2 w-100" type = "SUBMIT" name = "action" value = "Đổi quyền" form = "Assign Role_${current.getEmail()}">
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>                
+                </c:if>
 
 
-        </div>
-        <jsp:include page="../footer/footer.jsp" />
+            </div>
+            <jsp:include page="../footer/footer.jsp" />
     </body>
 </html>

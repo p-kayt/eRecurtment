@@ -56,20 +56,18 @@ public class ManagerViewCandidateEvaluation extends HttpServlet {
             String lastName = request.getParameter("LastName");
             String action = request.getParameter("action");
             String email = request.getParameter("Email");
+            String status = request.getParameter("Status");
             ArrayList<EvaluationDTO> list = new ArrayList<>();
-            if (action == null) {
-                request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
-            } else  {
-                try {
-                    list = EvaluationDAO.getEvaluations(email);
-                } catch (SQLException | NamingException | ClassNotFoundException ex) {
-                }
-            } 
+            try {
+                list = EvaluationDAO.getEvaluations(email);
+            } catch (SQLException | NamingException | ClassNotFoundException ex) {
+            }
             request.setAttribute("SearchValue", SearchValue);
             request.setAttribute("FirstName", firstName);
             request.setAttribute("LastName", lastName);
             request.setAttribute("Email", email);
             request.setAttribute("Evaluations", list);
+            request.setAttribute("Status", status);
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

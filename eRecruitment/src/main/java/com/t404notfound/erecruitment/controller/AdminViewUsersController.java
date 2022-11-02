@@ -51,7 +51,7 @@ public class AdminViewUsersController extends HttpServlet {
             String SearchValue = request.getParameter("txtSearch").trim();
             String action = request.getParameter("action");
             ArrayList<AdminUserDTO> list = new ArrayList<>();
-            if (action.equalsIgnoreCase("Search")) {
+            if (action.equalsIgnoreCase("Tìm kiếm")) {
                 try {
                     list = AdminUserDAO.getUsers(SearchValue);
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
@@ -62,10 +62,16 @@ public class AdminViewUsersController extends HttpServlet {
                     list = AdminUserDAO.getUsers(SearchValue);
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
                 }
+            } else if (action.equalsIgnoreCase("Hiển thị tất cả")) {
+                try {
+                    SearchValue = "";
+                    list = AdminUserDAO.getUsers(SearchValue);
+                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                }
             }
             request.setAttribute("SearchValue", SearchValue);
             if (list.isEmpty()) {
-                request.setAttribute("nullMsg", "No Record Matched.");
+                request.setAttribute("nullMsg", "Không tìm thấy!");
             } else {
                 request.setAttribute("Users", list);
             }
