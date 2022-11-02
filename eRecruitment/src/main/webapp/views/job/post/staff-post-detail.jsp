@@ -102,6 +102,21 @@
                 <div id="addRequirementButton">
                 </div>
                 <div id="addRequirementList">
+                    <div id="addRequirementFromEditPostContainer-example">
+                        <form action="#" method="post" id="addRequirementForm">
+                            <div id="inputRequirementContainer-example">
+                                <input type="hidden">
+                                <input type="hidden">
+                                <input type="hidden">
+                                <div id="requirementContainer-example">
+                                    <label for="requirement">Yêu Cầu </label><input type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc...">
+                                </div>
+                            </div>
+                            <div id="submitRequirementContainer-example">
+                                <input type="submit" value="Thêm">
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div>
@@ -139,6 +154,21 @@
                 <div id="addSkillButton">
                 </div>
                 <div id="addSkillList">
+                    <div id="addRequirementFromEditPostContainer-example">
+                        <form action="#" method="post" id="addRequirementForm">
+                            <div id="inputRequirementContainer-example">
+                                <input type="hidden">
+                                <input type="hidden">
+                                <input type="hidden">
+                                <div id="requirementContainer-example">
+                                    <div><label for="skillName">Kỹ Năng</label><input type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng..."></div><div><label for="skillDescription">Mô Tả</label><input type="text" id="skillDescription" name="skillDescription" value="" placeholder="Nhập mô tả kỹ năng..."></div>
+                                </div>
+                            </div>
+                            <div id="submitRequirementContainer-example">
+                                <input type="submit" value="Thêm">
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div>
@@ -177,6 +207,21 @@
                 <div id="addBenefitButton">
                 </div>
                 <div id="addBenefitList">
+                    <div id="addRequirementFromEditPostContainer-example">
+                        <form action="#" method="post" id="addRequirementForm">
+                            <div id="inputRequirementContainer-example">
+                                <input type="hidden">
+                                <input type="hidden">
+                                <input type="hidden">
+                                <div id="requirementContainer-example">
+                                    <label for="benefit">Quyền Lợi</label><input type="text" id="benefit" name="benefit" value="" placeholder="Nhập quyền lợi...">
+                                </div>
+                            </div>
+                            <div id="submitRequirementContainer-example">
+                                <input type="submit" value="Thêm">
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div>
@@ -219,6 +264,21 @@
                 <div id="addStageButton">
                 </div>
                 <div id="addStageList">
+                    <div id="addRequirementFromEditPostContainer-example">
+                        <form action="#" method="post" id="addRequirementForm">
+                            <div id="inputRequirementContainer-example">
+                                <input type="hidden">
+                                <input type="hidden">
+                                <input type="hidden">
+                                <div id="requirementContainer-example">
+                                    <div><label for="stageID">Vòng Ứng Tuyển</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả</label><input type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>
+                                </div>
+                            </div>
+                            <div id="submitRequirementContainer-example">
+                                <input type="submit" value="Thêm">
+                            </div>
+                        </form>
+                    </div>
                 </div>     
             </div>
         </c:if>
