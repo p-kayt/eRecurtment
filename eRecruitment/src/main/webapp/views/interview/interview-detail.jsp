@@ -20,7 +20,8 @@
         <%ArrayList<UserDTO> interviewerList = (ArrayList<UserDTO>) request.getAttribute("listMainInterviewer");%>
 
         <%ArrayList<UserDTO> candidateList = (ArrayList<UserDTO>) request.getAttribute("listMainCandidate");%>
-        <%ArrayList<ParticipantDTO> listParticipant = (ArrayList<ParticipantDTO>) request.getAttribute("listParicipant");%>
+        <%ArrayList<UserDTO> listNoInterviewCandidate = (ArrayList<UserDTO>) request.getAttribute("listNoInterviewCandidate");%>
+        <%ArrayList<ParticipantDTO> listParticipant = (ArrayList<ParticipantDTO>) request.getAttribute("listParticipant");%>
 
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -214,10 +215,47 @@
                                                 </div>
                                                 <div>
                                                     <c:forEach items="<%=listParticipant%>" var="p">
-                                                        <c:if test="${p.userID == i.userID}}">
-                                                            <p>Giờ ${p.interviewTime}</p>
+                                                        <c:if test="${p.userID == i.userID}">
+                                                            <p>Giờ ${p.interviewTime.split("\\s")[1]}</p>
                                                         </c:if>
                                                     </c:forEach>
+                                                </div>
+                                                <div>
+                                                    <form action="interview" method="post">
+                                                        <input type="hidden" name ="action" value ="removeCandidate">
+                                                        <input type="hidden" name ="userID" value="${i.getUserID()}" >
+                                                        <input type="hidden" name ="interviewID" value ="${interviewID}">
+                                                        <input type="submit" value="Xóa">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </c:if>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <div>
+                                <p>Ứng viên miễn phỏng vấn</p>
+                                <div>
+                                    <form action="interview" method="post">
+                                        <input type="hidden" name="action" value="showListCandidate">
+                                        <input type="hidden" name="interviewID" value = "${interviewID}">
+                                        <input type="submit" value="Thêm">
+                                    </form>
+                                </div>
+                                <div>
+                                    <c:if test="<%=listNoInterviewCandidate != null%>">
+                                        <c:forEach items="<%=listNoInterviewCandidate%>" var="i">
+                                            <div>
+                                                <div>
+                                                    <img class="ava_img" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                                </div>
+                                                <div>
+                                                    <p>${i.getFirstName()} ${i.getLastName()}</p>
                                                 </div>
                                                 <div>
                                                     <form action="interview" method="post">
@@ -239,6 +277,8 @@
                 </div>
             </c:if>
         </section>
+
+
 
         <script>
             function UpdateInterview() {

@@ -51,7 +51,8 @@ public class ParticipantDAO {
     //Get all the candidate of an interview
     public ArrayList<ParticipantDTO> getParticipant(int interviewID) {
         ArrayList<ParticipantDTO> list = new ArrayList<>();
-        String sql = "SElECT * FROM Participant "
+        String sql = "SElECT * "
+                + " FROM Participant "
                 + " WHERE InterviewID = ?";
         try {
             Connection con = DBUtil.getConnection();
@@ -74,7 +75,7 @@ public class ParticipantDAO {
         }
         return null;
     }
-    
+
     public ArrayList<UserDTO> getListCandidate(int interviewID) {
 
         ArrayList<UserDTO> list = new ArrayList<>();
@@ -102,7 +103,35 @@ public class ParticipantDAO {
 
         return list;
     }
-    
+
+    public ArrayList<UserDTO> getListCandidateByResult(int interviewID, int resultID) {
+
+        ArrayList<UserDTO> list = new ArrayList<>();
+        UserDAO dao = new UserDAO();
+
+        String sql = "SELECT UserID "
+                + " FROM Participant "
+                + " WHERE InterviewID = ? AND ResultID = ? ";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, interviewID);
+            ps.setInt(2, resultID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int userID = rs.getInt("UserID");
+
+                UserDTO tmp = dao.getUserByID(userID);
+                list.add(tmp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 
     //Remove candidate out of interview
     public boolean removeCandidate(int userID, int interviewID) {
@@ -182,6 +211,20 @@ public class ParticipantDAO {
         ArrayList<UserDTO> list = dao.getAvailablePariticipant(1, 1);
         System.out.println("===============================================================");
         for (UserDTO u : list) {
+            System.out.println(u.toString());
+        }
+        System.out.println("===============================================================");
+        System.out.println("List participant");
+        ArrayList<ParticipantDTO> pList = dao.getParticipant(2);
+        for (ParticipantDTO p : pList) {
+            System.out.println(p.getInterviewID() + " " + p.getUserID() + " " + p.getResultID() + " " + p.getInterviewTime());
+        }
+        System.out.println("===============================================================");
+
+        System.out.println("===============================================================");
+        System.out.println("List Candidate");
+        ArrayList<UserDTO> cList = dao.getListCandidate(2);
+        for (UserDTO u : cList) {
             System.out.println(u.toString());
         }
         System.out.println("===============================================================");

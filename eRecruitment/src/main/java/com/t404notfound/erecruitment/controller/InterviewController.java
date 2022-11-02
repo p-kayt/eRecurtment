@@ -114,9 +114,14 @@ public class InterviewController extends HttpServlet {
                 request.setAttribute("listParticipant", listParticipant);
 
                 //get list candidate
-                ArrayList<UserDTO> listCandidate = participantDAO.getListCandidate(interviewID);
+                ArrayList<UserDTO> listCandidate = participantDAO.getListCandidateByResult(interviewID, 1);
                 request.setAttribute("listMainCandidate", listCandidate);
                 //get list candidate
+                
+                //get list candidate that have not to interview
+                ArrayList<UserDTO> listNoInterviewCandidate = participantDAO.getListCandidateByResult(interviewID, 2);
+                request.setAttribute("listNoInterviewCandidate", listNoInterviewCandidate);
+                //get list candidate that have not to interview
 
                 request.setAttribute("interviewID", interviewID);
                 request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
