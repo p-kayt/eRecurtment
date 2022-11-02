@@ -168,32 +168,34 @@
                         </div>
                     </div>
                     <div class="col-9 d-flex flex-column justify-content-between">
-                        <div class="col-10 m-auto">
-                            <div class="d-flex flex-row justify-content-between">
-                                <h2 class="text-primary col-4">My resume</h2>
-                                <c:if test = "${not empty cv}">
-                                    <form class="col-2" action="cv" method = "post">
-                                        <input type="hidden" name="action" value="editMyCV">
-                                        <button class="btn btn-primary m-3" type="submit">Edit CV</button>
+                        <c:if test="${user.getUserRole() == 1}">
+                            <div class="col-10 m-auto">
+                                <div class="d-flex flex-row justify-content-between">
+                                    <h2 class="text-primary col-4">My resume</h2>
+                                    <c:if test = "${not empty cv}">
+                                        <form class="col-2" action="cv" method = "post">
+                                            <input type="hidden" name="action" value="editMyCV">
+                                            <button class="btn btn-primary m-3" type="submit">Edit CV</button>
+                                        </form>
+                                    </c:if>
+                                </div>
+                                <jsp:include page="../cv/cv-read.jsp" />
+                                <c:if test = "${empty cv}">
+                                    <form action="cv" method = "post">
+                                        <input type="hidden" name="action" value="createMyCV">
+                                        <button class="col-2 btn btn-primary" type="submit">Create CV</button>
                                     </form>
                                 </c:if>
                             </div>
-                            <jsp:include page="../cv/cv-read.jsp" />
-                            <c:if test = "${empty cv}">
-                                <form action="cv" method = "post">
-                                    <input type="hidden" name="action" value="createMyCV">
-                                    <button class="col-2 btn btn-primary" type="submit">Create CV</button>
-                                </form>
-                            </c:if>
-                        </div>
-                        <div class="col-10 m-auto">
-                            <c:if test = "${not empty cv}">
-                                <form action="cv" method = "post">
-                                    <input type="hidden" name="action" value="editMyCV">
-                                    <button class="col-2 btn btn-primary m-3" type="submit">Edit CV</button>
-                                </form>
-                            </c:if>
-                        </div>
+                            <div class="col-10 m-auto">
+                                <c:if test = "${not empty cv}">
+                                    <form action="cv" method = "post">
+                                        <input type="hidden" name="action" value="editMyCV">
+                                        <button class="col-2 btn btn-primary m-3" type="submit">Edit CV</button>
+                                    </form>
+                                </c:if>
+                            </div>
+                        </c:if>
                     </div>
 
 
