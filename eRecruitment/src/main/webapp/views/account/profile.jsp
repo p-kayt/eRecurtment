@@ -170,7 +170,15 @@
                     </div>
                     <div class="col-9 d-flex flex-column justify-content-between">
                         <div class="col-10 m-auto">
-                            <h2 class="m-auto text-primary">My resume</h2>
+                            <div class="d-flex flex-row justify-content-between">
+                                <h2 class="text-primary col-4">My resume</h2>
+                                <c:if test = "${not empty cv}">
+                                    <form class="col-2" action="cv" method = "post">
+                                        <input type="hidden" name="action" value="editMyCV">
+                                        <button class="btn btn-primary m-3" type="submit">Edit CV</button>
+                                    </form>
+                                </c:if>
+                            </div>
                             <jsp:include page="../cv/cv-read.jsp" />
                             <c:if test = "${empty cv}">
                                 <form action="cv" method = "post">
@@ -271,6 +279,17 @@
 
         </div>
         <jsp:include page="../footer/footer.jsp" />
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i>
+        </a>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+        <!--Javascript -->
+        <script src="js/main.js"></script>
     </body>
 </html>
 
