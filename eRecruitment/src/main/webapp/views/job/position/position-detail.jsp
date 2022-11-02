@@ -191,7 +191,7 @@
                 </form>
             </div>
         </div>
-        <div id="delete-position-form-container">
+                <div class="d-none" id="delete-position-form-container">
             <form action="./job" method="post">
                 <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                 <input type="hidden" name="action" value="delete-position">
