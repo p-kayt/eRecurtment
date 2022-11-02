@@ -124,6 +124,15 @@
                                     <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "View Evaluation_${current.getEmail()}">
                                     <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "View Evaluation_${current.getEmail()}">
                                     <input class= "btn btn-light border border-1 m-1" type = "SUBMIT" name = "action" value = "Xem kết quả phỏng vấn" form = "View Evaluation_${current.getEmail()}">
+                                    
+                                    <form action = "./ManagerViewCandidateCV" method ="POST" id = "View CV_${current.getEmail()}"></form>
+                                    <input type = "HIDDEN" name = "ID" value= "${current.getUserID()}" form = "View CV_${current.getEmail()}">
+                                    <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "View CV_${current.getEmail()}">
+                                    <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "View CV_${current.getEmail()}">
+                                    <input type = "HIDDEN" name = "Status" value="${current.getAppStatus()}" form = "View CV_${current.getEmail()}">
+                                    <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "View CV_${current.getEmail()}">
+                                    <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "View CV_${current.getEmail()}">
+                                    <input class= "btn btn-light border border-1 m-1" type = "SUBMIT" name = "action" value = "Xem CV" form = "View CV_${current.getEmail()}">
                                 </td>
                                 <td class="align-middle text-center">
                                     <c:if test = "${current.getAppStatus() == 'In-progress'}">

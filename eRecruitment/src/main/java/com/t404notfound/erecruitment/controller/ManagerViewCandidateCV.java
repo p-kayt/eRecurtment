@@ -5,10 +5,10 @@
 package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.UserDTO;
+import com.t404notfound.erecruitment.bean.cv.CVDAO;
+import com.t404notfound.erecruitment.bean.cv.CVDTO;
 import com.t404notfound.erecruitment.bean.interview.EvaluationDAO;
 import com.t404notfound.erecruitment.bean.interview.EvaluationDTO;
-import com.t404notfound.erecruitment.bean.interview.ManagerParticipantDAO;
-import com.t404notfound.erecruitment.bean.interview.ManagerParticipantDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -26,8 +26,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Savoy
  */
-@WebServlet(name = "ManagerViewCandidateEvaluation", urlPatterns = {"/ManagerViewCandidateEvaluation"})
-public class ManagerViewCandidateEvaluation extends HttpServlet {
+@WebServlet(name = "ManagerViewCandidateCV", urlPatterns = {"/ManagerViewCandidateCV"})
+public class ManagerViewCandidateCV extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,7 +42,7 @@ public class ManagerViewCandidateEvaluation extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        String url = "views/HRManager/evaluation.jsp";
+        String url = "views/HRManager/view-candidate-cv.jsp";
         HttpSession session = request.getSession();
         UserDTO user = (UserDTO) session.getAttribute("user");
         if (user == null) {
@@ -56,24 +56,23 @@ public class ManagerViewCandidateEvaluation extends HttpServlet {
             String lastName = request.getParameter("LastName");
             String email = request.getParameter("Email");
             String status = request.getParameter("Status");
-            ArrayList<EvaluationDTO> list = new ArrayList<>();
-            try {
-                list = EvaluationDAO.getEvaluations(email);
-            } catch (SQLException | NamingException | ClassNotFoundException ex) {
-            }
+            String id = request.getParameter("ID");
             request.setAttribute("SearchValue", SearchValue);
             request.setAttribute("FirstName", firstName);
             request.setAttribute("LastName", lastName);
             request.setAttribute("Email", email);
-            request.setAttribute("Evaluations", list);
             request.setAttribute("Status", status);
+            CVDAO cvdao = new CVDAO();
+            CVDTO cvdto = new CVDTO();
+            cvdto = cvdao.loadCVByUserID(Integer.parseInt(id));
+            request.setAttribute("cv", cvdto);
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            RequestDispatcher ReqDis = request.getRequestDispatcher(url);
+            ReqDis.forward(request, response);
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

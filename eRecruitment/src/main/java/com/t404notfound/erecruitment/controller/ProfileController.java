@@ -182,7 +182,7 @@ public class ProfileController extends HttpServlet {
         CVDAO cvdao = new CVDAO();
         CVDTO cvdto = new CVDTO();
         cvdto = cvdao.loadCVByUserID(user.getUserID());
-                request.setAttribute("cv", cvdto);
+        request.setAttribute("cv", cvdto);
         request.getRequestDispatcher("/views/account/profile.jsp").forward(request, response);
     }
 
