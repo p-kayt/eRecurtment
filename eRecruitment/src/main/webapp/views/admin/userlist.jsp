@@ -56,7 +56,16 @@
                 <jsp:include page="../header/header_logoutbtn.jsp" />
             </c:if>
 
-
+            <div class="container-xxl py-5 bg-dark page-header mb-5">
+                <div class="container my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Quản lý các tài khoản</h1>
+<!--                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb text-uppercase">
+                            <li class="breadcrumb-item"><a href="job?action=position-list">Danh sách ứng viên</a></li>
+                        </ol>
+                    </nav> -->
+                </div>
+            </div>
 
             <div
                 class="container-fluid bg-primary mb-5 wow fadeIn"
@@ -78,7 +87,7 @@
                     </form>
                 </div>
             </div>
-                            
+
             <c:if test = "${not empty requestScope.StatusResult}">
                 <h4>User ${requestScope.FirstName} ${requestScope.LastName} (Email: ${requestScope.Email})'s status has been set to: ${requestScope.StatusResult}!</h4>
             </c:if>
