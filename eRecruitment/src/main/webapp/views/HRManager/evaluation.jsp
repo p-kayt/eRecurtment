@@ -71,12 +71,20 @@
             <c:if test="${requestScope.FirstName != null && requestScope.LastName != null && requestScope.Email != null}">
                 <div class="d-flex flex-column m-4">
                     <div class="d-flex flex-column">
-                        <h4>Interview result of ${requestScope.FirstName} ${requestScope.LastName}</h4>
+                        <h4>Kết quả phỏng vấn của ${requestScope.FirstName} ${requestScope.LastName}</h4>
                         <h5 class="text-muted">${requestScope.Email}</h5>
                     </div>
                     <div>
-                        <input class="btn btn-primary m-1" type = "SUBMIT" name = "action" value = "Accept" form = "Change Status">
-                        <input class="btn btn-dark m-1" type = "SUBMIT" name = "action" value = "Decline" form = "Change Status">
+                        <c:if test="${requestScope.Status == 'In-progress'}">
+                            <input class="btn btn-primary m-1" type = "SUBMIT" name = "action" value = "Phê duyệt" form = "Change Status">
+                            <input class="btn btn-dark m-1" type = "SUBMIT" name = "action" value = "Từ chối" form = "Change Status">
+                        </c:if>
+                        <c:if test="${requestScope.Status != 'In-progress'}">
+                            <input class="btn btn-success m-1" type = "SUBMIT" name = "action" value = "Hoàn tác kết quả duyệt" form = "Change Status">
+                        </c:if>
+                        <form action="./ManagerViewCandidates" method ="POST" id = "Back"></form>
+                        <input type = "HIDDEN" name = "txtSearch" value= "${requestScope.SearchValue}" form = "Back">
+                        <input class="btn btn-success m-1" type = "SUBMIT" name = "action" value = "Quay về danh sách" form = "Back">
                     </div>
                 </div>
             </c:if>
@@ -92,10 +100,10 @@
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr class="tb_head col-12 rounded-9 justify-content-around">
-                            <th scope="col" class="col-2 text-center pb-4">Interview ID</th>
-                            <th scope="col" class="col-3 pb-4">Interviewer Name</th>
-                            <th scope="col" class="col-1 pb-4">Score</th>
-                            <th scope="col" class="col-6 pb-4">Comment</th>
+                            <th scope="col" class="col-2 text-center pb-4">ID buổi phỏng vấn</th>
+                            <th scope="col" class="col-3 pb-4">Họ và tên người phỏng vấn</th>
+                            <th scope="col" class="col-1 pb-4">Điểm</th>
+                            <th scope="col" class="col-6 pb-4">Nhận xét</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -104,7 +112,7 @@
                                 <c:if test = "${status.count % 2 == 1}">
                                     <th scope="rowgroup" rowspan=2> ${current.getInterviewID()} </td>
                                     </c:if>
-                                <td> ${current.getInterviewerID()} </td>
+                                <td> ${current.getInterviewerFirstName()} ${current.getInterviewerLastName()}</td>
                                 <td> ${current.getScore()} </td>
                                 <td class=""> ${current.getComment()}</td>
                             </tr>

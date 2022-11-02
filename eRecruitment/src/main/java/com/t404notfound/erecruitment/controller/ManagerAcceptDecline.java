@@ -61,13 +61,15 @@ public class ManagerAcceptDecline extends HttpServlet {
             ArrayList<ManagerParticipantDTO> list = new ArrayList<>();
             String result = "Undo";
 
-            if (action.equalsIgnoreCase("Accept")) {
+            if (action.equalsIgnoreCase("Phê duyệt")) {
                 status = 4;
-                result = "accepted!";
-            } else if (action.equalsIgnoreCase("Decline")) {
+                result = "được duyệt!";
+            } else if (action.equalsIgnoreCase("Từ chối")) {
                 status = 3;
-                result = "declined.";
-            } else if (action.equalsIgnoreCase("Undo")) {
+                result = "bị từ chối.";
+            } else if (action.equalsIgnoreCase("Hoàn tác")) {
+                status = 1;
+            } else if (action.equalsIgnoreCase("Hoàn tác kết quả duyệt")) {
                 status = 1;
             }
             

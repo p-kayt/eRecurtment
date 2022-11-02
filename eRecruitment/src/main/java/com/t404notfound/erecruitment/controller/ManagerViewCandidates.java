@@ -54,8 +54,19 @@ public class ManagerViewCandidates extends HttpServlet {
             String SearchValue = request.getParameter("txtSearch").trim();
             String action = request.getParameter("action");
             ArrayList<ManagerParticipantDTO> list = new ArrayList<>();
-            if (action.equalsIgnoreCase("Search")) {
+            if (action.equalsIgnoreCase("Tìm kiếm")) {
                 try {
+                    list = ManagerParticipantDAO.getParticipants(SearchValue);
+                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                }
+            } else if (action.equalsIgnoreCase("Quay về danh sách")) {
+                try {
+                    list = ManagerParticipantDAO.getParticipants(SearchValue);
+                } catch (SQLException | NamingException | ClassNotFoundException ex) {
+                }
+            } else if (action.equalsIgnoreCase("Hiển thị tất cả")) {
+                try {
+                    SearchValue = "";
                     list = ManagerParticipantDAO.getParticipants(SearchValue);
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
                 }
@@ -65,15 +76,10 @@ public class ManagerViewCandidates extends HttpServlet {
                     list = ManagerParticipantDAO.getParticipants(SearchValue);
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
                 }
-            } else if (action.equalsIgnoreCase("Back to Candidate List")) {
-                try {
-                    list = ManagerParticipantDAO.getParticipants(SearchValue);
-                } catch (SQLException | NamingException | ClassNotFoundException ex) {
-                }
             }
             request.setAttribute("SearchValue", SearchValue);
             if (list.isEmpty()) {
-                request.setAttribute("nullMsg", "No Record Matched.");
+                request.setAttribute("nullMsg", "Không tìm thấy!");
             } else {
                 request.setAttribute("Candidates", list);
             }
