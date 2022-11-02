@@ -67,14 +67,14 @@ public class UpdateStatusUsersController extends HttpServlet {
             if (status == 2) {
                 try {
                     AdminUserDAO.updateStatus(email, 1);
-                    result = "Active";
+                    result = "Tự do";
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
 
                 }
             } else {
                 try {
                     AdminUserDAO.updateStatus(email, 2);
-                    result = "inActive";
+                    result = "Bị cấm";
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
 
                 }
