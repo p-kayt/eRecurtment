@@ -52,7 +52,7 @@
             href="home"
             class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5"
             >
-            <h1 class="m-0 text-primary">eRrecruitment</h1>
+            <h1 class="m-0 text-primary">eRecruitment</h1>
         </a>
         <button
             type="button"
