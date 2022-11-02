@@ -25,6 +25,7 @@ public class ApplicationPostDTO implements Serializable {
     private int formID;
     private int statusID;
     private String positionName;
+    private String address = "Khu Công Nghệ Cao, Quận 9";
 
     private ArrayList<PostBenefitDTO> benefitList;
     private ArrayList<PostSkillDTO> skillList;
@@ -58,8 +59,14 @@ public class ApplicationPostDTO implements Serializable {
     public void setPositionName(String positionName) {
         this.positionName = positionName;
     }
-    
-    
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public int getPostID() {
         return postID;

@@ -183,600 +183,194 @@
 
                         <div class="tab-content">
                             <div id="tab-1" class="tab-pane fade show p-0 active">
-
                                 <div class="row g-3">
-                                    
-                                    <div class="job-item py-4 px-2 mb-3 col-6">
-                                        <div class="row g-4">
-                                            <div class="col-sm-12 col-md-6 d-flex align-items-center">
+                                    <c:if test="${not empty requestScope.highestQuantity}">
+                                        <c:forEach var="post" items="${requestScope.highestQuantity}" varStatus="status">
+                                            <div class="job-item py-4 px-2 mb-3 col-6">
+                                                <div class="row g-4">
+                                                    <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
-                                                <div class="text-start ps-4">
-                                                    <h5 class="mb-3">Software Engineer</h5>
-                                                    <span class="text-truncate me-3"
-                                                          ><i
-                                                            class="fa fa-map-marker-alt text-primary me-2"
-                                                            ></i
-                                                        >New York, USA</span
-                                                    >
-                                                    <span class="text-truncate me-3"
-                                                          ><i class="far fa-clock text-primary me-2"></i>Full
-                                                        Time</span
-                                                    >
-                                                    <span class="text-truncate me-0"
-                                                          ><i
-                                                            class="far fa-money-bill-alt text-primary me-2"
-                                                            ></i
-                                                        >$123 - $456</span
-                                                    >
+                                                        <div class="text-start ps-4">
+                                                            <h5 class="mb-3">${post.positionName}</h5>
+                                                            <span class="text-truncate me-3"
+                                                                  ><i
+                                                                    class="fa fa-map-marker-alt text-primary me-2"
+                                                                    ></i
+                                                                >${post.address}</span
+                                                            >
+                                                            <span class="text-truncate me-3"
+                                                                  ><i class="far fa-clock text-primary me-2"></i>
+                                                                <c:if test="${post.formID == 1}">Full Time - Offline</c:if>
+                                                                <c:if test="${post.formID == 2}">Full Time - Online</c:if>
+                                                                <c:if test="${post.formID == 3}">Full Time - Hybrid</c:if>
+                                                                <c:if test="${post.formID == 4}">Part Time - Offline</c:if>
+                                                                <c:if test="${post.formID == 5}">Part Time - Online</c:if>
+                                                                <c:if test="${post.formID == 6}">Part Time - Hybrid</c:if>
+                                                                </span
+                                                                >
+                                                                <span class="text-truncate me-0"
+                                                                      ><i
+                                                                        class="far fa-money-bill-alt text-primary me-2"
+                                                                        ></i
+                                                                    >${post.salary}</span
+                                                            >
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
+                                                        >
+                                                        <div class="d-flex mb-3">
+                                                            <a class="btn btn-light btn-square me-3" href=""
+                                                               ><i class="far fa-heart text-primary"></i
+                                                                ></a>
+                                                            <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
+                                                        </div>
+                                                        <small class="text-truncate"
+                                                               ><i class="far fa-calendar-alt text-primary me-2"></i
+                                                            >Date Line: ${post.expiredDate}</small
+                                                        >
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div
-                                                class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
-                                                >
-                                                <div class="d-flex mb-3">
-                                                    <a class="btn btn-light btn-square me-3" href=""
-                                                       ><i class="far fa-heart text-primary"></i
-                                                        ></a>
-                                                    <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
-                                                </div>
-                                                <small class="text-truncate"
-                                                       ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                    >Date Line: 01 Jan, 2045</small
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-                                    <div class="job-item py-4 px-2 mb-3 col-6">
-                                        <div class="row g-4">
-                                            <div class="col-sm-12 col-md-6 d-flex align-items-center">
-
-                                                <div class="text-start ps-4">
-                                                    <h5 class="mb-3">Software Engineer</h5>
-                                                    <span class="text-truncate me-3"
-                                                          ><i
-                                                            class="fa fa-map-marker-alt text-primary me-2"
-                                                            ></i
-                                                        >New York, USA</span
-                                                    >
-                                                    <span class="text-truncate me-3"
-                                                          ><i class="far fa-clock text-primary me-2"></i>Full
-                                                        Time</span
-                                                    >
-                                                    <span class="text-truncate me-0"
-                                                          ><i
-                                                            class="far fa-money-bill-alt text-primary me-2"
-                                                            ></i
-                                                        >$123 - $456</span
-                                                    >
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
-                                                >
-                                                <div class="d-flex mb-3">
-                                                    <a class="btn btn-light btn-square me-3" href=""
-                                                       ><i class="far fa-heart text-primary"></i
-                                                        ></a>
-                                                    <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
-                                                </div>
-                                                <small class="text-truncate"
-                                                       ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                    >Date Line: 01 Jan, 2045</small
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-                                    <div class="job-item py-4 px-2 mb-3 col-6">
-                                        <div class="row g-4">
-                                            <div class="col-sm-12 col-md-6 d-flex align-items-center">
-
-                                                <div class="text-start ps-4">
-                                                    <h5 class="mb-3">Software Engineer</h5>
-                                                    <span class="text-truncate me-3"
-                                                          ><i
-                                                            class="fa fa-map-marker-alt text-primary me-2"
-                                                            ></i
-                                                        >New York, USA</span
-                                                    >
-                                                    <span class="text-truncate me-3"
-                                                          ><i class="far fa-clock text-primary me-2"></i>Full
-                                                        Time</span
-                                                    >
-                                                    <span class="text-truncate me-0"
-                                                          ><i
-                                                            class="far fa-money-bill-alt text-primary me-2"
-                                                            ></i
-                                                        >$123 - $456</span
-                                                    >
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
-                                                >
-                                                <div class="d-flex mb-3">
-                                                    <a class="btn btn-light btn-square me-3" href=""
-                                                       ><i class="far fa-heart text-primary"></i
-                                                        ></a>
-                                                    <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
-                                                </div>
-                                                <small class="text-truncate"
-                                                       ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                    >Date Line: 01 Jan, 2045</small
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-                                    <div class="job-item py-4 px-2 mb-3 col-6">
-                                        <div class="row g-4">
-                                            <div class="col-sm-12 col-md-6 d-flex align-items-center">
-
-                                                <div class="text-start ps-4">
-                                                    <h5 class="mb-3">Software Engineer</h5>
-                                                    <span class="text-truncate me-3"
-                                                          ><i
-                                                            class="fa fa-map-marker-alt text-primary me-2"
-                                                            ></i
-                                                        >New York, USA</span
-                                                    >
-                                                    <span class="text-truncate me-3"
-                                                          ><i class="far fa-clock text-primary me-2"></i>Full
-                                                        Time</span
-                                                    >
-                                                    <span class="text-truncate me-0"
-                                                          ><i
-                                                            class="far fa-money-bill-alt text-primary me-2"
-                                                            ></i
-                                                        >$123 - $456</span
-                                                    >
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
-                                                >
-                                                <div class="d-flex mb-3">
-                                                    <a class="btn btn-light btn-square me-3" href=""
-                                                       ><i class="far fa-heart text-primary"></i
-                                                        ></a>
-                                                    <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
-                                                </div>
-                                                <small class="text-truncate"
-                                                       ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                    >Date Line: 01 Jan, 2045</small
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-                                    
+                                        </c:forEach>
+                                    </c:if>
                                 </div>
-
                                 <div class="p-3">
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination">
                                             <li class="page-item">
-                                                <a class="page-link" href="#">Trước</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">Tiếp theo</a>
+                                                <a class="page-link" href="">Xem thêm</a>
                                             </li>
                                         </ul>
                                     </nav>
                                 </div>
                             </div>
-
                             <div id="tab-2" class="tab-pane fade show p-0">
-
                                 <div class="row g-3">
-                                    
-                                    <div class="job-item py-4 px-2 mb-3 col-6">
-                                        <div class="row g-4">
-                                            <div class="col-sm-12 col-md-6 d-flex align-items-center">
+                                    <c:if test="${not empty requestScope.fulltime}">
+                                        <c:forEach var="post" items="${requestScope.fulltime}" varStatus="status">
+                                            <div class="job-item py-4 px-2 mb-3 col-6">
+                                                <div class="row g-4">
+                                                    <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
-                                                <div class="text-start ps-4">
-                                                    <h5 class="mb-3">Software Engineer</h5>
-                                                    <span class="text-truncate me-3"
-                                                          ><i
-                                                            class="fa fa-map-marker-alt text-primary me-2"
-                                                            ></i
-                                                        >New York, USA</span
-                                                    >
-                                                    <span class="text-truncate me-3"
-                                                          ><i class="far fa-clock text-primary me-2"></i>Full
-                                                        Time</span
-                                                    >
-                                                    <span class="text-truncate me-0"
-                                                          ><i
-                                                            class="far fa-money-bill-alt text-primary me-2"
-                                                            ></i
-                                                        >$123 - $456</span
-                                                    >
+                                                        <div class="text-start ps-4">
+                                                            <h5 class="mb-3">${post.positionName}</h5>
+                                                            <span class="text-truncate me-3"
+                                                                  ><i
+                                                                    class="fa fa-map-marker-alt text-primary me-2"
+                                                                    ></i
+                                                                >${post.address}</span
+                                                            >
+                                                            <span class="text-truncate me-3"
+                                                                  ><i class="far fa-clock text-primary me-2"></i>
+                                                                <c:if test="${post.formID == 1}">Full Time - Offline</c:if>
+                                                                <c:if test="${post.formID == 2}">Full Time - Online</c:if>
+                                                                <c:if test="${post.formID == 3}">Full Time - Hybrid</c:if>
+                                                                <c:if test="${post.formID == 4}">Part Time - Offline</c:if>
+                                                                <c:if test="${post.formID == 5}">Part Time - Online</c:if>
+                                                                <c:if test="${post.formID == 6}">Part Time - Hybrid</c:if>
+                                                                </span
+                                                                >
+                                                                <span class="text-truncate me-0"
+                                                                      ><i
+                                                                        class="far fa-money-bill-alt text-primary me-2"
+                                                                        ></i
+                                                                    >${post.salary}</span
+                                                            >
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
+                                                        >
+                                                        <div class="d-flex mb-3">
+                                                            <a class="btn btn-light btn-square me-3" href=""
+                                                               ><i class="far fa-heart text-primary"></i
+                                                                ></a>
+                                                            <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
+                                                        </div>
+                                                        <small class="text-truncate"
+                                                               ><i class="far fa-calendar-alt text-primary me-2"></i
+                                                            >Date Line: ${post.expiredDate}</small
+                                                        >
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div
-                                                class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
-                                                >
-                                                <div class="d-flex mb-3">
-                                                    <a class="btn btn-light btn-square me-3" href=""
-                                                       ><i class="far fa-heart text-primary"></i
-                                                        ></a>
-                                                    <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
-                                                </div>
-                                                <small class="text-truncate"
-                                                       ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                    >Date Line: 01 Jan, 2045</small
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-                                    <div class="job-item py-4 px-2 mb-3 col-6">
-                                        <div class="row g-4">
-                                            <div class="col-sm-12 col-md-6 d-flex align-items-center">
-
-                                                <div class="text-start ps-4">
-                                                    <h5 class="mb-3">Software Engineer</h5>
-                                                    <span class="text-truncate me-3"
-                                                          ><i
-                                                            class="fa fa-map-marker-alt text-primary me-2"
-                                                            ></i
-                                                        >New York, USA</span
-                                                    >
-                                                    <span class="text-truncate me-3"
-                                                          ><i class="far fa-clock text-primary me-2"></i>Full
-                                                        Time</span
-                                                    >
-                                                    <span class="text-truncate me-0"
-                                                          ><i
-                                                            class="far fa-money-bill-alt text-primary me-2"
-                                                            ></i
-                                                        >$123 - $456</span
-                                                    >
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
-                                                >
-                                                <div class="d-flex mb-3">
-                                                    <a class="btn btn-light btn-square me-3" href=""
-                                                       ><i class="far fa-heart text-primary"></i
-                                                        ></a>
-                                                    <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
-                                                </div>
-                                                <small class="text-truncate"
-                                                       ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                    >Date Line: 01 Jan, 2045</small
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-                                    <div class="job-item py-4 px-2 mb-3 col-6">
-                                        <div class="row g-4">
-                                            <div class="col-sm-12 col-md-6 d-flex align-items-center">
-
-                                                <div class="text-start ps-4">
-                                                    <h5 class="mb-3">Software Engineer</h5>
-                                                    <span class="text-truncate me-3"
-                                                          ><i
-                                                            class="fa fa-map-marker-alt text-primary me-2"
-                                                            ></i
-                                                        >New York, USA</span
-                                                    >
-                                                    <span class="text-truncate me-3"
-                                                          ><i class="far fa-clock text-primary me-2"></i>Full
-                                                        Time</span
-                                                    >
-                                                    <span class="text-truncate me-0"
-                                                          ><i
-                                                            class="far fa-money-bill-alt text-primary me-2"
-                                                            ></i
-                                                        >$123 - $456</span
-                                                    >
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
-                                                >
-                                                <div class="d-flex mb-3">
-                                                    <a class="btn btn-light btn-square me-3" href=""
-                                                       ><i class="far fa-heart text-primary"></i
-                                                        ></a>
-                                                    <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
-                                                </div>
-                                                <small class="text-truncate"
-                                                       ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                    >Date Line: 01 Jan, 2045</small
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-                                    <div class="job-item py-4 px-2 mb-3 col-6">
-                                        <div class="row g-4">
-                                            <div class="col-sm-12 col-md-6 d-flex align-items-center">
-
-                                                <div class="text-start ps-4">
-                                                    <h5 class="mb-3">Software Engineer</h5>
-                                                    <span class="text-truncate me-3"
-                                                          ><i
-                                                            class="fa fa-map-marker-alt text-primary me-2"
-                                                            ></i
-                                                        >New York, USA</span
-                                                    >
-                                                    <span class="text-truncate me-3"
-                                                          ><i class="far fa-clock text-primary me-2"></i>Full
-                                                        Time</span
-                                                    >
-                                                    <span class="text-truncate me-0"
-                                                          ><i
-                                                            class="far fa-money-bill-alt text-primary me-2"
-                                                            ></i
-                                                        >$123 - $456</span
-                                                    >
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
-                                                >
-                                                <div class="d-flex mb-3">
-                                                    <a class="btn btn-light btn-square me-3" href=""
-                                                       ><i class="far fa-heart text-primary"></i
-                                                        ></a>
-                                                    <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
-                                                </div>
-                                                <small class="text-truncate"
-                                                       ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                    >Date Line: 01 Jan, 2045</small
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-                                    
+                                        </c:forEach>
+                                    </c:if>
                                 </div>
-
                                 <div class="p-3">
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination">
                                             <li class="page-item">
-                                                <a class="page-link" href="#">Trước</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">Tiếp theo</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                             </div>
-
-                            <div id="tab-3" class="tab-pane fade show p-0">
-
-                                <div class="row g-3">
-                                    
-                                    <div class="job-item py-4 px-2 mb-3 col-6">
-                                        <div class="row g-4">
-                                            <div class="col-sm-12 col-md-6 d-flex align-items-center">
-
-                                                <div class="text-start ps-4">
-                                                    <h5 class="mb-3">Software Engineer</h5>
-                                                    <span class="text-truncate me-3"
-                                                          ><i
-                                                            class="fa fa-map-marker-alt text-primary me-2"
-                                                            ></i
-                                                        >New York, USA</span
-                                                    >
-                                                    <span class="text-truncate me-3"
-                                                          ><i class="far fa-clock text-primary me-2"></i>Full
-                                                        Time</span
-                                                    >
-                                                    <span class="text-truncate me-0"
-                                                          ><i
-                                                            class="far fa-money-bill-alt text-primary me-2"
-                                                            ></i
-                                                        >$123 - $456</span
-                                                    >
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
-                                                >
-                                                <div class="d-flex mb-3">
-                                                    <a class="btn btn-light btn-square me-3" href=""
-                                                       ><i class="far fa-heart text-primary"></i
-                                                        ></a>
-                                                    <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
-                                                </div>
-                                                <small class="text-truncate"
-                                                       ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                    >Date Line: 01 Jan, 2045</small
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-                                    <div class="job-item py-4 px-2 mb-3 col-6">
-                                        <div class="row g-4">
-                                            <div class="col-sm-12 col-md-6 d-flex align-items-center">
-
-                                                <div class="text-start ps-4">
-                                                    <h5 class="mb-3">Software Engineer</h5>
-                                                    <span class="text-truncate me-3"
-                                                          ><i
-                                                            class="fa fa-map-marker-alt text-primary me-2"
-                                                            ></i
-                                                        >New York, USA</span
-                                                    >
-                                                    <span class="text-truncate me-3"
-                                                          ><i class="far fa-clock text-primary me-2"></i>Full
-                                                        Time</span
-                                                    >
-                                                    <span class="text-truncate me-0"
-                                                          ><i
-                                                            class="far fa-money-bill-alt text-primary me-2"
-                                                            ></i
-                                                        >$123 - $456</span
-                                                    >
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
-                                                >
-                                                <div class="d-flex mb-3">
-                                                    <a class="btn btn-light btn-square me-3" href=""
-                                                       ><i class="far fa-heart text-primary"></i
-                                                        ></a>
-                                                    <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
-                                                </div>
-                                                <small class="text-truncate"
-                                                       ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                    >Date Line: 01 Jan, 2045</small
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-                                    <div class="job-item py-4 px-2 mb-3 col-6">
-                                        <div class="row g-4">
-                                            <div class="col-sm-12 col-md-6 d-flex align-items-center">
-
-                                                <div class="text-start ps-4">
-                                                    <h5 class="mb-3">Software Engineer</h5>
-                                                    <span class="text-truncate me-3"
-                                                          ><i
-                                                            class="fa fa-map-marker-alt text-primary me-2"
-                                                            ></i
-                                                        >New York, USA</span
-                                                    >
-                                                    <span class="text-truncate me-3"
-                                                          ><i class="far fa-clock text-primary me-2"></i>Full
-                                                        Time</span
-                                                    >
-                                                    <span class="text-truncate me-0"
-                                                          ><i
-                                                            class="far fa-money-bill-alt text-primary me-2"
-                                                            ></i
-                                                        >$123 - $456</span
-                                                    >
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
-                                                >
-                                                <div class="d-flex mb-3">
-                                                    <a class="btn btn-light btn-square me-3" href=""
-                                                       ><i class="far fa-heart text-primary"></i
-                                                        ></a>
-                                                    <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
-                                                </div>
-                                                <small class="text-truncate"
-                                                       ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                    >Date Line: 01 Jan, 2045</small
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-                                    <div class="job-item py-4 px-2 mb-3 col-6">
-                                        <div class="row g-4">
-                                            <div class="col-sm-12 col-md-6 d-flex align-items-center">
-
-                                                <div class="text-start ps-4">
-                                                    <h5 class="mb-3">Software Engineer</h5>
-                                                    <span class="text-truncate me-3"
-                                                          ><i
-                                                            class="fa fa-map-marker-alt text-primary me-2"
-                                                            ></i
-                                                        >New York, USA</span
-                                                    >
-                                                    <span class="text-truncate me-3"
-                                                          ><i class="far fa-clock text-primary me-2"></i>Full
-                                                        Time</span
-                                                    >
-                                                    <span class="text-truncate me-0"
-                                                          ><i
-                                                            class="far fa-money-bill-alt text-primary me-2"
-                                                            ></i
-                                                        >$123 - $456</span
-                                                    >
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
-                                                >
-                                                <div class="d-flex mb-3">
-                                                    <a class="btn btn-light btn-square me-3" href=""
-                                                       ><i class="far fa-heart text-primary"></i
-                                                        ></a>
-                                                    <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
-                                                </div>
-                                                <small class="text-truncate"
-                                                       ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                    >Date Line: 01 Jan, 2045</small
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    
-                                    
-                                </div>
-
-                                <div class="p-3">
-                                    <nav aria-label="Page navigation">
-                                        <ul class="pagination">
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">Trước</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">Tiếp theo</a>
+                                                <a class="page-link" href="">Xem thêm</a>
                                             </li>
                                         </ul>
                                     </nav>
                                 </div>
                             </div>
+                            <div id="tab-3" class="tab-pane fade show p-0">
+                                <div class="row g-3">
+                                    <c:if test="${not empty requestScope.parttime}">
+                                        <c:forEach var="post" items="${requestScope.parttime}" varStatus="status">
+                                            <div class="job-item py-4 px-2 mb-3 col-6">
+                                                <div class="row g-4">
+                                                    <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
-
+                                                        <div class="text-start ps-4">
+                                                            <h5 class="mb-3">${post.positionName}</h5>
+                                                            <span class="text-truncate me-3"
+                                                                  ><i
+                                                                    class="fa fa-map-marker-alt text-primary me-2"
+                                                                    ></i
+                                                                >${post.address}</span
+                                                            >
+                                                            <span class="text-truncate me-3"
+                                                                  ><i class="far fa-clock text-primary me-2"></i>
+                                                                <c:if test="${post.formID == 1}">Full Time - Offline</c:if>
+                                                                <c:if test="${post.formID == 2}">Full Time - Online</c:if>
+                                                                <c:if test="${post.formID == 3}">Full Time - Hybrid</c:if>
+                                                                <c:if test="${post.formID == 4}">Part Time - Offline</c:if>
+                                                                <c:if test="${post.formID == 5}">Part Time - Online</c:if>
+                                                                <c:if test="${post.formID == 6}">Part Time - Hybrid</c:if>
+                                                                </span
+                                                                >
+                                                                <span class="text-truncate me-0"
+                                                                      ><i
+                                                                        class="far fa-money-bill-alt text-primary me-2"
+                                                                        ></i
+                                                                    >${post.salary}</span
+                                                            >
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
+                                                        >
+                                                        <div class="d-flex mb-3">
+                                                            <a class="btn btn-light btn-square me-3" href=""
+                                                               ><i class="far fa-heart text-primary"></i
+                                                                ></a>
+                                                            <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
+                                                        </div>
+                                                        <small class="text-truncate"
+                                                               ><i class="far fa-calendar-alt text-primary me-2"></i
+                                                            >Date Line: ${post.expiredDate}</small
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </c:if>
+                                </div>
+                                <div class="p-3">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination">
+                                            <li class="page-item">
+                                                <a class="page-link" href="">Xem thêm</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
                         </div>
                         <!-- Jobs End -->
 

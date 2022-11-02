@@ -41,10 +41,12 @@ public class HomeController extends HttpServlet {
         ApplicationPositionDAO positionDAO = new ApplicationPositionDAO();
         ApplicationPostDAO postDAO = new ApplicationPostDAO();
         
-        ArrayList<ApplicationPostDTO> fulltime = postDAO.listFullTimePost();
+        ArrayList<ApplicationPostDTO> fulltime = postDAO.listTop10FullTimePost();
         request.setAttribute("fulltime", fulltime);
-        ArrayList<ApplicationPostDTO> parttime = postDAO.listPartTimePost();
+        ArrayList<ApplicationPostDTO> parttime = postDAO.listTop10PartTimePost();
         request.setAttribute("parttime", parttime);
+        ArrayList<ApplicationPostDTO> highestQuantity = postDAO.listTop10HighestHiringQuantityPosts();
+        request.setAttribute("highestQuantity", highestQuantity);
         
 
         request.getRequestDispatcher("views/home/homepage.jsp").forward(request, response);
