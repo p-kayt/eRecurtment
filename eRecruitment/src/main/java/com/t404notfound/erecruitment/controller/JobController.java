@@ -521,6 +521,32 @@ public class JobController extends HttpServlet {
                     break;
                 // NOT FINISHED ================================
                 case "delete-post":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    
+                    result = postDAO.deleteApplicationPost(postID);
+                    if (result == 1) {
+                        msg = "Xóa Bài Đăng Tuyển Dụng Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=position-detail&id=" + positionID + "").forward(request, response);
+                    } else {
+                        msg = "Xóa Bài Đăng Tuyển Dụng Thất Bại - Bài Đăng Đang Được Sử Dụng Cho Ứng Tuyển Vị Trí";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=staff-post-detail&positionID=" + positionID + "&postID=" + postID).forward(request, response);
+                    }
+                    break;
+                case "delete-position":
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    result = positionDAO.deleteApplicationPosition(positionID);
+                    if (result == 1) {
+                        msg = "Xóa Vị Trí Công Việc Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=position-list").forward(request, response);
+                    } else {
+                        msg = "Xóa Vị Trí Công Việc Thất Bại - Vị Trí Đang Được Sử Dụng Cho Các Bài Đăng Tuyển Dụng";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=position-detail&id=" + positionID + "").forward(request, response);
+                    }
                     break;
                 default:
                     break;

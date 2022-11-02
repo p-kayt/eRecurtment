@@ -70,7 +70,12 @@
                                 <input type="hidden" name="positionID" value="${requestScope.post.positionID}">
                             <input type="hidden" name="action" value="edit-post">
                             </br>
-                            <input type="submit" value="Cập Nhật Bài Đăng">
+                            <div>
+                                <input type="submit" value="Cập Nhật Bài Đăng">
+                            </div>
+                            <div id="show-delete-post-form">
+                                <span onclick="showPostDeleteForm()">Xóa</span>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -282,6 +287,22 @@
                 </div>     
             </div>
         </c:if>
+        <div id="delete-post-form-container">
+            <form action="./job" method="post">
+                <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                <input type="hidden" name="action" value="delete-post">
+                <div>
+                    <p>Bạn có chắc chắn muốn xóa bài đăng này không?</p>
+                </div>
+                <div id="option-no">
+                    <span onclick="hidePostDeleteForm()">Không</span>
+                </div>
+                <div id="option-yes">
+                    <input type="submit" value="Có">
+                </div>
+            </form>
+        </div>
         <script src="js/job-utility.js"></script>
     </body>
 </html>
