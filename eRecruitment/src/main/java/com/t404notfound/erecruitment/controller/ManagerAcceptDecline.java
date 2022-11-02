@@ -6,6 +6,7 @@ package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.AdminUserDAO;
 import com.t404notfound.erecruitment.bean.AdminUserDTO;
+import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.interview.ManagerParticipantDAO;
 import com.t404notfound.erecruitment.bean.interview.ManagerParticipantDTO;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,18 +43,30 @@ public class ManagerAcceptDecline extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         String url = "./ManagerViewCandidates";
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (user == null) {
+            response.sendRedirect("login");
+        } else if (user.getUserRole() != 3) {
+            response.sendRedirect("home");
+        }
         try {
             String SearchValue = request.getParameter("SearchValue").trim();
             request.setAttribute("SearchValue", SearchValue);
             String email = request.getParameter("Email");
+            String firstName = request.getParameter("FirstName");
+            String lastName = request.getParameter("LastName");
             String action = request.getParameter("action");
             int status = 0;
             ArrayList<ManagerParticipantDTO> list = new ArrayList<>();
+            String result = "Undo";
 
             if (action.equalsIgnoreCase("Accept")) {
                 status = 4;
+                result = "accepted!";
             } else if (action.equalsIgnoreCase("Decline")) {
                 status = 3;
+                result = "declined.";
             } else if (action.equalsIgnoreCase("Undo")) {
                 status = 1;
             }
@@ -67,6 +81,10 @@ public class ManagerAcceptDecline extends HttpServlet {
             } catch (SQLException | NamingException | ClassNotFoundException ex) {
             }
             request.setAttribute("Candidates", list);
+            request.setAttribute("FirstName", firstName);
+            request.setAttribute("LastName", lastName);
+            request.setAttribute("Email", email);
+            request.setAttribute("AppResult", result);
         } finally {
             RequestDispatcher ReqDis = request.getRequestDispatcher(url);
             ReqDis.forward(request, response);

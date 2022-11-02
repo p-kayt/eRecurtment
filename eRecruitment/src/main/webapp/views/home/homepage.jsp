@@ -1,7 +1,7 @@
 <%-- Document : homepage Created on : Sep 27, 2022, 5:47:58 PM Author : MINH TRI
---%> <%@page import="com.t404notfound.erecruitment.bean.UserDTO"%> <%@page
-    contentType="text/html" pageEncoding="UTF-8"%> <%@ taglib prefix="c"
-                                                          uri="http://java.sun.com/jsp/jstl/core" %>
+--%><%@page import="com.t404notfound.erecruitment.bean.UserDTO"%>
+    <%@page contentType="text/html" pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <!DOCTYPE html>
     <html lang="vi">
         <head>

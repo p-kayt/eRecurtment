@@ -6,6 +6,7 @@ package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.AdminUserDAO;
 import com.t404notfound.erecruitment.bean.AdminUserDTO;
+import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.interview.ManagerParticipantDAO;
 import com.t404notfound.erecruitment.bean.interview.ManagerParticipantDTO;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,13 +43,18 @@ public class ManagerViewCandidates extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         String url = "views/HRManager/candidatelist.jsp";
+        HttpSession session = request.getSession();
+        UserDTO user = (UserDTO) session.getAttribute("user");
+        if (user == null) {
+            response.sendRedirect("login");
+        } else if (user.getUserRole() != 3) {
+            response.sendRedirect("home");
+        }
         try {
             String SearchValue = request.getParameter("txtSearch").trim();
             String action = request.getParameter("action");
             ArrayList<ManagerParticipantDTO> list = new ArrayList<>();
-            if (action == null) {
-                request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
-            } else if (action.equalsIgnoreCase("Search")) {
+            if (action.equalsIgnoreCase("Search")) {
                 try {
                     list = ManagerParticipantDAO.getParticipants(SearchValue);
                 } catch (SQLException | NamingException | ClassNotFoundException ex) {
