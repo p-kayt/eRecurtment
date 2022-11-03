@@ -121,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-            </form>
+                </form>
                 <!-- Search End -->
             <c:if test="${not empty requestScope.postList}">
                 <div class="tab-content">
@@ -162,14 +162,15 @@
                                             class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
                                             >
                                             <div class="d-flex mb-3">
-                                                <a class="btn btn-light btn-square me-3" href=""
-                                                   ><i class="far fa-heart text-primary"></i
-                                                    ></a>
                                                 <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
                                             </div>
                                             <small class="text-truncate"
                                                    ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                >Date Line: ${post.expiredDate}</small
+                                                >Bắt Đầu: ${post.startDate}</small
+                                            >
+                                            <small class="text-truncate"
+                                                   ><i class="far fa-calendar-alt text-primary me-2"></i
+                                                >Đóng: ${post.expiredDate}</small
                                             >
                                         </div>
                                     </div>

@@ -170,7 +170,7 @@
                                     data-bs-toggle="pill"
                                     href="#tab-2"
                                     >
-                                    <h6 class="mt-n1 mb-0">Toàn thời gian</h6>
+                                    <h6 class="mt-n1 mb-0">Full Time</h6>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -179,7 +179,7 @@
                                     data-bs-toggle="pill"
                                     href="#tab-3"
                                     >
-                                    <h6 class="mt-n1 mb-0">Bán thời gian</h6>
+                                    <h6 class="mt-n1 mb-0">Part Time</h6>
                                 </a>
                             </li>
                         </ul>
@@ -190,7 +190,7 @@
                                     <c:if test="${not empty requestScope.highestQuantity}">
                                         <c:forEach var="post" items="${requestScope.highestQuantity}" varStatus="status">
                                             <div class="job-item py-4 px-2 mb-3 col-6">
-                                                <div class="row g-4">
+                                                <div class="row g-4" onclick="./post">
                                                     <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
                                                         <div class="text-start ps-4">
@@ -223,14 +223,15 @@
                                                         class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
                                                         >
                                                         <div class="d-flex mb-3">
-                                                            <a class="btn btn-light btn-square me-3" href=""
-                                                               ><i class="far fa-heart text-primary"></i
-                                                                ></a>
                                                             <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
                                                         </div>
                                                         <small class="text-truncate"
                                                                ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                            >Date Line: ${post.expiredDate}</small
+                                                            >Bắt Đầu: ${post.startDate}</small
+                                                        >
+                                                        <small class="text-truncate"
+                                                               ><i class="far fa-calendar-alt text-primary me-2"></i
+                                                            >Đóng: ${post.expiredDate}</small
                                                         >
                                                     </div>
                                                 </div>
@@ -286,14 +287,15 @@
                                                         class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
                                                         >
                                                         <div class="d-flex mb-3">
-                                                            <a class="btn btn-light btn-square me-3" href=""
-                                                               ><i class="far fa-heart text-primary"></i
-                                                                ></a>
                                                             <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
                                                         </div>
                                                         <small class="text-truncate"
                                                                ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                            >Date Line: ${post.expiredDate}</small
+                                                            >Bắt Đầu: ${post.startDate}</small
+                                                        >
+                                                        <small class="text-truncate"
+                                                               ><i class="far fa-calendar-alt text-primary me-2"></i
+                                                            >Đóng: ${post.expiredDate}</small
                                                         >
                                                     </div>
                                                 </div>
@@ -356,7 +358,11 @@
                                                         </div>
                                                         <small class="text-truncate"
                                                                ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                            >Date Line: ${post.expiredDate}</small
+                                                            >Bắt Đầu: ${post.startDate}</small
+                                                        >
+                                                        <small class="text-truncate"
+                                                               ><i class="far fa-calendar-alt text-primary me-2"></i
+                                                            >Đóng: ${post.expiredDate}</small
                                                         >
                                                     </div>
                                                 </div>
