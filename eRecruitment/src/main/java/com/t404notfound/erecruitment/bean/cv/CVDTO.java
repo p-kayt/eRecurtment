@@ -23,16 +23,16 @@ public class CVDTO {
     protected String phoneNumber;
     protected String address;
     protected String city;
-    protected String gender;
+    protected int gender;
     protected int userID;
-    protected ArrayList skills;
-    protected ArrayList interests;
-    protected ArrayList certificates;
-    protected ArrayList achivements;
-    protected ArrayList experiences;
-    protected ArrayList languages;
-    protected ArrayList educations;
-    protected ArrayList socialMedias;
+    private ArrayList<SkillDTO> skills;
+    protected ArrayList<InterestDTO> interests;
+    protected ArrayList<CertificateDTO> certificates;
+    protected ArrayList<AchievementDTO> achievements;
+    protected ArrayList<ExperienceDTO> experiences;
+    protected ArrayList<LanguageDTO> languages;
+    protected ArrayList<EducationDTO> educations;
+    protected ArrayList<SocialMediaDTO> socialMedias;
 
     public int getCVID() {
         return CVID;
@@ -53,7 +53,7 @@ public class CVDTO {
     public CVDTO() {
     }
 
-    public CVDTO(int CVID, String firstName, String lastName,  String dob, String introduction, String email, String phoneNumber, String address, String city, String gender, int userID, ArrayList skills, ArrayList interests, ArrayList certificates, ArrayList achivements, ArrayList experiences, ArrayList languages, ArrayList educations, ArrayList socialMedias) {
+    public CVDTO(int CVID, String firstName, String lastName,  String dob, String introduction, String email, String phoneNumber, String address, String city, int gender, int userID, ArrayList<SkillDTO> skills, ArrayList interests, ArrayList certificates, ArrayList achievements, ArrayList experiences, ArrayList languages, ArrayList educations, ArrayList socialMedias) {
         this.CVID = CVID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -69,7 +69,7 @@ public class CVDTO {
         this.skills = skills;
         this.interests = interests;
         this.certificates = certificates;
-        this.achivements = achivements;
+        this.achievements = achievements;
         this.experiences = experiences;
         this.languages = languages;
         this.educations = educations;
@@ -148,11 +148,11 @@ public class CVDTO {
         this.city = city;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -181,11 +181,11 @@ public class CVDTO {
     }
 
     public ArrayList getAchievements() {
-        return achivements;
+        return achievements;
     }
 
-    public void setAchievements(ArrayList achivements) {
-        this.achivements = achivements;
+    public void setAchievements(ArrayList achievements) {
+        this.achievements = achievements;
     }
 
     public ArrayList getExperiences() {
@@ -222,7 +222,7 @@ public class CVDTO {
 
     @Override
     public String toString() {
-        return "CVDTO{" + "CVID=" + CVID + ", firstName=" + firstName + ", lastName=" + lastName + ", avatar=" + avatar + ", dob=" + dob + ", introduction=" + introduction + ", email=" + email + ", phoneNumber=" + phoneNumber + ", address=" + address + ", city=" + city + ", gender=" + gender + ", userID=" + userID + ", \nskills=" + skills + ", \ninterests=" + interests + ", \ncertificates=" + certificates + ", \nachivements=" + achivements + ", \nexperiences=" + experiences + ", \nlanguages=" + languages + ", \neducations=" + educations + ", \nsocialMedias=" + socialMedias + '}';
+        return "CVDTO{" + "CVID=" + CVID + ", firstName=" + firstName + ", lastName=" + lastName + ", avatar=" + avatar + ", dob=" + dob + ", introduction=" + introduction + ", email=" + email + ", phoneNumber=" + phoneNumber + ", address=" + address + ", city=" + city + ", gender=" + gender + ", userID=" + userID + ", \nskills=" + skills + ", \ninterests=" + interests + ", \ncertificates=" + certificates + ", \nachievements=" + achievements + ", \nexperiences=" + experiences + ", \nlanguages=" + languages + ", \neducations=" + educations + ", \nsocialMedias=" + socialMedias + '}';
     }
 
 }

@@ -10,11 +10,11 @@ public class AchievementDTO {
     public AchievementDTO() {
     }
 
-    public AchievementDTO(int achivementID, String achivementName, String AchievementDescription, String achivementLink, int CVID) {
+    public AchievementDTO(int achivementID, String achivementName, String AchievementDescription, int CVID) {
         this.achivementID = achivementID;
         this.achivementName = achivementName;
         this.AchievementDescription = AchievementDescription;
-        this.achivementLink = achivementLink;
+        this.achivementLink = "";
         this.CVID = CVID;
     }
 

@@ -4,7 +4,7 @@ public class ExperienceDTO {
 
     private int experienceID;
     private String jobTitle;
-    private String organizationName;
+    private String experienceOrganizationName;
     private String experienceDescription;
     private String experienceDuration;
     private int CVID;
@@ -12,10 +12,10 @@ public class ExperienceDTO {
     public ExperienceDTO() {
     }
 
-    public ExperienceDTO(int experienceID, String jobTitle, String organizationName, String experienceDescription, String experienceDuration, int CVID) {
+    public ExperienceDTO(int experienceID, String jobTitle, String experienceOrganizationName, String experienceDescription, String experienceDuration, int CVID) {
         this.experienceID = experienceID;
         this.jobTitle = jobTitle;
-        this.organizationName = organizationName;
+        this.experienceOrganizationName = experienceOrganizationName;
         this.experienceDescription = experienceDescription;
         this.experienceDuration = experienceDuration;
         this.CVID = CVID;
@@ -37,12 +37,12 @@ public class ExperienceDTO {
         this.jobTitle = jobTitle;
     }
 
-    public String getOrganizationName() {
-        return organizationName;
+    public String getExperienceOrganizationName() {
+        return experienceOrganizationName;
     }
 
-    public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName;
+    public void setExperienceOrganizationName(String experienceOrganizationName) {
+        this.experienceOrganizationName = experienceOrganizationName;
     }
 
     public String getExperienceDescription() {
@@ -71,7 +71,7 @@ public class ExperienceDTO {
 
     @Override
     public String toString() {
-        return "ExperienceDTO{" + "experienceID=" + experienceID + ", jobTitle=" + jobTitle + ", organizationName=" + organizationName + ", experienceDescription=" + experienceDescription + ", experienceDuration=" + experienceDuration + ", CVID=" + CVID + '}';
+        return "ExperienceDTO{" + "experienceID=" + experienceID + ", jobTitle=" + jobTitle + ", experienceOrganizationName=" + experienceOrganizationName + ", experienceDescription=" + experienceDescription + ", experienceDuration=" + experienceDuration + ", CVID=" + CVID + '}';
     }
     
     

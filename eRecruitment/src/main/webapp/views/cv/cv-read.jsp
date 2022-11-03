@@ -46,8 +46,11 @@
                             <!-- Basic information -->
                             <div><b>First name: </b> <%=cv.getFirstName()%></div>
                             <div><b>Last name: </b> <%=cv.getLastName()%></div>
-                            <div><b>Gender: </b> <%=cv.getGender()%></div> 
-                            <div><b>Day of birth: </b> <%=cv.getDob()%></div> 
+                            <div><b>Gender: </b> <c:if test="${cv.gender == 1}"><span>Male</span></c:if>
+                                <c:if test="${cv.gender == 2}">Female</c:if>
+                                <c:if test="${cv.gender == 3}">Other</c:if>
+                                </div> 
+                                <div><b>Day of birth: </b> <%=cv.getDob()%></div> 
                             <div><b>Email: </b> <%=cv.getEmail()%></div>
                             <div><b>Phone number: </b> <%=cv.getPhoneNumber()%></div>
                             <div><b>Address: </b> <%=cv.getAddress()%></div>
@@ -97,16 +100,17 @@
                             <div>
                                 <%ExperienceDTO experience;%>
                                 <%experience = (ExperienceDTO) cv.getExperiences().get(i);%>
-                                <div><b>Job <%=i + 1%>: </b> <%=experience.getJobTitle()%></div>
-                                <div><b>Organization: </b> <%=experience.getOrganizationName()%></div>
+                                <div><b>Activity <%=i + 1%>: </b> <%=experience.getJobTitle()%></div>
+                                <div><b>Organization: </b> <%=experience.getExperienceOrganizationName()%></div>
                                 <div><b>Description: </b> <%=experience.getExperienceDescription()%></div>
                                 <div><b>Duration: </b> <%=experience.getExperienceDuration()%></div>
+                                <br>
                             </div>
                             <% }%> 
                         </div>
                         <div class="cv-element border-bottom-dark shadow">
                             <h3> Language </h3>
-                            <% for (int i = 0; i < cv.getExperiences().size(); i += 1) {%>
+                            <% for (int i = 0; i < cv.getLanguages().size(); i += 1) {%>
                             <div>
                                 <%LanguageDTO language;%>
                                 <%language = (LanguageDTO) cv.getLanguages().get(i);%>
@@ -142,15 +146,16 @@
                         </div>
                         <div class="cv-element">
                             <h3> Social media </h3>
-                            <% for (int i = 0; i < cv.getSocialMedias().size(); i += 1) {%>
-                            <div>
-                                <%SocialMediaDTO socialMedia;%>
-                                <%socialMedia = (SocialMediaDTO) cv.getSocialMedias().get(i);%>
-                                <div><b>Platform <%=i + 1%>: </b> <%=socialMedia.getPlatformID()%></div>
-                                <div><b>Link: </b> <%=socialMedia.getSocialMediaLink()%></div>
-                            </div>
-                            <br>
-                            <% }%> 
+                            <c:forEach var="i"  items="${cv.socialMedias}" varStatus="loop">
+
+                                <div><b>Platform ${loop.count}: ${i.platformID}</div>
+                                <div><b>Link: </b> ${i.socialMediaLink}</div>
+
+
+                            </c:forEach>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -167,14 +172,14 @@
 </html>
 
 <script>
-                function saveCV() {
-                    var element = document.getElementById('element');
-                    html2pdf(element, {
-                        filename: 'yourCV.pdf',
-                        image: {type: 'png', quality: 0.98},
-                        html2canvas: {scale: 2, logging: true, dpi: 192, letterRendering: true},
-                        jsPDF: {unit: 'mm', format: 'a4', orientation: 'portrait'}
-                    })
-                }
+                    function saveCV() {
+                        var element = document.getElementById('element');
+                        html2pdf(element, {
+                            filename: 'yourCV.pdf',
+                            image: {type: 'png', quality: 0.98},
+                            html2canvas: {scale: 2, logging: true, dpi: 192, letterRendering: true},
+                            jsPDF: {unit: 'mm', format: 'a4', orientation: 'portrait'}
+                        })
+                    }
 </script>
 </html>

@@ -76,7 +76,7 @@ public class CVDAO {
                 + "PhoneNumber, "
                 + "[Address], "
                 + "City, "
-                + "GenderName, "
+                + "Gender, "
                 + "UserID FROM CV "
                 + "INNER JOIN Gender ON Gender = GenderID "
                 + "WHERE CVID = ?";
@@ -97,7 +97,7 @@ public class CVDAO {
                 cv.setPhoneNumber(rs.getString("PhoneNumber"));
                 cv.setAddress(rs.getString("Address"));
                 cv.setCity(rs.getString("City"));
-                cv.setGender(rs.getString("GenderName"));
+                cv.setGender(rs.getInt("Gender"));
                 cv.setUserID(rs.getInt("UserID"));
                 cv.setSkills(loadSkill(CVID));
                 cv.setInterests(loadInterest(CVID));
@@ -132,7 +132,7 @@ public class CVDAO {
                 SkillDTO dto = new SkillDTO();
                 dto.setSkillID(rs.getInt("SkillID"));
                 dto.setSkillName(rs.getString("SkillName"));
-                dto.setSkillDescription("SkillDescription");
+                dto.setSkillDescription(rs.getString("SkillDescription"));
                 dto.setCVID(CVID);
                 list.add(dto);
             }
@@ -186,7 +186,7 @@ public class CVDAO {
                 CertificateDTO dto = new CertificateDTO();
                 dto.setCertificateID(rs.getInt("CertificateID"));
                 dto.setCertificateName(rs.getString("CertificateName"));
-                dto.setCertificateLink("CertificateLink");
+                dto.setCertificateLink(rs.getString("CertificateLink"));
                 dto.setCVID(CVID);
                 list.add(dto);
             }
@@ -198,7 +198,7 @@ public class CVDAO {
     }
 
     public ArrayList<AchievementDTO> loadAchievement(int CVID) {
-        String sql = "SELECT AchievementID, AchievementName, AchievementDescription, AchievementLink, CVID FROM CV_Achievement WHERE CVID = ?;";
+        String sql = "SELECT AchievementID, AchievementName, AchievementDescription, CVID FROM CV_Achievement WHERE CVID = ?;";
         try {
             ArrayList<AchievementDTO> list = new ArrayList<>();
             Connection con = DBUtil.getConnection();
@@ -210,7 +210,6 @@ public class CVDAO {
                 dto.setAchievementID(rs.getInt("AchievementID"));
                 dto.setAchievementName(rs.getString("AchievementName"));
                 dto.setAchievementDescription(rs.getString("AchievementDescription"));
-                dto.setAchievementLink(rs.getString("AchievementLink"));
                 dto.setCVID(CVID);
                 list.add(dto);
             }
@@ -241,6 +240,7 @@ public class CVDAO {
                 System.out.println(rs.toString());
                 dto.setExperienceID(rs.getInt("ExperienceID"));
                 dto.setJobTitle(rs.getString("JobTitle"));
+                dto.setExperienceOrganizationName(rs.getString("OrganizationName"));
                 dto.setExperienceDescription(rs.getString("ExperienceDescription"));
                 dto.setExperienceDuration(rs.getString("ExperienceDuration"));
                 dto.setCVID(CVID);
@@ -317,7 +317,8 @@ public class CVDAO {
         String sql = "SELECT SocialMediaID, "
                 + "SocialMediaLink, "
                 + "PlatformID "
-                + "FROM CV_SocialMedia ";
+                + "FROM CV_SocialMedia "
+                + "WHERE CVID = ?;";
         try {
             ArrayList<SocialMediaDTO> list = new ArrayList<>();
             Connection con = DBUtil.getConnection();
@@ -431,19 +432,19 @@ public class CVDAO {
                 ps.setNString(9, "");
             }
 
-            int genderID = 1;
-            switch (cv.getGender().toLowerCase()) {
-                case "female":
-                    genderID = 2;
-                    break;
-                case "other":
-                    genderID = 3;
-                    break;
-                default:
-                    genderID = 1;
-                    break;
-            }
-            ps.setInt(10, genderID);
+//            int genderID = 1;
+//            switch (cv.getGender().toLowerCase()) {
+//                case "female":
+//                    genderID = 2;
+//                    break;
+//                case "other":
+//                    genderID = 3;
+//                    break;
+//                default:
+//                    genderID = 1;
+//                    break;
+//            }
+            ps.setInt(10, cv.getGender());
             ps.setInt(11, cv.getUserID());
             result = ps.executeUpdate();
 //            System.out.println(result);
@@ -631,7 +632,7 @@ public class CVDAO {
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setNString(1, x.getAchievementName());
                 ps.setNString(2, x.getAchievementDescription());
-                ps.setNString(3, x.getAchievementLink());
+                ps.setNString(3, "");
                 ps.setInt(4, CVID);
 
                 psList.add(ps);
@@ -656,7 +657,7 @@ public class CVDAO {
             for (ExperienceDTO x : experienceList) {
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setNString(1, x.getJobTitle());
-                ps.setNString(2, x.getOrganizationName());
+                ps.setNString(2, x.getExperienceOrganizationName());
                 ps.setNString(3, x.getExperienceDescription());
                 ps.setNString(4, x.getExperienceDuration());
                 ps.setInt(5, CVID);
@@ -817,65 +818,73 @@ public class CVDAO {
             } else {
                 ps.setNString(9, "");
             }
-            int genderID = 1;
-            switch (cv.getGender().toLowerCase()) {
-                case "female":
-                    genderID = 2;
-                    break;
-                case "other":
-                    genderID = 3;
-                    break;
-                default:
-                    genderID = 1;
-                    break;
-            }
-            ps.setInt(10, genderID);
+//            int genderID = 1;
+//            switch (cv.getGender().toLowerCase()) {
+//                case "female":
+//                    genderID = 2;
+//                    break;
+//                case "other":
+//                    genderID = 3;
+//                    break;
+//                default:
+//                    genderID = 1;
+//                    break;
+//            }
+            ps.setInt(10, cv.getGender());
 
             int CVID = cv.getCVID();
 
             if (cv.getSkills() != null) {
+                deleteSkill(CVID, con).executeUpdate();
                 ArrayList<PreparedStatement> psList = saveSkill(cv.getSkills(), CVID, con);
                 for (PreparedStatement x : psList) {
                     x.executeUpdate();
                 }                
             }
             if (cv.getInterests() != null) {
+                deleteInterest(CVID, con).executeUpdate();
                 ArrayList<PreparedStatement> psList = saveInterest(cv.getInterests(), CVID, con);
                 for (PreparedStatement x : psList) {
                     x.executeUpdate();
                 }  
             }
             if (cv.getCertificates() != null) {
+                deleteCertificate(CVID, con).executeUpdate();
                 ArrayList<PreparedStatement> psList = saveCertificate(cv.getCertificates(), CVID, con);
                 for (PreparedStatement x : psList) {
                     x.executeUpdate();
                 }  
             }
             if (cv.getAchievements() != null) {
+                deleteAchievement(CVID, con).executeUpdate();
                 ArrayList<PreparedStatement> psList = saveAchievement(cv.getAchievements(), CVID, con);
                 for (PreparedStatement x : psList) {
                     x.executeUpdate();
                 }  
             }
             if (cv.getEducations() != null) {
-                ArrayList<PreparedStatement> psList = saveExperience(cv.getExperiences(), CVID, con);
-                for (PreparedStatement x : psList) {
-                    x.executeUpdate();
-                }  
-            }
-            if (cv.getLanguages() != null) {
-                ArrayList<PreparedStatement> psList = saveLanguage(cv.getLanguages(), CVID, con);
-                for (PreparedStatement x : psList) {
-                    x.executeUpdate();
-                }  
-            }
-            if (cv.getEducations() != null) {
+                deleteEducation(CVID, con).executeUpdate();
                 ArrayList<PreparedStatement> psList = saveEducation(cv.getEducations(), CVID, con);
                 for (PreparedStatement x : psList) {
                     x.executeUpdate();
                 }  
             }
+            if (cv.getLanguages() != null) {
+                deleteLanguage(CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveLanguage(cv.getLanguages(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
+            }
+            if (cv.getExperiences() != null) {
+                deleteExperience(CVID, con).executeUpdate();
+                ArrayList<PreparedStatement> psList = saveExperience(cv.getExperiences(), CVID, con);
+                for (PreparedStatement x : psList) {
+                    x.executeUpdate();
+                }  
+            }
             if (cv.getSocialMedias() != null) {
+                deleteSocialMedia(CVID, con).executeUpdate();
                 ArrayList<PreparedStatement> psList = saveSocialMedia(cv.getSocialMedias(), CVID, con);
                 for (PreparedStatement x : psList) {
                     x.executeUpdate();
@@ -1079,38 +1088,38 @@ public class CVDAO {
         return null;
     }
 
-    public static void main(String[] args) {
-        CVDAO dao = new CVDAO();
-        CVDTO dto = new CVDTO();
-
-        ArrayList<SkillDTO> skillList = new ArrayList<>();
-        skillList.add(new SkillDTO(0, "test skill 1", "test skill description", 0));
-        skillList.add(new SkillDTO(0, "test skill 2", "test skill description", 0));
-        ArrayList<InterestDTO> interestList = new ArrayList<>();
-        interestList.add(new InterestDTO(0, "test 1", 0));
-        interestList.add(new InterestDTO(0, "test 2", 0));
-        ArrayList<CertificateDTO> certificateList = new ArrayList<>();
-        certificateList.add(new CertificateDTO(0, "test 1", "test 1", 0));
-        certificateList.add(new CertificateDTO(0, "test 2", "test 2", 0));
-        ArrayList<AchievementDTO> achievementList = new ArrayList<>();
-        achievementList.add(new AchievementDTO(0, "test 1", "test 1", "test 1", 0));
-        achievementList.add(new AchievementDTO(0, "test 2", "test 2", "test 2", 0));
-        ArrayList<ExperienceDTO> experienceList = new ArrayList<>();
-        experienceList.add(new ExperienceDTO(0, "test 1", "test 2", "test 3", "test 4", 0));
-        ArrayList<LanguageDTO> languageList = new ArrayList<>();
-        languageList.add(new LanguageDTO(0, "test language 1", "test language description", 0));
-        languageList.add(new LanguageDTO(0, "test language 2", "test language description", 0));
-        ArrayList<EducationDTO> educationList = new ArrayList<>();
-        educationList.add(new EducationDTO(0, "test 1", "test 2", 1, 0));
-        ArrayList<SocialMediaDTO> socialMediaList = new ArrayList<>();
-        socialMediaList.add(new SocialMediaDTO(0, "test 1", 1, 0));
-        socialMediaList.add(new SocialMediaDTO(0, "test 2", 2, 0));
-        dto = new CVDTO(1, "test 1", "test 2", "2011-04-01", "test 5", "test572477@gmail.com", "test 7", "test 8", "test 9", "male", 1, null, null, null, null, null, null, null, null);
-
-//      skillList, interestList, certificateList, achievementList, experienceList, languageList, educationList, socialMediaList
-        Connection con = DBUtil.getConnection();
-        dao.updateCV(dto);
-        dto = dao.loadCV(1);
-        System.out.println(dto.toString());
-    }
+//    public static void main(String[] args) {
+//        CVDAO dao = new CVDAO();
+//        CVDTO dto = new CVDTO();
+//
+//        ArrayList<SkillDTO> skillList = new ArrayList<>();
+//        skillList.add(new SkillDTO(0, "test skill 1", "test skill description", 0));
+//        skillList.add(new SkillDTO(0, "test skill 2", "test skill description", 0));
+//        ArrayList<InterestDTO> interestList = new ArrayList<>();
+//        interestList.add(new InterestDTO(0, "test 1", 0));
+//        interestList.add(new InterestDTO(0, "test 2", 0));
+//        ArrayList<CertificateDTO> certificateList = new ArrayList<>();
+//        certificateList.add(new CertificateDTO(0, "test 1", "test 1", 0));
+//        certificateList.add(new CertificateDTO(0, "test 2", "test 2", 0));
+//        ArrayList<AchievementDTO> achievementList = new ArrayList<>();
+//        achievementList.add(new AchievementDTO(0, "test 1", "test 1", 0));
+//        achievementList.add(new AchievementDTO(0, "test 2", "test 2", 0));
+//        ArrayList<ExperienceDTO> experienceList = new ArrayList<>();
+//        experienceList.add(new ExperienceDTO(0, "test 1", "test 2", "test 3", "test 4", 0));
+//        ArrayList<LanguageDTO> languageList = new ArrayList<>();
+//        languageList.add(new LanguageDTO(0, "test language 1", "test language description", 0));
+//        languageList.add(new LanguageDTO(0, "test language 2", "test language description", 0));
+//        ArrayList<EducationDTO> educationList = new ArrayList<>();
+//        educationList.add(new EducationDTO(0, "test 1", "test 2", 1, 0));
+//        ArrayList<SocialMediaDTO> socialMediaList = new ArrayList<>();
+//        socialMediaList.add(new SocialMediaDTO(0, "test 1", 1, 0));
+//        socialMediaList.add(new SocialMediaDTO(0, "test 2", 2, 0));
+//        dto = new CVDTO(1, "test 1", "test 2", "2011-04-01", "test 5", "test572477@gmail.com", "test 7", "test 8", "test 9", "male", 1, skillList, null, null, null, null, null, null, null);
+//
+////      skillList, interestList, certificateList, achievementList, experienceList, languageList, educationList, socialMediaList
+//        Connection con = DBUtil.getConnection();
+//        dao.updateCV(dto);
+//        dto = dao.loadCV(1);
+//        System.out.println(dto.toString());
+//    }
 }
