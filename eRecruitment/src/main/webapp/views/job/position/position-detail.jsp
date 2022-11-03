@@ -117,13 +117,17 @@
                                     <span class="col-6"></span>
 
                                 </div>
-                                <div class="d-flex flex-row justify-content-around m-2">
+                                <div class="d-flex flex-row justify-content-center m-2">
                                     <input type="hidden" name="action" value="edit-position">
-                                    <input class="btn btn-primary" type="submit" value="Cập Nhật">
+                                    <input class="btn btn-primary m-1" type="submit" value="Cập Nhật">
+                                    <div>
+                                        <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#confirmModal">
+                                            Xóa
+                                        </button>
+
+                                    </div>
                                 </div>
-                                <div id="show-delete-position-form">
-                                    <span onclick="showPositionDeleteForm()">Xóa</span>
-                                </div>
+
                             </div>
                         </form>
                     </div>
@@ -153,13 +157,13 @@
                         </thead>
                         <tbody>
                             <c:forEach var = "current" items="${requestScope.postList}" varStatus = "status" >
-                                <tr>
+                                <tr onclick="document.getElementById('${current.postID}').submit()" >
                                     <td scope="row" class="align-middle text-center">
-                                        <form action="./job" method="post">
+                                        <form action="./job" method="post" id="${current.postID}">
                                             <input type="hidden" name="postID" value="${current.postID}">
                                             <input type="hidden" name="positionID" value="${current.positionID}">
                                             <input type="hidden" name="action" value="staff-post-detail">
-                                            <input class="border-0 bg-white btn btn-light" type="submit" value="${current.postID}">
+                                            <input class="border-0 bg-transparent btn btn-light" type="submit" value="${current.postID}">
                                         </form>
                                     </td>
                                     <td class="align-middle text-center"> ${current.createdDate} </td>
@@ -191,22 +195,47 @@
                 </form>
             </div>
         </div>
-                <div class="d-none" id="delete-position-form-container">
-            <form action="./job" method="post">
-                <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
-                <input type="hidden" name="action" value="delete-position">
-                <div>
-                    <p>Bạn có chắc chắn muốn xóa vị trí này không?</p>
+
+        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form action="./job" method="post">
+                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                        <input type="hidden" name="action" value="delete-post">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Bạn có chắc chắn muốn xóa vị trí này không?</h5> 
+                        </div>
+                        <div class="modal-footer">
+                            <input class="btn btn-primary" type="submit" value="Có">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                        </div>
+                    </form>
                 </div>
-                <div id="option-no">
-                    <span onclick="hidePositionDeleteForm()">Không</span>
-                </div>
-                <div id="option-yes">
-                    <input type="submit" value="Có">
-                </div>
-            </form>
-        </div>
-        <script src="js/jobutility.js"></script>
+            </div>
+        </div> 
+
+        <!--        <div class="d-none" id="delete-position-form-container">
+                    <form action="./job" method="post">
+                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                        <input type="hidden" name="action" value="delete-position">
+                        <div>
+                            <p>Bạn có chắc chắn muốn xóa vị trí này không?</p>
+                        </div>
+                        <div id="option-no">
+                            <span onclick="hidePositionDeleteForm()">Không</span>
+                        </div>
+                        <div id="option-yes">
+                            <input type="submit" value="Có">
+                        </div>
+                    </form>
+                </div>-->
         <jsp:include page="../../footer/footer.jsp" />
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <script src="js/jobutility.js"></script>
+
     </body>
 </html>
