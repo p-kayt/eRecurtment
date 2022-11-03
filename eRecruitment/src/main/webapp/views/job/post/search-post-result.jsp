@@ -60,7 +60,7 @@
             </div>
             <!-- Search Start -->
             <form action="./post" method="post">
-                <input type="hidden" name="action" value="search-posts">
+                <input type="hidden" name="action" value="advanced-search-posts">
                 <div
                     class="container-fluid bg-primary mb-5 wow fadeIn"
                     data-wow-delay="0.1s"
@@ -93,11 +93,35 @@
                                 </div>
                             </div>
                             <div>
-                                
+                                <div class="col-md-4">
+                                    <input
+                                        type="text"
+                                        class="form-control border-0"
+                                        name="salary"
+                                        placeholder="Nhập mức lương..."
+                                        value="${requestScope.salary}"/>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-md-4">
+                                <label for="workingForm">Hình thức làm việc</label>
+                                <select class="form-select border-0" name="workingForm" id="workingForm">
+                                    <option value="1" <c:if test="${requestScope.workingForm == 1}">selected</c:if>>Tất cả</option>
+                                    <option value="2" <c:if test="${requestScope.workingForm == 2}">selected</c:if>>Full Time</option>
+                                    <option value="3" <c:if test="${requestScope.workingForm == 3}">selected</c:if>>Part Time</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="dateOrder">Sắp xếp theo</label>
+                                    <select class="form-select border-0" name="dateOrder" id="dateOrder">
+                                        <option value="1" <c:if test="${requestScope.dateOrder == 1}">selected</c:if>>Ngày đóng tuyển dụng</option>
+                                    <option value="2" <c:if test="${requestScope.dateOrder == 2}">selected</c:if>>Ngày bắt đầu tuyển dụng</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </form>
+            </form>
                 <!-- Search End -->
             <c:if test="${not empty requestScope.postList}">
                 <div class="tab-content">
