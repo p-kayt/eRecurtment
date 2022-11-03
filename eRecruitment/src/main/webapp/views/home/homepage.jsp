@@ -242,7 +242,7 @@
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination">
                                             <li class="page-item">
-                                                <a class="page-link" href="">Xem thêm</a>
+                                                <a class="page-link" href="./post?action=more-recommended">Xem thêm</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -305,7 +305,7 @@
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination">
                                             <li class="page-item">
-                                                <a class="page-link" href="">Xem thêm</a>
+                                                <a class="page-link" href="./post?action=more-fulltime">Xem thêm</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -368,7 +368,7 @@
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination">
                                             <li class="page-item">
-                                                <a class="page-link" href="">Xem thêm</a>
+                                                <a class="page-link" href="./post?action=more-parttime">Xem thêm</a>
                                             </li>
                                         </ul>
                                     </nav>
