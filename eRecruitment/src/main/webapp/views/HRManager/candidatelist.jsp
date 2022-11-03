@@ -77,7 +77,7 @@
                             <div class="col-md-6">
                                 <input type="text" class="form-control border-0" placeholder="Tìm kiếm" name = "txtSearch" value = "${requestScope.SearchValue}"/>
                             </div>
-                            <div class="col-md-3 d-flex flex-row justify-content-around">
+                            <div class="col-md-4 d-flex flex-row justify-content-around">
                                 <input class="btn btn-dark col-5" type = "SUBMIT" name = "action" value = "Tìm kiếm">
                                 <input class="btn btn-dark col-6" type = "SUBMIT" name = "action" value = "Hiển thị tất cả">
                             </div>
@@ -86,16 +86,24 @@
                     </form>
                 </div>
             </div>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
-                <c:if test = "${requestScope.AppResult != 'Undo' && requestScope.AppResult != null}">
-                    <h5>
-                        Đơn ứng tuyển của ứng viên ${requestScope.FirstName} ${requestScope.LastName} đã ${requestScope.AppResult}
-                    </h5>
-                </c:if>
-                <c:if test = "${empty requestScope.Candidates}">
-                    <h5>${requestScope.nullMsg}</h5>  
-                </c:if>
-            </div>
+
+            <c:if test = "${requestScope.AppResult != 'Undo' && requestScope.AppResult != null}">
+                <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+                    Đơn ứng tuyển của ứng viên ${requestScope.FirstName} ${requestScope.LastName} đã ${requestScope.AppResult}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </c:if>
+            <c:if test = "${empty requestScope.Candidates}">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    ${requestScope.nullMsg}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>  
+            </c:if>
+
             <c:if test = "${not empty requestScope.Candidates}">
                 <table class="table table-hover table-bordered">
                     <thead>
@@ -124,7 +132,7 @@
                                     <input type = "HIDDEN" name = "FirstName" value= "${current.getFirstName()}" form = "View Evaluation_${current.getEmail()}">
                                     <input type = "HIDDEN" name = "LastName" value= "${current.getLastName()}" form = "View Evaluation_${current.getEmail()}">
                                     <input class= "btn btn-light border border-1 m-1" type = "SUBMIT" name = "action" value = "Xem kết quả phỏng vấn" form = "View Evaluation_${current.getEmail()}">
-                                    
+
                                     <form action = "./ManagerViewCandidateCV" method ="POST" id = "View CV_${current.getEmail()}"></form>
                                     <input type = "HIDDEN" name = "ID" value= "${current.getUserID()}" form = "View CV_${current.getEmail()}">
                                     <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "View CV_${current.getEmail()}">
@@ -146,6 +154,7 @@
                                     </c:if> 
                                 </td>
                                 <td class="align-middle d-flex flex-column">
+
                                     <form action = "./ManagerAcceptDecline" method = "POST" id = "Change Status_${current.getEmail()}"></form>
                                     <input type = "HIDDEN" name = "Email" value= "${current.getEmail()}" form = "Change Status_${current.getEmail()}">
                                     <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Change Status_${current.getEmail()}">
@@ -158,6 +167,7 @@
                                     <c:if test = "${current.getAppStatus() == 'Fail' || current.getAppStatus() == 'Success'}">
                                         <input  class="btn btn-success m-1" type = "SUBMIT" name = "action" value = "Hoàn tác" form = "Change Status_${current.getEmail()}">
                                     </c:if>
+
                                 </td>
                             </tr>
                         </c:forEach>
@@ -175,8 +185,10 @@
         </div>
 
         <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
         <script src="lib/wow/wow.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
         <script src="lib/waypoints/waypoints.min.js"></script>

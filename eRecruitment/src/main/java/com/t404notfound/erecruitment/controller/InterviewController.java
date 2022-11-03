@@ -329,6 +329,92 @@ public class InterviewController extends HttpServlet {
                 request.setAttribute("booker", user.getFirstName() + " " + user.getLastName());
                 request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
                 /*reload list candidate page*/
+            } else if (action.equalsIgnoreCase("showCreatedInterview")) {
+
+                //get URL for Back function of each page
+//            String url = request.getServletPath();
+                int bookerID = user.getUserID();
+                InterviewDAO interviewDAO = new InterviewDAO();
+                ArrayList<String> listInterviewStatus = new ArrayList<>();
+                ArrayList<String> listInterviewStage = new ArrayList<>();
+
+                ArrayList<InterviewDTO> createdInterviewList = interviewDAO.getCreatedInterview(bookerID);
+
+                for (int i = 0; i < createdInterviewList.size(); i++) {
+                    int interviewPostID = createdInterviewList.get(i).getPostID();
+                    int stageIndex = createdInterviewList.get(i).getStageID();
+                    int statusID = createdInterviewList.get(i).getInteviewStatusID();
+
+                    String stageName = interviewDAO.getInteviewStage(interviewPostID, stageIndex);
+                    String statusName = interviewDAO.getInteviewStatus(statusID);
+                    listInterviewStage.add(stageName);
+                    listInterviewStatus.add(statusName);
+                }
+
+                request.setAttribute("listInterviewStatus", listInterviewStatus);
+                request.setAttribute("listInterviewStage", listInterviewStage);
+
+//            session.setAttribute("url", url);
+                request.setAttribute("createdInterviewList", createdInterviewList);
+                request.getRequestDispatcher("/views/HRStaff/created-inteview-list.jsp").forward(request, response);
+
+            } else if (action.equalsIgnoreCase("showPendingInterview")) {
+                InterviewDAO interviewDAO = new InterviewDAO();
+                ArrayList<InterviewDTO> InterviewList = interviewDAO.getInterviewByStatus(1);
+                ArrayList<String> listInterviewStatus = new ArrayList<>();
+                ArrayList<String> listInterviewStage = new ArrayList<>();
+
+                for (int i = 0; i < InterviewList.size(); i++) {
+                    int interviewPostID = InterviewList.get(i).getPostID();
+                    int stageIndex = InterviewList.get(i).getStageID();
+                    int statusID = InterviewList.get(i).getInteviewStatusID();
+
+                    String stageName = interviewDAO.getInteviewStage(interviewPostID, stageIndex);
+                    String statusName = interviewDAO.getInteviewStatus(statusID);
+                    listInterviewStage.add(stageName);
+                    listInterviewStatus.add(statusName);
+                }
+
+                request.setAttribute("userID", user.getUserID());
+                request.setAttribute("listInterviewStatus", listInterviewStatus);
+                request.setAttribute("listInterviewStage", listInterviewStage);
+
+                request.setAttribute("InterviewList", InterviewList);
+                request.getRequestDispatcher("/views/HRStaff/interview-list.jsp").forward(request, response);
+            } else if (action.equalsIgnoreCase("showInterviewHisory")) {
+                InterviewDAO interviewDAO = new InterviewDAO();
+                ArrayList<InterviewDTO> InterviewList = interviewDAO.getInterviewByStatus(3);
+                ArrayList<String> listInterviewStatus = new ArrayList<>();
+                ArrayList<String> listInterviewStage = new ArrayList<>();
+
+                for (int i = 0; i < InterviewList.size(); i++) {
+                    int interviewPostID = InterviewList.get(i).getPostID();
+                    int stageIndex = InterviewList.get(i).getStageID();
+                    int statusID = InterviewList.get(i).getInteviewStatusID();
+
+                    String stageName = interviewDAO.getInteviewStage(interviewPostID, stageIndex);
+                    String statusName = interviewDAO.getInteviewStatus(statusID);
+                    listInterviewStage.add(stageName);
+                    listInterviewStatus.add(statusName);
+                }
+
+                request.setAttribute("userID", user.getUserID());
+                request.setAttribute("listInterviewStatus", listInterviewStatus);
+                request.setAttribute("listInterviewStage", listInterviewStage);
+
+                request.setAttribute("InterviewList", InterviewList);
+                request.getRequestDispatcher("/views/HRStaff/interview-list.jsp").forward(request, response);
+            } else {
+                InterviewDAO dao = new InterviewDAO();
+                ArrayList<String> interviewStage = dao.getInterviewStage(postID);
+                ArrayList<String> interviewStatus = dao.getInterviewStatus();
+                ArrayList<String> interviewFormat = dao.getInterviewFormat();
+
+                request.setAttribute("postID", postID);
+                request.setAttribute("interviewFormat", interviewFormat);
+                request.setAttribute("interviewStatus", interviewStatus);
+                request.setAttribute("interviewStage", interviewStage);
+                request.getRequestDispatcher("/views/interview/interview-create.jsp").forward(request, response);
             }
         } else {
             InterviewDAO dao = new InterviewDAO();
@@ -342,7 +428,6 @@ public class InterviewController extends HttpServlet {
             request.setAttribute("interviewStage", interviewStage);
             request.getRequestDispatcher("/views/interview/interview-create.jsp").forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

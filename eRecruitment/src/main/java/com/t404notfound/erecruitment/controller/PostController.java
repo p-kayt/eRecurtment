@@ -6,8 +6,10 @@ package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositionDAO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDAO;
+import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,15 +39,76 @@ public class PostController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-           ApplicationPositionDAO positionDAO = new ApplicationPositionDAO();
+            ApplicationPositionDAO positionDAO = new ApplicationPositionDAO();
             ApplicationPostDAO postDAO = new ApplicationPostDAO();
             String msg = "";
             String action = request.getParameter("action");
             HttpSession session = request.getSession();
-            switch(action){
+            switch (action) {
                 case "search-posts":
                     String keyword = request.getParameter("keyword");
+                    request.setAttribute("keyword", keyword);
                     int statusID = Integer.parseInt(request.getParameter("statusID"));
+                    request.setAttribute("statusID", statusID);
+                    ArrayList<ApplicationPostDTO> postList = postDAO.searchApplicationPosts(keyword, statusID);
+                    request.setAttribute("postList", postList);
+                    request.getRequestDispatcher("views/job/post/search-post-result.jsp").forward(request, response);
+                    break;
+                case "advanced-search-posts":
+                    keyword = request.getParameter("keyword");
+                    request.setAttribute("keyword", keyword);
+                    statusID = Integer.parseInt(request.getParameter("statusID"));
+                    request.setAttribute("statusID", statusID);
+                    String salary = request.getParameter("salary");
+                    request.setAttribute("salary", salary);
+                    int workingForm = Integer.parseInt(request.getParameter("workingForm"));
+                    request.setAttribute("workingForm", workingForm);
+                    int dateOrder = Integer.parseInt(request.getParameter("dateOrder"));
+                    request.setAttribute("dateOrder", dateOrder);
+                    
+                    String formID = "";
+                    if(workingForm == 2){
+                        formID = " and post.FormID in (1, 2, 3)";
+                    }
+                    else if(workingForm == 3){
+                        formID = " and post.FormID in (4, 5, 6)";
+                    }
+                    
+                    String sortByDate = "";
+                    if(dateOrder == 1){
+                        sortByDate = " order by ExpiredDate desc";
+                    }
+                    else{
+                        sortByDate = " order by StartDate desc";
+                    }
+                    
+                    postList = postDAO.advanceSearchApplicationPosts(keyword, statusID, salary, formID, sortByDate);
+                    request.setAttribute("postList", postList);
+                    request.getRequestDispatcher("views/job/post/search-post-result.jsp").forward(request, response);
+                    break;
+                case "more-recommended":
+                    request.setAttribute("statusID", 3);
+                    request.setAttribute("workingForm", 1);
+                    
+                    postList = postDAO.listHighestHiringQuantityPosts();
+                    request.setAttribute("postList", postList);
+                    request.getRequestDispatcher("views/job/post/search-post-result.jsp").forward(request, response);
+                    break;
+                case "more-fulltime":
+                    request.setAttribute("statusID", 3);
+                    request.setAttribute("workingForm", 2);
+                    
+                    postList = postDAO.listFullTimePost();
+                    request.setAttribute("postList", postList);
+                    request.getRequestDispatcher("views/job/post/search-post-result.jsp").forward(request, response);
+                    break;
+                case "more-parttime":
+                    request.setAttribute("statusID", 3);
+                    request.setAttribute("workingForm", 3);
+                    
+                    postList = postDAO.listPartTimePost();
+                    request.setAttribute("postList", postList);
+                    request.getRequestDispatcher("views/job/post/search-post-result.jsp").forward(request, response);
                     break;
                 default:
                     break;

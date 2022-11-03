@@ -130,7 +130,7 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <c:if test = "${current.getUserRole() == 'Candidate'}">
-                                                    <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                    <select class="bg-transparent" name = "Role" form = "Assign Role_${current.getEmail()}">
                                                         <option value="Candidate">Ứng viên</option>
                                                         <option value="HR Staff">Nhân viên HR</option>
                                                         <option value="HR Manager">Quản lý HR</option>
@@ -139,7 +139,7 @@
                                                     </select>
                                                 </c:if>
                                                 <c:if test = "${current.getUserRole() == 'HR Staff'}">
-                                                    <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                    <select class="bg-transparent" name = "Role" form = "Assign Role_${current.getEmail()}">
                                                         <option value="HR Staff">Nhân viên HR</option>
                                                         <option value="Candidate">Ứng viên</option>
                                                         <option value="HR Manager">Quản lý HR</option>
@@ -148,7 +148,7 @@
                                                     </select>
                                                 </c:if>
                                                 <c:if test = "${current.getUserRole() == 'HR Manager'}">
-                                                    <select name = "Role" form = "Assign Role_${current.getEmail()}">
+                                                    <select class="bg-transparent" name = "Role" form = "Assign Role_${current.getEmail()}">
                                                         <option value="HR Staff">Quản lý HR</option>
                                                         <option value="Candidate">Ứng viên</option>
                                                         <option value="HR Manager">Nhân viên HR</option>
