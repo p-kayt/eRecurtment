@@ -358,6 +358,40 @@ public class InterviewController extends HttpServlet {
                 request.setAttribute("createdInterviewList", createdInterviewList);
                 request.getRequestDispatcher("/views/HRStaff/created-inteview-list.jsp").forward(request, response);
 
+            } else if (action.equalsIgnoreCase("showPendingInterview")) {
+                InterviewDAO interviewDAO = new InterviewDAO();
+                ArrayList<InterviewDTO> pendingInterviewList = interviewDAO.getPendingInterview();
+                ArrayList<String> listInterviewStatus = new ArrayList<>();
+                ArrayList<String> listInterviewStage = new ArrayList<>();
+
+                for (int i = 0; i < pendingInterviewList.size(); i++) {
+                    int interviewPostID = pendingInterviewList.get(i).getPostID();
+                    int stageIndex = pendingInterviewList.get(i).getStageID();
+                    int statusID = pendingInterviewList.get(i).getInteviewStatusID();
+
+                    String stageName = interviewDAO.getInteviewStage(interviewPostID, stageIndex);
+                    String statusName = interviewDAO.getInteviewStatus(statusID);
+                    listInterviewStage.add(stageName);
+                    listInterviewStatus.add(statusName);
+                }
+
+                request.setAttribute("userID", user.getUserID());
+                request.setAttribute("listInterviewStatus", listInterviewStatus);
+                request.setAttribute("listInterviewStage", listInterviewStage);
+
+                request.setAttribute("pendingInterviewList", pendingInterviewList);
+                request.getRequestDispatcher("/views/HRStaff/interview-list.jsp").forward(request, response);
+            } else {
+                InterviewDAO dao = new InterviewDAO();
+                ArrayList<String> interviewStage = dao.getInterviewStage(postID);
+                ArrayList<String> interviewStatus = dao.getInterviewStatus();
+                ArrayList<String> interviewFormat = dao.getInterviewFormat();
+
+                request.setAttribute("postID", postID);
+                request.setAttribute("interviewFormat", interviewFormat);
+                request.setAttribute("interviewStatus", interviewStatus);
+                request.setAttribute("interviewStage", interviewStage);
+                request.getRequestDispatcher("/views/interview/interview-create.jsp").forward(request, response);
             }
         } else {
             InterviewDAO dao = new InterviewDAO();

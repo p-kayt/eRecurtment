@@ -40,7 +40,7 @@
                     <c:when test= "<%=(createdInterviewList != null)%>">
                         <c:choose>
                             <c:when test="<%= (createdInterviewList.size() == 0)%>">
-                                <p>Bạn chưa tạo cuộc phỏng vấn nào.  List khong co phan tu</p>
+                                <p>Bạn chưa tạo cuộc phỏng vấn nào.</p>
                             </c:when>  
                             <c:otherwise>
                                 <h3>Các cuộc phỏng vấn đã tạo</h3>
@@ -75,7 +75,7 @@
 
                     </c:when>    
                     <c:otherwise>
-                        <p>Bạn chưa tạo cuộc phỏng vấn nào. list is null</p>
+                        <p>Bạn chưa tạo cuộc phỏng vấn nào.</p>
                     </c:otherwise>
                 </c:choose>
             </div>
