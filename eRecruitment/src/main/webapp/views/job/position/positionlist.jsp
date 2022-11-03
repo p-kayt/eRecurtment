@@ -101,12 +101,13 @@
                             </thead>
                             <tbody>
                                 <c:forEach var = "current" items="${requestScope.list}" varStatus = "status" >
-                                    <tr>
+                                    <tr class="table-row" onclick="document.getElementById('${current.positionID}').submit()">
+
                                         <td scope="row" class="align-middle text-center">
-                                            <form action="./job" method="post">
+                                            <form action="./job" method="post" id="${current.positionID}">
                                                 <input type="hidden" name="id" value="${current.positionID}">
                                                 <input type="hidden" name="action" value="position-detail">
-                                                <input class="border-0 bg-white btn btn-light" type="submit" value="${current.positionID}">
+                                                <input class="border-0 bg-transparent btn btn-light" type="submit" value="${current.positionID}">
                                             </form>
                                         </td>
                                         <td class="align-middle"> ${current.positionName} </td>
@@ -134,5 +135,6 @@
             </c:if>
         </div>
         <jsp:include page="../../footer/footer.jsp" />
+
     </body>
 </html>

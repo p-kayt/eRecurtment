@@ -43,6 +43,7 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style-dltemp.css" rel="stylesheet" />
+
     </head>
     <body>
         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
@@ -62,7 +63,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb text-uppercase">
                             <li class="breadcrumb-item"><a href="job?action=position-list">Danh sách vị trí</a></li>
-                            <li class="breadcrumb-item"><a href="job?id=${current.positionID}&action=position-detail">Chi tiết</a></li>
+                            <li class="breadcrumb-item"><a href="job?id=${requestScope.position.positionID}&action=position-detail">Chi tiết</a></li>
                             <li class="breadcrumb-item text-white active" aria-current="page">Thông Tin Bài Đăng Tuyển Dụng</li>
                         </ol>
                     </nav> 
@@ -72,8 +73,11 @@
                 <div class="d-flex flex-column mb-4">
                     <!-- Thong bao ket qua cap nhat bai dang, Se xuat hien sau khi cap nhat bai dang -->
                     <c:if test="${not empty requestScope.msg}">
-                        <div class="alert alert-secondary">
-                            <h4>${requestScope.msg}</h4>
+                        <div class="alert alert-secondary alert-dismissible fade show d-flex flex-row justify-content-between" role="alert">
+                            <span>${requestScope.msg}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                     </c:if>
                     <!--  -->
@@ -147,21 +151,30 @@
                                 <input type="hidden" name="action" value="edit-post">
                             </div>
                             <div class="d-flex flex-row justify-content-center m-2">
-                                <div class="col-2 m-3">
+                                <div class="col-3 m-1 text-center">
                                     <input class="btn btn-primary" type="submit" value="Cập nhật bài đăng">
                                 </div>
-                                <div class="col-2 m-3" id="show-delete-post-form">
-                                    <span class="btn btn-primary" onclick="showPostDeleteForm()">Xóa bài đăng</span>
+                                <div class="col-3 m-1 text-center" id="show-delete-post-form">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal">
+                                        Xóa bài đăng
+                                    </button>
+
                                 </div>
+                                <!-- Form chua thong tin de tao buoi phong van Interview -->
+                                <div class="col-3 m-1 text-center">
+                                    <span class="btn btn-primary" onclick="document.getElementById('createInterviewForm').submit()">Tạo buổi phỏng vấn</span>
+                                </div>
+                                <!--  -->
                             </div>
                         </div>
                     </form>
-                    <!-- Form chua thong tin de tao buoi phong van Interview -->
-                    <form action="" method="post">
+
+                    <form class="col-2 m-3" action="interview" method="get" id="createInterviewForm">
                         <input type="hidden" name="postID" value="${requestScope.post.postID}">
-                        <input class="btn btn-primary" type="submit" value="Tạo buổi phỏng vấn">
+
+                        <input class="d-none" type="submit" value="Tạo buổi phỏng vấn">
                     </form>
-                    <!--  -->
+
                 </div>
                 <div  class="d-flex flex-column mb-4">
                     <div class="m-auto">
@@ -182,7 +195,7 @@
                                     </div>
                                 </c:forEach>
                             </div>
-                            <div class="col-4 m-auto">
+                            <div class="col-4 m-auto text-center">
                                 <c:if test="${not empty requestScope.post.requirementList}">
 
                                     <input class="btn btn-primary" type="submit" value="Cập Nhật Yêu Cầu Công Việc">
@@ -231,7 +244,7 @@
                                 <input type="hidden" name="action" value="edit-post-skills">
                                 <c:forEach var="skill" items="${requestScope.post.skillList}" varStatus="status">
                                     <input type="hidden" name="skillID" value="${skill.skillID}">
-                                    <div class="d-flex flex-row">
+                                    <div class="d-flex flex-row justify-content-center">
                                         <input class="col-5 m-1" type="text" name="skillName" value="${skill.skillName}">
                                         <input class="col-5 m-1" type="text" name="skillDescription" value="${skill.skillDescription}">
                                         <a class="col-1 m-1 btn btn-danger" href="./job?action=delete-a-skill&postID=${requestScope.post.postID}&positionID=${requestScope.position.positionID}&skillID=${skill.skillID}">Xóa</a>
@@ -239,7 +252,7 @@
                                 </c:forEach>
 
                             </div>
-                            <div class="col-4 m-auto">
+                            <div class="col-4 m-auto text-center">
                                 <c:if test="${not empty requestScope.post.skillList}">
                                     <input class="btn btn-primary" type="submit" value="Cập Nhật Kỹ Năng Cần Thiết">
                                 </c:if>
@@ -288,7 +301,7 @@
                                     </div>
                                 </c:forEach>
                             </div>
-                            <div class="col-4 m-auto">
+                            <div class="col-4 m-auto text-center">
                                 <c:if test="${not empty requestScope.post.benefitList}">
                                     <input class="btn btn-primary" type="submit" value="Cập Nhật Quyền Lợi Công Việc"> 
                                 </c:if>
@@ -303,78 +316,113 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="d-flex flex-column mb-4">
                     <div class="m-auto">
                         <h3>Quy Trình Ứng Tuyển</h3>
                     </div>
                     <div class="d-flex flex-column m-auto col-10 border border-1 shadow p-4">
-
-                        <div>
-                            <form action="./job" method="post">
+                        <form action="./job" method="post">
+                            <div class="d-flex flex-column m-2 p-3">
                                 <input type="hidden" name="postID" value="${requestScope.post.postID}">
                                 <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                                 <input type="hidden" name="action" value="edit-post-stages">
                                 <c:forEach var="stage" items="${requestScope.post.stageList}" varStatus="status">
-                                    <input type="hidden" name="id" value="${stage.id}">
-                                    <select id="stageID" name="stageID">
-                                        <option value="1" <c:if test="${stage.stageID == 1}">selected</c:if>>CV Applying</option>
-                                        <option value="2" <c:if test="${stage.stageID == 2}">selected</c:if>>Interview</option>
-                                        <option value="3" <c:if test="${stage.stageID == 3}">selected</c:if>>Finish</option>
-                                        <option value="4" <c:if test="${stage.stageID == 4}">selected</c:if>>Final Evaluation</option>
-                                        </select>
-                                        <input type="text" name="description" value="${stage.description}">
-                                    <a href="./job?action=delete-a-stage&postID=${requestScope.post.postID}&positionID=${requestScope.position.positionID}&id=${stage.id}">Xóa</a>
-                                    </br>
+                                    <div class="d-flex flex-row justify-content-center">
+                                        <input type="hidden" name="id" value="${stage.id}">
+                                        <select class="col-2 m-1" id="stageID" name="stageID">
+                                            <option value="1" <c:if test="${stage.stageID == 1}">selected</c:if>>CV Applying</option>
+                                            <option value="2" <c:if test="${stage.stageID == 2}">selected</c:if>>Interview</option>
+                                            <option value="3" <c:if test="${stage.stageID == 3}">selected</c:if>>Finish</option>
+                                            <option value="4" <c:if test="${stage.stageID == 4}">selected</c:if>>Final Evaluation</option>
+                                            </select>
+                                            <input class="col-8 m-1" type="text" name="description" value="${stage.description}">
+                                        <a class="col-1 btn btn-danger m-1" href="./job?action=delete-a-stage&postID=${requestScope.post.postID}&positionID=${requestScope.position.positionID}&id=${stage.id}">Xóa</a>
+                                    </div>
                                 </c:forEach>
+                            </div>
+                            <div class="col-4 m-auto text-center">
                                 <c:if test="${not empty requestScope.post.stageList}">
-                                    <input type="submit" value="Cập Nhật Quy Trình Ứng Tuyển">
+                                    <input class="btn btn-primary" type="submit" value="Cập Nhật Quy Trình Ứng Tuyển">
                                 </c:if>
-                            </form> 
-                        </div>
+                            </div>
+                        </form> 
                         <div>
-                            <span class="fa fa-plus-circle fa-2x" onclick="addStageFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"></span>
+                            <label class="bi bi-plus-square-dotted mx-5 px-1 col-2" onclick="addStageFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"><span class="m-2">Thêm quy trình</span></label>
                         </div>
                         <div id="addStageButton">
                         </div>
                         <div id="addStageList">
-                            <div id="addRequirementFromEditPostContainer-example">
-                                <form action="#" method="post" id="addRequirementForm">
-                                    <div id="inputRequirementContainer-example">
-                                        <input type="hidden">
-                                        <input type="hidden">
-                                        <input type="hidden">
-                                        <div id="requirementContainer-example">
-                                            <div><label for="stageID">Vòng Ứng Tuyển</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả</label><input type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>
-                                        </div>
-                                    </div>
-                                    <div id="submitRequirementContainer-example">
-                                        <input type="submit" value="Thêm">
-                                    </div>
-                                </form>
-                            </div>
+                            <!--                            <div id="addRequirementFromEditPostContainer-example">
+                                                            <form action="#" method="post" id="addRequirementForm">
+                                                                <div id="inputRequirementContainer-example">
+                                                                    <input type="hidden">
+                                                                    <input type="hidden">
+                                                                    <input type="hidden">
+                                                                    <div id="requirementContainer-example">
+                                                                        <div><label for="stageID">Vòng Ứng Tuyển</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả</label><input type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="submitRequirementContainer-example">
+                                                                    <input type="submit" value="Thêm">
+                                                                </div>
+                                                            </form>
+                                                        </div>-->
                         </div>     
                     </div>
                 </div>
             </c:if>
-            <div id="delete-post-form-container">
-                <form action="./job" method="post">
-                    <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
-                    <input type="hidden" name="postID" value="${requestScope.post.postID}">
-                    <input type="hidden" name="action" value="delete-post">
-                    <div>
-                        <p>Bạn có chắc chắn muốn xóa bài đăng này không?</p>
+            <!--modal-->
+
+            <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <form action="./job" method="post">
+                            <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                            <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                            <input type="hidden" name="action" value="delete-post">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Bạn có chắc chắn muốn xóa bài đăng này không?</h5> 
+                            </div>
+                            <div class="modal-footer">
+                                <input class="btn btn-primary" type="submit" value="Có">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                            </div>
+                        </form>
                     </div>
-                    <div id="option-no">
-                        <span onclick="hidePostDeleteForm()">Không</span>
-                    </div>
-                    <div id="option-yes">
-                        <input type="submit" value="Có">
-                    </div>
-                </form>
-            </div>
-        </div>   
+                </div>
+            </div>            
+
+            <!--            <div id="delete-post-form-container">
+                            <form action="./job" method="post">
+                                <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                                <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                <input type="hidden" name="action" value="delete-post">
+                                <div>
+                                    <p>Bạn có chắc chắn muốn xóa bài đăng này không?</p>
+                                </div>
+                                <div id="option-no">
+                                    <span onclick="hidePostDeleteForm()">Không</span>
+                                </div>
+                                <div id="option-yes">
+                                    <input type="submit" value="Có">
+                                </div>
+                            </form>
+                        </div>-->
 
 
+        </div>
+        <jsp:include page="../../footer/footer.jsp" />
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+           ><i class="bi bi-arrow-up"></i
+            ></a>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="js/jobutility.js"></script>
+
     </body>
 </html>
