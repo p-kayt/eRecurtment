@@ -6,8 +6,10 @@ package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositionDAO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDAO;
+import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,7 +47,23 @@ public class PostController extends HttpServlet {
             switch(action){
                 case "search-posts":
                     String keyword = request.getParameter("keyword");
+                    request.setAttribute("keyword", keyword);
                     int statusID = Integer.parseInt(request.getParameter("statusID"));
+                    request.setAttribute("statusID", statusID);
+                    ArrayList<ApplicationPostDTO> postList = postDAO.searchApplicationPosts(keyword, statusID);
+                    request.setAttribute("postList", postList);
+                    request.getRequestDispatcher("views/job/post/search-post-result.jsp").forward(request, response);    
+                    break;
+                case "advanced-search-posts":
+                    keyword = request.getParameter("keyword");
+                    request.setAttribute("keyword", keyword);
+                    statusID = Integer.parseInt(request.getParameter("statusID"));
+                    request.setAttribute("statusID", statusID);
+                    
+                    
+                    postList = postDAO.searchApplicationPosts(keyword, statusID);
+                    request.setAttribute("postList", postList);
+                    request.getRequestDispatcher("views/job/post/search-post-result.jsp").forward(request, response);    
                     break;
                 default:
                     break;
