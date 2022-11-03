@@ -15,9 +15,6 @@
 <html lang = "vi">
     <head>
         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
-        <%ArrayList<InterviewDTO> pendingInterviewList = (ArrayList<InterviewDTO>) request.getAttribute("pendingInterviewList");%>
-        <%ArrayList<String> listInterviewStatus = (ArrayList<String>) request.getAttribute("listInterviewStatus");%>
-        <%ArrayList<String> listInterviewStage = (ArrayList<String>) request.getAttribute("listInterviewStage");%>
 
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -38,15 +35,15 @@
         <section>
             <div>
                 <c:choose>
-                    <c:when test= "${not empty pendingInterviewList}">
+                    <c:when test= "${not empty InterviewList}">
                         <c:choose>
-                            <c:when test="${(pendingInterviewList.size() == 0)}">
+                            <c:when test="${(InterviewList.size() == 0)}">
                                 <p>Chưa có cuộc phỏng vấn nào.</p>
                             </c:when>  
                             <c:otherwise>
                                 <h3>Danh sách các cuộc phỏng vấn</h3>
                                 <div class="border border-1 m-5 p-4 shadow">
-                                    <c:forEach items="${pendingInterviewList}" var="p" varStatus="loop">
+                                    <c:forEach items="${InterviewList}" var="p" varStatus="loop">
                                         <div>
 
                                             <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">

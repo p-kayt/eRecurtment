@@ -416,16 +416,17 @@ public class InterviewDAO {
         return statusName;
     }
 
-    //get all interview that have status booked
-    public ArrayList<InterviewDTO> getPendingInterview() {
+    //get all interview by status ID
+    public ArrayList<InterviewDTO> getInterviewByStatus(int statusID) {
         ArrayList<InterviewDTO> list = new ArrayList<>();
 
         String sql = " SELECT * FROM Interview\n"
-                + " WHERE StatusID = 1";
+                + " WHERE StatusID = ?";
 
         try {
             Connection con = DBUtil.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, statusID);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -442,7 +443,6 @@ public class InterviewDAO {
                 int stageID = rs.getInt("StageID");
                 int postID = rs.getInt("PostID");
                 int formatID = rs.getInt("FormatID");
-                int statusID = rs.getInt("StatusID");
                 int bookerID = rs.getInt("BookerID");
 
                 InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, maxCandidate, stageID, postID, statusID, bookerID);
@@ -456,19 +456,21 @@ public class InterviewDAO {
         return list;
     }
 
-    //get pending interview of an interviewer
-    public ArrayList<InterviewDTO> getPendingInterviewOfInterviewer(int interviewerID) {
+
+    //get all interview by status ID of an interviewer or hr staff
+    public ArrayList<InterviewDTO> getInterviewOfInterviewerByStatus(int interviewerID, int statusID) {
         ArrayList<InterviewDTO> list = new ArrayList<>();
 
         String sql = " SELECT * FROM Interview\n"
-                + "WHERE StatusID = 1  AND InterviewID IN (SELECT DISTINCT InterviewID\n"
+                + "WHERE StatusID = ?  AND InterviewID IN (SELECT DISTINCT InterviewID\n"
                 + "					FROM Interviewer\n"
                 + "					WHERE UserID = ?)";
 
         try {
             Connection con = DBUtil.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, interviewerID);
+            ps.setInt(1, statusID);
+            ps.setInt(2, interviewerID);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -485,7 +487,6 @@ public class InterviewDAO {
                 int stageID = rs.getInt("StageID");
                 int postID = rs.getInt("PostID");
                 int formatID = rs.getInt("FormatID");
-                int statusID = rs.getInt("StatusID");
                 int bookerID = rs.getInt("BookerID");
 
                 InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, maxCandidate, stageID, postID, statusID, bookerID);
@@ -544,7 +545,7 @@ public class InterviewDAO {
         }
         System.out.println("=====================================================================================");
         System.out.println("Show pending interview");
-        getList = dao.getPendingInterview();
+        getList = dao.getInterviewByStatus(1);
         for (InterviewDTO i : getList) {
             System.out.println("ID: " + i.getInterviewID() + " to String: " + i.toString());
         }
