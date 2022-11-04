@@ -202,30 +202,37 @@
                                 </c:if>
                             </div>
                         </form>
-                        <div class="d-flex">
-                            <lable class="bi bi-plus-square-dotted mx-5 px-1 col-2" onclick="addRequirementFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"><span class="m-2">Thêm yêu cầu</span></lable>
+                        <div class="d-flex flex-column">
+                            <div class=" mx-5 px-1 col-2">
+                                <lable class="bi bi-plus-square-dotted" onclick="addRequirementFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"><span class="m-2">Thêm yêu cầu</span></lable>
+                            </div>
+                            <div class=" mx-5 px-1 col-2" id="addRequirementButton">
+
+                            </div>
+
+                            <div class="d-flex flex-column" id="addRequirementList">
+                                <!--                                <div class=" m-2 px-3" id="addRequirementFromEditPostContainer-example">
+                                                                    <form action="#" method="post" id="addRequirementForm">
+                                                                        <div class="d-flex flex-column justify-content-center m-2 px-3" id="inputRequirementContainer-example">
+                                                                            <input type="hidden">
+                                                                            <input type="hidden">
+                                                                            <input type="hidden">
+                                
+                                                                            <label>Yêu Cầu</label>
+                                                                            <div class="d-flex justify-content-center" id="requirementContainer-example">
+                                                                                
+                                                                                <input class="col-12 mx-5 p-1" type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc...">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-1 mx-4" id="submitRequirementContainer-example">
+                                                                            <input class="btn btn-primary" type="submit" value="Thêm">
+                                                                        </div>
+                                                                    </form>
+                                                                </div>-->
+                            </div>
                         </div>
-                        <div id="addRequirementButton">
-                        </div>
-                        <div id="addRequirementList">
-                            <!--                                                    <div id="addRequirementFromEditPostContainer-example">
-                                                                                    <form action="#" method="post" id="addRequirementForm">
-                                                                                        <div class="d-flex flex-column m-2 p-3" id="inputRequirementContainer-example">
-                                                                                            <div>Yêu Cầu</div>
-                                                                                            <input type="hidden">
-                                                                                            <input type="hidden">
-                                                                                            <input type="hidden">
-                                                                                            <div class="d-flex flex-row justify-content-center" id="requirementContainer-example">
-                                                                                                
-                                                                                                <input class="col-12 m-1" type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc...">
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div id="submitRequirementContainer-example">
-                                                                                            <input class="btn btn-primary" type="submit" value="Thêm">
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div>-->
-                        </div>
+
+
                     </div>
 
 
@@ -238,13 +245,21 @@
 
                         <form action="./job" method="post">
                             <div class="d-flex flex-column m-2 p-3">
+                                <div class="d-flex flex-row justify-content-center">
+                                    <label class="col-5 m-1" for="skillName">Kỹ Năng</label>
+                                    <label class="col-5 m-1" for="skillDescription">Mô Tả</label>
+                                    <span class="col-1"></span>
+                                </div>
                                 <input type="hidden" name="postID" value="${requestScope.post.postID}">
                                 <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                                 <input type="hidden" name="action" value="edit-post-skills">
                                 <c:forEach var="skill" items="${requestScope.post.skillList}" varStatus="status">
                                     <input type="hidden" name="skillID" value="${skill.skillID}">
+
                                     <div class="d-flex flex-row justify-content-center">
+
                                         <input class="col-5 m-1" type="text" name="skillName" value="${skill.skillName}">
+
                                         <input class="col-5 m-1" type="text" name="skillDescription" value="${skill.skillDescription}">
                                         <a class="col-1 m-1 btn btn-danger" href="./job?action=delete-a-skill&postID=${requestScope.post.postID}&positionID=${requestScope.position.positionID}&skillID=${skill.skillID}">Xóa</a>
                                     </div>
@@ -257,29 +272,36 @@
                                 </c:if>
                             </div>
                         </form>
-                        <div class="d-flex">
-                            <label class="bi bi-plus-square-dotted mx-5 px-1 col-2" onclick="addSkillFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"><span class="m-2">Thêm yêu cầu</span></label>
+                        <div class="d-flex flex-column">
+                            <div class=" mx-5 px-1 col-2">
+                                <label class="bi bi-plus-square-dotted" onclick="addSkillFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"><span class="m-2">Thêm kỹ năng</span></label>
+                            </div>
+                            <div class=" mx-5 px-1 col-2" id="addSkillButton">
+                            </div>
+                            <div class="d-flex flex-column" id="addSkillList">
+                                <!--                                <div class="m-2 px-3" id="addSkillFromEditPostContainer-example">
+                                                                    <form action="#" method="post" id="addSkillForm">
+                                                                        <div class="d-flex flex-column justify-content-center m-2 px-3" id="inputSkillContainer-example">
+                                                                            <div class="d-flex flex-row row g-2" id="skillContainer-example">
+                                                                                <div class="d-flex flex-column col-6">
+                                                                                    <label for="skillName">Kỹ Năng</label>
+                                                                                    <input class="p-1" type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng...">
+                                                                                </div>
+                                                                                <div class="d-flex flex-column col-6">
+                                                                                    <label for="skillDescription">Mô Tả</label>
+                                                                                    <input class="p-1" type="text" id="skillDescription" name="skillDescription" value="" placeholder="Nhập mô tả kỹ năng...">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-1 mx-4" id="submitSkillContainer-example">
+                                                                            <input class="btn btn-primary" type="submit" value="Thêm">
+                                                                        </div>
+                                                                    </form>
+                                                                </div>-->
+                            </div>
                         </div>
-                        <div id="addSkillButton">
-                        </div>
-                        <div id="addSkillList">
-                            <!--                            <div id="addRequirementFromEditPostContainer-example">
-                                                            <form action="#" method="post" id="addRequirementForm">
-                                                                <div id="inputRequirementContainer-example">
-                                                                    <input type="hidden">
-                                                                    <input type="hidden">
-                                                                    <input type="hidden">
-                                                                    <div id="requirementContainer-example">
-                                                                        <div><label for="skillName">Kỹ Năng</label><input type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng..."></div>
-                                                                        <div><label for="skillDescription">Mô Tả</label><input type="text" id="skillDescription" name="skillDescription" value="" placeholder="Nhập mô tả kỹ năng..."></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div id="submitRequirementContainer-example">
-                                                                    <input type="submit" value="Thêm">
-                                                                </div>
-                                                            </form>
-                                                        </div>-->
-                        </div>
+
+
                     </div>
                 </div>
                 <div class="d-flex flex-column mb-4">
@@ -306,13 +328,17 @@
                                 </c:if>
                             </div>
                         </form>   
-                        <div class="d-flex">
-                            <lable class="bi bi-plus-square-dotted mx-5 px-1 col-2" onclick="addBenefitFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"><span class="m-2">Thêm quyền Lợi</span></lable>
+                        <div class="d-flex flex-column">
+                            <div class=" mx-5 px-1 col-2">
+                                <lable class="bi bi-plus-square-dotted" onclick="addBenefitFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"><span class="m-2">Thêm quyền Lợi</span></lable>
+                            </div>
+                            <div class=" mx-5 px-1 col-2" id="addBenefitButton">
+                            </div>
+                            <div class="d-flex flex-column" id="addBenefitList">
+                            </div>
                         </div>
-                        <div id="addBenefitButton">
-                        </div>
-                        <div id="addBenefitList">
-                        </div>
+
+
                     </div>
                 </div>
 
@@ -346,28 +372,19 @@
                                 </c:if>
                             </div>
                         </form> 
-                        <div>
-                            <label class="bi bi-plus-square-dotted mx-5 px-1 col-2" onclick="addStageFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"><span class="m-2">Thêm quy trình</span></label>
+                        <div class="d-flex flex-column">
+                            <div class=" mx-5 px-1 col-2">
+                                <label class="bi bi-plus-square-dotted" onclick="addStageFromEditPost(${requestScope.post.postID}, ${requestScope.position.positionID})"><span class="m-2">Thêm quy trình</span></label>
+                            </div>
+                            <div class=" mx-5 px-1 col-2" id="addStageButton">
+                            </div>
+                            <div class="d-flex flex-column" id="addStageList">
+                                
+
+                            </div>  
                         </div>
-                        <div id="addStageButton">
-                        </div>
-                        <div id="addStageList">
-                            <!--                            <div id="addRequirementFromEditPostContainer-example">
-                                                            <form action="#" method="post" id="addRequirementForm">
-                                                                <div id="inputRequirementContainer-example">
-                                                                    <input type="hidden">
-                                                                    <input type="hidden">
-                                                                    <input type="hidden">
-                                                                    <div id="requirementContainer-example">
-                                                                        <div><label for="stageID">Vòng Ứng Tuyển</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả</label><input type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div id="submitRequirementContainer-example">
-                                                                    <input type="submit" value="Thêm">
-                                                                </div>
-                                                            </form>
-                                                        </div>-->
-                        </div>     
+
+
                     </div>
                 </div>
             </c:if>
