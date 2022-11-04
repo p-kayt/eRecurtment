@@ -5,6 +5,8 @@
 package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.UserDTO;
+import com.t404notfound.erecruitment.bean.application.ApplicationDAO;
+import com.t404notfound.erecruitment.bean.application.ApplicationDTO;
 import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositionDAO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDAO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDTO;
@@ -12,7 +14,9 @@ import com.t404notfound.erecruitment.bean.cv.CVDAO;
 import com.t404notfound.erecruitment.bean.cv.CVDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,11 +49,14 @@ public class PostController extends HttpServlet {
             ApplicationPositionDAO positionDAO = new ApplicationPositionDAO();
             ApplicationPostDAO postDAO = new ApplicationPostDAO();
             String msg = "";
+            int result = 0;
             String action = request.getParameter("action");
             HttpSession session = request.getSession();
             UserDTO user = (UserDTO) session.getAttribute("user");
             CVDAO cvDAO = new CVDAO();
             CVDTO cv = new CVDTO();
+            ApplicationDAO appDAO = new ApplicationDAO();
+            Date currentDate;
             switch (action) {
                 case "search-posts":
                     String keyword = request.getParameter("keyword");
@@ -145,13 +152,34 @@ public class PostController extends HttpServlet {
                                 request.getRequestDispatcher("./profile").forward(request, response);
                             } // Check if user HAS ALREADY APPLIED for the post
                             else {
-                                if (true) {
-
+                                boolean isApplying = appDAO.isUserApplying(user.getUserID(), postID);
+                                // User HAS ALREADY APPLIED for the post
+                                if (isApplying == true) {
+                                    msg = "Bạn Đã Ứng Tuyển Cho Vị Trí Này - Không Thể Ứng Tuyển Cho Cùng 1 Bài Đăng Công Việc";
+                                    request.setAttribute("msg", msg);
+                                    post = postDAO.loadApplicationPostWithName(postID);
+                                    request.setAttribute("post", post);
+                                    request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
                                 } // All user conditions have been met
                                 // LOGGED-IN, IS A CANDIDATE, HAS CREATED A CV, DOES NOT APPLY FOR THIS POST YET
                                 // Add user application for the post and redirect to user's application list with anouncement
                                 else {
-
+                                    post = postDAO.loadApplicationPostWithName(postID);
+                                    int initialStage = post.getStageList().get(0).getId();
+                                    currentDate = new Date(Calendar.getInstance().getTime().getTime());
+                                    ApplicationDTO application = new ApplicationDTO(0, currentDate, 1, initialStage, user.getUserID(), postID);
+                                    result = appDAO.addApplication(application);
+                                    if (result == 1) {
+                                        msg = "Ứng Tuyển Công Việc Thành Công - Xem Công Việc Ứng Tuyển Của Ứng Viên Ở Danh Sách Ứng Tuyển";
+                                        request.setAttribute("msg", msg);
+                                        request.setAttribute("post", post);
+                                        request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
+                                    } else {
+                                        msg = "Đã Có Lỗi Xảy Ra - Vui Lòng Thử Lại Ứng Tuyển Vị Trí";
+                                        request.setAttribute("msg", msg);
+                                        request.setAttribute("post", post);
+                                        request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
+                                    }
                                 }
                             }
                         }
