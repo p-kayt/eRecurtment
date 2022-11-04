@@ -287,7 +287,7 @@
 
                                         <div id="socialMedia${loop.count}">
                                             <div><b>Platform ${loop.count}: </b> 
-                                                <select name="platformID" id="status-select">
+                                                <select name="platformID">
 
                                                     <option value="" disabled="">--Please choose a platform--</option>
 

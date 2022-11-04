@@ -127,7 +127,7 @@
                                 <%CertificateDTO certificate;%>
                                 <%certificate = (CertificateDTO) cv.getCertificates().get(i);%>
                                 <div><b>Certificate <%=i + 1%>: </b> <%=certificate.getCertificateName()%></div>
-                                <div><b>Link: </b> <%=certificate.getCertificateLink()%></div>
+                                <div><b>Link: </b> <a href="<%=certificate.getCertificateLink()%>"><%=certificate.getCertificateLink()%></a></div>
                             </div>
                             <br>
                             <% }%> 
@@ -149,7 +149,7 @@
                             <c:forEach var="i"  items="${cv.socialMedias}" varStatus="loop">
 
                                 <div><b>Platform ${loop.count}: ${i.platformID}</div>
-                                <div><b>Link: </b> ${i.socialMediaLink}</div>
+                                <div><b>Link: </b><a href="${i.socialMediaLink}"> ${i.socialMediaLink}</a></div>
 
 
                             </c:forEach>
@@ -160,7 +160,10 @@
                     </div>
                 </div>
                 <div class="html2pdf__page-break"></div>
-                <button onclick="saveCV()">Save to your device</button>
+                <div class="text-center">
+                    <button class="btn cancel col-4 border border-1 m-1 " style="text-align: center" onclick="saveCV()">Save to your device</button>
+                </div>
+                
             </c:when>  
             <c:otherwise>
                 <h3>CV not found</h3>
@@ -175,7 +178,7 @@
                     function saveCV() {
                         var element = document.getElementById('element');
                         html2pdf(element, {
-                            filename: 'yourCV.pdf',
+                            filename: 'CV.pdf',
                             image: {type: 'png', quality: 0.98},
                             html2canvas: {scale: 2, logging: true, dpi: 192, letterRendering: true},
                             jsPDF: {unit: 'mm', format: 'a4', orientation: 'portrait'}

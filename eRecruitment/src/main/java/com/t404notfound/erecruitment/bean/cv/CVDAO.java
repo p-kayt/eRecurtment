@@ -20,17 +20,17 @@ import java.util.logging.Logger;
  */
 public class CVDAO {
 
-    public boolean changeAvatar(String url, int userID) {
+    public boolean changeAvatar(String url, int CVID) {
 
         String sql = "UPDATE CV "
                 + " SET Avatar = ? "
-                + " WHERE userID = ? ";
+                + " WHERE CVID = ? ";
 
         try {
             Connection con = DBUtil.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, url);
-            ps.setInt(2, userID);
+            ps.setInt(2, CVID);
             int rs = ps.executeUpdate();
             if (rs > 0) {
                 return true;
@@ -323,6 +323,7 @@ public class CVDAO {
             ArrayList<SocialMediaDTO> list = new ArrayList<>();
             Connection con = DBUtil.getConnection();
             PreparedStatement pst = con.prepareStatement(sql);
+            pst.setNString(1, String.valueOf(CVID));
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 SocialMediaDTO dto = new SocialMediaDTO();

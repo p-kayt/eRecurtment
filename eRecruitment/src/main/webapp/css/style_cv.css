@@ -1,3 +1,15 @@
+.cv .cv-element img {
+    margin: 40px 40px 10px 40px;
+    height: 200px;
+    width: 200px;
+    object-position: center;
+    object-fit: cover;
+    border: solid #EFFDF5 1px;
+    border-radius: 50%;
+    display: inline-block;
+    background: #EFFDF5;
+}
+
 .cv {
     background-color: white;
     width: 800px;

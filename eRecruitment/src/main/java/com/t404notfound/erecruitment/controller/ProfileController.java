@@ -142,29 +142,32 @@ public class ProfileController extends HttpServlet {
                     }
                     //Lấy đường dẫn tương đối
 
+                    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
                     //tạo file .png và ghi đè img vào
                     String fileName = "avatar";
                     File file = File.createTempFile(fileName, ".png", image);
+                    //tạo file .png và ghi đè img vào
+                    if (filePart.getSize() > 0) {
+                        try {
 
-                    try {
-                        Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
-                        try ( InputStream input = filePart.getInputStream()) {
-                            Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                            try ( InputStream input = filePart.getInputStream()) {
+                                Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        //tạo file .png và ghi đè img vào
+
+                        //rename img
+                        Path source = Paths.get(file.getParentFile() + "\\" + file.getName());
+
+                        Files.move(source, source.resolveSibling("avatar.png"),
+                                StandardCopyOption.REPLACE_EXISTING);
+                        //rename img
                     }
-                    //tạo file .png và ghi đè img vào
-
-                    //rename img
-                    Path source = Paths.get(file.getParentFile() + "\\" + file.getName());
-
-                    Files.move(source, source.resolveSibling("avatar.png"),
-                            StandardCopyOption.REPLACE_EXISTING);
-                    //rename img
-
 //                request.setAttribute("path", file.getAbsolutePath());
                     String url = "image/avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/avatar.png";
                     if (dao.changeAvatar(url, user.getUserID())) {

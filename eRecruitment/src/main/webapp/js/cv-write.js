@@ -193,7 +193,7 @@ function addSocialMedia() {
     const div = document.createElement("div");
     div.id = 'socialMedia' + socialMediaCount.toString();
     const div1 = document.createElement("div");
-    div1.innerHTML = '<b>Platform '+ socialMediaCount+': </b><select name="platformID" id="status-select"><option value="" disabled="" selected>--Please choose a platform--</option><option value="1">LinkedIn</option><option value="2">Facebook</option><option value="3">Twitter</option><option value="4">GitHub</option><option value="5">Personal Website</option></select>';
+    div1.innerHTML = '<b>Platform '+ socialMediaCount+': </b><select name="platformID" id="socialMedia"><option value="" disabled="" selected>--Please choose a platform--</option><option value="1">LinkedIn</option><option value="2">Facebook</option><option value="3">Twitter</option><option value="4">GitHub</option><option value="5">Personal Website</option></select>';
     const div2 = document.createElement("div");
     div2.innerHTML = '<b>Link: </b> <input type="text" placeholder="Enter the link of your personal page" name="socialMediaLink"></div>';
     div.appendChild(div1);
