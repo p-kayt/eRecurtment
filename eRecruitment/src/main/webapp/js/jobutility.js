@@ -86,17 +86,23 @@ function addRequirementFromEditPost(postID, positionID) {
         postReq++;
         var div = document.createElement("div");
         div.id = 'addRequirementFromEditPostContainer';
+        div.classList.add('m-2');
+        div.classList.add('px-3');
 
         var inputDiv = document.createElement("div");
         inputDiv.id = 'inputRequirementContainer';
         inputDiv.classList.add('d-flex');
         inputDiv.classList.add('flex-column');
         inputDiv.classList.add('m-2');
-        inputDiv.classList.add('p-3');
-        
+        inputDiv.classList.add('px-3');
+        inputDiv.innerHTML = '<label for="requirement">Yêu Cầu</label>';
+
 
         var submitDiv = document.createElement("div");
         submitDiv.id = 'submitRequirementContainer';
+        submitDiv.classList.add('col-1');
+        submitDiv.classList.add('mx-4');
+
 
         var form = document.createElement("form");
         form.action = './job';
@@ -120,7 +126,9 @@ function addRequirementFromEditPost(postID, positionID) {
 
         var reqDiv = document.createElement("div");
         reqDiv.id = 'requirementContainer' + postReq;
-        reqDiv.innerHTML = '<label for="requirement">Yêu Cầu</label><input class="col-12 m-1" type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc">';
+        reqDiv.classList.add('d-flex');
+        reqDiv.classList.add('justify-content-center');
+        reqDiv.innerHTML = '<input class="col-12 mx-5 p-1" type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc">';
 
         var submit = document.createElement('input');
         submit.type = 'submit';
@@ -133,8 +141,8 @@ function addRequirementFromEditPost(postID, positionID) {
         inputDiv.appendChild(reqDiv);
 
         root = document.getElementById("addRequirementButton");
-        root.innerHTML = '<div class="d-flex"><i class="fa-sharp fa-solid fa-minus" onclick="removeRequirementFromEditPost()"></i></div>';
-        
+        root.innerHTML = '<lable class="bi bi-dash" onclick="removeRequirementFromEditPost()"><span class="m-2">Xoá yêu cầu</span></lable>';
+
         submitDiv.appendChild(submit);
         form.appendChild(inputDiv);
         form.appendChild(submitDiv);
@@ -150,7 +158,12 @@ function addRequirementFromEditPost(postID, positionID) {
 function addMoreRequirement(postReq) {
     var reqDiv = document.createElement("div");
     reqDiv.id = 'requirementContainer' + postReq;
-    reqDiv.innerHTML = '<label for="requirement">Yêu Cầu</label><input class="col-12 m-1" type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc...">';
+    reqDiv.classList.add('d-flex');
+    reqDiv.classList.add('my-2');
+    reqDiv.classList.add('justify-content-center');
+    reqDiv.innerHTML = '<input class="col-12 mx-5 p-1" type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc">';
+//    reqDiv.innerHTML = '<label for="requirement">Yêu Cầu</label><input class="col-12 m-1" type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc...">';
+
     root = document.getElementById("inputRequirementContainer");
     root.appendChild(reqDiv);
 }
@@ -176,16 +189,21 @@ function addBenefitFromEditPost(postID, positionID) {
         postBene++;
         const div = document.createElement("div");
         div.id = 'addBenefitFromEditPostContainer';
+        div.classList.add('m-2');
+        div.classList.add('px-3');
 
         const inputDiv = document.createElement("div");
         inputDiv.id = 'inputBenefitContainer';
         inputDiv.classList.add('d-flex');
         inputDiv.classList.add('flex-column');
         inputDiv.classList.add('m-2');
-        inputDiv.classList.add('p-3');
+        inputDiv.classList.add('px-3');
+        inputDiv.innerHTML = '<label for="requirement">Quyền lợi</label>';
 
         const submitDiv = document.createElement("div");
         submitDiv.id = 'submitBenefitContainer';
+        submitDiv.classList.add('col-1');
+        submitDiv.classList.add('mx-4');
 
         const form = document.createElement("form");
         form.action = './job';
@@ -209,7 +227,9 @@ function addBenefitFromEditPost(postID, positionID) {
 
         const beneDiv = document.createElement("div");
         beneDiv.id = 'benefitContainer' + postBene;
-        beneDiv.innerHTML = '<label for="benefit">Quyền Lợi</label><input class="col-12 m-1" type="text" id="benefit" name="benefit" value="" placeholder="Nhập quyền lợi...">';
+        beneDiv.classList.add('d-flex');
+        beneDiv.classList.add('justify-content-center');
+        beneDiv.innerHTML = '<input class="col-12 mx-5 p-1" type="text" id="benefit" name="benefit" value="" placeholder="Nhập quyền lợi...">';
 
         const submit = document.createElement('input');
         submit.type = 'submit';
@@ -220,10 +240,11 @@ function addBenefitFromEditPost(postID, positionID) {
         inputDiv.appendChild(input2);
         inputDiv.appendChild(input3);
         inputDiv.appendChild(beneDiv);
-        
+
         root = document.getElementById("addBenefitButton");
-        root.innerHTML = '<div class="d-flex"><i class="fa-sharp fa-solid fa-minus" onclick="removeBenefitFromEditPost()"></i></div>';
-        
+
+        root.innerHTML = '<lable class="bi bi-dash" onclick="removeBenefitFromEditPost()"><span class="m-2">Xoá quyền lợi</span></lable>';
+
         submitDiv.appendChild(submit);
         form.appendChild(inputDiv);
         form.appendChild(submitDiv);
@@ -239,7 +260,11 @@ function addBenefitFromEditPost(postID, positionID) {
 function addMoreBenefit(postBene) {
     const beneDiv = document.createElement("div");
     beneDiv.id = 'benefitContainer' + postBene;
-    beneDiv.innerHTML = '<label for="benefit">Quyền Lợi</label><input class="col-12 m-1" type="text" id="benefit" name="benefit" value="" placeholder="Nhập quyền lợi...">';
+    beneDiv.classList.add('d-flex');
+    beneDiv.classList.add('my-2');
+    beneDiv.classList.add('justify-content-center');
+    beneDiv.innerHTML = '<input class="col-12 mx-5 p-1" type="text"id="benefit" name="benefit" value="" placeholder="Nhập quyền lợi...">';
+
     root = document.getElementById("inputBenefitContainer");
     root.appendChild(beneDiv);
 }
@@ -266,16 +291,23 @@ function addSkillFromEditPost(postID, positionID) {
         postSkill++;
         const div = document.createElement("div");
         div.id = 'addSkillFromEditPostContainer';
+        div.classList.add('m-2');
+        div.classList.add('px-3');
 
         const inputDiv = document.createElement("div");
         inputDiv.id = 'inputSkillContainer';
         inputDiv.classList.add('d-flex');
-        inputDiv.classList.add('flex-column');
+        inputDiv.classList.add('justify-content-center');
         inputDiv.classList.add('m-2');
-        inputDiv.classList.add('p-3');
+        inputDiv.classList.add('px-3');
+        inputDiv.classList.add('row');
+        inputDiv.classList.add('g-1');
 
         const submitDiv = document.createElement("div");
         submitDiv.id = 'submitSkillContainer';
+        submitDiv.classList.add('col-1');
+        submitDiv.classList.add('mx-4');
+
 
         const form = document.createElement("form");
         form.action = './job';
@@ -299,22 +331,29 @@ function addSkillFromEditPost(postID, positionID) {
 
         const skillDiv = document.createElement("div");
         skillDiv.id = 'skillContainer' + postSkill;
-        skillDiv.innerHTML = '<div><label for="skillName">Kỹ Năng</label><input type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng..."></div><div><label for="skillDescription">Mô Tả</label><input type="text" id="skillDescription" name="skillDescription" value="" placeholder="Nhập mô tả kỹ năng..."></div>';
+        skillDiv.classList.add('d-flex');
+        skillDiv.classList.add('flex-row');
+        skillDiv.classList.add('row');
+        skillDiv.classList.add('g-2');
+        skillDiv.innerHTML = '<div class="d-flex flex-column col-6"><label for="skillName">Kỹ Năng</label><input class="p-1" type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng..."></div><div class="d-flex flex-column col-6"><label for="skillDescription">Mô Tả</label><input class="p-1" type="text" id="skillDescription" name="skillDescription" value="" placeholder="Nhập mô tả kỹ năng..."></div>';
 
         const submit = document.createElement('input');
         submit.type = 'submit';
         submit.value = 'Thêm';
+        submit.className = "btn btn-primary";
 
+        inputDiv.appendChild(skillDiv);
         inputDiv.appendChild(input1);
         inputDiv.appendChild(input2);
         inputDiv.appendChild(input3);
-        inputDiv.appendChild(skillDiv);
+
 
         root = document.getElementById("addSkillButton");
-        root.innerHTML = '<div><span class="fa fa-minus-circle fa-2x" onclick="removeSkillFromEditPost()"></span></div>';
+        root.innerHTML = '<lable class="bi bi-dash" onclick="removeSkillFromEditPost()"><span class="m-2">Xoá kỹ năng</span></lable>';
 
         submitDiv.appendChild(submit);
         form.appendChild(inputDiv);
+//        form.appendChild(skillDiv);
         form.appendChild(submitDiv);
         div.appendChild(form);
         root = document.getElementById("addSkillList");
@@ -328,7 +367,12 @@ function addSkillFromEditPost(postID, positionID) {
 function addMoreSkill(postSkill) {
     const skillDiv = document.createElement("div");
     skillDiv.id = 'skillContainer' + postSkill;
-    skillDiv.innerHTML = '<div><label for="skillName">Kỹ Năng</label><input type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng..."></div><div><label for="skillDescription">Mô Tả</label><input type="text" id="skillDescription" name="skillDescription" value="Nhập mô tả kỹ năng..." placeholder=""></div>';
+    skillDiv.classList.add('d-flex');
+    skillDiv.classList.add('flex-row');
+    skillDiv.classList.add('row');
+    skillDiv.classList.add('g-2');
+    skillDiv.innerHTML = '<div class="d-flex flex-column col-6"><input class="p-1" type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng..."></div><div class="d-flex flex-column col-6"><input class="p-1" type="text" id="skillDescription" name="skillDescription" value="" placeholder="Nhập mô tả kỹ năng..."></div>';
+
     root = document.getElementById("inputSkillContainer");
     root.appendChild(skillDiv);
 }
@@ -355,16 +399,22 @@ function addStageFromEditPost(postID, positionID) {
         postStage++;
         const div = document.createElement("div");
         div.id = 'addStageFromEditPostContainer';
+        div.classList.add('m-2');
+        div.classList.add('px-3');
 
         const inputDiv = document.createElement("div");
         inputDiv.id = 'inputStageContainer';
         inputDiv.classList.add('d-flex');
-        inputDiv.classList.add('flex-column');
+        inputDiv.classList.add('justify-content-center');
         inputDiv.classList.add('m-2');
-        inputDiv.classList.add('p-3');
+        inputDiv.classList.add('px-3');
+        inputDiv.classList.add('row');
+        inputDiv.classList.add('g-1');
 
         const submitDiv = document.createElement("div");
         submitDiv.id = 'submitStageContainer';
+        submitDiv.classList.add('col-1');
+        submitDiv.classList.add('mx-4');
 
         const form = document.createElement("form");
         form.action = './job';
@@ -388,19 +438,25 @@ function addStageFromEditPost(postID, positionID) {
 
         const stageDiv = document.createElement("div");
         stageDiv.id = 'stageContainer' + postStage;
-        stageDiv.innerHTML = '<div><label for="stageID">Vòng Ứng Tuyển</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả</label><input type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>';
+        stageDiv.classList.add('d-flex');
+        stageDiv.classList.add('flex-row');
+        stageDiv.classList.add('row');
+        stageDiv.classList.add('g-2');
+        stageDiv.innerHTML = '<div class="col-3 m-1 d-flex flex-column"><label for="stageID">Vòng Ứng Tuyển</label><select class="p-1" id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div class="col-8 m-1 d-flex flex-column"><label for="description">Mô Tả</label><input class="p-1" type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>';
 
         const submit = document.createElement('input');
         submit.type = 'submit';
         submit.value = 'Thêm';
+        submit.className = "btn btn-primary";
 
+        inputDiv.appendChild(stageDiv);
         inputDiv.appendChild(input1);
         inputDiv.appendChild(input2);
         inputDiv.appendChild(input3);
-        inputDiv.appendChild(stageDiv);
+
 
         root = document.getElementById("addStageButton");
-        root.innerHTML = '<div><span class="fa fa-minus-circle fa-2x" onclick="removeStageFromEditPost()"></span></div>';
+        root.innerHTML = '<lable class="bi bi-dash" onclick="removeStageFromEditPost()"><span class="m-2">Xoá quy trình</span></lable>';
 
         submitDiv.appendChild(submit);
         form.appendChild(inputDiv);
@@ -417,7 +473,11 @@ function addStageFromEditPost(postID, positionID) {
 function addMoreStage(postStage) {
     const stageDiv = document.createElement("div");
     stageDiv.id = 'stageContainer' + postStage;
-    stageDiv.innerHTML = '<div><label for="stageID">Vòng Ứng Tuyển</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả</label><input type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>';
+    stageDiv.classList.add('d-flex');
+    stageDiv.classList.add('flex-row');
+    stageDiv.classList.add('row');
+    stageDiv.classList.add('g-2');
+    stageDiv.innerHTML = '<div class="col-3 m-1 d-flex flex-column"><select class="p-1" id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div class="col-8 m-1 d-flex flex-column"><input class="p-1" type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>';
     root = document.getElementById("inputStageContainer");
     root.appendChild(stageDiv);
 }
@@ -437,18 +497,18 @@ function removeStageFromEditPost() {
 }
 
 //=====================================================================
-function showPositionDeleteForm(){
+function showPositionDeleteForm() {
     document.getElementById("delete-position-form-container").style.display = "block";
 }
 
-function hidePositionDeleteForm(){
+function hidePositionDeleteForm() {
     document.getElementById("delete-position-form-container").style.display = "none";
 }
 
-function showPostDeleteForm(){
+function showPostDeleteForm() {
     document.getElementById("delete-post-form-container").style.display = "block";
 }
 
-function hidePostDeleteForm(){
+function hidePostDeleteForm() {
     document.getElementById("delete-post-form-container").style.display = "none";
 }

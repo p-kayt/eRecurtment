@@ -59,23 +59,13 @@
                                             </div>
                                             <p>${p.getTime()}</p>
                                             <p>This is post detail  ${p.getPostID()}</p>
-                                            <form action="interview" method="post" >
+                                            <form action="/interviewer/interview" method="post" >
 
                                                 <input type="hidden" name="postID" value="${p.getPostID()}">
                                                 <input type="hidden" name="interviewID" value="${p.getInterviewID()}">
-
-                                                <c:choose>
-                                                    <c:when test = "${(p.bookerID == userID)}">
-                                                        <input type="hidden" name="action" value="interviewDetail">
-                                                        <input type="submit" value="Chỉnh sửa">
-                                                    </c:when>
-
-                                                    <c:otherwise>
-                                                        <input type="hidden" name="action" value="viewInterviewDetail">
-                                                        <p>PS: Chưa làm phan hiển thị interview (view only)</p>
-                                                        <input type="submit" value="Chi tiết">
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                <input type="hidden" name="action" value="viewInterviewDetail">
+                                                <p>PS: Chưa làm phan hiển thị interview (view only)</p>
+                                                <input type="submit" value="Chi tiết">
                                             </form>
                                         </div>
                                     </c:forEach>
