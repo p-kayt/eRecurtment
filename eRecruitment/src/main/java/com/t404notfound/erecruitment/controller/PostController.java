@@ -129,6 +129,7 @@ public class PostController extends HttpServlet {
                     break;
                 case "apply-for-post":
                     postID = Integer.parseInt(request.getParameter("postID"));
+                    post = postDAO.loadApplicationPostWithName(postID);
                     // Check if user is LOGGED-IN or not
                     if (user == null) {
                         // User is NOT LOGGED-IN. 
@@ -157,28 +158,46 @@ public class PostController extends HttpServlet {
                                 if (isApplying == true) {
                                     msg = "Bạn Đã Ứng Tuyển Cho Vị Trí Này - Không Thể Ứng Tuyển Nhiều Lần Cho Cùng 1 Bài Đăng Công Việc";
                                     request.setAttribute("msg", msg);
-                                    post = postDAO.loadApplicationPostWithName(postID);
                                     request.setAttribute("post", post);
                                     request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
-                                } // All user conditions have been met
-                                // LOGGED-IN, IS A CANDIDATE, HAS CREATED A CV, DOES NOT APPLY FOR THIS POST YET
-                                // Add user application for the post and redirect to user's application list with anouncement
-                                else {
-                                    post = postDAO.loadApplicationPostWithName(postID);
-                                    int initialStage = post.getStageList().get(0).getId();
-                                    currentDate = new Date(Calendar.getInstance().getTime().getTime());
-                                    ApplicationDTO application = new ApplicationDTO(0, currentDate, 1, initialStage, user.getUserID(), postID);
-                                    result = appDAO.addApplication(application);
-                                    if (result == 1) {
-                                        msg = "Ứng Tuyển Công Việc Thành Công - Xem Công Việc Ðã Ứng Tuyển Của Ứng Viên Ở Danh Sách Ứng Tuyển";
-                                        request.setAttribute("msg", msg);
-                                        request.setAttribute("post", post);
-                                        request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
-                                    } else {
-                                        msg = "Đã Có Lỗi Xảy Ra - Vui Lòng Thử Lại Ứng Tuyển Vị Trí";
-                                        request.setAttribute("msg", msg);
-                                        request.setAttribute("post", post);
-                                        request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
+                                } else {
+                                    // If post Status IS NOT HIRING (INACTIVE, PENDING, CLOSE)
+                                    if (post.getStatusID() != 3) {
+                                        if (post.getStatusID() == 1) {
+                                            msg = "Ứng Tuyển Thất Bại - Bài Đăng Đang Ở Trạng Thái InActive";
+                                            request.setAttribute("msg", msg);
+                                            request.setAttribute("post", post);
+                                            request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
+                                        } else if (post.getStatusID() == 2) {
+                                            msg = "Ứng Tuyển Thất Bại - Bài Đăng Đang Ở Trạng Thái Đang Chờ";
+                                            request.setAttribute("msg", msg);
+                                            request.setAttribute("post", post);
+                                            request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
+                                        } else {
+                                            msg = "Ứng Tuyển Thất Bại - Bài Đăng Đang Ở Trạng Thái Đã Đóng";
+                                            request.setAttribute("msg", msg);
+                                            request.setAttribute("post", post);
+                                            request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
+                                        }
+                                    } // All user conditions have been met
+                                    // LOGGED-IN, IS A CANDIDATE, HAS CREATED A CV, DOES NOT APPLY FOR THIS POST YET
+                                    // Add user application for the post and redirect to user's application list with anouncement
+                                    else {
+                                        int initialStage = post.getStageList().get(0).getId();
+                                        currentDate = new Date(Calendar.getInstance().getTime().getTime());
+                                        ApplicationDTO application = new ApplicationDTO(0, currentDate, 1, initialStage, user.getUserID(), postID);
+                                        result = appDAO.addApplication(application);
+                                        if (result == 1) {
+                                            msg = "Ứng Tuyển Công Việc Thành Công - Xem Công Việc Ðã Ứng Tuyển Của Ứng Viên Ở Danh Sách Ứng Tuyển";
+                                            request.setAttribute("msg", msg);
+                                            request.setAttribute("post", post);
+                                            request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
+                                        } else {
+                                            msg = "Đã Có Lỗi Xảy Ra - Vui Lòng Thử Lại Ứng Tuyển Vị Trí";
+                                            request.setAttribute("msg", msg);
+                                            request.setAttribute("post", post);
+                                            request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
+                                        }
                                     }
                                 }
                             }

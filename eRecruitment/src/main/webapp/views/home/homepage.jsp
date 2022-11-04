@@ -51,8 +51,15 @@
             <c:if test="${not empty user}">
                 <jsp:include page="../header/header_logoutbtn.jsp" />
             </c:if>
-            
-            
+
+            <c:if test="${not empty requestScope.msg}">
+                <div class="alert alert-secondary alert-dismissible fade show d-flex flex-row justify-content-between" role="alert">
+                    <span>${requestScope.msg}</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </c:if>
             <!-- Carousel Start -->
             <div class="container-fluid p-0">
                 <div class="owl-carousel header-carousel position-relative">
@@ -89,7 +96,7 @@
                                 <div class="row justify-content-start">
                                     <div class="col-10 col-lg-8">
                                         <h1 class="display-3 text-white animated slideInDown mb-4">
-                                            Khởi nghiệp phù hợp nhất
+                                            Công việc phù hợp nhất
                                         </h1>
 
                                         <a
@@ -128,9 +135,9 @@
                                     </div>
                                     <div class="col-md-4">
                                         <select class="form-select border-0" name="statusID">
-                                            <option value="2">Pending</option>
-                                            <option value="3" selected>Hiring</option>
-                                            <option value="4">Closed</option>
+                                            <option value="2">Đang chờ</option>
+                                            <option value="3" selected>Đang tuyển</option>
+                                            <option value="4">Đã đóng</option>
                                         </select>
                                     </div>
                                 </div>
@@ -189,7 +196,7 @@
                                     <c:if test="${not empty requestScope.highestQuantity}">
                                         <c:forEach var="post" items="${requestScope.highestQuantity}" varStatus="status">
                                             <div class="job-item py-4 px-2 mb-3 col-6">
-                                                <div class="row g-4" onclick="location.href='./post?action=post-detail&postID=${post.postID}'">
+                                                <div class="row g-4" onclick="location.href = './post?action=post-detail&postID=${post.postID}'">
                                                     <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
                                                         <div class="text-start ps-4">
@@ -253,7 +260,7 @@
                                     <c:if test="${not empty requestScope.fulltime}">
                                         <c:forEach var="post" items="${requestScope.fulltime}" varStatus="status">
                                             <div class="job-item py-4 px-2 mb-3 col-6">
-                                                <div class="row g-4" onclick="location.href='./post?action=post-detail&postID=${post.postID}'">
+                                                <div class="row g-4" onclick="location.href = './post?action=post-detail&postID=${post.postID}'">
                                                     <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
                                                         <div class="text-start ps-4">
@@ -317,7 +324,7 @@
                                     <c:if test="${not empty requestScope.parttime}">
                                         <c:forEach var="post" items="${requestScope.parttime}" varStatus="status">
                                             <div class="job-item py-4 px-2 mb-3 col-6">
-                                                <div class="row g-4" onclick="location.href='./post?action=post-detail&postID=${post.postID}'">
+                                                <div class="row g-4" onclick="location.href = './post?action=post-detail&postID=${post.postID}'">
                                                     <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
                                                         <div class="text-start ps-4">

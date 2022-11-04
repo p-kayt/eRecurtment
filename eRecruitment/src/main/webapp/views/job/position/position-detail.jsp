@@ -148,9 +148,9 @@
                         <thead>
                             <tr class="col-12 rounded-9 justify-content-around">
                                 <th scope="col" class="col-1 text-center align-middle">ID</th>
-                                <th scope="col" class="col-2 align-middle">Ngày Tạo</th>
-                                <th scope="col" class="col-2 align-middle">Ngày Bắt Đầu</th>
-                                <th scope="col" class="col-2 align-middle">Ngày Kết Thúc</th>
+                                <th scope="col" class="col-2 text-center align-middle">Ngày Tạo</th>
+                                <th scope="col" class="col-2 text-center align-middle">Ngày Bắt Đầu</th>
+                                <th scope="col" class="col-2 text-center align-middle">Ngày Kết Thúc</th>
                                 <th scope="col" class="col-2 text-center">Trạng Thái</th>
                             </tr>
                         </thead>

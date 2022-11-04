@@ -4,6 +4,9 @@
  */
 package com.t404notfound.erecruitment.controller;
 
+import com.t404notfound.erecruitment.bean.UserDTO;
+import com.t404notfound.erecruitment.bean.application.ApplicationDAO;
+import com.t404notfound.erecruitment.bean.application.ApplicationDTO;
 import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositionDAO;
 import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositionDTO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDAO;
@@ -47,9 +50,23 @@ public class JobController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             ApplicationPositionDAO positionDAO = new ApplicationPositionDAO();
             ApplicationPostDAO postDAO = new ApplicationPostDAO();
+            ApplicationDAO appDAO = new ApplicationDAO();
             String msg = "";
             String action = request.getParameter("action");
             HttpSession session = request.getSession();
+            UserDTO user = (UserDTO) session.getAttribute("user");
+            // User is NOT LOGGED-IN
+            if (user == null) {
+                msg = "Bạn Cần Phải Đăng Nhập Để Sử Dụng Tính Năng Này";
+                request.setAttribute("msg", msg);
+                request.getRequestDispatcher("./login").forward(request, response);
+            }
+            // User's role is NOT HR STAFF or HR MANAGER
+            else if(user.getUserRole() != 2 && user.getUserRole() != 3){
+                msg = "Bạn Không Có Quyền Sử Dụng Tính Năng Này";
+                request.setAttribute("msg", msg);
+                request.getRequestDispatcher("./home").forward(request, response);
+            }
             switch (action) {
                 case "load-add-position":
                     request.getRequestDispatcher("views/job/position/add-position.jsp").forward(request, response);
@@ -170,7 +187,7 @@ public class JobController extends HttpServlet {
                     int formID = Integer.parseInt(request.getParameter("formID"));
                     int statusID = Integer.parseInt(request.getParameter("statusID"));
                     positionID = Integer.parseInt(request.getParameter("positionID"));
-                    
+
                     log(postDescription.toUpperCase());
 
                     ApplicationPostDTO editingPost = new ApplicationPostDTO();
@@ -481,7 +498,6 @@ public class JobController extends HttpServlet {
                     for (int i = 0; i < requirements.length; i++) {
                         reqList.add(new PostRequirementDTO(0, requirements[i], 0));
                     }
-                    
 
                     String[] skillNames = request.getParameterValues("skillName");
                     String[] skillDescriptions = request.getParameterValues("skillDescription");
@@ -525,7 +541,7 @@ public class JobController extends HttpServlet {
                 case "delete-post":
                     postID = Integer.parseInt(request.getParameter("postID"));
                     positionID = Integer.parseInt(request.getParameter("positionID"));
-                    
+
                     result = postDAO.deleteApplicationPost(postID);
                     if (result == 1) {
                         msg = "Xóa Bài Đăng Tuyển Dụng Thành Công";
@@ -549,6 +565,17 @@ public class JobController extends HttpServlet {
                         request.setAttribute("msg", msg);
                         request.getRequestDispatcher("./job?action=position-detail&id=" + positionID + "").forward(request, response);
                     }
+                    break;
+                case "managing-applications":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    post = postDAO.loadApplicationPostWithName(postID);
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    position = positionDAO.loadApplicationPositions(positionID);
+                    ArrayList<ApplicationDTO> appList = appDAO.listAllApplicationOfAPost(postID);
+                    request.setAttribute("appList", appList);
+                    request.setAttribute("post", post);
+                    request.setAttribute("position", position);
+                    request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
                     break;
                 default:
                     break;

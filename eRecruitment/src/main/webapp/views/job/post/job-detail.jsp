@@ -74,8 +74,11 @@
             </div>
             <!-- Header End -->
             <c:if test="${not empty requestScope.msg}">
-                <div>
-                    <h3>${requestScope.msg}</h3>
+                <div class="alert alert-secondary alert-dismissible fade show d-flex justify-content-between" role="alert">
+                    ${requestScope.msg}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
             </c:if>
             <c:if test="${not empty requestScope.post}">

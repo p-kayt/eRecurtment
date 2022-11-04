@@ -164,6 +164,11 @@
                                     <span class="btn btn-primary" onclick="document.getElementById('createInterviewForm').submit()">Tạo buổi phỏng vấn</span>
                                 </div>
                                 <!--  -->
+                                <c:if test="${requestScope.post.statusID == 4}">
+                                    <div class="col-3 m-1 text-center">
+                                        <span class="btn btn-primary" onclick="document.getElementById('managing-applications').submit()">Quản lý ứng tuyển</span>
+                                    </div>
+                                </c:if>
                             </div>
                         </div>
                     </form>
@@ -174,6 +179,12 @@
                         <input class="d-none" type="submit" value="Tạo buổi phỏng vấn">
                     </form>
 
+                    <form class="col-2 m-3" action="./job" method="post" id="managing-applications">
+                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                        <input type="hidden" name="action" value="managing-applications">
+                        <input class="d-none" type="submit" value="Quản lý ứng tuyển">
+                    </form>
                 </div>
                 <div  class="d-flex flex-column mb-4">
                     <div class="m-auto">
@@ -379,7 +390,7 @@
                             <div class=" mx-5 px-1 col-2" id="addStageButton">
                             </div>
                             <div class="d-flex flex-column" id="addStageList">
-                                
+
 
                             </div>  
                         </div>

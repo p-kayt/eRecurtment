@@ -40,7 +40,9 @@ public class HomeController extends HttpServlet {
         
         ApplicationPositionDAO positionDAO = new ApplicationPositionDAO();
         ApplicationPostDAO postDAO = new ApplicationPostDAO();
-        
+        String msg = "";
+        msg = request.getParameter("msg");
+        request.setAttribute("msg", msg);
         ArrayList<ApplicationPostDTO> fulltime = postDAO.listTop10FullTimePost();
         request.setAttribute("fulltime", fulltime);
         ArrayList<ApplicationPostDTO> parttime = postDAO.listTop10PartTimePost();
