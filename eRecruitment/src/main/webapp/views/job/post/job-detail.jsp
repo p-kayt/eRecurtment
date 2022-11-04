@@ -105,67 +105,56 @@
                                     <ul class="list-unstyled">
                                         <c:forEach var="req" items="${requestScope.post.requirementList}">
                                             <li><i class="fa fa-angle-right text-primary me-2"></i>${req.requirement}</li>
-                                        </c:forEach>
+                                            </c:forEach>
                                     </ul>
                                     <h4 class="mb-3">Kỹ Năng Cần Thiết</h4>
                                     <ul class="list-unstyled">
                                         <c:forEach var="skill" items="${requestScope.post.skillList}">
-                                            <li><i class="fa fa-angle-right text-primary me-2"></i>${skill.skillName}</li>
+                                            <li>
+                                                <div><i class="fa fa-angle-right text-primary me-2"></i>${skill.skillName}</div>
+                                                <div><i class="fa fa-minus text-primary me-2"></i>${skill.skillDescription}</div>
+                                            </li>
                                         </c:forEach>
-                                        <li><i class="fa fa-angle-right text-primary me-2"></i>Dolor justo tempor duo ipsum accusam</li>
-                                        <li><i class="fa fa-angle-right text-primary me-2"></i>Elitr stet dolor vero clita labore gubergren</li>
-                                        <li><i class="fa fa-angle-right text-primary me-2"></i>Rebum vero dolores dolores elitr</li>
-                                        <li><i class="fa fa-angle-right text-primary me-2"></i>Est voluptua et sanctus at sanctus erat</li>
-                                        <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
+                                    </ul>
+                                    <h4 class="mb-3">Quyền Lợi Công Việc</h4>
+                                    <ul class="list-unstyled">
+                                        <c:forEach var="bene" items="${requestScope.post.benefitList}">
+                                            <li><i class="fa fa-angle-right text-primary me-2"></i>${bene.benefit}</li>
+                                            </c:forEach>
                                     </ul>
                                 </div>
-
                                 <div class="">
                                     <h4 class="mb-4">Apply For The Job</h4>
-                                    <form>
-                                        <div class="row g-3">
-                                            <div class="col-12 col-sm-6">
-                                                <input type="text" class="form-control" placeholder="Your Name">
-                                            </div>
-                                            <div class="col-12 col-sm-6">
-                                                <input type="email" class="form-control" placeholder="Your Email">
-                                            </div>
-                                            <div class="col-12 col-sm-6">
-                                                <input type="text" class="form-control" placeholder="Portfolio Website">
-                                            </div>
-                                            <div class="col-12 col-sm-6">
-                                                <input type="file" class="form-control bg-white">
-                                            </div>
-                                            <div class="col-12">
-                                                <textarea class="form-control" rows="5" placeholder="Coverletter"></textarea>
-                                            </div>
-                                            <div class="col-12">
-                                                <button class="btn btn-primary w-100" type="submit">Apply Now</button>
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
 
                             <div class="col-lg-4">
                                 <div class="bg-light rounded p-5 mb-4 wow slideInUp" data-wow-delay="0.1s">
                                     <h4 class="mb-4">Job Summery</h4>
-                                    <p><i class="fa fa-angle-right text-primary me-2"></i>Published On: 01 Jan, 2045</p>
-                                    <p><i class="fa fa-angle-right text-primary me-2"></i>Vacancy: 123 Position</p>
-                                    <p><i class="fa fa-angle-right text-primary me-2"></i>Job Nature: Full Time</p>
-                                    <p><i class="fa fa-angle-right text-primary me-2"></i>Salary: $123 - $456</p>
-                                    <p><i class="fa fa-angle-right text-primary me-2"></i>Location: New York, USA</p>
-                                    <p class="m-0"><i class="fa fa-angle-right text-primary me-2"></i>Date Line: 01 Jan, 2045</p>
-                                </div>
-                                <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s">
-                                    <h4 class="mb-4">Company Detail</h4>
-                                    <p class="m-0">Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.</p>
+
+                                    <p><i class="fa fa-angle-right text-primary me-2"></i>Số lượng tuyển: ${requestScope.post.hiringQuantity}</p>
+                                    <p><i class="fa fa-angle-right text-primary me-2"></i>Hình thức làm việc: 
+                                        <c:if test="${requestScope.post.formID == 1}">Full Time - Offline</c:if>
+                                        <c:if test="${requestScope.post.formID == 2}">Full Time - Online</c:if>
+                                        <c:if test="${requestScope.post.formID == 3}">Full Time - Hybrid</c:if>
+                                        <c:if test="${requestScope.post.formID == 4}">Part Time - Offline</c:if>
+                                        <c:if test="${requestScope.post.formID == 5}">Part Time - Online</c:if>
+                                        <c:if test="${requestScope.post.formID == 6}">Part Time - Hybrid</c:if>
+                                        </p>
+                                        <p><i class="fa fa-angle-right text-primary me-2"></i>Mức lương: ${requestScope.post.salary}</p>
+                                    <p><i class="fa fa-angle-right text-primary me-2"></i>Địa chỉ: ${requestScope.post.address}</p>
+                                    <p><i class="fa fa-angle-right text-primary me-2"></i>Ngày bắt đầu: ${requestScope.post.startDate}</p>
+                                        <p class="m-0"><i class="fa fa-angle-right text-primary me-2"></i>Ngày kết thúc: ${requestScope.post.expiredDate}</p>
+                                    </div>
+                                    <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s">
+                                        <h4 class="mb-4">Company Detail</h4>
+                                        <p class="m-0">Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- Job Detail End -->
+                    <!-- Job Detail End -->
             </c:if>
 
             <!-- Back to Top -->
