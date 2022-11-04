@@ -112,6 +112,9 @@ public class PostController extends HttpServlet {
                     break;
                 case "post-detail":
                     int postID = Integer.parseInt(request.getParameter("postID"));
+                    ApplicationPostDTO post = postDAO.loadApplicationPostWithName(postID);
+                    request.setAttribute("post", post);
+                    request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
                     break;
                 default:
                     break;

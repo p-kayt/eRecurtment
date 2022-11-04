@@ -170,6 +170,8 @@ public class JobController extends HttpServlet {
                     int formID = Integer.parseInt(request.getParameter("formID"));
                     int statusID = Integer.parseInt(request.getParameter("statusID"));
                     positionID = Integer.parseInt(request.getParameter("positionID"));
+                    
+                    log(postDescription.toUpperCase());
 
                     ApplicationPostDTO editingPost = new ApplicationPostDTO();
                     editingPost.setPostID(postID);

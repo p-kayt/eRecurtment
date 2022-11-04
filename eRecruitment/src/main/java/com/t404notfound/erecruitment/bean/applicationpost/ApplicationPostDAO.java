@@ -763,6 +763,51 @@ public class ApplicationPostDAO {
         return null;
     }
 
+    public ApplicationPostDTO loadApplicationPostWithName(int postID) {
+        String sql = "select post.PostID, post.PostDescription, post.Salary, post.HiringQuantity, post.CreateDate, post.StartDate, post.ExpiredDate, post.PositionID, post.FormID, post.StatusID, position.PositionName"
+                + " from ApplicationPost as post"
+                + " join ApplicationPosition as position on post.PositionID = position.PositionID"
+                + " where post.PostID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, postID);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                ApplicationPostDTO post = new ApplicationPostDTO();
+                post.setPostID(postID);
+                post.setPostDescription(rs.getNString("PostDescription"));
+                post.setSalary(rs.getNString("Salary"));
+                post.setHiringQuantity(rs.getInt("HiringQuantity"));
+                post.setCreatedDate(rs.getDate("CreateDate"));
+                post.setStartDate(rs.getDate("StartDate"));
+                post.setExpiredDate(rs.getDate("ExpiredDate"));
+                post.setPositionID(rs.getInt("PositionID"));
+                post.setFormID(rs.getInt("FormID"));
+                post.setStatusID(rs.getInt("StatusID"));
+                post.setPositionName(rs.getNString("PositionName"));
+
+                post.setBenefitList(loadPostBenefits(postID));
+                post.setSkillList(loadPostSkills(postID));
+                post.setRequirementList(loadPostRequirements(postID));
+                post.setStageList(loadPostStages(postID));
+
+                return post;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
+
     // load posts list
     public ArrayList<ApplicationPostDTO> listApplicationPosts() {
         String sql = "select PostID, PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID from ApplicationPost";
@@ -858,8 +903,8 @@ public class ApplicationPostDAO {
         }
         return null;
     }
-    
-        public ArrayList<ApplicationPostDTO> listFullTimePost() {
+
+    public ArrayList<ApplicationPostDTO> listFullTimePost() {
         // select top 10 post with post working form is FULLTIME (1, 2, 3)
         // post status is HIRING
         // with position status is HIRING
@@ -964,7 +1009,7 @@ public class ApplicationPostDAO {
         }
         return null;
     }
-    
+
     public ArrayList<ApplicationPostDTO> listPartTimePost() {
         // select top 10 post with post working form is PARTTIME (4,5,6)
         // post status is HIRING
@@ -1069,7 +1114,7 @@ public class ApplicationPostDAO {
         }
         return null;
     }
-    
+
     public ArrayList<ApplicationPostDTO> listHighestHiringQuantityPosts() {
         // select top 4 post
         // post status is HIRING
@@ -1253,7 +1298,7 @@ public class ApplicationPostDAO {
         }
         return null;
     }
-    
+
     public ArrayList<ApplicationPostDTO> searchApplicationPosts(String keyword, int statusID) {
         String sql = "select PostID, PostDescription, Salary, post.HiringQuantity, CreateDate, StartDate, ExpiredDate, post.PositionID, FormID, post.StatusID, position.PositionName "
                 + " from ApplicationPost post inner join ApplicationPosition position on post.PositionID = position.PositionID"
@@ -1351,7 +1396,7 @@ public class ApplicationPostDAO {
         }
         return null;
     }
-    
+
     // Delete Post
     public int deleteApplicationPost(int postID) {
         int result = 0;
@@ -1478,8 +1523,7 @@ public class ApplicationPostDAO {
     public static void main(String[] args) {
 
         ApplicationPostDAO dao = new ApplicationPostDAO();
-//        int result = dao.deleteApplicationPost(4);
-//        System.out.println(result);
+
 
     }
 }

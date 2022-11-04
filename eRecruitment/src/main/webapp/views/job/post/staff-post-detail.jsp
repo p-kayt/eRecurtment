@@ -158,7 +158,6 @@
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal">
                                         Xóa bài đăng
                                     </button>
-
                                 </div>
                                 <!-- Form chua thong tin de tao buoi phong van Interview -->
                                 <div class="col-3 m-1 text-center">
