@@ -33,62 +33,69 @@
         </c:if>
 
         <section>
-            <div>
-                <c:choose>
-                    <c:when test= "${not empty InterviewList}">
+            <c:choose>
+                <c:when test = "${user.userRole == 2 || user.userRole == 3}">
+                    <div>
                         <c:choose>
-                            <c:when test="${(InterviewList.size() == 0)}">
-                                <p>Chưa có cuộc phỏng vấn nào.</p>
-                            </c:when>  
-                            <c:otherwise>
-                                <h3>Danh sách các cuộc phỏng vấn</h3>
-                                <div class="border border-1 m-5 p-4 shadow">
-                                    <c:forEach items="${InterviewList}" var="p" varStatus="loop">
-                                        <div>
+                            <c:when test= "${not empty InterviewList}">
+                                <c:choose>
+                                    <c:when test="${(InterviewList.size() == 0)}">
+                                        <p>Chưa có cuộc phỏng vấn nào.</p>
+                                    </c:when>  
+                                    <c:otherwise>
+                                        <h3>Danh sách các cuộc phỏng vấn</h3>
+                                        <div class="border border-1 m-5 p-4 shadow">
+                                            <c:forEach items="${InterviewList}" var="p" varStatus="loop">
+                                                <div>
 
-                                            <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
-                                                <p>${status}<p>
-                                                </c:forEach>
+                                                    <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
+                                                        <p>${status}<p>
+                                                        </c:forEach>
 
-                                                <c:forEach items="${listInterviewStage}" begin="${loop.index}" end="${loop.index}" step="1" var="stage">
-                                                <p>${stage}<p>
-                                                </c:forEach>
-                                            <div style = "background: #ccc;">
-                                                <p>Mô tả</p>
-                                                <p>${p.getDescription()}</p>
-                                            </div>
-                                            <p>${p.getTime()}</p>
-                                            <p>This is post detail  ${p.getPostID()}</p>
-                                            <form action="interview" method="post" >
+                                                        <c:forEach items="${listInterviewStage}" begin="${loop.index}" end="${loop.index}" step="1" var="stage">
+                                                        <p>${stage}<p>
+                                                        </c:forEach>
+                                                    <div style = "background: #ccc;">
+                                                        <p>Mô tả</p>
+                                                        <p>${p.getDescription()}</p>
+                                                    </div>
+                                                    <p>${p.getTime()}</p>
+                                                    <p>This is post detail  ${p.getPostID()}</p>
+                                                    <form action="interview" method="post" >
 
-                                                <input type="hidden" name="postID" value="${p.getPostID()}">
-                                                <input type="hidden" name="interviewID" value="${p.getInterviewID()}">
+                                                        <input type="hidden" name="postID" value="${p.getPostID()}">
+                                                        <input type="hidden" name="interviewID" value="${p.getInterviewID()}">
 
-                                                <c:choose>
-                                                    <c:when test = "${(p.bookerID == userID)}">
-                                                        <input type="hidden" name="action" value="interviewDetail">
-                                                        <input type="submit" value="Chỉnh sửa">
-                                                    </c:when>
+                                                        <c:choose>
+                                                            <c:when test = "${(p.bookerID == userID)}">
+                                                                <input type="hidden" name="action" value="interviewDetail">
+                                                                <input type="submit" value="Chỉnh sửa">
+                                                            </c:when>
 
-                                                    <c:otherwise>
-                                                        <input type="hidden" name="action" value="viewInterviewDetail">
-                                                        <p>PS: Chưa làm phan hiển thị interview (view only)</p>
-                                                        <input type="submit" value="Chi tiết">
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </form>
+                                                            <c:otherwise>
+                                                                <input type="hidden" name="action" value="viewInterviewDetail">
+                                                                <p>PS: Chưa làm phan hiển thị interview (view only)</p>
+                                                                <input type="submit" value="Chi tiết">
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </form>
+                                                </div>
+                                            </c:forEach>
                                         </div>
-                                    </c:forEach>
-                                </div>
+                                    </c:otherwise>
+                                </c:choose>
+
+                            </c:when>    
+                            <c:otherwise>
+                                <p>Chưa có cuộc phỏng vấn nào.</p>
                             </c:otherwise>
                         </c:choose>
-
-                    </c:when>    
-                    <c:otherwise>
-                        <p>Chưa có cuộc phỏng vấn nào.</p>
-                    </c:otherwise>
-                </c:choose>
-            </div>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <h2>Bạn không có quyền truy cập trang này</h2>
+                </c:otherwise>
+            </c:choose>
         </section>
 
 

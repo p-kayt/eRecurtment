@@ -25,8 +25,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author MINH TRI
  */
-@WebServlet(name = "InterviewOfInterviewerController", urlPatterns = {"/interviewer-interview"})
-public class InterviewOfInterviewerController extends HttpServlet {
+@WebServlet(name = "InterviewOfInterviewerController", urlPatterns = {"/interviewer/interview"})
+public class InterviewerInterviewController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -117,7 +117,7 @@ public class InterviewOfInterviewerController extends HttpServlet {
                 request.setAttribute("listInterviewStage", listInterviewStage);
 
                 request.setAttribute("InterviewList", InterviewList);
-                request.getRequestDispatcher("/views/Interviewer/interview-list.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/candidate/interview-list.jsp").forward(request, response);
             } else if (action.equalsIgnoreCase("showInterviewHistory")) {
                 InterviewDAO interviewDAO = new InterviewDAO();
                 ArrayList<InterviewDTO> InterviewList = interviewDAO.getInterviewOfInterviewerByStatus(user.getUserID(), 3);
@@ -140,7 +140,7 @@ public class InterviewOfInterviewerController extends HttpServlet {
                 request.setAttribute("listInterviewStage", listInterviewStage);
 
                 request.setAttribute("InterviewList", InterviewList);
-                request.getRequestDispatcher("/views/Interviewer/interview-list.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/candidate/interview-list.jsp").forward(request, response);
             } else {
                 response.sendRedirect(request.getContextPath() + "/home");
             }

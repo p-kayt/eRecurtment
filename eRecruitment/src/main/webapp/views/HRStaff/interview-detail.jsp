@@ -28,7 +28,7 @@
         <%ArrayList<ParticipantDTO> listParticipant = (ArrayList<ParticipantDTO>) request.getAttribute("listParticipant");%>
 
 
-        <title><c:if test="${not empty user}"><%=user.getFirstName()%> <%=user.getLastName()%></c:if></title>
+        <title><c:if test="${not empty user}">${user.firstName} ${user.lastName}</c:if></title>
             <meta content="width=device-width, initial-scale=1.0" name="viewport" />
             <meta content="" name="keywords" />
             <meta content="" name="description" />
@@ -73,7 +73,7 @@
             <section>
                 <c:choose>
                     <c:when test = "${user.userRole == 2 || user.userRole == 3}">
-                        <c:if test="<%=(interview != null)%>"> 
+                        <c:if test="${not empty interview}"> 
                             <div class="d-flex flex-column justify-content-center align-middle m-4 p-5 border border-2 shadow">
                                 <div class="d-flex flex-column">
                                     <form action="interview" method = "post" id="form1">
@@ -82,8 +82,8 @@
                                                 <h4>Mô tả bài đăng ${postDescription}</h4>
                                             </div>
                                             <select class="col-2" id = "statusID" name= "statusID">
-                                                <c:if test ="<%=(interviewStatus != null)%>" >
-                                                    <c:forEach items="<%=interviewStatus%>" var="i" varStatus="count">
+                                                <c:if test ="${not empty interviewStatus}" >
+                                                    <c:forEach items="${interviewStatus}" var="i" varStatus="count">
                                                         <option value = "${count.index + 1}" ${(count.index + 1) == interview.inteviewStatusID ? "selected" : ""} >${i}</option>   
                                                     </c:forEach>
                                                 </c:if>
@@ -93,8 +93,8 @@
                                             <label for="stageID">Tên vòng phỏng vấn</label>
                                             <%--Need fix this, must load stage from database--%>
                                             <select  id="stage" name ="stage" disabled>
-                                                <c:if test ="<%=(interviewStage != null)%>" >
-                                                    <c:forEach items="<%=interviewStage%>" var="i" varStatus="count">
+                                                <c:if test ="${not empty interviewStage}" >
+                                                    <c:forEach items="${interviewStage}" var="i" varStatus="count">
                                                         <option value = "${count.index + 1}" ${(count.index + 1) == interview.stageID ? "selected" : ""} >${i}</option>   
                                                     </c:forEach>
                                                 </c:if>
@@ -104,7 +104,7 @@
 
                                             <div class="col-12">
                                                 <label class="col-2" for="description">Mô tả</label>
-                                                <textarea class="col-8" rows="4" cols="60" name="description" form="form1"><%=interview.getDescription()%></textarea> <br/>
+                                                <textarea class="col-8" rows="4" cols="60" name="description" form="form1">${interview.description}</textarea> <br/>
                                             </div>
 
                                             <div class="col-12">

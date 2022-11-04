@@ -1,6 +1,6 @@
 <%-- 
-    Document   : interview-list
-    Created on : Oct 24, 2022, 4:03:17 PM
+    Document   : interview-detail
+    Created on : Nov 4, 2022, 5:30:37 PM
     Author     : MINH TRI
 --%>
 
