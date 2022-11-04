@@ -25,8 +25,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author MINH TRI
  */
-@WebServlet(name = "InterviewOfInterviewerController", urlPatterns = {"/interviewer/interview"})
-public class InterviewerInterviewController extends HttpServlet {
+@WebServlet(name = "CommonInterviewController", urlPatterns = {"/common-interview"})
+public class CommonInterviewController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,6 +50,11 @@ public class InterviewerInterviewController extends HttpServlet {
             interviewID = Integer.parseInt(request.getParameter("interviewID"));
         };
         String action = request.getParameter("action");
+        
+        int postID = 0;
+        if (request.getParameter("postID") != null) {
+            postID = Integer.parseInt(request.getParameter("postID"));
+        };
 
         if (action != null) {
             if (action.equalsIgnoreCase("showInterviewDetail")) {
@@ -95,7 +100,7 @@ public class InterviewerInterviewController extends HttpServlet {
                 request.setAttribute("interviewID", interviewID);
                 request.getRequestDispatcher("/views/Interviewer/interview-detail.jsp").forward(request, response);
                 return;
-            } else if (action.equalsIgnoreCase("showPendingInterview")) {
+            } else if (action.equalsIgnoreCase("showInterviewerPendingInterview")) {
                 InterviewDAO interviewDAO = new InterviewDAO();
                 ArrayList<InterviewDTO> InterviewList = interviewDAO.getInterviewOfInterviewerByStatus(user.getUserID(), 1);
                 ArrayList<String> listInterviewStatus = new ArrayList<>();
@@ -118,7 +123,35 @@ public class InterviewerInterviewController extends HttpServlet {
 
                 request.setAttribute("InterviewList", InterviewList);
                 request.getRequestDispatcher("/views/candidate/interview-list.jsp").forward(request, response);
-            } else if (action.equalsIgnoreCase("showInterviewHistory")) {
+            } else if (action.equalsIgnoreCase("showCandidatePendingInterview")) {
+                InterviewDAO interviewDAO = new InterviewDAO();
+                int userID = user.getUserID();
+                ArrayList<InterviewDTO> InterviewList = interviewDAO.getInterviewOfCandidateByStatus(user.getUserID(), 1);
+                ArrayList<String> listInterviewStatus = new ArrayList<>();
+                ArrayList<String> listInterviewStage = new ArrayList<>();
+                ArrayList<String> candidateInterviewTime = new ArrayList<>();
+
+                for (int i = 0; i < InterviewList.size(); i++) {
+                    int interviewPostID = InterviewList.get(i).getPostID();
+                    int stageIndex = InterviewList.get(i).getStageID();
+                    int statusID = InterviewList.get(i).getInteviewStatusID();
+
+                    String time = interviewDAO.getCandidateInterviewTime(userID, InterviewList.get(i).getInterviewID());
+                    String stageName = interviewDAO.getInteviewStage(interviewPostID, stageIndex);
+                    String statusName = interviewDAO.getInteviewStatus(statusID);
+                    listInterviewStage.add(stageName);
+                    listInterviewStatus.add(statusName);
+                    candidateInterviewTime.add(time);
+                }
+
+                request.setAttribute("userID", userID);
+                request.setAttribute("listInterviewStatus", listInterviewStatus);
+                request.setAttribute("listInterviewStage", listInterviewStage);
+                request.setAttribute("candidateInterviewTime", candidateInterviewTime);
+
+                request.setAttribute("InterviewList", InterviewList);
+                request.getRequestDispatcher("/views/candidate/interview-list.jsp").forward(request, response);
+            } else if (action.equalsIgnoreCase("showInterviewerInterviewHistory")) {
                 InterviewDAO interviewDAO = new InterviewDAO();
                 ArrayList<InterviewDTO> InterviewList = interviewDAO.getInterviewOfInterviewerByStatus(user.getUserID(), 3);
                 ArrayList<String> listInterviewStatus = new ArrayList<>();
@@ -141,6 +174,62 @@ public class InterviewerInterviewController extends HttpServlet {
 
                 request.setAttribute("InterviewList", InterviewList);
                 request.getRequestDispatcher("/views/candidate/interview-list.jsp").forward(request, response);
+            } else if (action.equalsIgnoreCase("showCandidateInterviewHistory")) {
+                InterviewDAO interviewDAO = new InterviewDAO();
+                ArrayList<InterviewDTO> InterviewList = interviewDAO.getInterviewOfCandidateByStatus(user.getUserID(), 3);
+                ArrayList<String> listInterviewStatus = new ArrayList<>();
+                ArrayList<String> listInterviewStage = new ArrayList<>();
+                ArrayList<String> listResultOfCandidate = new ArrayList<>();
+                ArrayList<String> candidateInterviewTime = new ArrayList<>();
+                int userID = user.getUserID();
+
+                for (int i = 0; i < InterviewList.size(); i++) {
+                    int interviewPostID = InterviewList.get(i).getPostID();
+                    int stageIndex = InterviewList.get(i).getStageID();
+                    int statusID = InterviewList.get(i).getInteviewStatusID();
+
+                    String time = interviewDAO.getCandidateInterviewTime(userID, InterviewList.get(i).getInterviewID());
+                    String result = interviewDAO.getResultOfCandidate(userID, InterviewList.get(i).getInterviewID());
+                    String stageName = interviewDAO.getInteviewStage(interviewPostID, stageIndex);
+                    String statusName = interviewDAO.getInteviewStatus(statusID);
+                    listInterviewStage.add(stageName);
+                    listInterviewStatus.add(statusName);
+                    listResultOfCandidate.add(result);
+                    candidateInterviewTime.add(time);
+                }
+
+                request.setAttribute("userID", userID);
+                request.setAttribute("listInterviewStatus", listInterviewStatus);
+                request.setAttribute("listInterviewStage", listInterviewStage);
+                request.setAttribute("listResultOfCandidate", listResultOfCandidate);
+                request.setAttribute("candidateInterviewTime", candidateInterviewTime);
+
+                request.setAttribute("InterviewList", InterviewList);
+                request.getRequestDispatcher("/views/candidate/interview-list.jsp").forward(request, response);
+            } else if (action.equalsIgnoreCase("showCandidateInterviewDetail")) {
+                // must contain postID and interviewID
+                
+                InterviewDAO interviewDAO = new InterviewDAO();
+                int userID = user.getUserID();
+                
+                InterviewerDAO interviewerDAO = new InterviewerDAO();
+                InterviewDTO interview = interviewDAO.getInterview(interviewID);
+                int bookerID = interview.getBookerID();
+                UserDTO booker = userDAO.getUserByID(bookerID);
+                String stageName = interviewDAO.getInteviewStage(postID, interview.getStageID());
+                String formatName = interviewDAO.getInterviewFormat(interview.getFormatID());
+                String time = interviewDAO.getCandidateInterviewTime(userID, interviewID);
+                String result = interviewDAO.getResultOfCandidate(userID, interviewID);
+                ArrayList<UserDTO> listInterviewer = interviewerDAO.getInterviewer(interviewID);
+                
+                request.setAttribute("listInterviewer", listInterviewer);
+                request.setAttribute("result", result);
+                request.setAttribute("time", time);
+                request.setAttribute("formatName", formatName);
+                request.setAttribute("stageName", stageName);
+                request.setAttribute("booker", booker);
+                request.setAttribute("interview", interview);
+                request.getRequestDispatcher("/views/candidate/interview-detail.jsp").forward(request, response);
             } else {
                 response.sendRedirect(request.getContextPath() + "/home");
             }

@@ -25,8 +25,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author MINH TRI
  */
-@WebServlet(name = "InterviewController", urlPatterns = {"/interview"})
-public class InterviewController extends HttpServlet {
+@WebServlet(name = "HRInterviewController", urlPatterns = {"/interview"})
+public class HRInterviewController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
