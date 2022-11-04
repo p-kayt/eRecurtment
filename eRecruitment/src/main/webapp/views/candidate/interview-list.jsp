@@ -94,6 +94,7 @@
                                                         <input type="hidden" name="action" value="showCandidateInterviewDetail">
                                                     </c:when>
                                                     <c:otherwise>
+                                                        <input type="hidden" name="option" value="${option}">
                                                         <input type="hidden" name="action" value="showInterviewerInterviewDetail">
                                                     </c:otherwise>
                                                 </c:choose>

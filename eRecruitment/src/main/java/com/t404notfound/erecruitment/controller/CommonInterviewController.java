@@ -50,7 +50,7 @@ public class CommonInterviewController extends HttpServlet {
             interviewID = Integer.parseInt(request.getParameter("interviewID"));
         };
         String action = request.getParameter("action");
-        
+
         int postID = 0;
         if (request.getParameter("postID") != null) {
             postID = Integer.parseInt(request.getParameter("postID"));
@@ -121,6 +121,7 @@ public class CommonInterviewController extends HttpServlet {
                 request.setAttribute("listInterviewStatus", listInterviewStatus);
                 request.setAttribute("listInterviewStage", listInterviewStage);
 
+                request.setAttribute("option", "pending");
                 request.setAttribute("InterviewList", InterviewList);
                 request.getRequestDispatcher("/views/candidate/interview-list.jsp").forward(request, response);
             } else if (action.equalsIgnoreCase("showCandidatePendingInterview")) {
@@ -172,6 +173,7 @@ public class CommonInterviewController extends HttpServlet {
                 request.setAttribute("listInterviewStatus", listInterviewStatus);
                 request.setAttribute("listInterviewStage", listInterviewStage);
 
+                request.setAttribute("option", "history");
                 request.setAttribute("InterviewList", InterviewList);
                 request.getRequestDispatcher("/views/candidate/interview-list.jsp").forward(request, response);
             } else if (action.equalsIgnoreCase("showCandidateInterviewHistory")) {
@@ -208,10 +210,10 @@ public class CommonInterviewController extends HttpServlet {
                 request.getRequestDispatcher("/views/candidate/interview-list.jsp").forward(request, response);
             } else if (action.equalsIgnoreCase("showCandidateInterviewDetail")) {
                 // must contain postID and interviewID
-                
+
                 InterviewDAO interviewDAO = new InterviewDAO();
                 int userID = user.getUserID();
-                
+
                 InterviewerDAO interviewerDAO = new InterviewerDAO();
                 InterviewDTO interview = interviewDAO.getInterview(interviewID);
                 int bookerID = interview.getBookerID();
@@ -221,7 +223,7 @@ public class CommonInterviewController extends HttpServlet {
                 String time = interviewDAO.getCandidateInterviewTime(userID, interviewID);
                 String result = interviewDAO.getResultOfCandidate(userID, interviewID);
                 ArrayList<UserDTO> listInterviewer = interviewerDAO.getInterviewer(interviewID);
-                
+
                 request.setAttribute("listInterviewer", listInterviewer);
                 request.setAttribute("result", result);
                 request.setAttribute("time", time);
@@ -230,6 +232,59 @@ public class CommonInterviewController extends HttpServlet {
                 request.setAttribute("booker", booker);
                 request.setAttribute("interview", interview);
                 request.getRequestDispatcher("/views/candidate/interview-detail.jsp").forward(request, response);
+            } else if (action.equalsIgnoreCase("showInterviewerInterviewDetail")) {
+                // must contain postID and interviewID and option of this interview
+
+                String option = request.getParameter("option");  //pending or history
+                int resultID;
+
+                switch (option.toLowerCase()) {
+                    case "pending":
+                        resultID = 1;
+                        break;
+                    case "history":
+                        resultID = 2;
+                        break;
+                    default:
+                        resultID = 1;
+                }
+
+                ParticipantDAO participantDAO = new ParticipantDAO();
+                InterviewDAO interviewDAO = new InterviewDAO();
+                int userID = user.getUserID();
+
+                InterviewerDAO interviewerDAO = new InterviewerDAO();
+                InterviewDTO interview = interviewDAO.getInterview(interviewID);
+                int bookerID = interview.getBookerID();
+                UserDTO booker = userDAO.getUserByID(bookerID);
+                String stageName = interviewDAO.getInteviewStage(postID, interview.getStageID());
+                String formatName = interviewDAO.getInterviewFormat(interview.getFormatID());
+                
+                String statusName = interviewDAO.getInteviewStatus(interview.getInteviewStatusID());
+                ArrayList<UserDTO> listInterviewer = interviewerDAO.getInterviewer(interviewID);
+                
+                //get list candidate
+                ArrayList<UserDTO> listCandidate = participantDAO.getListCandidateByResult(interviewID, resultID);
+                request.setAttribute("listCandidate", listCandidate);
+                //get list candidate
+                //get time of candidates
+                ArrayList<String> candidateInterviewTime = new ArrayList<>();
+                for (UserDTO u : listCandidate) {
+                    String time = interviewDAO.getCandidateInterviewTime(u.getUserID(), interviewID);
+                    candidateInterviewTime.add(time);
+                }
+                //get time of candidates
+                
+
+                request.setAttribute("listInterviewer", listInterviewer);
+                request.setAttribute("statusName", statusName);
+                request.setAttribute("listCandidate", listCandidate);
+                request.setAttribute("candidateInterviewTime", candidateInterviewTime);
+                request.setAttribute("formatName", formatName);
+                request.setAttribute("stageName", stageName);
+                request.setAttribute("booker", booker);
+                request.setAttribute("interview", interview);
+                request.getRequestDispatcher("/views/Interviewer/interview-detail.jsp").forward(request, response);
             } else {
                 response.sendRedirect(request.getContextPath() + "/home");
             }
