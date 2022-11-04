@@ -45,7 +45,7 @@
         <link href="css/style-dltemp.css" rel="stylesheet" />
     </head>
     <body>
-        <div>
+        <div class="container-xxl bg-white p-0">
             <c:if test="${empty sessionScope.user}">
                 <jsp:include page="../../header/header_loginbtn.jsp" />
             </c:if>
@@ -53,9 +53,11 @@
             <c:if test="${not empty sessionScope.user}">
                 <jsp:include page="../../header/header_logoutbtn.jsp" />
             </c:if>
-            <div>
-                <div>
-                    <h1>Kết Quả Tìm Kiếm Bài Đăng</h1>
+
+            <div class="container-xxl py-5 bg-dark page-header">
+                <div class="container my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Tìm Kiếm Bài Đăng</h1>
+
                 </div>
             </div>
             <!-- Search Start -->
@@ -75,116 +77,141 @@
                                             type="text"
                                             class="form-control border-0"
                                             name="keyword"
-                                            placeholder="Tìm kiếm theo tên vị trí..."
+                                            placeholder="Tìm kiếm theo tên..."
                                             value="${requestScope.keyword}"
                                             />
                                     </div>
                                     <div class="col-md-4">
-                                        <select class="form-select border-0" name="statusID">
-                                            <option value="2" <c:if test="${requestScope.statusID == 2}">selected</c:if>>Pending</option>
-                                            <option value="3" <c:if test="${requestScope.statusID == 3}">selected</c:if>>Hiring</option>
-                                            <option value="4" <c:if test="${requestScope.statusID == 4}">selected</c:if>>Closed</option>
-                                            </select>
-                                        </div>
+                                        <input
+                                            type="text"
+                                            class="form-control border-0"
+                                            name="salary"
+                                            placeholder="Nhập mức lương..."
+                                            value="${requestScope.salary}"/>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-dark border-0 w-100">Tìm kiếm</button>
-                                </div>
                             </div>
-                            <div>
-                                <div class="col-md-4">
-                                    <input
-                                        type="text"
-                                        class="form-control border-0"
-                                        name="salary"
-                                        placeholder="Nhập mức lương..."
-                                        value="${requestScope.salary}"/>
+                            <div class="col-md-2">
+                                <button class="btn btn-dark border-0 w-100">Tìm kiếm</button>
                             </div>
                         </div>
-                        <div>
-                            <div class="col-md-4">
-                                <label for="workingForm">Hình thức làm việc</label>
-                                <select class="form-select border-0" name="workingForm" id="workingForm">
-                                    <option value="1" <c:if test="${requestScope.workingForm == 1}">selected</c:if>>Tất cả</option>
-                                    <option value="2" <c:if test="${requestScope.workingForm == 2}">selected</c:if>>Full Time</option>
-                                    <option value="3" <c:if test="${requestScope.workingForm == 3}">selected</c:if>>Part Time</option>
-                                    </select>
+                        <div class="col-md-10 d-flex">
+                            <div class="col-8 d-flex row g-2 "> 
+                                <div class="col-md-6">
+                                    <label class="text-white">Trạng thái</label>
+                                    <select class="form-select border-0" name="statusID">
+                                        <option value="2" <c:if test="${requestScope.statusID == 2}">selected</c:if>>Đang chờ</option>
+                                        <option value="3" <c:if test="${requestScope.statusID == 3}">selected</c:if>>Đang tuyển</option>
+                                        <option value="4" <c:if test="${requestScope.statusID == 4}">selected</c:if>>Đã đóng</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="text-white" for="workingForm">Hình thức làm việc</label>
+                                        <select class="form-select border-0" name="workingForm" id="workingForm">
+                                            <option value="1" <c:if test="${requestScope.workingForm == 1}">selected</c:if>>Tất cả</option>
+                                        <option value="2" <c:if test="${requestScope.workingForm == 2}">selected</c:if>>Full Time</option>
+                                        <option value="3" <c:if test="${requestScope.workingForm == 3}">selected</c:if>>Part Time</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="dateOrder">Sắp xếp theo</label>
+                                <div class="col-md-4 align-items-center mx-2 px-1">
+                                    <label class="text-white" for="dateOrder">Sắp xếp theo</label>
                                     <select class="form-select border-0" name="dateOrder" id="dateOrder">
                                         <option value="1" <c:if test="${requestScope.dateOrder == 1}">selected</c:if>>Ngày đóng tuyển dụng</option>
                                     <option value="2" <c:if test="${requestScope.dateOrder == 2}">selected</c:if>>Ngày bắt đầu tuyển dụng</option>
                                     </select>
                                 </div>
+                                <!--                                <span class="col-2"></span>-->
                             </div>
                         </div>
                     </div>
                 </form>
                 <!-- Search End -->
             <c:if test="${not empty requestScope.postList}">
-                <div class="tab-content">
-                    <div id="tab-1" class="tab-pane fade show p-0 active">
-                        <div class="row g-3">
-                            <c:forEach var="post" items="${requestScope.postList}" varStatus="status">
-                                <div class="job-item py-4 px-2 mb-3 col-6">
-                                    <div class="row g-4"  onclick="location.href='./post?action=post-detail&postID=${post.postID}'">
-                                        <div class="col-sm-12 col-md-6 d-flex align-items-center">
+                <div class="search-item">
 
-                                            <div class="text-start ps-4">
-                                                <h5 class="mb-3">${post.positionName}</h5>
-                                                <span class="text-truncate me-3"
+                    <div class="row g-1">
+                        <c:forEach var="post" items="${requestScope.postList}" varStatus="status">
+                            <div class="job-item py-4 px-2 mb-3">
+                                <div class="row g-4 justify-content-around"  onclick="location.href = './post?action=post-detail&postID=${post.postID}'">
+                                    <div class="col-sm-12 col-md-6 d-flex align-items-center">
+
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3">${post.positionName}</h5>
+                                            <span class="text-truncate me-3"
+                                                  ><i
+                                                    class="fa fa-map-marker-alt text-primary me-2"
+                                                    ></i
+                                                >${post.address}</span
+                                            >
+                                            <span class="text-truncate me-3"
+                                                  ><i class="far fa-clock text-primary me-2"></i>
+                                                <c:if test="${post.formID == 1}">Full Time - Offline</c:if>
+                                                <c:if test="${post.formID == 2}">Full Time - Online</c:if>
+                                                <c:if test="${post.formID == 3}">Full Time - Hybrid</c:if>
+                                                <c:if test="${post.formID == 4}">Part Time - Offline</c:if>
+                                                <c:if test="${post.formID == 5}">Part Time - Online</c:if>
+                                                <c:if test="${post.formID == 6}">Part Time - Hybrid</c:if>
+                                                </span
+                                                >
+                                                <span class="text-truncate me-0"
                                                       ><i
-                                                        class="fa fa-map-marker-alt text-primary me-2"
+                                                        class="far fa-money-bill-alt text-primary me-2"
                                                         ></i
-                                                    >${post.address}</span
-                                                >
-                                                <span class="text-truncate me-3"
-                                                      ><i class="far fa-clock text-primary me-2"></i>
-                                                    <c:if test="${post.formID == 1}">Full Time - Offline</c:if>
-                                                    <c:if test="${post.formID == 2}">Full Time - Online</c:if>
-                                                    <c:if test="${post.formID == 3}">Full Time - Hybrid</c:if>
-                                                    <c:if test="${post.formID == 4}">Part Time - Offline</c:if>
-                                                    <c:if test="${post.formID == 5}">Part Time - Online</c:if>
-                                                    <c:if test="${post.formID == 6}">Part Time - Hybrid</c:if>
-                                                    </span
-                                                    >
-                                                    <span class="text-truncate me-0"
-                                                          ><i
-                                                            class="far fa-money-bill-alt text-primary me-2"
-                                                            ></i
-                                                        >${post.salary}</span
-                                                >
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
-                                            >
-                                            <div class="d-flex mb-3">
-                                                <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
-                                            </div>
-                                            <small class="text-truncate"
-                                                   ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                >Bắt Đầu: ${post.startDate}</small
-                                            >
-                                            <small class="text-truncate"
-                                                   ><i class="far fa-calendar-alt text-primary me-2"></i
-                                                >Đóng: ${post.expiredDate}</small
+                                                    >${post.salary}</span
                                             >
                                         </div>
                                     </div>
+                                    <div
+                                        class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
+                                        >
+                                        <div class="d-flex mb-3">
+                                            <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
+                                        </div>
+                                        <small class="text-truncate"
+                                               ><i class="far fa-calendar-alt text-primary me-2"></i
+                                            >Bắt Đầu: ${post.startDate}</small
+                                        >
+                                        <small class="text-truncate"
+                                               ><i class="far fa-calendar-alt text-primary me-2"></i
+                                            >Đóng: ${post.expiredDate}</small
+                                        >
+
+                                    </div>
                                 </div>
-                            </c:forEach>
-                        </div>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
             </c:if>
             <c:if test="${empty requestScope.postList}">
-                <div>
-                    <h3>Không Tìm Thấy Bài Đăng Tương Ứng</h3>
+                <div class="alert alert-secondary alert-dismissible fade show d-flex flex-row justify-content-between" role="alert">
+                    <span>Không Tìm Thấy Bài Đăng Tương Ứng</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+
             </c:if>
+
+            <jsp:include page="../../footer/footer.jsp" />
+
+
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+               ><i class="bi bi-arrow-up"></i
+                ></a>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+            <script src="lib/wow/wow.min.js"></script>
+            <script src="lib/easing/easing.min.js"></script>
+            <script src="lib/waypoints/waypoints.min.js"></script>
+            <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+            <!--Javascript -->
+            <script src="js/main.js"></script>
         </div>
     </body>
 </html>

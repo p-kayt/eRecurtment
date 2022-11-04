@@ -70,7 +70,7 @@
                                         </h1>
 
                                         <a
-                                            href=""
+                                            href="./post?action=more-parttime"
                                             class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
                                             >Tìm ngay</a
                                         >
@@ -93,10 +93,9 @@
                                         </h1>
 
                                         <a
-                                            href=""
+                                            href="./post?action=more-parttime"
                                             class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
-                                            >Tìm ngay</a
-                                        >
+                                            >Tìm ngay</a>
 
                                     </div>
                                 </div>
