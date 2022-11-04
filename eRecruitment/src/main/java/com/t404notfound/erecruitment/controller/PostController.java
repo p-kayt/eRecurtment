@@ -110,6 +110,9 @@ public class PostController extends HttpServlet {
                     request.setAttribute("postList", postList);
                     request.getRequestDispatcher("views/job/post/search-post-result.jsp").forward(request, response);
                     break;
+                case "post-detail":
+                    int postID = Integer.parseInt(request.getParameter("postID"));
+                    break;
                 default:
                     break;
             }

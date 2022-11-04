@@ -190,7 +190,7 @@
                                     <c:if test="${not empty requestScope.highestQuantity}">
                                         <c:forEach var="post" items="${requestScope.highestQuantity}" varStatus="status">
                                             <div class="job-item py-4 px-2 mb-3 col-6">
-                                                <div class="row g-4" onclick="./post">
+                                                <div class="row g-4" onclick="location.href='./post?action=post-detail&postID=${post.postID}'">
                                                     <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
                                                         <div class="text-start ps-4">
@@ -254,7 +254,7 @@
                                     <c:if test="${not empty requestScope.fulltime}">
                                         <c:forEach var="post" items="${requestScope.fulltime}" varStatus="status">
                                             <div class="job-item py-4 px-2 mb-3 col-6">
-                                                <div class="row g-4">
+                                                <div class="row g-4" onclick="location.href='./post?action=post-detail&postID=${post.postID}'">
                                                     <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
                                                         <div class="text-start ps-4">
@@ -318,7 +318,7 @@
                                     <c:if test="${not empty requestScope.parttime}">
                                         <c:forEach var="post" items="${requestScope.parttime}" varStatus="status">
                                             <div class="job-item py-4 px-2 mb-3 col-6">
-                                                <div class="row g-4">
+                                                <div class="row g-4" onclick="location.href='./post?action=post-detail&postID=${post.postID}'">
                                                     <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
                                                         <div class="text-start ps-4">
