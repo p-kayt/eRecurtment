@@ -51,8 +51,8 @@
             <c:if test="${not empty user}">
                 <jsp:include page="../header/header_logoutbtn.jsp" />
             </c:if>
-
-
+            
+            
             <!-- Carousel Start -->
             <div class="container-fluid p-0">
                 <div class="owl-carousel header-carousel position-relative">

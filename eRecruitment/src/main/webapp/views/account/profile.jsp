@@ -6,11 +6,11 @@
 
 <%@page import="com.t404notfound.erecruitment.bean.cv.CVDTO"%>
 <%@page import="com.t404notfound.erecruitment.bean.UserDTO"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="vi">
     <%UserDTO user = (UserDTO) session.getAttribute("user");%>
     <head>
         <meta charset="UTF-8" />
@@ -46,7 +46,7 @@
     </head>
     <body>
         <div class="container-xxl bg-white p-0">
-            <!-- navi -->
+            <!-- navigation start -->
             <c:if test="${empty user}">
                 <jsp:include page="../header/header_loginbtn.jsp" />
             </c:if>
@@ -54,10 +54,15 @@
             <c:if test="${not empty user}">
                 <jsp:include page="../header/header_logoutbtn.jsp" />
             </c:if>
+            <!-- navigation end -->
             <!--Show CV-->
             <c:if test="${not empty user}">
-
                 <div class="d-flex flex-row mt-4 justify-content-center">
+                    <c:if test="${not empty requestScope.msg}}">
+                        <div>
+                            <p>${requestScope.msg}<p>
+                        </div>
+                    </c:if>
                     <div class="col-3">
                         <div class="profile-img d-flex flex-column col-12 h-auto border border-1 rounded rounded-2">
                             <div class="user_name">
@@ -217,9 +222,6 @@
                         </form>
                     </c:if>
                 </div>
-
-
-
             </c:if>
 
             <!--JavaScript-->

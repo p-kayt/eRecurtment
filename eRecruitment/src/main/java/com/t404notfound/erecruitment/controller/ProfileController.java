@@ -186,6 +186,12 @@ public class ProfileController extends HttpServlet {
         CVDTO cvdto = new CVDTO();
         cvdto = cvdao.loadCVByUserID(user.getUserID());
         request.setAttribute("cv", cvdto);
+    
+        // Hoa: message for Applying for a job
+        // But user role is not a CANDIDATE
+        String msg = (String)request.getAttribute("msg");
+        request.setAttribute("msg", msg);
+        //
         request.getRequestDispatcher("/views/account/profile.jsp").forward(request, response);
     }
 
