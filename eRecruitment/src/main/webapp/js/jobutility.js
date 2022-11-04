@@ -8,7 +8,11 @@ function addRequirement() {
     requirementCount++;
     var div = document.createElement("div");
     div.id = 'requirementContainer' + requirementCount;
-    div.innerHTML = '<label for="requirement">Yêu Cầu ' + requirementCount.toString() + '</label><input type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc...">';
+    div.classList.add('d-flex');
+    div.classList.add('flex-column');
+    div.classList.add('m-2');
+    div.classList.add('px-3');
+    div.innerHTML = '<label for="requirement">Yêu cầu ' + requirementCount.toString() + '</label><input class="col-11 mx-5 p-1" type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc...">';
     root = document.getElementById("requirementList");
     root.appendChild(div);
 }
@@ -27,7 +31,11 @@ function addBenefit() {
     benefitCount++;
     var div = document.createElement("div");
     div.id = 'benefitContainer' + benefitCount;
-    div.innerHTML = '<label for="benefit">Quyền Lợi ' + benefitCount.toString() + '</label><input type="text" id="benefit" name="benefit" value="" placeholder="Nhập quyền lợi...">';
+    div.classList.add('d-flex');
+    div.classList.add('flex-column');
+    div.classList.add('m-2');
+    div.classList.add('px-3');
+    div.innerHTML = '<label for="benefit">Quyền lợi ' + benefitCount.toString() + '</label><input class="col-11 mx-5 p-1" type="text" id="benefit" name="benefit" value="" placeholder="Nhập quyền lợi...">';
     root = document.getElementById("benefitList");
     root.appendChild(div);
 }
@@ -46,7 +54,14 @@ function addSkill() {
     skillCount++;
     var div = document.createElement("div");
     div.id = 'skillContainer' + skillCount;
-    div.innerHTML = '<div><label for="skillName">Kỹ Năng ' + skillCount.toString() + '</label><input type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng..."></div><div><label for="skillDescription">Mô Tả ' + skillCount.toString() + '</label><input type="text" id="skillDescription" name="skillDescription" value="" placeholder="Nhập mô tả kỹ năng..."></div>'
+    div.classList.add('d-flex');
+    div.classList.add('flex-row');
+    div.classList.add('justify-content-center');
+    div.classList.add('row');
+    div.classList.add('g-2');
+    div.classList.add('mx-2');
+    div.innerHTML = '<div class="d-flex flex-column col-6"><label class="m-1" for="skillName">Kỹ năng ' + skillCount.toString() + '</label><input class="m-1 p-1" type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng..."></div><div class="d-flex flex-column col-6"><label class="m-1" for="skillDescription">Mô Tả</label><input class="m-1 p-1" type="text" id="skillDescription" name="skillDescription" value="" placeholder="Nhập mô tả kỹ năng..."></div>'
+//     + skillCount.toString() + 
     root = document.getElementById("skillList");
     root.appendChild(div);
 }
@@ -65,7 +80,14 @@ function addStage() {
     stageCount++;
     var div = document.createElement("div");
     div.id = 'stageContainer' + stageCount;
-    div.innerHTML = '<div><label for="stageID">Vòng Ứng Tuyển ' + stageCount.toString() + '</label><select id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div><label for="description">Mô Tả ' + stageCount.toString() + '</label><input type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>';
+     div.classList.add('d-flex');
+    div.classList.add('flex-row');
+    div.classList.add('justify-content-center');
+    div.classList.add('row');
+    div.classList.add('g-2');
+    div.classList.add('mx-2');
+    div.innerHTML = '<div class="d-flex flex-column col-3"><label class="m-1" for="stageID">Vòng ' + stageCount.toString() + '</label><select class="p-1" id="stageID" name="stageID"><option value="1" selected>CV Applying</option><option value="2">Interview</option><option value="3">Finish</option><option value="4">Final Evaluation</option></select></div><div class="col-8 d-flex flex-column"><label class="m-1" for="description">Mô Tả</label><input class="p-1" type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển..."></div>';
+//     ' + stageCount.toString() + '
     root = document.getElementById("stageList");
     root.appendChild(div);
 }
