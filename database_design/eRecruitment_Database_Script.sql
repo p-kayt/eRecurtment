@@ -1,4 +1,4 @@
-﻿-- Made and Edit By Nguyễn Thái Hòa
+-- Made and Edit By Nguyễn Thái Hòa
 -- Review by Members of team 404NotFound
 USE [master]
 
@@ -183,7 +183,7 @@ CREATE TABLE CV(
 	CVID INT IDENTITY(1,1) NOT NULL,
 	FirstName NVARCHAR(50) NULL,
 	LastName NVARCHAR(50) NULL,
-	Avatar VARCHAR(512) NULL,
+	Avatar NVARCHAR(512) NULL,
 	Dob DATE NULL,
 	Introduction NVARCHAR(1000) NULL,
 	Email VARCHAR(254) UNIQUE NULL,
