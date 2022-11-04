@@ -83,7 +83,7 @@
                                         </div>
 
                                         <div>
-                                            <p>Thời gian: ${time}</p>
+                                            <p>Thời gian: ${interview.time}</p>
                                         </div>
                                         <c:choose> 
                                             <c:when test = "${formatName == 'Offline'}">
@@ -144,6 +144,13 @@
                                                                     <p>${time}<p>
                                                                     </c:forEach>
                                                                 </p>
+                                                            </div>
+                                                            <div>
+                                                                <form action="common-interview" method = "post" id = "${loop.count}">
+                                                                    <p>Đánh giá</p>
+                                                                    <textarea form ="${loop.count}" cols="50" rows="4" name="evaluate"></textarea>
+                                                                    <input type="submit" value = "Đánh giá">
+                                                                </form>
                                                             </div>
 
                                                         </div>
