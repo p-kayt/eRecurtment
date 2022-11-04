@@ -67,7 +67,7 @@
                     </nav> 
                 </div>
             </div>
-            
+
             <c:if test="${requestScope.FirstName != null && requestScope.LastName != null && requestScope.Email != null}">
                 <div class="d-flex flex-column m-4">
                     <div class="d-flex flex-column">
@@ -75,6 +75,11 @@
                         <h5 class="text-muted">${requestScope.Email}</h5>
                     </div>
                     <div>
+                        <form action = "./ManagerAcceptDecline" method = "POST" id = "Change Status"></form>
+                        <input type = "HIDDEN" name = "Email" value= "${requestScope.Email}" form = "Change Status">
+                        <input type = "HIDDEN" name = "FirstName" value= "${requestScope.FirstName}" form = "Change Status">
+                        <input type = "HIDDEN" name = "LastName" value= "${requestScope.LastName}" form = "Change Status">
+                        <input type = "HIDDEN" name = "SearchValue" value= "${requestScope.SearchValue}" form = "Change Status">
                         <c:if test="${requestScope.Status == 'In-progress'}">
                             <input class="btn btn-primary m-1" type = "SUBMIT" name = "action" value = "Phê duyệt" form = "Change Status">
                             <input class="btn btn-dark m-1" type = "SUBMIT" name = "action" value = "Từ chối" form = "Change Status">
@@ -88,9 +93,9 @@
                     </div>
                 </div>
             </c:if>
-            
+
             <jsp:include page="../cv/cv-read.jsp" />
-            
+
             <jsp:include page="../footer/footer.jsp" />
 
             <!-- Back to Top -->
