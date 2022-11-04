@@ -189,8 +189,8 @@ public class InterviewerDAO {
             System.out.println(userDTO.toString() + "\n");
         }
         System.out.println("======================");
-        test = dao.getInterviewer(1);
-        System.out.println("List");
+        test = dao.getInterviewer(2);
+        System.out.println("List interviewer");
         for (UserDTO userDTO : test) {
             userDTO.toString();
             System.out.println(userDTO.toString() + "\n");

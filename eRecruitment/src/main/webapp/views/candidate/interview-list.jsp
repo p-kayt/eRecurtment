@@ -49,6 +49,17 @@
                                             <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
                                                 <p>${status}<p>
                                                 </c:forEach>
+                                                <%--Hiển thị kết quả phỏng vấn của ứng viên nếu hành động là sem lịch sử phỏng vấn--%>
+
+                                                <c:if test = "${user.userRole == 1}"> 
+                                                    <c:if test = "${not empty listResultOfCandidate}">
+                                                        <c:forEach items="${listResultOfCandidate}" begin="${loop.index}" end="${loop.index}" step="1" var="result">
+                                                        <p>${result}<p>
+                                                        </c:forEach>
+                                                    </c:if>
+                                                </c:if>
+
+                                                <%--Hiển thị kết quả phỏng vấn của ứng viên nếu hành động là xem lịch sử phỏng vấn--%>
 
                                                 <c:forEach items="${listInterviewStage}" begin="${loop.index}" end="${loop.index}" step="1" var="stage">
                                                 <p>${stage}<p>
@@ -57,14 +68,38 @@
                                                 <p>Mô tả</p>
                                                 <p>${p.getDescription()}</p>
                                             </div>
-                                            <p>${p.getTime()}</p>
+                                            <p>Thời gian 
+                                                <c:choose>
+                                                    <c:when test = "${user.userRole == 1}">
+                                                        <c:forEach items="${candidateInterviewTime}" begin="${loop.index}" end="${loop.index}" step="1" var="time">
+                                                            ${time}
+                                                        </c:forEach>
+                                                    </c:when>
+
+                                                    <c:otherwise>
+                                                        ${p.getTime()}
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </p>
+
+
                                             <p>This is post detail  ${p.getPostID()}</p>
-                                            <form action="/interviewer/interview" method="post" >
+                                            <form action="common-interview" method="post" >
 
                                                 <input type="hidden" name="postID" value="${p.getPostID()}">
                                                 <input type="hidden" name="interviewID" value="${p.getInterviewID()}">
-                                                <input type="hidden" name="action" value="viewInterviewDetail">
-                                                <p>PS: Chưa làm phan hiển thị interview (view only)</p>
+
+                                                <c:choose>
+                                                    <c:when test = "${user.userRole == 1}">
+                                                        <input type="hidden" name="action" value="showCandidateInterviewDetail">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input type="hidden" name="option" value="${option}">
+                                                        <input type="hidden" name="action" value="showInterviewerInterviewDetail">
+                                                    </c:otherwise>
+                                                </c:choose>
+
+
                                                 <input type="submit" value="Chi tiết">
                                             </form>
                                         </div>

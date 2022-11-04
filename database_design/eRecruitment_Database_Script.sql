@@ -922,18 +922,18 @@ GO
 
 CREATE TABLE InterviewResult(
 	ResultID INT NOT NULL PRIMARY KEY,
-	ResultName VARCHAR(20) NOT NULL
+	ResultName NVARCHAR(20) NOT NULL
 )
 GO
 -- Các ứng viên sẽ có trạng thái kèm theo buổi phỏng vấn
 -- Đang chờ phỏng vấn, miễn phỏng vấn, pass, fail
-INSERT INTO InterviewResult (ResultID, ResultName) VALUES (1,'waiting')
+INSERT INTO InterviewResult (ResultID, ResultName) VALUES (1,N'Chờ phỏng vấn')
 GO
-INSERT INTO InterviewResult (ResultID, ResultName) VALUES (2,'nointerview')
+INSERT INTO InterviewResult (ResultID, ResultName) VALUES (2,N'Miễn phỏng vấn')
 GO
-INSERT INTO InterviewResult (ResultID, ResultName) VALUES (3,'pass')
+INSERT INTO InterviewResult (ResultID, ResultName) VALUES (3,N'Đậu phỏng vấn')
 GO
-INSERT INTO InterviewResult (ResultID, ResultName) VALUES (4,'fail')
+INSERT INTO InterviewResult (ResultID, ResultName) VALUES (4,N'Rớt phỏng vấn')
 GO
 
 CREATE TABLE Participant(
