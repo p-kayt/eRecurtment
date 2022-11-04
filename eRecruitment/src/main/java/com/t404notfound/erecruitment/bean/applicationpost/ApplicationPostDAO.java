@@ -1018,58 +1018,6 @@ public class ApplicationPostDAO {
         return null;
     }
 
-    public ArrayList<ApplicationPostDTO> listTop4RecentlyAddedPosts() {
-        // select top 4 post
-        // post status is HIRING
-        // with position status is HIRING
-        // order by CREATEDATE in descending order
-        String sql = "select top 4 post.PostID, post.PostDescription, post.Salary, post.HiringQuantity, post.CreateDate, post.StartDate, post.ExpiredDate, post.PositionID, post.FormID, post.StatusID, position.PositionName "
-                + "from ApplicationPost as post "
-                + "join ApplicationPosition as position on post.PositionID = position.PositionID "
-                + "where post.StatusID = 3 "
-                + "and position.StatusID = 3 "
-                + "order by post.CreateDate desc";
-        try {
-            cn = DBUtil.getConnection();
-            ArrayList<ApplicationPostDTO> list = new ArrayList<>();
-            PreparedStatement pst = cn.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
-                ApplicationPostDTO post = new ApplicationPostDTO();
-                post.setPostID(rs.getInt("PostID"));
-                post.setPostDescription(rs.getNString("PostDescription"));
-                post.setSalary(rs.getNString("Salary"));
-                post.setHiringQuantity(rs.getInt("HiringQuantity"));
-                post.setCreatedDate(rs.getDate("CreateDate"));
-                post.setStartDate(rs.getDate("StartDate"));
-                post.setExpiredDate(rs.getDate("ExpiredDate"));
-                post.setPositionID(rs.getInt("PositionID"));
-                post.setFormID(rs.getInt("FormID"));
-                post.setStatusID(rs.getInt("StatusID"));
-                post.setPositionName(rs.getNString("PositionName"));
-
-                post.setBenefitList(loadPostBenefits(post.getPostID()));
-                post.setSkillList(loadPostSkills(post.getPostID()));
-                post.setRequirementList(loadPostRequirements(post.getPostID()));
-                post.setStageList(loadPostStages(post.getPostID()));
-
-                list.add(post);
-            }
-            return list;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
-        return null;
-    }
-
     public ArrayList<ApplicationPostDTO> listTop10HighestHiringQuantityPosts() {
         // select top 4 post
         // post status is HIRING

@@ -202,7 +202,7 @@
                     <form action="./job" method="post">
                         <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                         <input type="hidden" name="postID" value="${requestScope.post.postID}">
-                        <input type="hidden" name="action" value="delete-post">
+                        <input type="hidden" name="action" value="delete-position">
                         <div class="modal-header">
                             <h5 class="modal-title">Bạn có chắc chắn muốn xóa vị trí này không?</h5> 
                         </div>
