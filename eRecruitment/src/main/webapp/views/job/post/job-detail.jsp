@@ -73,11 +73,16 @@
                 </div>
             </div>
             <!-- Header End -->
-
+            <c:if test="${not empty requestScope.msg}">
+                <div>
+                    <h3>${requestScope.msg}</h3>
+                </div>
+            </c:if>
             <c:if test="${not empty requestScope.post}">
                 <!-- Job Detail Start -->
                 <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="container">
+
                         <div class="row gy-5 gx-4">
                             <div class="col-lg-8">
                                 <div class="d-flex align-items-center mb-5">
@@ -202,10 +207,10 @@
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
-        
+
         <!-- script for displaying element -->
         <script>
-            
+
         </script>
     </body>
 </html>

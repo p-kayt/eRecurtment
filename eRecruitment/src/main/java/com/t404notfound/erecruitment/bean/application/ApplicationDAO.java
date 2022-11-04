@@ -73,10 +73,9 @@ public class ApplicationDAO {
             pst.setInt(5, dto.getPostID());
 
             result = pst.executeUpdate();
-            if (result != 0) {
-                cn.commit();
-                return result;
-            }
+
+            cn.commit();
+            return result;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -91,19 +90,39 @@ public class ApplicationDAO {
         return result;
     }
 
+    public boolean isUserApplying(int userID, int postID) {
+        String sql = "select ApplicationID from Application where UserID = ? and PostID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, userID);
+            pst.setInt(2, postID);
+            ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return true;
+    }
+
+    
     public static void main(String[] args) {
         ApplicationDAO dao = new ApplicationDAO();
-//        ApplicationDTO dto = new ApplicationDTO();
-//        long millis = System.currentTimeMillis();
-//        java.sql.Date date = new java.sql.Date(millis);
-//        dto.setApplyDate(date);
-//        dto.setStatusID(1);
-//        dto.setStageID(1);
-//        dto.setUserID(2);
-//        dto.setPostID(2);
-//
-//        int res = dao.addApplication(dto);
-//        System.out.println(res);
+        boolean res = dao.isUserApplying(2, 2);
+        System.out.println(res);
     }
 
 }
