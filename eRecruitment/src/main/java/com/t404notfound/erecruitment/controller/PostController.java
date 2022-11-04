@@ -8,6 +8,8 @@ import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositionDAO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDAO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDTO;
+import com.t404notfound.erecruitment.bean.cv.CVDAO;
+import com.t404notfound.erecruitment.bean.cv.CVDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -45,7 +47,9 @@ public class PostController extends HttpServlet {
             String msg = "";
             String action = request.getParameter("action");
             HttpSession session = request.getSession();
-            UserDTO user = (UserDTO)session.getAttribute("user");
+            UserDTO user = (UserDTO) session.getAttribute("user");
+            CVDAO cvDAO = new CVDAO();
+            CVDTO cv = new CVDTO();
             switch (action) {
                 case "search-posts":
                     String keyword = request.getParameter("keyword");
@@ -67,23 +71,21 @@ public class PostController extends HttpServlet {
                     request.setAttribute("workingForm", workingForm);
                     int dateOrder = Integer.parseInt(request.getParameter("dateOrder"));
                     request.setAttribute("dateOrder", dateOrder);
-                    
+
                     String formID = "";
-                    if(workingForm == 2){
+                    if (workingForm == 2) {
                         formID = " and post.FormID in (1, 2, 3)";
-                    }
-                    else if(workingForm == 3){
+                    } else if (workingForm == 3) {
                         formID = " and post.FormID in (4, 5, 6)";
                     }
-                    
+
                     String sortByDate = "";
-                    if(dateOrder == 1){
+                    if (dateOrder == 1) {
                         sortByDate = " order by ExpiredDate desc";
-                    }
-                    else{
+                    } else {
                         sortByDate = " order by StartDate desc";
                     }
-                    
+
                     postList = postDAO.advanceSearchApplicationPosts(keyword, statusID, salary, formID, sortByDate);
                     request.setAttribute("postList", postList);
                     request.getRequestDispatcher("views/job/post/search-post-result.jsp").forward(request, response);
@@ -91,7 +93,7 @@ public class PostController extends HttpServlet {
                 case "more-recommended":
                     request.setAttribute("statusID", 3);
                     request.setAttribute("workingForm", 1);
-                    
+
                     postList = postDAO.listHighestHiringQuantityPosts();
                     request.setAttribute("postList", postList);
                     request.getRequestDispatcher("views/job/post/search-post-result.jsp").forward(request, response);
@@ -99,7 +101,7 @@ public class PostController extends HttpServlet {
                 case "more-fulltime":
                     request.setAttribute("statusID", 3);
                     request.setAttribute("workingForm", 2);
-                    
+
                     postList = postDAO.listFullTimePost();
                     request.setAttribute("postList", postList);
                     request.getRequestDispatcher("views/job/post/search-post-result.jsp").forward(request, response);
@@ -107,7 +109,7 @@ public class PostController extends HttpServlet {
                 case "more-parttime":
                     request.setAttribute("statusID", 3);
                     request.setAttribute("workingForm", 3);
-                    
+
                     postList = postDAO.listPartTimePost();
                     request.setAttribute("postList", postList);
                     request.getRequestDispatcher("views/job/post/search-post-result.jsp").forward(request, response);
@@ -120,10 +122,40 @@ public class PostController extends HttpServlet {
                     break;
                 case "apply-for-post":
                     postID = Integer.parseInt(request.getParameter("postID"));
-                    if(user == null){
+                    // Check if user is LOGGED-IN or not
+                    if (user == null) {
+                        // User is NOT LOGGED-IN. 
                         msg = "Bạn Cần Phải Đăng Nhập Để Ứng Tuyển Vào Vị Trí";
                         request.setAttribute("msg", msg);
                         request.getRequestDispatcher("./login").forward(request, response);
+                    } // Check if user is a CANDIDATE or not
+                    else {
+                        // User is NOT a CANDIDATE
+                        if (user.getUserRole() != 1) {
+                            msg = "Bạn Không Phải Là Ứng Viên - Chỉ Có Ứng Viên Mới Được Quyền Ứng Tuyển Vào Các Vị Trí";
+                            request.setAttribute("msg", msg);
+                            request.getRequestDispatcher("./profile").forward(request, response);
+                        } // User is a CANDIDATE. Check if he/she has create a CV
+                        else {
+                            cv = cvDAO.loadCVByUserID(user.getUserID());
+                            // User has NOT create a CV
+                            if (cv == null) {
+                                msg = "Bạn Chưa Tạo CV - Ứng Viên Cần Tạo CV Để Ứng Tuyển Vào Các Vị Trí";
+                                request.setAttribute("msg", msg);
+                                request.getRequestDispatcher("./profile").forward(request, response);
+                            } // Check if user HAS ALREADY APPLIED for the post
+                            else {
+                                if (true) {
+
+                                } // All user conditions have been met
+                                // LOGGED-IN, IS A CANDIDATE, HAS CREATED A CV, DOES NOT APPLY FOR THIS POST YET
+                                // Add user application for the post and redirect to user's application list with anouncement
+                                else {
+
+                                }
+                            }
+                        }
+
                     }
                     break;
                 default:
