@@ -99,7 +99,7 @@
                             </div>
                             <div class="d-flex flex-row justify-content-center m-2">
                                 <label class="col-2" for="postDescription">Mô Tả</label>
-                                <textarea class="col-6" rows="5" type="text" id="postDescription" name="postDescription" value="${requestScope.post.postDescription}"></textarea>
+                                <textarea class="col-6" rows="5" type="text" id="postDescription" name="postDescription" value="${requestScope.post.postDescription}">${requestScope.post.postDescription}</textarea>
                             </div>
                             <div class="d-flex flex-row justify-content-center m-2">
                                 <label class="col-2" for="salary">Mức Lương</label>
