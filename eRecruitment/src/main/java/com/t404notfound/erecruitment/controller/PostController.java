@@ -155,7 +155,7 @@ public class PostController extends HttpServlet {
                                 boolean isApplying = appDAO.isUserApplying(user.getUserID(), postID);
                                 // User HAS ALREADY APPLIED for the post
                                 if (isApplying == true) {
-                                    msg = "Bạn Đã Ứng Tuyển Cho Vị Trí Này - Không Thể Ứng Tuyển Cho Cùng 1 Bài Đăng Công Việc";
+                                    msg = "Bạn Đã Ứng Tuyển Cho Vị Trí Này - Không Thể Ứng Tuyển Nhiều Lần Cho Cùng 1 Bài Đăng Công Việc";
                                     request.setAttribute("msg", msg);
                                     post = postDAO.loadApplicationPostWithName(postID);
                                     request.setAttribute("post", post);
@@ -170,7 +170,7 @@ public class PostController extends HttpServlet {
                                     ApplicationDTO application = new ApplicationDTO(0, currentDate, 1, initialStage, user.getUserID(), postID);
                                     result = appDAO.addApplication(application);
                                     if (result == 1) {
-                                        msg = "Ứng Tuyển Công Việc Thành Công - Xem Công Việc Ứng Tuyển Của Ứng Viên Ở Danh Sách Ứng Tuyển";
+                                        msg = "Ứng Tuyển Công Việc Thành Công - Xem Công Việc Ðã Ứng Tuyển Của Ứng Viên Ở Danh Sách Ứng Tuyển";
                                         request.setAttribute("msg", msg);
                                         request.setAttribute("post", post);
                                         request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
@@ -183,7 +183,6 @@ public class PostController extends HttpServlet {
                                 }
                             }
                         }
-
                     }
                     break;
                 default:
