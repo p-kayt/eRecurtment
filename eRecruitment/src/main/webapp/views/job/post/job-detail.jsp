@@ -6,7 +6,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Thông Tin Bài Đăng</title>
+        <title>Thông Tin Tuyển Dụng</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content="" name="keywords" />
         <meta content="" name="description" />
@@ -62,7 +62,7 @@
             <!-- Header End -->
             <div class="container-xxl py-5 bg-dark page-header mb-5">
                 <div class="container my-5 pt-5 pb-4">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">Thông Tin Bài Đăng</h1>
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Thông Tin Tuyển Dụng</h1>
                     <!-- <nav aria-label="breadcrumb">
                         <ol class="breadcrumb text-uppercase">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -83,7 +83,7 @@
                                 <div class="d-flex align-items-center mb-5">
                                     <!--                                <img class="flex-shrink-0 img-fluid border rounded" src="image/com-logo-2.jpg" alt="" style="width: 80px; height: 80px;">-->
                                     <div class="text-start ps-4">
-                                        <h3 class="mb-3">${requestScope.post.positionName}</h3>
+                                        <h3 class="mb-3">Vị Trí: ${requestScope.post.positionName}</h3>
                                         <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>${requestScope.post.address}</span>
                                         <span class="text-truncate me-3">
                                             <i class="far fa-clock text-primary me-2"></i>
@@ -112,7 +112,7 @@
                                         <c:forEach var="skill" items="${requestScope.post.skillList}">
                                             <li>
                                                 <div><i class="fa fa-angle-right text-primary me-2"></i>${skill.skillName}</div>
-                                                <div><i class="fa fa-minus text-primary me-2"></i>${skill.skillDescription}</div>
+                                                <div>${skill.skillDescription}</div>
                                             </li>
                                         </c:forEach>
                                     </ul>
@@ -123,17 +123,22 @@
                                             </c:forEach>
                                     </ul>
                                 </div>
-                                <div class="">
-                                    <h4 class="mb-4">Apply For The Job</h4>
+                                <div class="mb-5">
+                                    <form action="./post" method="post">
+                                        <input type="hidden" name="action" value="apply-for-post">
+                                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                        <input class="btn btn-primary" type="submit" value="Ứng Tuyển Ngay">
+                                    </form>
                                 </div>
                             </div>
 
                             <div class="col-lg-4">
                                 <div class="bg-light rounded p-5 mb-4 wow slideInUp" data-wow-delay="0.1s">
-                                    <h4 class="mb-4">Job Summery</h4>
+                                    <h4 class="mb-4">Thông Tin Cần Biết</h4>
 
                                     <p><i class="fa fa-angle-right text-primary me-2"></i>Số lượng tuyển: ${requestScope.post.hiringQuantity}</p>
-                                    <p><i class="fa fa-angle-right text-primary me-2"></i>Hình thức làm việc: 
+                                    <p>
+                                        <i class="fa fa-angle-right text-primary me-2"></i>Hình thức làm việc: 
                                         <c:if test="${requestScope.post.formID == 1}">Full Time - Offline</c:if>
                                         <c:if test="${requestScope.post.formID == 2}">Full Time - Online</c:if>
                                         <c:if test="${requestScope.post.formID == 3}">Full Time - Hybrid</c:if>
@@ -144,22 +149,48 @@
                                         <p><i class="fa fa-angle-right text-primary me-2"></i>Mức lương: ${requestScope.post.salary}</p>
                                     <p><i class="fa fa-angle-right text-primary me-2"></i>Địa chỉ: ${requestScope.post.address}</p>
                                     <p><i class="fa fa-angle-right text-primary me-2"></i>Ngày bắt đầu: ${requestScope.post.startDate}</p>
-                                        <p class="m-0"><i class="fa fa-angle-right text-primary me-2"></i>Ngày kết thúc: ${requestScope.post.expiredDate}</p>
+                                    <p><i class="fa fa-angle-right text-primary me-2"></i>Ngày kết thúc: ${requestScope.post.expiredDate}</p>
+                                    <p>
+                                        <i class="fa fa-angle-right text-primary me-2"></i>Trạng thái: 
+                                        <c:if test = "${requestScope.post.statusID == 1}">inActive</c:if>
+                                        <c:if test = "${requestScope.post.statusID == 2}">Đang chờ</c:if>
+                                        <c:if test = "${requestScope.post.statusID == 3}">Đang tuyển</c:if>
+                                        <c:if test = "${requestScope.post.statusID == 4}">Đã đóng</c:if>
+                                        </p>
                                     </div>
                                     <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s">
-                                        <h4 class="mb-4">Company Detail</h4>
-                                        <p class="m-0">Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.</p>
-                                    </div>
+                                        <h4 class="mb-4">Quy Trình Ứng Tuyển</h4>
+                                    <c:forEach var="stage" items="${requestScope.post.stageList}">
+                                        <div>
+                                            <div>
+                                                <p>
+                                                    <i class="fa fa-angle-right text-primary me-2"></i>
+                                                    <c:if test = "${stage.stageID == 1}">Ứng tuyển CV</c:if>
+                                                    <c:if test = "${stage.stageID == 2}">Phỏng vấn</c:if>
+                                                    <c:if test = "${stage.stageID == 3}">Kết thúc</c:if>
+                                                    <c:if test = "${stage.stageID == 4}">Đánh giá tổng kết</c:if>
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p>${stage.description}</p>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Job Detail End -->
+                </div>
+                <!-- Job Detail End -->
+            </c:if>
+            <c:if test="${empty requestScope.post}">
+                <h3 class="mb-3">Không tìm thấy bài đăng tuyển dụng</h3>
             </c:if>
 
             <!-- Back to Top -->
             <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
         </div>
+        <jsp:include page="../../footer/footer.jsp" />
 
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -171,6 +202,10 @@
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
+        
+        <!-- script for displaying element -->
+        <script>
+            
+        </script>
     </body>
-
 </html>

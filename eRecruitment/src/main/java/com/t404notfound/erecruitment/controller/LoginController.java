@@ -68,7 +68,7 @@ public class LoginController extends HttpServlet {
             UserDTO user = dao.login(email, password);
             if (user == null) {
                 request.setAttribute("email", email);
-                request.setAttribute("errorMessage", "Incorrect email or password");
+                request.setAttribute("errorMessage", "Email hoặc mật khẩu không chính xác");
             } else {
                 session.setAttribute("user", user);
 
@@ -95,6 +95,10 @@ public class LoginController extends HttpServlet {
                 return;
             }
         }
+        // Hoa: message for Applying for a job but not logged-in
+        String msg = (String)request.getAttribute("msg");
+        request.setAttribute("msg", msg);
+        //
         request.getRequestDispatcher("views/account/login.jsp").forward(request, response);
     }
 

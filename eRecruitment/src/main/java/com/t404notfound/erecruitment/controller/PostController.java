@@ -4,6 +4,7 @@
  */
 package com.t404notfound.erecruitment.controller;
 
+import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositionDAO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDAO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDTO;
@@ -44,6 +45,7 @@ public class PostController extends HttpServlet {
             String msg = "";
             String action = request.getParameter("action");
             HttpSession session = request.getSession();
+            UserDTO user = (UserDTO)session.getAttribute("user");
             switch (action) {
                 case "search-posts":
                     String keyword = request.getParameter("keyword");
@@ -115,6 +117,14 @@ public class PostController extends HttpServlet {
                     ApplicationPostDTO post = postDAO.loadApplicationPostWithName(postID);
                     request.setAttribute("post", post);
                     request.getRequestDispatcher("views/job/post/job-detail.jsp").forward(request, response);
+                    break;
+                case "apply-for-post":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    if(user == null){
+                        msg = "Bạn Cần Phải Đăng Nhập Để Ứng Tuyển Vào Vị Trí";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./login").forward(request, response);
+                    }
                     break;
                 default:
                     break;

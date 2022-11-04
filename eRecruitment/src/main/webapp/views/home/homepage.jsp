@@ -222,7 +222,7 @@
                                                         class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
                                                         >
                                                         <div class="d-flex mb-3">
-                                                            <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
+                                                            <a class="btn btn-primary" href="./post?action=apply-for-post&postID=${post.postID}">Ứng tuyển ngay</a>
                                                         </div>
                                                         <small class="text-truncate"
                                                                ><i class="far fa-calendar-alt text-primary me-2"></i
@@ -286,7 +286,7 @@
                                                         class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
                                                         >
                                                         <div class="d-flex mb-3">
-                                                            <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
+                                                            <a class="btn btn-primary" href="./post?action=apply-for-post&postID=${post.postID}">Ứng tuyển ngay</a>
                                                         </div>
                                                         <small class="text-truncate"
                                                                ><i class="far fa-calendar-alt text-primary me-2"></i
@@ -353,7 +353,7 @@
                                                             <a class="btn btn-light btn-square me-3" href=""
                                                                ><i class="far fa-heart text-primary"></i
                                                                 ></a>
-                                                            <a class="btn btn-primary" href="">Ứng tuyển ngay</a>
+                                                            <a class="btn btn-primary" href="./post?action=apply-for-post&postID=${post.postID}">Ứng tuyển ngay</a>
                                                         </div>
                                                         <small class="text-truncate"
                                                                ><i class="far fa-calendar-alt text-primary me-2"></i
@@ -391,7 +391,6 @@
 
         </div>
         <jsp:include page="../footer/footer.jsp" />
-
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
