@@ -58,11 +58,7 @@
             <!--Show CV-->
             <c:if test="${not empty user}">
                 <div class="d-flex flex-row mt-4 justify-content-center">
-                    <c:if test="${not empty requestScope.msg}}">
-                        <div>
-                            <p>${requestScope.msg}<p>
-                        </div>
-                    </c:if>
+                    
                     <div class="col-3">
                         <div class="profile-img d-flex flex-column col-12 h-auto border border-1 rounded rounded-2">
                             <div class="user_name">
@@ -173,6 +169,15 @@
                         </div>
                     </div>
                     <div class="col-9 d-flex flex-column justify-content-between">
+
+                    <c:if test="${not empty (requestScope.msg)}">
+                        <div class="alert alert-secondary alert-dismissible fade show d-flex justify-content-between" role="alert">
+                            ${requestScope.msg}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </c:if>
                         <c:if test="${user.getUserRole() == 1}">
                             <div class="col-10 m-auto">
                                 <div class="d-flex flex-row justify-content-between">
@@ -284,8 +289,10 @@
         <jsp:include page="../footer/footer.jsp" />
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i>
         </a>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
         <script src="lib/wow/wow.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
         <script src="lib/waypoints/waypoints.min.js"></script>
