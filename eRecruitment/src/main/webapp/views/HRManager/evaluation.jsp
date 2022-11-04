@@ -101,19 +101,18 @@
                     <thead>
                         <tr class="tb_head col-12 rounded-9 justify-content-around">
                             <th scope="col" class="col-2 text-center pb-4">ID buổi phỏng vấn</th>
-                            <th scope="col" class="col-3 pb-4">Họ và tên người phỏng vấn</th>
-                            <th scope="col" class="col-1 pb-4">Điểm</th>
+                            <th scope="col" class="col-3 text-center pb-4">Họ và tên người phỏng vấn</th>
+                            <th scope="col" class="col-1 text-center pb-4">Điểm</th>
                             <th scope="col" class="col-6 pb-4">Nhận xét</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var = "current" items="${requestScope.Evaluations}" varStatus = "status" >
                             <tr>
-                                <c:if test = "${status.count % 2 == 1}">
-                                    <th scope="rowgroup" rowspan=2> ${current.getInterviewID()} </td>
-                                    </c:if>
+
+                                <td class="text-center"> ${current.getInterviewID()} </td>
                                 <td> ${current.getInterviewerFirstName()} ${current.getInterviewerLastName()}</td>
-                                <td> ${current.getScore()} </td>
+                                <td class="text-center"> ${current.getScore()} </td>
                                 <td class=""> ${current.getComment()}</td>
                             </tr>
                         </c:forEach>
