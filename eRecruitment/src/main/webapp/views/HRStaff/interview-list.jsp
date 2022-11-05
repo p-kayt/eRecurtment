@@ -20,7 +20,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <title>Danh sách các cuộc phỏng vấn đã tạo</title>
+        <title>eRecruitment</title>
 
     </head>
     <body>
@@ -43,7 +43,13 @@
                                         <p>Chưa có cuộc phỏng vấn nào.</p>
                                     </c:when>  
                                     <c:otherwise>
-                                        <h3>Danh sách các cuộc phỏng vấn</h3>
+                                        <ul>
+                                            <li><a href = "./interview?action=showCreatedInterview" >Các cuộc phỏng vấn đã tạo</a></li>
+                                            <li><a href = "./interview?action=showPendingInterview" >Các cuộc phỏng vấn đang chờ</a></li>
+                                            <li><a href = "./interview?action=showInterviewHisory" >Các cuộc phỏng vấn đã xảy ra</a></li>
+                                            <li><a href = "./common-interview?action=showInterviewerPendingInterview" >Các cuộc phỏng vấn sắp diễn ra</a></li>
+                                            <li><a href = "./common-interview?action=showInterviewerInterviewHistory" >Lịch sử phỏng vấn</a></li>
+                                        </ul>
                                         <div class="border border-1 m-5 p-4 shadow">
                                             <c:forEach items="${InterviewList}" var="p" varStatus="loop">
                                                 <div>
