@@ -69,9 +69,9 @@
             </div>
             <!-- Breadcrumb End -->
             <!-- Content -->
-            
-            
-            <c:if test="${not empty requestScope.post and not empty requestScope.post and not empty requestScope.appList}">
+
+
+            <c:if test="${not empty requestScope.post and not empty requestScope.position and not empty requestScope.appList}">
                 <c:forEach var="stage" items="${requestScope.post.stageList}" varStatus="loop">
                     <div>
                         <div>
@@ -92,18 +92,34 @@
                                     <tr class="col-12 rounded-9 justify-content-around">
                                         <th scope="col" class="col-1 text-center align-middle">ID</th>
                                         <th scope="col" class="col-2 text-center align-middle">Ngày Ứng Tuyển</th>
-                                        <th scope="col" class="col-2 text-center align-middle">Ngày Bắt Đầu</th>
-                                        <th scope="col" class="col-2 text-center align-middle">Ngày Kết Thúc</th>
-                                        <th scope="col" class="col-2 text-center">Trạng Thái</th>
+                                        <th scope="col" class="col-2 text-center align-middle">ID Ứng Viên</th>
+                                        <th scope="col" class="col-2 text-center align-middle">Trạng Thái</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    <c:forEach var="app" items="${requestScope.appList}" varStatus="loop">
+                                        <c:if test="${stage.id == app.stageID}">
+                                            <tr class="col-12 rounded-9 justify-content-around">
+                                                <td scope="col" class="col-1 text-center align-middle">${app.id}</td>
+                                                <td scope="col" class="col-1 text-center align-middle">${app.applyDate}</td>
+                                                <td scope="col" class="col-1 text-center align-middle">${app.userID}</td>
+                                                <td scope="col" class="col-1 text-center align-middle">
+                                                    <c:if test="${app.statusID == 1}">In-progress</c:if>
+                                                    <c:if test="${app.statusID == 2}">Cancelled</c:if>
+                                                    <c:if test="${app.statusID == 3}">Fail</c:if>
+                                                    <c:if test="${app.statusID == 4}">Success</c:if>
+                                                    </td>
+                                                </tr>
+                                        </c:if>
+                                    </c:forEach>
+                                </tbody>
                             </table>
                         </div>
                     </div>
                 </c:forEach>
             </c:if>
-            
-            
+
+
             <c:if test="${empty requestScope.post or empty requestScope.post or empty requestScope.appList}">
                 <div>
                     <h3>Danh Sách Ứng Tuyển Vào Bài Đăng Công Việc Trống</h3>

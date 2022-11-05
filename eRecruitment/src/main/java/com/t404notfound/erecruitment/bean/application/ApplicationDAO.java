@@ -155,8 +155,10 @@ public class ApplicationDAO {
     
     public static void main(String[] args) {
         ApplicationDAO dao = new ApplicationDAO();
-        boolean res = dao.isUserApplying(2, 2);
-        System.out.println(res);
+        ArrayList<ApplicationDTO> list = dao.listAllApplicationOfAPost(6);
+        for (ApplicationDTO a : list) {
+            System.out.println(a.getId() + "    " + a.getStageID() + "    " + a.getPostID() + "    " + a.getUserID() + "    " + a.getApplyDate().toString());
+        }
     }
 
 }
