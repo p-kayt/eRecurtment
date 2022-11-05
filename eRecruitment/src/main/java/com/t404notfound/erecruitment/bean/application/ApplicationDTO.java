@@ -11,7 +11,8 @@ import java.sql.Date;
  *
  * @author MSI GF63
  */
-public class ApplicationDTO implements Serializable{
+public class ApplicationDTO implements Serializable {
+
     private int id;
     private Date applyDate;
     private int statusID;

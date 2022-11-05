@@ -82,6 +82,19 @@
 
                         <a href="#" class="nav-item nav-link">Giới thiệu</a>
                         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
+
+                        <c:choose>
+                            <c:when test = "${user.getUserRole() == 1}">
+                                <a href="./common-interview?action=showCandidatePendingInterview" class="nav-item nav-link">Lịch phỏng vấn</a>
+                            </c:when>
+                            <c:when test = "${user.getUserRole() == 2}">
+                                <a href="./interview?action=showCreatedInterview" class="nav-item nav-link">Lịch phỏng vấn</a>
+                            </c:when>
+                            <c:when test = "${user.getUserRole() == 4}">
+                                <a href="./common-interview?action=showInterviewerPendingInterview" class="nav-item nav-link">Lịch phỏng vấn</a>
+                            </c:when>
+                        </c:choose>
+
                         <a href="profile" class="nav-item nav-link">Hồ sơ</a>
                         <c:if test = "${user.getUserRole() == 1}">
                             <a href="" class="nav-item nav-link">Ứng tuyển</a>

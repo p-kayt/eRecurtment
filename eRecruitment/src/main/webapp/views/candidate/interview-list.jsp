@@ -41,6 +41,30 @@
                                 <p>Chưa có cuộc phỏng vấn nào. list rong</p>
                             </c:when>  
                             <c:otherwise>
+                                <ul>
+                                    <c:choose>
+                                        <c:when test = "${user.userRole == 1}">
+                                            <li><a href = "./common-interview?action=showCandidatePendingInterview" >Các cuộc phỏng vấn đang chờ</a></li>
+                                            <li><a href = "./common-interview?action=showCandidateInterviewHistory" >Lịch sử phỏng vấn</a></li>
+                                            </c:when>
+                                            <c:when test = "${user.userRole == 4}">
+                                            <li><a href = "./common-interview?action=showInterviewerPendingInterview" >Các cuộc phỏng vấn đang chờ</a></li>
+                                            <li><a href = "./common-interview?action=showInterviewerInterviewHistory" >Lịch sử phỏng vấn</a></li>
+                                            </c:when>
+                                            <c:when test = "${user.userRole == 2}">
+                                            <li><a href = "./interview?action=showCreatedInterview" >Các cuộc phỏng vấn đã tạo</a></li>
+                                            <li><a href = "./interview?action=showPendingInterview" >Các cuộc phỏng vấn đang chờ</a></li>
+                                            <li><a href = "./interview?action=showInterviewHisory" >Các cuộc phỏng vấn đã xảy ra</a></li>
+                                            <li><a href = "./common-interview?action=showInterviewerPendingInterview" >Các cuộc phỏng vấn sắp diễn ra</a></li>
+                                            <li><a href = "./common-interview?action=showInterviewerInterviewHistory" >Lịch sử phỏng vấn</a></li>
+                                            </c:when>
+                                        </c:choose>
+
+
+
+
+
+                                </ul>
                                 <h3>Danh sách các cuộc phỏng vấn</h3>
                                 <div class="border border-1 m-5 p-4 shadow">
                                     <c:forEach items="${InterviewList}" var="p" varStatus="loop">
