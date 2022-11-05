@@ -32,7 +32,7 @@
         <%cv = (CVDTO) request.getAttribute("cv");%>
         <c:choose>
             <c:when test = "${not empty cv}">
-                <div id="element" class="cv m-auto d"> 
+                <div id="element" class="cv m-auto d m-1"> 
 
                     <div class="cv-column border border-1 shadow">
                         <div class="cv-element">

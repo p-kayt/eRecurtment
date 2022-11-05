@@ -84,7 +84,8 @@
                         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
                         <a href="profile" class="nav-item nav-link">Hồ sơ</a>
                         <c:if test = "${user.getUserRole() == 1}">
-                            <a href="" class="nav-item nav-link">Xem CV</a>
+                            <a href="" class="nav-item nav-link">Ứng tuyển</a>
+                            <a href="./cv?action=viewCV" class="nav-item nav-link" target="_blank">Xem CV</a>
                         </c:if>
                         <c:if test = "${user.getUserRole() == 2 || user.getUserRole() == 3}">
                             <a href="./job?action=position-list" class="nav-item nav-link">Quản lý tuyển dụng</a>
