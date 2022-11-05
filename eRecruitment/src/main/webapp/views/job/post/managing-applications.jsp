@@ -102,7 +102,7 @@
                                             <tr class="col-12 rounded-9 justify-content-around">
                                                 <td scope="col" class="col-1 text-center align-middle">${app.id}</td>
                                                 <td scope="col" class="col-1 text-center align-middle">${app.applyDate}</td>
-                                                <td scope="col" class="col-1 text-center align-middle"><<a href="./job?action=view-candidate-cv&userID=${app.userID}" target="_blank">${app.userID}</a></td>
+                                                <td scope="col" class="col-1 text-center align-middle"><a href="./job?action=view-candidate-cv&userID=${app.userID}" target="_blank">${app.userID}</a></td>
                                                 <td scope="col" class="col-1 text-center align-middle">
                                                     <c:if test="${app.statusID == 1}">In-progress</c:if>
                                                     <c:if test="${app.statusID == 2}">Cancelled</c:if>
@@ -116,6 +116,7 @@
                             </table>
                         </div>
                     </div>
+                    </br>
                 </c:forEach>
             </c:if>
 

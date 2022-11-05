@@ -15,6 +15,8 @@ import com.t404notfound.erecruitment.bean.applicationpost.PostBenefitDTO;
 import com.t404notfound.erecruitment.bean.applicationpost.PostRequirementDTO;
 import com.t404notfound.erecruitment.bean.applicationpost.PostSkillDTO;
 import com.t404notfound.erecruitment.bean.applicationpost.PostStageDTO;
+import com.t404notfound.erecruitment.bean.cv.CVDAO;
+import com.t404notfound.erecruitment.bean.cv.CVDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -60,9 +62,8 @@ public class JobController extends HttpServlet {
                 msg = "Bạn Cần Phải Đăng Nhập Để Sử Dụng Tính Năng Này";
                 request.setAttribute("msg", msg);
                 request.getRequestDispatcher("./login").forward(request, response);
-            }
-            // User's role is NOT HR STAFF or HR MANAGER
-            else if(user.getUserRole() != 2 && user.getUserRole() != 3){
+            } // User's role is NOT HR STAFF or HR MANAGER
+            else if (user.getUserRole() != 2 && user.getUserRole() != 3) {
                 msg = "Bạn Không Có Quyền Sử Dụng Tính Năng Này";
                 request.setAttribute("msg", msg);
                 request.getRequestDispatcher("./home").forward(request, response);
@@ -576,6 +577,13 @@ public class JobController extends HttpServlet {
                     request.setAttribute("post", post);
                     request.setAttribute("position", position);
                     request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                    break;
+                case "view-candidate-cv":
+                    int userID = Integer.parseInt(request.getParameter("userID"));
+                    CVDAO cvDAO = new CVDAO();
+                    CVDTO cv = cvDAO.loadCVByUserID(userID);
+                    request.setAttribute("cv", cv);
+                    request.getRequestDispatcher("/views/cv/cv-read.jsp").forward(request, response);
                     break;
                 default:
                     break;
