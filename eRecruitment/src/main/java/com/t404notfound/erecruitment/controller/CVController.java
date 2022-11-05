@@ -71,15 +71,6 @@ public class CVController extends HttpServlet {
         String address;
         String city;
 
-//        String dir;
-//        String path[];
-//        File img;
-//        File avatar;
-//        File image;
-//        String fileName;
-//        File file = null;
-//        Path source;
-//        String url;
         CVDAO cvdao = new CVDAO();
         CVDTO cvdto = new CVDTO();
         if (user != null) {
@@ -187,9 +178,10 @@ public class CVController extends HttpServlet {
                 ArrayList<AchievementDTO> achivements = new ArrayList<>();
                 String[] achivementNames = request.getParameterValues("achivementName");
                 String[] achievementDescriptions = request.getParameterValues("achievementDescription");
+                String[] achivementLink = request.getParameterValues("achivementLink");
                 try {
                     for (int i = 0; i < achivementNames.length; i++) {
-                        achivements.add(new AchievementDTO(0, achivementNames[i], achievementDescriptions[i], CVID));
+                        achivements.add(new AchievementDTO(0, achivementNames[i], achievementDescriptions[i], achivementLink[i], CVID));
                     }
                 } catch (Exception e) {
 
@@ -204,68 +196,72 @@ public class CVController extends HttpServlet {
                         socialMedias.add(new SocialMediaDTO(0, socialMediaLink[i], Integer.parseInt(platformIDs[i]), CVID));
                     }
                 } catch (Exception e) {
+
                 }
 
                 cvdto = new CVDTO(CVID, firstName, lastName, dob, introduction, email, phoneNumber, address, city, gender, user.getUserID(), skills, interests, certificates, achivements, experiences, languages, educations, socialMedias);
                 cvdao.saveCV(cvdto);
-                cvdto = cvdao.loadCVByUserID(user.getUserID());
 
-//                try {
-//                    Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
-//                    log("==================================================================================" + filePart.toString());
-//                    if (filePart.getSize() == 0) {
-//                        dir = request.getServletContext().getRealPath("");
-//                        path = dir.split("eRecruitment");
-//                        dir = path[0];
-//
-//                        dir += "\\image";
-//                        img = new File(dir);
-//                        if (!img.exists()) {
-//                            img.mkdir();
-//                        }
-//                        dir += "\\cv_avatar";
-//                        avatar = new File(dir);
-//                        if (!avatar.exists()) {
-//                            avatar.mkdir();
-//                        }
-//                        dir += "\\" + user.getFirstName().trim() + user.getLastName().trim();
-//                        image = new File(dir);
-//                        if (!image.exists()) {
-//                            image.mkdir();
-//                        }
-//                        //Lấy đường dẫn tương đối
-//
-//                        //tạo file .png và ghi đè img vào
-//                        fileName = "cv_avatar";
-//                        file = File.createTempFile(fileName, ".png", image);
-//                    }
-//                    try ( InputStream input = filePart.getInputStream()) {
-//                        Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                //tạo file .png và ghi đè img vào
-//
-//                //rename img
-//                source = Paths.get(file.getParentFile() + "\\" + file.getName());
-//
-//                if (source != null) {
-//                    Files.move(source, source.resolveSibling("cv_avatar.png"),
-//                            StandardCopyOption.REPLACE_EXISTING);
-//                    //rename img
-//                }
-//
-//                url = "image/cv_avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/cv_avatar.png";
-//                if (cvdao.changeAvatar(url, user.getUserID())) {
-//                    cvdto.setAvatar(url);
-//                    cvdto = cvdao.loadCVByUserID(user.getUserID());
-//                }
-//                cvdto = cvdao.loadCVByUserID(user.getUserID());
-//                request.setAttribute("cv", cvdto);
-//                request.getRequestDispatcher("/profile").forward(request, response);
+                //Lấy đường dẫn tương đối
+                String dir;
+
+                dir = request.getServletContext().getRealPath("");
+                String path[] = dir.split("eRecruitment");
+                dir = path[0];
+
+                dir += "\\image";
+                File img = new File(dir);
+                if (!img.exists()) {
+                    img.mkdir();
+                }
+                dir += "\\cv_avatar";
+                File avatar = new File(dir);
+                if (!avatar.exists()) {
+                    avatar.mkdir();
+                }
+                dir += "\\" + user.getFirstName().trim() + user.getLastName().trim();
+                File image = new File(dir);
+                if (!image.exists()) {
+                    image.mkdir();
+                }
+                //Lấy đường dẫn tương đối
+
+                Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
+                //tạo file .png và ghi đè img vào
+                String fileName = "cv_avatar";
+                File file = File.createTempFile(fileName, ".png", image);
+                //tạo file .png và ghi đè img vào
+                if (filePart.getSize() > 0) {
+                    try {
+
+                        try ( InputStream input = filePart.getInputStream()) {
+                            Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    //tạo file .png và ghi đè img vào
+
+                    //rename img
+                    Path source = Paths.get(file.getParentFile() + "\\" + file.getName());
+
+                    Files.move(source, source.resolveSibling("cv_avatar.png"),
+                            StandardCopyOption.REPLACE_EXISTING);
+                    //rename img
+                }
+
+//                request.setAttribute("path", file.getAbsolutePath());
+                String url = "image/cv_avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/cv_avatar.png";
+                if (cvdao.changeAvatar(url, cvdto.getCVID())) {
+                    cvdto.setAvatar(url);
+                }
+
+                cvdto = cvdao.loadCVByUserID(user.getUserID());
+                request.setAttribute("cv", cvdto);
+                request.getRequestDispatcher("/profile").forward(request, response);
             }
             if (action.equalsIgnoreCase("editMyCV")) {
                 request.setAttribute("action", "editCV");
@@ -368,9 +364,10 @@ public class CVController extends HttpServlet {
                 ArrayList<AchievementDTO> achivements = new ArrayList<>();
                 String[] achivementNames = request.getParameterValues("achivementName");
                 String[] achievementDescriptions = request.getParameterValues("achievementDescription");
+                String[] achivementLink = request.getParameterValues("achivementLink");
                 try {
                     for (int i = 0; i < achivementNames.length; i++) {
-                        achivements.add(new AchievementDTO(0, achivementNames[i], achievementDescriptions[i], CVID));
+                        achivements.add(new AchievementDTO(0, achivementNames[i], achievementDescriptions[i], achivementLink[i], CVID));
                     }
                 } catch (Exception e) {
 
@@ -454,17 +451,8 @@ public class CVController extends HttpServlet {
 
             }
 
-//            request.getRequestDispatcher("/home").forward(request, response);
         }
 
-        //        
-        //        CVDTO cvdto = cvdao.loadCV(1);
-        //        
-        //        request.setAttribute("cv", cvdto);
-        //        request.getRequestDispatcher("views/cv/cv-write.jsp").forward(request, response);
-        {
-
-        }
     }
 
     public static void main(String[] args) {

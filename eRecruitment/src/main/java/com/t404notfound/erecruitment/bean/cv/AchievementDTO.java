@@ -3,18 +3,18 @@ package com.t404notfound.erecruitment.bean.cv;
 public class AchievementDTO {
     private int achivementID;
     private String achivementName;
-    private String AchievementDescription;
+    private String achievementDescription;
     private String achivementLink;
     private int CVID;
 
     public AchievementDTO() {
     }
 
-    public AchievementDTO(int achivementID, String achivementName, String AchievementDescription, int CVID) {
+    public AchievementDTO(int achivementID, String achivementName, String AchievementDescription, String achivementLink, int CVID) {
         this.achivementID = achivementID;
         this.achivementName = achivementName;
-        this.AchievementDescription = AchievementDescription;
-        this.achivementLink = "";
+        this.achievementDescription = AchievementDescription;
+        this.achivementLink = achivementLink;
         this.CVID = CVID;
     }
 
@@ -35,11 +35,11 @@ public class AchievementDTO {
     }
 
     public String getAchievementDescription() {
-        return AchievementDescription;
+        return achievementDescription;
     }
 
     public void setAchievementDescription(String AchievementDescription) {
-        this.AchievementDescription = AchievementDescription;
+        this.achievementDescription = AchievementDescription;
     }
 
     public String getAchievementLink() {
@@ -60,7 +60,7 @@ public class AchievementDTO {
 
     @Override
     public String toString() {
-        return "AchievementDTO{" + "achivementID=" + achivementID + ", achivementName=" + achivementName + ", AchievementDescription=" + AchievementDescription + ", achivementLink=" + achivementLink + ", CVID=" + CVID + '}';
+        return "AchievementDTO{" + "achivementID=" + achivementID + ", achivementName=" + achivementName + ", AchievementDescription=" + achievementDescription + ", achivementLink=" + achivementLink + ", CVID=" + CVID + '}';
     }
     
     

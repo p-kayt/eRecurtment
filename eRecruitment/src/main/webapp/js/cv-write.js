@@ -14,7 +14,7 @@ function addEducation() {
     const div2 = document.createElement("div");
     div2.innerHTML = '<b>Organization: </b> <input type="text" placeholder="Enter your school/univercity/... name" name="organizationName">';
     const div3 = document.createElement("div");
-    div3.innerHTML = '<b>Status: </b> <select name="status" id="status-select"><option value="" disabled selected>--Please choose a status--</option><option value="1" >Complete</option><option value="2">In-progress</option></select>';
+    div3.innerHTML = '<b>Status: </b> <select name="status" id="status-select"><option value="" disabled selected>--Please choose a status--</option><option value="1" >Complete</option><option value="2">In-progress</option></select><br><br>';
     div.appendChild(div1);
     div.appendChild(div2);
     div.appendChild(div3);
@@ -65,7 +65,7 @@ function addInterest() {
     const div = document.createElement("div");
     div.id = 'interest' + interestCount.toString();
     const div1 = document.createElement("div");
-    div1.innerHTML = '<b>Interest ' + interestCount + ': </b> <input type="text" placeholder="What is your interest?" name="interestName"><br>';
+    div1.innerHTML = '<b>Interest ' + interestCount + ': </b> <input type="text" placeholder="What is your interest?" name="interestName"><br><br>';
     div.appendChild(div1);
     root = document.getElementById("interest");
     root.appendChild(div);
@@ -87,11 +87,11 @@ function addExperience() {
     const div = document.createElement("div");
     div.id = 'experience' + experienceCount.toString();
     const div1 = document.createElement("div");
-    div1.innerHTML = '<div><b>Job ' + experienceCount + ': </b> <input type="text" placeholder="Enter your job name" name="jobTitle"></div>';
+    div1.innerHTML = '<div><b>Activity ' + experienceCount + ': </b> <input type="text" placeholder="Enter your activity name" name="jobTitle"></div>';
     const div2 = document.createElement("div");
     div2.innerHTML = '<div><b>Organization: </b> <input type="text" placeholder="Enter your organization name" name="experienceOrganizationName"></div>';
     const div3 = document.createElement("div");
-    div3.innerHTML = '<div><b>Description: </b> <input type="text" placeholder="Tell something about your job" name="experienceDescription"></div>';
+    div3.innerHTML = '<div><b>Description: </b> <input type="text" placeholder="Tell something about your activity" name="experienceDescription"></div>';
     const div4 = document.createElement("div");
     div4.innerHTML = '<div><b>Duration: </b> <input type="text" placeholder="How long did you work there?" name="experienceDuration"></div><br>';
     div.appendChild(div1);
@@ -120,7 +120,7 @@ function addLanguage() {
     const div1 = document.createElement("div");
     div1.innerHTML = '<b>Language ' + languageCount + ': </b> <input type="text" placeholder="Enter your language" name="languageName">';
     const div2 = document.createElement("div");
-    div2.innerHTML = '<b>Description: </b> <input type="text" placeholder="Tell something about how you study and use that language" name="languageDescription"><br>';
+    div2.innerHTML = '<b>Description: </b> <input type="text" placeholder="Tell something about how you study and use that language" name="languageDescription"><br><br>';
     div.appendChild(div1);
     div.appendChild(div2);
     root = document.getElementById("language");
@@ -145,7 +145,7 @@ function addCertificate() {
     const div1 = document.createElement("div");
     div1.innerHTML = '<b>Certificate: ' + certificateCount + ' </b> <input type="text" placeholder="Enter your certificate name" name="certificateName">';
     const div2 = document.createElement("div");
-    div2.innerHTML = '<b>Link: </b> <input type="text" placeholder="Enter the link of it" name="certificateLink">';
+    div2.innerHTML = '<b>Link: </b> <input type="text" placeholder="Enter the link of it" name="certificateLink"> <br><br>';
     div.appendChild(div1);
     div.appendChild(div2);
     root = document.getElementById("certificate");
@@ -170,9 +170,12 @@ function addAchievement() {
     const div1 = document.createElement("div");
     div1.innerHTML = '<b>Achievement ' + achievementCount + ': </b> <input type="text" placeholder="Enter your achievement name" name="achivementName">';
     const div2 = document.createElement("div");
-    div2.innerHTML = '<b>Description: </b> <input type="text" placeholder="Tell something about your achievement" name="achievementDescription">';
+    div2.innerHTML = '<b>Description: </b> <input type="text" placeholder="Tell something about your achievement" name="achievementDescription"> ';
+    const div3 = document.createElement("div");
+    div3.innerHTML = '<b>Link: </b> <input type="text" placeholder="Enter the link of your archivement link" name="achivementLink"><br><br>';
     div.appendChild(div1);
     div.appendChild(div2);
+    div.appendChild(div3);
     root = document.getElementById("achievement");
     root.appendChild(div);
 }
@@ -195,7 +198,7 @@ function addSocialMedia() {
     const div1 = document.createElement("div");
     div1.innerHTML = '<b>Platform '+ socialMediaCount+': </b><select name="platformID" id="socialMedia"><option value="" disabled="" selected>--Please choose a platform--</option><option value="1">LinkedIn</option><option value="2">Facebook</option><option value="3">Twitter</option><option value="4">GitHub</option><option value="5">Personal Website</option></select>';
     const div2 = document.createElement("div");
-    div2.innerHTML = '<b>Link: </b> <input type="text" placeholder="Enter the link of your personal page" name="socialMediaLink"></div>';
+    div2.innerHTML = '<b>Link: </b> <input type="text" placeholder="Enter the link of your personal page" name="socialMediaLink"></div> <br><br>';
     div.appendChild(div1);
     div.appendChild(div2);
     root = document.getElementById("socialMedia");

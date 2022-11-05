@@ -198,7 +198,7 @@ public class CVDAO {
     }
 
     public ArrayList<AchievementDTO> loadAchievement(int CVID) {
-        String sql = "SELECT AchievementID, AchievementName, AchievementDescription, CVID FROM CV_Achievement WHERE CVID = ?;";
+        String sql = "SELECT AchievementID, AchievementName, AchievementDescription, AchievementLink, CVID FROM CV_Achievement WHERE CVID = ?;";
         try {
             ArrayList<AchievementDTO> list = new ArrayList<>();
             Connection con = DBUtil.getConnection();
@@ -210,6 +210,7 @@ public class CVDAO {
                 dto.setAchievementID(rs.getInt("AchievementID"));
                 dto.setAchievementName(rs.getString("AchievementName"));
                 dto.setAchievementDescription(rs.getString("AchievementDescription"));
+                dto.setAchievementLink(rs.getString("AchievementLink"));
                 dto.setCVID(CVID);
                 list.add(dto);
             }
@@ -633,7 +634,7 @@ public class CVDAO {
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setNString(1, x.getAchievementName());
                 ps.setNString(2, x.getAchievementDescription());
-                ps.setNString(3, "");
+                ps.setNString(3, x.getAchievementLink());
                 ps.setInt(4, CVID);
 
                 psList.add(ps);

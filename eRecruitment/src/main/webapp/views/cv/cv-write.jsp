@@ -64,6 +64,7 @@
 
                                 <div class="cv-element">
                                     <h3> Introduction </h3>
+                                    <i>Please fill out all of the basic information below! They are necessary for us to contact you. </i>
                                     <input type="text"
                                            value="${requestScope.cv.introduction}"
                                            placeholder="Say something about yourself"
@@ -130,6 +131,7 @@
                                 </div>
                                 <div class="cv-element">
                                     <h3> Education </h3>
+                                    <i>Tell about your school/university/college, about what were you study there.</i>
                                     <div id="education">
                                         <c:forEach var="i" items="${requestScope.cv.educations}" varStatus="loop">
                                             <div id="education${loop.count}">
@@ -146,8 +148,9 @@
                                                         </select>
                                                     </div>
 
-                                                    <br><br>
+
                                                 </div>
+                                                <br><br>
                                         </c:forEach>
                                         <script>educationCount = ${cv.getEducations().size()};</script>
 
@@ -158,7 +161,7 @@
                                 </div>
                                 <div class="cv-element">
                                     <h3> Skill </h3>
-
+                                    <i>If you have any specific skills for the applied position, please let us know</i>
                                     <div id="skill">
 
                                         <c:forEach var="i"  items="${requestScope.cv.skills}" varStatus="loop">
@@ -184,15 +187,16 @@
 
                                 <div class="cv-element">
                                     <h3> Interest </h3>
+                                    <i>Share something about your interest that help us know more about your personality</i>
                                     <div id="interest">
                                         <c:forEach var="i"  items="${requestScope.cv.interests}" varStatus="loop">
 
 
                                             <div id="interest${loop.count}">
                                                 <div><b>Interest ${loop.count}: </b> <input type="text" placeholder="What is your interest?" name="interestName" value="${i.interestName}"></div>
-                                                <br>
-                                            </div>
 
+                                            </div>
+                                            <br>
 
                                         </c:forEach>
                                         <script>interestCount = ${cv.getInterests().size()};</script>
@@ -204,7 +208,7 @@
                                 </div>
                                 <div class="cv-element">
                                     <h3> Experience </h3>
-
+                                    <i>Tell us all of your related activities that prove your capacity of the positions which you are going to apply (maybe your old job work experience or your team/personal project)</i>
                                     <div id="experience">
                                         <c:forEach var="i"  items="${requestScope.cv.experiences}" varStatus="loop">
                                             <div id="experience${loop.count}">
@@ -225,6 +229,7 @@
                                 </div>
                                 <div class="cv-element">
                                     <h3> Language </h3>
+                                    <i>Please provide us information about your language ability, include languages you can talk, and their certificates(optional)</i>
                                     <div id="language">
                                         <c:forEach var="i"  items="${requestScope.cv.languages}" varStatus="loop">
 
@@ -235,9 +240,9 @@
                                                                                  name="languageDescription"
                                                                                  value="${i.languageDescription}"/></div>
                                             </div>
-
+                                            <br><br>
                                         </c:forEach>
-                                        <br>
+
                                         <script>languageCount = ${cv.getLanguages().size()};</script>
                                     </div>
 
@@ -246,6 +251,7 @@
                                 </div>
                                 <div class="cv-element">
                                     <h3> Certificate </h3>
+                                    <i>Any certificates that related to the job, please provide here</i>
                                     <div id="certificate">
                                         <c:forEach var="i"  items="${requestScope.cv.certificates}" varStatus="loop">
 
@@ -254,8 +260,9 @@
                                                 </div>
                                                 <div><b>Link: </b> <input type="text" placeholder="Enter the link of it" name="certificateLink" value="${i.certificateLink}"></div>
                                             </div>
+                                            <br><br>
                                         </c:forEach>
-                                        <br>
+
                                         <script>certificateCount = ${cv.getCertificates().size()};</script>
                                     </div>
 
@@ -264,6 +271,7 @@
                                 </div>
                                 <div class="cv-element">
                                     <h3> Achievement </h3>
+                                    <i>This field is used for your prize, title, ...</i>
                                     <div id="achievement">
                                         <c:forEach var="i"  items="${requestScope.cv.achievements}" varStatus="loop">
 
@@ -272,10 +280,12 @@
                                                 </div>
                                                 <div><b>Description: </b> <input type="text" placeholder="Tell something about your achievement"
                                                                                  name="achievementDescription" value="${i.achievementDescription}"></div>
-
+                                                <div><b>Link: </b> <input type="text" placeholder="Enter the link of your archivement link" name="achivementLink"
+                                                                          value="${i.getAchievementLink()}"></div>
                                             </div>
+                                            <br><br>
                                         </c:forEach>
-                                        <br>
+
                                         <script>achievementCount = ${cv.getAchievements().size()};</script>
                                     </div>
 
@@ -284,6 +294,7 @@
                                 </div>
                                 <div class="cv-element">
                                     <h3> Social media </h3>
+                                    <i>More ways for us to keep in touch with you</i>
                                     <div id="socialMedia">
                                         <c:forEach var="i"  items="${cv.socialMedias}" varStatus="loop">
 
@@ -302,9 +313,11 @@
                                                     </div>
                                                     <div><b>Link: </b> <input type="text" placeholder="Enter the link of your personal page" name="socialMediaLink"
                                                                               value="${i.socialMediaLink}"></div>
+                                                <br><br>
                                             </div>
+
                                         </c:forEach>
-                                        <br>
+
                                         <script>socialMediaCount = ${cv.getSocialMedias().size()};</script>
                                     </div>
                                     <span class="fa fa-plus-circle fa-2x" onclick="addSocialMedia()"></span>

@@ -140,6 +140,7 @@
                                 <%achievement = (AchievementDTO) cv.getAchievements().get(i);%>
                                 <div><b>Achievement <%=i + 1%>: </b> <%=achievement.getAchievementName()%></div>
                                 <div><b>Description: </b> <%=achievement.getAchievementDescription()%></div>
+                                <div><b>Link: </b> <a href="<%=achievement.getAchievementLink()%>"><%=achievement.getAchievementLink()%></a></div>
                             </div>
                             <br>
                             <% }%> 
