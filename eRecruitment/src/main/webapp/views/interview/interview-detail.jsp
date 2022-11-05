@@ -55,6 +55,8 @@
             <link href="css/bootstrap.min.css" rel="stylesheet" />
 
             <link href="css/style-dltemp.css" rel="stylesheet" />
+
+            <link rel="stylesheet" href="css/style_profile.css"/>
             <!--css/style-dltemp.css-->
         </head>
         <body>
@@ -73,8 +75,19 @@
             <section>
                 <c:choose>
                     <c:when test = "${user.userRole == 2 || user.userRole == 3}">
+                        <div class="container-xxl py-5 bg-dark page-header mb-5">
+                            <div class="container my-5 pt-5 pb-4">
+                                <h1 class="display-3 text-white mb-3 animated slideInDown">Mô tả bài đăng</h1>
+                                <nav aria-label="breadcrumb">
+                                    <!--                                                    <ol class="breadcrumb text-uppercase">
+                                                                                            <li class="breadcrumb-item"><a href="job?action=position-list">Danh sách vị trí</a></li>
+                                                                                            <li class="breadcrumb-item text-white active" aria-current="page">Chi tiết</li>
+                                                                                        </ol>-->
+                                </nav> 
+                            </div>
+                        </div>
                         <c:if test="<%=(interview != null)%>"> 
-                            <div class="d-flex flex-column justify-content-center align-middle m-4 p-5 border border-2 shadow">
+                            <div class="d-flex flex-column align-middle m-4 p-5 border border-2 shadow">
                                 <div class="d-flex flex-column">
                                     <form action="interview" method = "post" id="form1">
                                         <div class="d-flex flex-row m-2">
@@ -102,12 +115,12 @@
 
                                             <input type="hidden" name = "stage" value="${interview.stageID}">
 
-                                            <div class="col-12">
+                                            <div class="col-11 row g-2 m-1 justify-content-center">
                                                 <label class="col-2" for="description">Mô tả</label>
                                                 <textarea class="col-8" rows="4" cols="60" name="description" form="form1"><%=interview.getDescription()%></textarea> <br/>
                                             </div>
 
-                                            <div class="col-12">
+                                            <div class="col-11 row g-2 m-1 justify-content-center">
                                                 <label class="col-2" for="format">Hình thức</label>
                                                 <%int formatID = interview.getFormatID();%>
                                                 <select class="col-8" id = "format" name= "format">
@@ -123,33 +136,36 @@
                                                 String date = datetime[0];
                                                 String hour = datetime[1];
                                             %>
-                                            <div class="col-12">
+                                            <div class="col-11 row g-2 m-1 justify-content-center">
                                                 <label class="col-2" for="date" >Ngày</label>
                                                 <input class="col-4" type="date" name="date" value = <%=date%> required>
+                                                <span class="col-4"></span>
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-11 row g-2 m-1 justify-content-center">
                                                 <label class="col-2" for="time">Giờ</label>
                                                 <input class="col-4" type="time" name="time" value = <%=hour%> required>
+                                                <span class="col-4"></span>
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-11 row g-2 m-1 justify-content-center">
                                                 <label class="col-2" for = "link">Link</label>
                                                 <input class="col-8" type = "url" name="link" id="link" value="<%=interview.getLink()%>" >
                                             </div>
 
-                                            <div class="col-12">
+                                            <div class="col-11 row g-2 m-1 justify-content-center">
                                                 <label class="col-2" for="address" >Địa chỉ</label>
                                                 <input class="col-8" type="text" name="address" id="address" value="<%=interview.getAddress()%>" >
                                             </div>
 
-                                            <div class="col-12">
+                                            <div class="col-11 row g-2 m-1 justify-content-center">
                                                 <label class="col-2" for="maxCandidate">Số ứng viên tối đa</label>
                                                 <input class="col-4" type="number" name="maxCandidate" min="1" value = "<%=interview.getMaxCandidate()%>" required>
+                                                <span class="col-4"></span>
                                             </div>
 
                                             <input type="hidden" name="interviewID" value="${interviewID}" >
 
 
-                                            <div class="col-12">
+                                            <div class="col-11 row g-2 m-1 justify-content-center">
                                                 <label class="col-2" for="creator">Người tạo </label>
                                                 <span class="col-8 text-dark" id="creator"> ${booker} </span>
                                             </div>
@@ -158,9 +174,9 @@
                                         </div>
                                     </form>
 
-                                    <div class="d-flex flex-column m-2  border border-1">
+                                    <div class="d-flex flex-column m-2 p-2 border border-1">
                                         <div class="d-flex flex-row justify-content-between align-middle">
-                                            <label class="col-2">Người phỏng vấn</label>
+                                            <label class="col-3 m-2 px-3">Người phỏng vấn</label>
                                             <div>
                                                 <form action="interview" method="post">
                                                     <input type="hidden" name="action" value="showListInterviewer">
@@ -175,7 +191,7 @@
                                                     <div class="d-flex flex-row justify-content-between align-center border border-2 m-1 bg-light">
                                                         <div class="col-6 d-flex flex-row text-center">
                                                             <div class="col-3 d-flex justify-content-center">
-                                                                <img class="img-thumbnail m-2" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                                                <img class="ava_img_icon m-2 border border-1" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
                                                             </div>
                                                             <div class="col-9 text-start align-center m-auto">
                                                                 <p>${i.getFirstName()} ${i.getLastName()}</p>
@@ -196,9 +212,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="d-flex flex-column m-2  border border-1">
+                                    <div class="d-flex flex-column m-2 p-2  border border-1">
                                         <div class="d-flex flex-row justify-content-between align-middle">
-                                            <p>Ứng viên</p>
+                                            <label class="col-3 m-2 px-3">Ứng viên</label>
                                             <div>
                                                 <form action="interview" method="post">
                                                     <input type="hidden" name="action" value="showListCandidate">
@@ -240,9 +256,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="d-flex flex-column m-2 border border-1">
+                                    <div class="d-flex flex-column m-2 p-2  border border-1">
                                         <div class="d-flex flex-row justify-content-between align-middle">
-                                            <p>Ứng viên miễn phỏng vấn</p>
+                                            <label class="col-3 m-2 px-3">Ứng viên miễn phỏng vấn</label>
                                             <div>
                                                 <form action="interview" method="post">
                                                     <input type="hidden" name="action" value="showListCandidate">
@@ -276,25 +292,39 @@
                                             </c:if>
                                         </div>
                                     </div>
-
-                                    <button class="btn btn-primary m-auto col-3"  type = "button" onclick = "UpdateInterview()">Cập nhật phỏng vấn</button>
+                                    <div class=" m-auto col-3 m-2 p-3">
+                                        <button class="btn btn-primary"  type = "button" onclick = "UpdateInterview()">Cập nhật phỏng vấn</button>
+                                    </div>
                                 </div>
                             </div>
                         </c:if>
                     </c:when>
                     <c:otherwise>
-                        <h2>Bạn không được phép chỉnh sửa lịch phỏng vấn</h2>
+                        <div class="alert alert-secondary alert-dismissible fade show d-flex justify-content-between" role="alert">
+                            Bạn không được phép chỉnh sửa lịch phỏng vấn
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                     </c:otherwise>
                 </c:choose>
             </section>
 
 
         </div>
+        <jsp:include page="../footer/footer.jsp" />
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+           ><i class="bi bi-arrow-up"></i
+            ></a>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
         <script>
-            function UpdateInterview() {
-                var f = document.getElementById("form1");
-                f.submit();
-            }
+                                            function UpdateInterview() {
+                                                var f = document.getElementById("form1");
+                                                f.submit();
+                                            }
         </script>
     </body>
 </html>
