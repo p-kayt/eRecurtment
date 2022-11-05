@@ -68,10 +68,8 @@
                 </div>
             </div>
             <!-- Breadcrumb End -->
-            <!-- Content -->
-
-
-            <c:if test="${not empty requestScope.post and not empty requestScope.position and not empty requestScope.appList}">
+            <!-- Content Start -->
+            <c:if test="${not empty requestScope.post.stageList}">
                 <c:forEach var="stage" items="${requestScope.post.stageList}" varStatus="loop">
                     <div>
                         <div>
@@ -97,21 +95,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach var="app" items="${requestScope.appList}" varStatus="loop">
-                                        <c:if test="${stage.id == app.stageID}">
-                                            <tr class="col-12 rounded-9 justify-content-around">
-                                                <td scope="col" class="col-1 text-center align-middle">${app.id}</td>
-                                                <td scope="col" class="col-1 text-center align-middle">${app.applyDate}</td>
-                                                <td scope="col" class="col-1 text-center align-middle"><a href="./job?action=view-candidate-cv&userID=${app.userID}" target="_blank">${app.userID}</a></td>
-                                                <td scope="col" class="col-1 text-center align-middle">
-                                                    <c:if test="${app.statusID == 1}">In-progress</c:if>
-                                                    <c:if test="${app.statusID == 2}">Cancelled</c:if>
-                                                    <c:if test="${app.statusID == 3}">Fail</c:if>
-                                                    <c:if test="${app.statusID == 4}">Success</c:if>
-                                                    </td>
-                                                </tr>
-                                        </c:if>
-                                    </c:forEach>
+                                    <c:if test="${not empty requestScope.appList}">
+                                        <c:forEach var="app" items="${requestScope.appList}" varStatus="loop">
+                                            <c:if test="${stage.id == app.stageID}">
+                                                <tr class="col-12 rounded-9 justify-content-around">
+                                                    <td scope="col" class="col-1 text-center align-middle">${app.id}</td>
+                                                    <td scope="col" class="col-1 text-center align-middle">${app.applyDate}</td>
+                                                    <td scope="col" class="col-1 text-center align-middle"><a href="./job?action=view-candidate-cv&userID=${app.userID}" target="_blank">${app.userID}</a></td>
+                                                    <td scope="col" class="col-1 text-center align-middle">
+                                                        <c:if test="${app.statusID == 1}">In-progress</c:if>
+                                                        <c:if test="${app.statusID == 2}">Cancelled</c:if>
+                                                        <c:if test="${app.statusID == 3}">Fail</c:if>
+                                                        <c:if test="${app.statusID == 4}">Success</c:if>
+                                                        </td>
+                                                    </tr>
+                                            </c:if>
+                                        </c:forEach>
+                                    </c:if>
+                                    <c:if test="${empty requestScope.appList}">
+                                    <div>
+                                        <h3>Bài Đăng Chưa Có Ứng Viên Ứng Tuyển</h3>
+                                    </div>
+                                </c:if>
                                 </tbody>
                             </table>
                         </div>
@@ -119,14 +124,15 @@
                     </br>
                 </c:forEach>
             </c:if>
-
-
-            <c:if test="${empty requestScope.post or empty requestScope.post or empty requestScope.appList}">
+            <c:if test="${empty requestScope.post.stageList}">
                 <div>
-                    <h3>Danh Sách Ứng Tuyển Vào Bài Đăng Công Việc Trống</h3>
+                    <h3>Bài Đăng Chưa Có Các Vòng Tuyển Dụng</h3>
                 </div>
             </c:if>
+            <!-- Content End -->
         </div>
+        <!-- Footer Start -->
         <jsp:include page="../../footer/footer.jsp" />
+        <!-- Footer End -->
     </body>
 </html>
