@@ -20,20 +20,61 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <title>Danh sách các cuộc phỏng vấn đã tạo</title>
+        <title>Danh sách các cuộc phỏng vấn sắp diễn ra</title>
 
     </head>
     <body>
-        <c:if test="${empty user}">
-            <jsp:include page="../header/header_loginbtn.jsp" />
-        </c:if>
+        <div class="container-xxl bg-white p-0">
+            <c:if test="${empty user}">
+                <jsp:include page="../header/header_loginbtn.jsp" />
+            </c:if>
 
-        <c:if test="${not empty user}">
-            <jsp:include page="../header/header_logoutbtn.jsp" />
-        </c:if>
+            <c:if test="${not empty user}">
+                <jsp:include page="../header/header_logoutbtn.jsp" />
+            </c:if>
+            <c:choose>
+                <c:when test = "${user.userRole == 1}">
+                    <ul class="nav nav-tabs bg-dark row pt-2 justify-content-start mx-auto">
+                        <li class="nav-item col-auto">
+                            <a class="nav-link py-3 fw-bold border-0 active" href="./common-interview?action=showCandidatePendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
+                        </li>
+                        <li class="nav-item col-auto">
+                            <a class="nav-link py-3 fw-bold border-0" href="./common-interview?action=showCandidateInterviewHistory">Lịch sử phỏng vấn</a>
+                        </li>
+                    </ul>
+                </c:when>
+                <c:when test = "${user.userRole == 4}">
+                    <ul class="nav nav-tabs bg-dark row pt-2 justify-content-start mx-auto">
+                        <li class="nav-item col-auto">
+                            <a class="nav-link py-3 fw-bold border-0 active" href="./common-interview?action=showInterviewerPendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
+                        </li>
+                        <li class="nav-item col-auto">
+                            <a class="nav-link py-3 fw-bold border-0" href="./common-interview?action=showInterviewerInterviewHistory">Lịch sử phỏng vấn</a>
+                        </li>
+                    </ul>
+                </c:when>
+                <c:when test = "${user.userRole == 2}">
+                    <ul class="nav nav-tabs bg-dark row pt-2 justify-content-between mx-auto">
+                        <li class="nav-item col-auto">
+                            <a class="nav-link py-3 fw-bold border-0" href="./interview?action=showCreatedInterview">Các cuộc phỏng vấn đã tạo</a>
+                        </li>
+                        <li class="nav-item col-auto">
+                            <a class="nav-link py-3 fw-bold border-0" id="pending-interview" href="./interview?action=showPendingInterview" onclick="changeTab()">Các cuộc phỏng vấn đang chờ</a>
+                        </li>
+                        <li class="nav-item col-auto">
+                            <a class="nav-link py-3 fw-bold border-0" id="happend-interview" href="./interview?action=showInterviewHisory" onclick="changeTab()">Các cuộc phỏng vấn đã xảy ra</a>
+                        </li>
+                        <li class="nav-item col-auto">
+                            <a class="nav-link py-3 fw-bold border-0 active" href="./common-interview?action=showInterviewerPendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
+                        </li>
+                        <li class="nav-item col-auto">
+                            <a class="nav-link py-3 fw-bold border-0" href="./common-interview?action=showInterviewerInterviewHistory">Lịch sử phỏng vấn</a>
+                        </li>
+                    </ul>
+                </c:when>
+            </c:choose>
+            <section>
 
-        <section>
-            <div>
                 <c:choose>
                     <c:when test= "${not empty InterviewList}">
                         <c:choose>
@@ -41,74 +82,57 @@
                                 <p>Chưa có cuộc phỏng vấn nào. list rong</p>
                             </c:when>  
                             <c:otherwise>
-                                <ul>
-                                    <c:choose>
-                                        <c:when test = "${user.userRole == 1}">
-                                            <li><a href = "./common-interview?action=showCandidatePendingInterview" >Các cuộc phỏng vấn đang chờ</a></li>
-                                            <li><a href = "./common-interview?action=showCandidateInterviewHistory" >Lịch sử phỏng vấn</a></li>
-                                            </c:when>
-                                            <c:when test = "${user.userRole == 4}">
-                                            <li><a href = "./common-interview?action=showInterviewerPendingInterview" >Các cuộc phỏng vấn đang chờ</a></li>
-                                            <li><a href = "./common-interview?action=showInterviewerInterviewHistory" >Lịch sử phỏng vấn</a></li>
-                                            </c:when>
-                                            <c:when test = "${user.userRole == 2}">
-                                            <li><a href = "./interview?action=showCreatedInterview" >Các cuộc phỏng vấn đã tạo</a></li>
-                                            <li><a href = "./interview?action=showPendingInterview" >Các cuộc phỏng vấn đang chờ</a></li>
-                                            <li><a href = "./interview?action=showInterviewHisory" >Các cuộc phỏng vấn đã xảy ra</a></li>
-                                            <li><a href = "./common-interview?action=showInterviewerPendingInterview" >Các cuộc phỏng vấn sắp diễn ra</a></li>
-                                            <li><a href = "./common-interview?action=showInterviewerInterviewHistory" >Lịch sử phỏng vấn</a></li>
-                                            </c:when>
-                                        </c:choose>
-
-
-
-
-
-                                </ul>
-                                <h3>Danh sách các cuộc phỏng vấn</h3>
+                                <!--                                <h3>Danh sách các cuộc phỏng vấn</h3>-->
                                 <div class="border border-1 m-5 p-4 shadow">
                                     <c:forEach items="${InterviewList}" var="p" varStatus="loop">
-                                        <div>
+                                        <div class="border border-1 mb-5 p-4 shadow d-flex flex-column">
+                                            <div class="row g-2 m-1 mx-3">
+                                                <label class="col-2 fw-bold" for="status">Trạng thái</label>
+                                                <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
+                                                    <p class="col-4" id="status">${status}<p>
+                                                    </c:forEach>
+                                            </div>
+                                            <%--Hiển thị kết quả phỏng vấn của ứng viên nếu hành động là sem lịch sử phỏng vấn--%>
 
-                                            <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
-                                                <p>${status}<p>
-                                                </c:forEach>
-                                                <%--Hiển thị kết quả phỏng vấn của ứng viên nếu hành động là sem lịch sử phỏng vấn--%>
-
-                                                <c:if test = "${user.userRole == 1}"> 
-                                                    <c:if test = "${not empty listResultOfCandidate}">
-                                                        <c:forEach items="${listResultOfCandidate}" begin="${loop.index}" end="${loop.index}" step="1" var="result">
+                                            <c:if test = "${user.userRole == 1}"> 
+                                                <c:if test = "${not empty listResultOfCandidate}">
+                                                    <c:forEach items="${listResultOfCandidate}" begin="${loop.index}" end="${loop.index}" step="1" var="result">
                                                         <p>${result}<p>
                                                         </c:forEach>
                                                     </c:if>
                                                 </c:if>
 
                                                 <%--Hiển thị kết quả phỏng vấn của ứng viên nếu hành động là xem lịch sử phỏng vấn--%>
-
+                                            <div class="row g-2 m-1 mx-3">
+                                                <label class="col-2 fw-bold"  for="stage">Vòng</label>
                                                 <c:forEach items="${listInterviewStage}" begin="${loop.index}" end="${loop.index}" step="1" var="stage">
-                                                <p>${stage}<p>
-                                                </c:forEach>
-                                            <div style = "background: #ccc;">
-                                                <p>Mô tả</p>
-                                                <p>${p.getDescription()}</p>
+                                                    <p class="col-4" id="stage">${stage}<p>
+                                                    </c:forEach>
                                             </div>
-                                            <p>Thời gian 
-                                                <c:choose>
-                                                    <c:when test = "${user.userRole == 1}">
-                                                        <c:forEach items="${candidateInterviewTime}" begin="${loop.index}" end="${loop.index}" step="1" var="time">
-                                                            ${time}
-                                                        </c:forEach>
-                                                    </c:when>
+                                            <div class="d-flex flex-column m-1 mx-3">
+                                                <label class="col-2 fw-bold " for="description">Mô tả</label>
+                                                <textarea class="col-11 m-auto" id="description" rows="4" >${p.getDescription()}</textarea>
 
-                                                    <c:otherwise>
-                                                        ${p.getTime()}
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </p>
+                                            </div>
+                                            <div class="row g-2 m-1 mx-3 ">
+                                                <label class="col-2 fw-bold" for="time">Thời gian</label>
+                                                <p class="col-4" id="time"><c:choose>
+                                                        <c:when test = "${user.userRole == 1}">
+                                                            <c:forEach items="${candidateInterviewTime}" begin="${loop.index}" end="${loop.index}" step="1" var="time">
+                                                                ${time}
+                                                            </c:forEach>
+                                                        </c:when>
+
+                                                        <c:otherwise>
+                                                            ${p.getTime()}
+                                                        </c:otherwise>
+                                                    </c:choose></p>
+                                            </div>
 
 
-                                            <p>This is post detail  ${p.getPostID()}</p>
-                                            <form action="common-interview" method="post" >
+
+<!--                                            <p>This is post detail  ${p.getPostID()}</p>-->
+                                            <form class="d-flex justify-content-end m-2" action="common-interview" method="post" >
 
                                                 <input type="hidden" name="postID" value="${p.getPostID()}">
                                                 <input type="hidden" name="interviewID" value="${p.getInterviewID()}">
@@ -124,7 +148,7 @@
                                                 </c:choose>
 
 
-                                                <input type="submit" value="Chi tiết">
+                                                <input class="btn btn-primary" type="submit" value="Chi tiết">
                                             </form>
                                         </div>
                                     </c:forEach>
@@ -137,11 +161,26 @@
                         <p>Chưa có cuộc phỏng vấn nào. list null</p>
                     </c:otherwise>
                 </c:choose>
-            </div>
-        </section>
 
+            </section>
+        </div>
 
+        <jsp:include page="../footer/footer.jsp" />
 
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+           ><i class="bi bi-arrow-up"></i
+            ></a>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+        <!--Javascript -->
+        <script src="js/main.js"></script>
 
     </body>
 </html>
