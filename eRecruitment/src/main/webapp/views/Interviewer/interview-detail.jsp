@@ -145,23 +145,25 @@
                                                                     </c:forEach>
                                                                 </p>
                                                             </div>
-                                                            <div>
-                                                                <form action="evaluate" method = "post" id = "Ca${loop.index}">
-                                                                    <p>Đánh giá</p>
-                                                                    <textarea form ="Ca${loop.index}" cols="50" rows="4" name="description">${not empty evaluate ? evaluate.evaluationDescription : ""}</textarea>
+                                                            <c:if test="${user.userRole == 4}">
+                                                                <div>
+                                                                    <form action="evaluate" method = "post" id = "Ca${loop.index}">
+                                                                        <p>Đánh giá</p>
+                                                                        <textarea form ="Ca${loop.index}" cols="50" rows="4" name="description">${not empty evaluate ? evaluate.evaluationDescription : ""}</textarea>
 
-                                                                    <label for ="score" >Điểm </label>
-                                                                    <input type="number" name="score" value="${not empty evaluate ? evaluate.score : 5}" min="0" max="10" required><br>
-                                                                    <input type="hidden" name="action" value="showInterviewerInterviewDetail">
-                                                                    <input type="hidden" name = "evaluateAction" value= "evaluate">
-                                                                    <input type="hidden" name="interviewerID" value="${user.userID}">
-                                                                    <input type="hidden" name="interviewID" value="${interview.interviewID}">
-                                                                    <input type="hidden" name="postID" value="${interview.postID}">
-                                                                    <input type="hidden" name="option" value="${option}">
-                                                                    <input type="hidden" name="participantID" value="${i.userID}">
-                                                                    <input type="submit" value = "Đánh giá">
-                                                                </form>
-                                                            </div>
+                                                                        <label for ="score" >Điểm </label>
+                                                                        <input type="number" name="score" value="${not empty evaluate ? evaluate.score : 5}" min="0" max="10" required><br>
+                                                                        <input type="hidden" name="action" value="showInterviewerInterviewDetail">
+                                                                        <input type="hidden" name = "evaluateAction" value= "evaluate">
+                                                                        <input type="hidden" name="interviewerID" value="${user.userID}">
+                                                                        <input type="hidden" name="interviewID" value="${interview.interviewID}">
+                                                                        <input type="hidden" name="postID" value="${interview.postID}">
+                                                                        <input type="hidden" name="option" value="${option}">
+                                                                        <input type="hidden" name="participantID" value="${i.userID}">
+                                                                        <input type="submit" value = "Đánh giá">
+                                                                    </form>
+                                                                </div>
+                                                            </c:if>
 
                                                         </div>
                                                     </div>

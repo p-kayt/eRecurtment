@@ -15,20 +15,8 @@
     <head>
         <meta charset="utf-8" />
         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
-        <%InterviewDTO interview = (InterviewDTO) request.getAttribute("interview");%>
-        <%String booker = (String) request.getAttribute("booker");%>
-        <%ArrayList<String> interviewStage = (ArrayList<String>) request.getAttribute("interviewStage");%>
-        <%ArrayList<String> interviewStatus = (ArrayList<String>) request.getAttribute("interviewStatus");%>
-        <%ArrayList<String> interviewFormat = (ArrayList<String>) request.getAttribute("interviewFormat");%>
 
-        <%ArrayList<UserDTO> interviewerList = (ArrayList<UserDTO>) request.getAttribute("listMainInterviewer");%>
-
-        <%ArrayList<UserDTO> candidateList = (ArrayList<UserDTO>) request.getAttribute("listMainCandidate");%>
-        <%ArrayList<UserDTO> listNoInterviewCandidate = (ArrayList<UserDTO>) request.getAttribute("listNoInterviewCandidate");%>
-        <%ArrayList<ParticipantDTO> listParticipant = (ArrayList<ParticipantDTO>) request.getAttribute("listParticipant");%>
-
-
-        <title><c:if test="${not empty user}">${user.firstName} ${user.lastName}</c:if></title>
+        <title><c:if test="${not empty user}"><%=user.getFirstName()%> <%=user.getLastName()%></c:if></title>
             <meta content="width=device-width, initial-scale=1.0" name="viewport" />
             <meta content="" name="keywords" />
             <meta content="" name="description" />
@@ -72,106 +60,56 @@
 
             <section>
                 <c:choose>
-                    <c:when test = "${user.userRole == 2 || user.userRole == 3}">
+                    <c:when test = "${user.userRole == 2 ||user.userRole == 4}">
                         <c:if test="${not empty interview}"> 
                             <div class="d-flex flex-column justify-content-center align-middle m-4 p-5 border border-2 shadow">
                                 <div class="d-flex flex-column">
-                                    <form action="interview" method = "post" id="form1">
-                                        <div class="d-flex flex-row m-2">
-                                            <div class="col-10"> 
-                                                <h4>Mô tả bài đăng ${postDescription}</h4>
-                                            </div>
-                                            <select class="col-2" id = "statusID" name= "statusID">
-                                                <c:if test ="${not empty interviewStatus}" >
-                                                    <c:forEach items="${interviewStatus}" var="i" varStatus="count">
-                                                        <option value = "${count.index + 1}" ${(count.index + 1) == interview.inteviewStatusID ? "selected" : ""} >${i}</option>   
-                                                    </c:forEach>
-                                                </c:if>
-                                            </select>
+                                    <div class="d-flex flex-row m-2">
+                                        <div class="col-10"> 
+                                            <h4>Mô tả bài đăng ${postDescription}</h4>
                                         </div>
-                                        <div class="d-flex flex-column m-2">
-                                            <label for="stageID">Tên vòng phỏng vấn</label>
-                                            <%--Need fix this, must load stage from database--%>
-                                            <select  id="stage" name ="stage" disabled>
-                                                <c:if test ="${not empty interviewStage}" >
-                                                    <c:forEach items="${interviewStage}" var="i" varStatus="count">
-                                                        <option value = "${count.index + 1}" ${(count.index + 1) == interview.stageID ? "selected" : ""} >${i}</option>   
-                                                    </c:forEach>
-                                                </c:if>
-                                            </select>
+                                        <p>Status: ${statusName}</p>
+                                    </div>
+                                    <div class="d-flex flex-column m-2">
+                                        <p>Tên vòng phỏng vấn: ${stageName}<p>
 
-                                            <input type="hidden" name = "stage" value="${interview.stageID}">
-
-                                            <div class="col-12">
-                                                <label class="col-2" for="description">Mô tả</label>
-                                                <textarea class="col-8" rows="4" cols="60" name="description" form="form1">${interview.description}</textarea> <br/>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <label class="col-2" for="format">Hình thức</label>
-                                                <%int formatID = interview.getFormatID();%>
-                                                <select class="col-8" id = "format" name= "format">
-                                                    <c:if test ="<%=(interviewFormat != null)%>" >
-                                                        <c:forEach items="<%=interviewFormat%>" var="i" varStatus="count">
-                                                            <option value = "${count.index + 1}" ${((count.index + 1) == interview.formatID) ? "selected" : ""}>${i}</option>   
-                                                        </c:forEach>
-                                                    </c:if>
-                                                </select>
-                                            </div>
-                                            <%
-                                                String[] datetime = interview.getTime().split("\\s");
-                                                String date = datetime[0];
-                                                String hour = datetime[1];
-                                            %>
-                                            <div class="col-12">
-                                                <label class="col-2" for="date" >Ngày</label>
-                                                <input class="col-4" type="date" name="date" value = <%=date%> required>
-                                            </div>
-                                            <div class="col-12">
-                                                <label class="col-2" for="time">Giờ</label>
-                                                <input class="col-4" type="time" name="time" value = <%=hour%> required>
-                                            </div>
-                                            <div class="col-12">
-                                                <label class="col-2" for = "link">Link</label>
-                                                <input class="col-8" type = "url" name="link" id="link" value="<%=interview.getLink()%>" >
-                                            </div>
-
-                                            <div class="col-12">
-                                                <label class="col-2" for="address" >Địa chỉ</label>
-                                                <input class="col-8" type="text" name="address" id="address" value="<%=interview.getAddress()%>" >
-                                            </div>
-
-                                            <div class="col-12">
-                                                <label class="col-2" for="maxCandidate">Số ứng viên tối đa</label>
-                                                <input class="col-4" type="number" name="maxCandidate" min="1" value = "<%=interview.getMaxCandidate()%>" required>
-                                            </div>
-
-                                            <input type="hidden" name="interviewID" value="${interviewID}" >
-
-
-                                            <div class="col-12">
-                                                <label class="col-2" for="creator">Người tạo </label>
-                                                <span class="col-8 text-dark" id="creator"> ${booker} </span>
-                                            </div>
-
-                                            <input type="hidden" name="action" value="updateInterview" > 
+                                        <div style= "background: #ccc;">
+                                            <p>Mô tả</p>
+                                            <p>${interview.description}</p>
                                         </div>
-                                    </form>
+
+                                        <div class="col-12">
+                                            <p>Hình thức: ${formatName}</p>
+                                        </div>
+
+                                        <div>
+                                            <p>Thời gian: ${interview.time}</p>
+                                        </div>
+                                        <c:choose> 
+                                            <c:when test = "${formatName == 'Offline'}">
+                                                <div class="col-12">
+                                                    <p>Địa chỉ: ${interview.address}</p>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="col-12">
+                                                    <p>Link: ${interview.link}</p>
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
+
+                                        <div class="col-12">
+                                            <p>Người tạo: ${booker.firstName} ${booker.lastName}<p>
+                                        </div>
+                                    </div>
 
                                     <div class="d-flex flex-column m-2  border border-1">
                                         <div class="d-flex flex-row justify-content-between align-middle">
                                             <label class="col-2">Người phỏng vấn</label>
-                                            <div>
-                                                <form action="interview" method="post">
-                                                    <input type="hidden" name="action" value="showListInterviewer">
-                                                    <input type="hidden" name="interviewID" value = "${interviewID}">
-                                                    <input class="btn btn-primary m-2" type="submit" value="Thêm">
-                                                </form>
-                                            </div>
                                         </div>
                                         <div  class="d-flex flex-column align-middle">
-                                            <c:if test="<%=interviewerList != null%>">
-                                                <c:forEach items="<%=interviewerList%>" var="i">
+                                            <c:if test="${not empty listInterviewer}">
+                                                <c:forEach items="${listInterviewer}" var="i">
                                                     <div class="d-flex flex-row justify-content-between align-center border border-2 m-1 bg-light">
                                                         <div class="col-6 d-flex flex-row text-center">
                                                             <div class="col-3 d-flex justify-content-center">
@@ -181,15 +119,6 @@
                                                                 <p>${i.getFirstName()} ${i.getLastName()}</p>
                                                             </div>
                                                         </div>
-                                                        <div class="col-4"></div>
-                                                        <div class="col-1 text-start align-center m-auto">
-                                                            <form action="interview" method="post">
-                                                                <input type="hidden" name ="action" value ="removeInterviewer">
-                                                                <input type="hidden" name ="interviewID" value ="${interviewID}">
-                                                                <input type="hidden" name ="userID" value="${i.getUserID()}" >
-                                                                <input class="btn btn-danger col-12" type="submit" value="Xóa">
-                                                            </form>
-                                                        </div>
                                                     </div>
                                                 </c:forEach>
                                             </c:if>
@@ -198,105 +127,59 @@
 
                                     <div class="d-flex flex-column m-2  border border-1">
                                         <div class="d-flex flex-row justify-content-between align-middle">
-                                            <p>Ứng viên</p>
-                                            <div>
-                                                <form action="interview" method="post">
-                                                    <input type="hidden" name="action" value="showListCandidate">
-                                                    <input type="hidden" name="interviewID" value = "${interviewID}">
-                                                    <input class="btn btn-primary m-2" type="submit" value="Thêm">
-                                                </form>
-                                            </div>
+                                            <label class="col-2">Ứng viên</label>
                                         </div>
                                         <div  class="d-flex flex-column align-middle">
-                                            <c:if test="<%=candidateList != null%>">
-                                                <c:forEach items="<%=candidateList%>" var="i">
+                                            <c:if test="${not empty listCandidate}">
+                                                <c:forEach items="${listCandidate}" var="i" varStatus="loop">
                                                     <div class="d-flex flex-row justify-content-between align-center border border-2 m-1 bg-light">
                                                         <div class="col-6 d-flex flex-row text-center">
                                                             <div class="col-3 d-flex justify-content-center">
-                                                                <img class="ava_img_icon m-2" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                                                <img class="img-thumbnail m-2" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
                                                             </div>
                                                             <div class="col-9 text-start align-center m-auto">
                                                                 <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                                                <p>Thời gian: 
+                                                                    <c:forEach items="${candidateInterviewTime}" begin="${loop.index}" end="${loop.index}" step="1" var="time">
+                                                                    <p>${time}<p>
+                                                                    </c:forEach>
+                                                                </p>
                                                             </div>
-                                                            <div>
-                                                                <c:forEach items="<%=listParticipant%>" var="p">
-                                                                    <c:if test="${p.userID == i.userID}">
-                                                                        <p>Giờ ${p.interviewTime.split("\\s")[1]}</p>
-                                                                    </c:if>
-                                                                </c:forEach>
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <form action="interview" method="post">
-                                                                <input type="hidden" name ="action" value ="removeCandidate">
-                                                                <input type="hidden" name ="userID" value="${i.getUserID()}" >
-                                                                <input type="hidden" name ="interviewID" value ="${interviewID}">
-                                                                <input type="submit" value="Xóa">
-                                                            </form>
+<!--                                                            <div>
+                                                                <form action="evaluate" method = "post" id = "Ca${loop.index}">
+                                                                    <p>Đánh giá</p>
+                                                                    <textarea form ="Ca${loop.index}" cols="50" rows="4" name="description">${not empty evaluate ? evaluate.evaluationDescription : ""}</textarea>
+
+                                                                    <label for ="score" >Điểm </label>
+                                                                    <input type="number" name="score" value="${not empty evaluate ? evaluate.score : 5}" min="0" max="10" required><br>
+                                                                    <input type="hidden" name="action" value="showInterviewerInterviewDetail">
+                                                                    <input type="hidden" name = "evaluateAction" value= "evaluate">
+                                                                    <input type="hidden" name="interviewerID" value="${user.userID}">
+                                                                    <input type="hidden" name="interviewID" value="${interview.interviewID}">
+                                                                    <input type="hidden" name="postID" value="${interview.postID}">
+                                                                    <input type="hidden" name="option" value="${option}">
+                                                                    <input type="hidden" name="participantID" value="${i.userID}">
+                                                                    <input type="submit" value = "Đánh giá">
+                                                                </form>
+                                                            </div>-->
+
                                                         </div>
                                                     </div>
                                                 </c:forEach>
                                             </c:if>
                                         </div>
                                     </div>
-
-                                    <div class="d-flex flex-column m-2 border border-1">
-                                        <div class="d-flex flex-row justify-content-between align-middle">
-                                            <p>Ứng viên miễn phỏng vấn</p>
-                                            <div>
-                                                <form action="interview" method="post">
-                                                    <input type="hidden" name="action" value="showListCandidate">
-                                                    <input type="hidden" name="interviewID" value = "${interviewID}">
-                                                    <input class="btn btn-primary m-2" type="submit" value="Thêm">
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div  class="d-flex flex-column align-middle">
-                                            <c:if test="<%=listNoInterviewCandidate != null%>">
-                                                <c:forEach items="<%=listNoInterviewCandidate%>" var="i">
-                                                    <div class="d-flex flex-row justify-content-between align-center border border-2 m-1 bg-light">
-                                                        <div class="col-6 d-flex flex-row text-center">
-                                                            <div class="col-3 d-flex justify-content-center">
-                                                                <img class="ava_img" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
-                                                            </div>
-                                                            <div>
-                                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <form action="interview" method="post">
-                                                                <input type="hidden" name ="action" value ="removeCandidate">
-                                                                <input type="hidden" name ="userID" value="${i.getUserID()}" >
-                                                                <input type="hidden" name ="interviewID" value ="${interviewID}">
-                                                                <input type="submit" value="Xóa">
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </c:forEach>
-                                            </c:if>
-                                        </div>
-                                    </div>
-
-                                    <button class="btn btn-primary m-auto col-3"  type = "button" onclick = "UpdateInterview()">Cập nhật phỏng vấn</button>
                                 </div>
                             </div>
                         </c:if>
                     </c:when>
                     <c:otherwise>
-                        <h2>Bạn không được phép chỉnh sửa lịch phỏng vấn</h2>
+                        <h2>Chỉ người phỏng vấn mới có thể xem trang này</h2>
                     </c:otherwise>
                 </c:choose>
             </section>
 
 
         </div>
-        <script>
-            function UpdateInterview() {
-                var f = document.getElementById("form1");
-                f.submit();
-            }
-        </script>
     </body>
 </html>
-
-<!--InterviewDTO(interviewID, description, formatID, link, address, time, stageID, postID, statusID, bookerID);-->
