@@ -58,7 +58,7 @@ public class ApplicationDAO {
         }
         return null;
     }
-    
+
     public ArrayList<ApplicationDTO> listAllApplicationOfAPost(int postID) {
         String sql = "select ApplicationID, ApplyDate, StatusID, StageID, UserID, PostID from Application where PostID = ?";
         try {
@@ -132,10 +132,9 @@ public class ApplicationDAO {
             pst.setInt(1, userID);
             pst.setInt(2, postID);
             ResultSet rs = pst.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
         } catch (SQLException e) {
@@ -152,13 +151,84 @@ public class ApplicationDAO {
         return true;
     }
 
-    
+    public int rejectApplication(int appID) {
+        String sql = "update Application set StatusID = 3 where ApplicationID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, appID);
+            return pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int getNextStage(int stageOffset, int postID) {
+        String sql = "select top 1 LEAD(ID, ?, 0) OVER ( ORDER BY ID ) AS NextID FROM Application_Stage where PostID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, stageOffset);
+            pst.setInt(2, postID);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int approveToNextStage(int nextStage, int appID) {
+        String sql = "update Application set StageID = ? where ApplicationID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, nextStage);
+            pst.setInt(2, appID);
+            return pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
         ApplicationDAO dao = new ApplicationDAO();
-        ArrayList<ApplicationDTO> list = dao.listAllApplicationOfAPost(6);
-        for (ApplicationDTO a : list) {
-            System.out.println(a.getId() + "    " + a.getStageID() + "    " + a.getPostID() + "    " + a.getUserID() + "    " + a.getApplyDate().toString());
-        }
+//        ArrayList<ApplicationDTO> list = dao.listAllApplicationOfAPost(6);
+//        for (ApplicationDTO a : list) {
+//            System.out.println(a.getId() + "    " + a.getStageID() + "    " + a.getPostID() + "    " + a.getUserID() + "    " + a.getApplyDate().toString());
+//        }
+
+        int nextStage = dao.getNextStage(5, 6);
+        System.out.println("NEXT STAGE: " + nextStage);
     }
 
 }

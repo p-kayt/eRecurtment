@@ -589,8 +589,7 @@ public class JobController extends HttpServlet {
                     postID = Integer.parseInt(request.getParameter("postID"));
                     positionID = Integer.parseInt(request.getParameter("positionID"));
                     int appID = Integer.parseInt(request.getParameter("appID"));
-                    
-                    
+                    result = appDAO.rejectApplication(appID);
                     
                     post = postDAO.loadApplicationPostWithName(postID);
                     position = positionDAO.loadApplicationPositions(positionID);
@@ -599,9 +598,47 @@ public class JobController extends HttpServlet {
                     request.setAttribute("appList", appList);
                     request.setAttribute("post", post);
                     request.setAttribute("position", position);
+
+                    
+                    if (result == 1) {
+                        msg = "Từ Chối Thành Công Hồ Sơ Ứng Tuyển Với ID: " + appID;
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                    } else {
+                        msg = "Từ Chối Thất Bại Hồ Sơ Ứng Tuyển Với ID: " + appID;
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                    }
                     break;
                 case "approve-cv":
-                    log("APPROVE CVVVVVVVVVVVVVVVVVVVVVVVVVVV");
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    appID = Integer.parseInt(request.getParameter("appID"));
+                    int stageOffset = Integer.parseInt(request.getParameter("stageOffset"));
+                    int nextStageID = appDAO.getNextStage(stageOffset, postID);
+                    if(nextStageID != 0){
+                        result = appDAO.approveToNextStage(nextStageID, appID);
+                    }
+                    else{
+                        result = 0;
+                    }
+                    
+                    post = postDAO.loadApplicationPostWithName(postID);
+                    position = positionDAO.loadApplicationPositions(positionID);
+                    appList = appDAO.listAllApplicationOfAPost(postID);
+
+                    request.setAttribute("appList", appList);
+                    request.setAttribute("post", post);
+                    request.setAttribute("position", position);
+                    if (result == 1) {
+                        msg = "Duyệt Hồ Sơ Ứng Tuyển Với ID: " + appID + " Đến Vòng Tiếp Theo Thành Công";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                    } else {
+                        msg = "Duyệt Hồ Sơ Ứng Tuyển Với ID: " + appID + " Đến Vòng Tiếp Theo Thất Bại";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                    }
                     break;
                 default:
                     break;
