@@ -585,6 +585,24 @@ public class JobController extends HttpServlet {
                     request.setAttribute("cv", cv);
                     request.getRequestDispatcher("/views/cv/cv-read.jsp").forward(request, response);
                     break;
+                case "reject-cv":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    int appID = Integer.parseInt(request.getParameter("appID"));
+                    
+                    
+                    
+                    post = postDAO.loadApplicationPostWithName(postID);
+                    position = positionDAO.loadApplicationPositions(positionID);
+                    appList = appDAO.listAllApplicationOfAPost(postID);
+                    
+                    request.setAttribute("appList", appList);
+                    request.setAttribute("post", post);
+                    request.setAttribute("position", position);
+                    break;
+                case "approve-cv":
+                    log("APPROVE CVVVVVVVVVVVVVVVVVVVVVVVVVVV");
+                    break;
                 default:
                     break;
 

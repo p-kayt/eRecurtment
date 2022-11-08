@@ -92,6 +92,7 @@
                                         <th scope="col" class="col-2 text-center align-middle">Ngày Ứng Tuyển</th>
                                         <th scope="col" class="col-2 text-center align-middle">ID Ứng Viên</th>
                                         <th scope="col" class="col-2 text-center align-middle">Trạng Thái</th>
+                                        <th scope="col" class="col-2 text-center align-middle">Xét Duyệt</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -101,18 +102,36 @@
                                                 <tr class="col-12 rounded-9 justify-content-around">
                                                     <td scope="col" class="col-1 text-center align-middle">${app.id}</td>
                                                     <td scope="col" class="col-1 text-center align-middle">${app.applyDate}</td>
-                                                    <td scope="col" class="col-1 text-center align-middle"><a href="./job?action=view-candidate-cv&userID=${app.userID}" target="_blank">${app.userID}</a></td>
+                                                    <td scope="col" class="col-1 text-center align-middle"><a class="link-info" href="./job?action=view-candidate-cv&userID=${app.userID}" target="_blank">${app.userID}</a></td>
                                                     <td scope="col" class="col-1 text-center align-middle">
                                                         <c:if test="${app.statusID == 1}">In-progress</c:if>
                                                         <c:if test="${app.statusID == 2}">Cancelled</c:if>
                                                         <c:if test="${app.statusID == 3}">Fail</c:if>
                                                         <c:if test="${app.statusID == 4}">Success</c:if>
                                                         </td>
-                                                    </tr>
+                                                    <c:if test="${stage.stageID == 1 and app.statusID == 1}">
+                                                        <td>
+                                                            <span class="btn btn-danger" onclick="document.getElementById('rejectCVForm').submit()">Từ Chối</span>
+                                                            <span class="btn btn-success" onclick="document.getElementById('approveCVForm').submit()">Duyệt</span>
+                                                        </td>
+                                                <form id="rejectCVForm" action="./job" method="post">
+                                                    <input type="hidden" name="action" value="reject-cv">
+                                                    <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                                    <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                                                    <input type="hidden" name="appID" value="${app.id}">
+                                                </form>
+                                                <form id="approveCVForm" action="./job" method="post">
+                                                    <input type="hidden" name="action" value="approve-cv">
+                                                    <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                                    <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                                                    <input type="hidden" name="appID" value="${app.id}">
+                                                </form>
                                             </c:if>
-                                        </c:forEach>
-                                    </c:if>
-                                    <c:if test="${empty requestScope.appList}">
+                                            </tr>
+                                        </c:if>
+                                    </c:forEach>
+                                </c:if>
+                                <c:if test="${empty requestScope.appList}">
                                     <div>
                                         <h3>Bài Đăng Chưa Có Ứng Viên Ứng Tuyển</h3>
                                     </div>
@@ -124,12 +143,14 @@
                     </br>
                 </c:forEach>
             </c:if>
+                    
             <c:if test="${empty requestScope.post.stageList}">
                 <div>
                     <h3>Bài Đăng Chưa Có Các Vòng Tuyển Dụng</h3>
                 </div>
             </c:if>
             <!-- Content End -->
+            
         </div>
         <!-- Footer Start -->
         <jsp:include page="../../footer/footer.jsp" />
