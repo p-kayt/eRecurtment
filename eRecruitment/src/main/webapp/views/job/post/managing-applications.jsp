@@ -45,6 +45,7 @@
     </head>
     <body>
         <div class="container-xxl bg-white p-0">
+
             <!-- Header Start -->
             <c:if test="${empty sessionScope.user}">
                 <jsp:include page="../../header/header_loginbtn.jsp" />
@@ -53,6 +54,7 @@
                 <jsp:include page="../../header/header_logoutbtn.jsp" />
             </c:if>
             <!-- Header End -->
+
             <c:if test="${not empty requestScope.msg}">
                 <div class="alert alert-secondary alert-dismissible fade show d-flex justify-content-between" role="alert">
                     ${requestScope.msg}
@@ -61,6 +63,7 @@
                     </button>
                 </div>
             </c:if>
+
             <!-- Breadcrumb Start -->
             <div class="container-xxl py-5 bg-dark page-header mb-5">
                 <div class="container my-5 pt-5 pb-4">
@@ -76,6 +79,7 @@
                 </div>
             </div>
             <!-- Breadcrumb End -->
+
             <!-- Content Start -->
             <c:if test="${not empty requestScope.post.stageList}">
                 <c:forEach var="stage" items="${requestScope.post.stageList}" varStatus="stageLoop">
@@ -104,6 +108,13 @@
                                 <input class="d-none" type="submit" value="Tạo buổi phỏng vấn">
                             </form>
                         </c:if>
+                        <c:if test="${not empty stage.interviewList}">
+                            <!-- Insert link to view Interview of stage -->
+                            <!-- Insert link to view Interview of stage -->
+                            <!-- Insert link to view Interview of stage -->
+                            <!-- Insert link to view Interview of stage -->
+                            <!-- Insert link to view Interview of stage -->
+                        </c:if>
                         <div>
                             <table>
                                 <thead>
@@ -129,6 +140,8 @@
                                                         <c:if test="${app.statusID == 3}">Fail</c:if>
                                                         <c:if test="${app.statusID == 4}">Success</c:if>
                                                         </td>
+
+                                                        <!-- If Candidate application is waiting for staff's review -->
                                                     <c:if test="${stage.stageID == 1 and app.statusID == 1}">
                                                         <td scope="col" class="col-1 text-center align-middle">
                                                             <span class="btn btn-danger" onclick="document.getElementById('rejectCVForm').submit()">Từ Chối</span>
@@ -148,16 +161,42 @@
                                                     <input type="hidden" name="stageOffset" value="${stageLoop.count}">
                                                 </form>
                                             </c:if>
+                                            <!-- If Candidate application is waiting for staff's review -->
+
+                                            <!-- If Candidate cancel the application -->
                                             <c:if test="${app.statusID == 2}">
                                                 <td scope="col" class="col-1 text-center align-middle">
                                                     Đã Hủy
                                                 </td>
                                             </c:if>
+                                            <!-- If Candidate cancel the application -->
+
+                                            <!-- If Staff reject the candidate's application (CV) -->
                                             <c:if test="${app.statusID == 3}">
                                                 <td scope="col" class="col-1 text-center align-middle">
                                                     Rớt
                                                 </td>
                                             </c:if>
+                                            <!-- If Staff reject the candidate's application (CV) -->
+                                            
+                                            <!-- If Stage is an interview stage but does not have Interview -->
+                                            <c:if test="${stage.stageID == 2 and empty stage.interviewList}">
+                                                <td scope="col" class="col-1 text-center align-middle">
+                                                    Vòng Chưa Có Buổi Phỏng Vấn
+                                                </td>
+                                            </c:if>
+                                            <!-- If Stage is an interview stage but does not have Interview -->
+                                            
+                                            <!-- If Stage is an interview stage and has Interview -->
+                                            <c:if test="${stage.stageID == 2 and not empty stage.interviewList}">
+                                                <td scope="col" class="col-1 text-center align-middle">
+                                                    <!-- Insert link to interview of stage -->
+                                                    <!-- Insert link to interview of stage -->
+                                                    <!-- Insert link to interview of stage -->
+                                                </td>
+                                            </c:if>
+                                            <!-- If Stage is an interview stage and has Interview -->
+                                            
                                             </tr>
                                         </c:if>
                                     </c:forEach>

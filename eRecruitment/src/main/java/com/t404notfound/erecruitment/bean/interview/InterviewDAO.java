@@ -222,7 +222,7 @@ public class InterviewDAO {
         }
         return list;
     }
-
+    
     //test ok
     public ArrayList<InterviewDTO> getCreatedInterview(int bookerID) {
         ArrayList<InterviewDTO> list = new ArrayList<>();

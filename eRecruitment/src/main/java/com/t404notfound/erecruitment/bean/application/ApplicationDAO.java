@@ -5,6 +5,7 @@
 package com.t404notfound.erecruitment.bean.application;
 
 import Util.DBUtil;
+import com.t404notfound.erecruitment.bean.interview.InterviewDTO;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -220,6 +221,42 @@ public class ApplicationDAO {
         return 0;
     }
 
+        public ArrayList<InterviewDTO> getInterviewsOfPost(int postID) {
+        ArrayList<InterviewDTO> list = new ArrayList<>();
+        String sql = " SELECT * FROM [Interview] where PostID = ? ";
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, postID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int interviewID = rs.getInt("InterviewID");
+                String description = rs.getString("Description");
+                String link = rs.getString("OnlineLink");
+                String address = rs.getString("Address");
+
+                /* Convert date to String using DateFormat*/
+                String time = rs.getString("InterviewTime").split("\\.")[0];
+                /* Convert date to String using DateFormat*/
+
+                int maxCandidate = rs.getInt("MaxCandidate");
+                int stageID = rs.getInt("StageID");
+                int formatID = rs.getInt("FormatID");
+                int statusID = rs.getInt("StatusID");
+                int bookerID = rs.getInt("BookerID");
+
+                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, maxCandidate, stageID, postID, statusID, bookerID);
+                list.add(tmp);
+            }
+            return list;
+
+        } catch (Exception e) {
+            System.out.println("Error when get interview list.");
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
     public static void main(String[] args) {
         ApplicationDAO dao = new ApplicationDAO();
 //        ArrayList<ApplicationDTO> list = dao.listAllApplicationOfAPost(6);

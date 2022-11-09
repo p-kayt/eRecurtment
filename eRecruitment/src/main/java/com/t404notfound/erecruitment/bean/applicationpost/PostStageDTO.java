@@ -4,6 +4,9 @@
  */
 package com.t404notfound.erecruitment.bean.applicationpost;
 
+import com.t404notfound.erecruitment.bean.interview.InterviewDTO;
+import java.util.ArrayList;
+
 /**
  *
  * @author MSI GF63
@@ -14,6 +17,8 @@ public class PostStageDTO {
     private String description;
     private int postID;
     private int stageID;
+    
+    private ArrayList<InterviewDTO> interviewList;
 
     public PostStageDTO() {
     }
@@ -24,6 +29,15 @@ public class PostStageDTO {
         this.postID = postID;
         this.stageID = stageID;
     }
+
+    public ArrayList<InterviewDTO> getInterviewList() {
+        return interviewList;
+    }
+
+    public void setInterviewList(ArrayList<InterviewDTO> interviewList) {
+        this.interviewList = interviewList;
+    }
+    
 
     public int getId() {
         return id;

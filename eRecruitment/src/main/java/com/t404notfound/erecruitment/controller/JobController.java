@@ -569,10 +569,15 @@ public class JobController extends HttpServlet {
                     break;
                 case "managing-applications":
                     postID = Integer.parseInt(request.getParameter("postID"));
-                    post = postDAO.loadApplicationPostWithName(postID);
                     positionID = Integer.parseInt(request.getParameter("positionID"));
+                    
                     position = positionDAO.loadApplicationPositions(positionID);
+                    post = postDAO.loadApplicationPostWithName(postID);
+                    for (PostStageDTO stage : post.getStageList()) {
+                        stage.setInterviewList(postDAO.getStageInterviews(stage));
+                    }
                     ArrayList<ApplicationDTO> appList = appDAO.listAllApplicationOfAPost(postID);
+                    
                     request.setAttribute("appList", appList);
                     request.setAttribute("post", post);
                     request.setAttribute("position", position);
