@@ -159,11 +159,7 @@
                                         Xóa bài đăng
                                     </button>
                                 </div>
-                                <!-- Form chua thong tin de tao buoi phong van Interview -->
-                                <div class="col-3 m-1 text-center">
-                                    <span class="btn btn-primary" onclick="document.getElementById('createInterviewForm').submit()">Tạo buổi phỏng vấn</span>
-                                </div>
-                                <!--  -->
+                                
                                 <c:if test="${requestScope.post.statusID == 4 || requestScope.post.statusID == 3}">
                                     <div class="col-3 m-1 text-center">
                                         <span class="btn btn-primary" onclick="document.getElementById('managing-applications').submit()">Quản lý ứng tuyển</span>
@@ -173,11 +169,6 @@
                         </div>
                     </form>
 
-                    <form class="col-2 m-3" action="interview" method="get" id="createInterviewForm">
-                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
-
-                        <input class="d-none" type="submit" value="Tạo buổi phỏng vấn">
-                    </form>
 
                     <form class="col-2 m-3" action="./job" method="post" id="managing-applications">
                         <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
