@@ -222,7 +222,7 @@ public class InterviewDAO {
         }
         return list;
     }
-    
+
     //test ok
     public ArrayList<InterviewDTO> getCreatedInterview(int bookerID) {
         ArrayList<InterviewDTO> list = new ArrayList<>();
@@ -261,9 +261,10 @@ public class InterviewDAO {
         return list;
     }
 
+    //format of interview stage is (ID; description)
     public ArrayList<String> getInterviewStage(int postID) {
         ArrayList<String> list = new ArrayList<>();
-        String sql = " SELECT [Description]\n"
+        String sql = " SELECT ID, [Description]\n"
                 + " FROM Application_Stage\n"
                 + " WHERE StageID = 2 AND PostID = ?";
 
@@ -274,7 +275,7 @@ public class InterviewDAO {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                String interviewStage = rs.getString("Description");
+                String interviewStage = rs.getInt("ID") + ";" + rs.getString("Description");
                 list.add(interviewStage);
             }
 
@@ -371,28 +372,27 @@ public class InterviewDAO {
         return formatName;
     }
 
-    public String getInteviewStage(int postID, int stageIndex) {
-        ArrayList<String> list = new ArrayList<>();
-        String sql = " SELECT [Description]  \n"
+    //get interview stage
+    public String getInterviewStageByID(int stageID) {
+
+        String sql = " SELECT ID, [Description]\n"
                 + " FROM Application_Stage\n"
-                + " WHERE PostID = ? AND StageID = 2 ";
-        String stageName = "";
+                + " WHERE ID = ?";
+        String stage = "";
         try {
             Connection con = DBUtil.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, postID);
+            ps.setInt(1, stageID);
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                String stage = rs.getString("Description");
-                list.add(stage);
+            if (rs.next()) {
+                stage = rs.getInt("ID") + ";" + rs.getString("Description");
             }
 
-            stageName = list.get(stageIndex - 1);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return stageName;
+        return stage;
     }
 
     public String getInteviewStatus(int statusID) {

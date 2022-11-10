@@ -65,13 +65,13 @@
                             <div class="d-flex flex-column justify-content-center align-middle m-4 p-5 border border-2 shadow">
                                 <div class="d-flex flex-column">
                                     <div class="d-flex flex-row m-2">
-                                        <div class="col-10"> 
-                                            <h4>Mô tả bài đăng ${postDescription}</h4>
+                                        <div class="row g-2 m-1 mx-3">
+                                            <a href="post?action=post-detail&postID=${interview.postID}" target="_blank">Xem bài đăng tuyển dụng</a>
                                         </div>
                                         <p>Status: ${statusName}</p>
                                     </div>
                                     <div class="d-flex flex-column m-2">
-                                        <p>Tên vòng phỏng vấn: ${stageName}<p>
+                                        <p>Tên vòng phỏng vấn: ${stageName.split(";")[1]}<p>
 
                                         <div style= "background: #ccc;">
                                             <p>Mô tả</p>
@@ -100,6 +100,7 @@
 
                                         <div class="col-12">
                                             <p>Người tạo: ${booker.firstName} ${booker.lastName}<p>
+                                            <p>Email: ${booker.email}</p>
                                         </div>
                                     </div>
 
@@ -144,6 +145,11 @@
                                                                     <p>${time}<p>
                                                                     </c:forEach>
                                                                 </p>
+                                                                <c:if test ="${user.userRole != 1}">
+                                                                    <div class="col-9 text-start align-center m-auto">
+                                                                        <a href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
+                                                                    </div>
+                                                                </c:if>
                                                             </div>
                                                             <c:if test="${user.userRole == 4}">
                                                                 <div>

@@ -87,6 +87,9 @@
                                     <c:forEach items="${InterviewList}" var="p" varStatus="loop">
                                         <div class="border border-1 mb-5 p-4 shadow d-flex flex-column">
                                             <div class="row g-2 m-1 mx-3">
+                                                        <a href="post?action=post-detail&postID=${p.postID}" target="_blank">Xem bài đăng tuyển dụng</a>
+                                                    </div>
+                                            <div class="row g-2 m-1 mx-3">
                                                 <label class="col-2 fw-bold" for="status">Trạng thái</label>
                                                 <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
                                                     <p class="col-4" id="status">${status}<p>
@@ -106,12 +109,12 @@
                                             <div class="row g-2 m-1 mx-3">
                                                 <label class="col-2 fw-bold"  for="stage">Vòng</label>
                                                 <c:forEach items="${listInterviewStage}" begin="${loop.index}" end="${loop.index}" step="1" var="stage">
-                                                    <p class="col-4" id="stage">${stage}<p>
+                                                    <p class="col-4" id="stage">${stage.split(";")[1]}<p>
                                                     </c:forEach>
                                             </div>
                                             <div class="d-flex flex-column m-1 mx-3">
                                                 <label class="col-2 fw-bold " for="description">Mô tả</label>
-                                                <textarea class="col-11 m-auto" id="description" rows="4" >${p.getDescription()}</textarea>
+                                                <textarea class="col-11 m-auto" id="description" rows="4" disabled>${p.getDescription()}</textarea>
 
                                             </div>
                                             <div class="row g-2 m-1 mx-3 ">

@@ -94,13 +94,15 @@
                                                         <div class="col-9 text-start align-center m-auto">
                                                             <p class="m-0">${i.getFirstName()} ${i.getLastName()}</p>
                                                         </div>
+                                                        <div class="col-9 text-start align-center m-auto">
+                                                            <a href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-4"></div>
                                                     <div class="col-1 text-start align-center m-auto">
                                                         <%
                                                             String[] datetime = interview.getTime().split("\\s");
                                                             String date = datetime[0];
-                                                            String hour = datetime[1];
+                                                            String hour = datetime[1].split("\\.")[0];
                                                         %>
                                                         <form action="interview" method="get">
 

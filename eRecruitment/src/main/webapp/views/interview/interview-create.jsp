@@ -79,6 +79,9 @@
                         <div class="d-flex flex-column m-auto my-4 col-10 border border-1 shadow p-4 pb-5">
                             <form class="m-auto col-10" action = "interview" method = "post" id = "form1">
                                 <div class="d-flex flex-row justify-content-center row g-2 m-1">
+                                    <a href="post?action=post-detail&postID=${postID}" target="_blank">Xem bài đăng tuyển dụng</a>
+                                </div>
+                                <div class="d-flex flex-row justify-content-center row g-2 m-1">
                                     <label class="col-3" for="format">Hình thức</label>
                                     <!--                                    <div class="col-2 d-flex flex-row" id="fomat">
                                     <c:if test ="<%=(interviewFormat != null)%>" >
@@ -126,7 +129,8 @@
                                     <select class="col-6" name = "stage" id="stage">
                                         <c:if test ="<%=(interviewStage != null)%>" >
                                             <c:forEach items="<%=interviewStage%>" var="i" varStatus="count">
-                                                <option value = "${count.index + 1}" ${(stage == (count.index + 1)) ? "selected" : ""}>${i}</option>   
+                                                
+                                                <option value = "${i.split(";")[0]}" ${(stage == i.split(";")[0]) ? "selected" : ""}>${i.split(";")[1]}</option>   
                                             </c:forEach>
                                         </c:if>
                                     </select>

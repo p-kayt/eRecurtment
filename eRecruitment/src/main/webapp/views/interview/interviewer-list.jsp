@@ -90,6 +90,9 @@
                                                         <div class="col-9 text-start align-center m-auto">
                                                             <p class="m-0">${i.getFirstName()} ${i.getLastName()}</p>
                                                         </div>
+                                                        <div class="col-9 text-start align-center m-auto">
+                                                            <p>Email: ${i.email}</p>
+                                                        </div>
                                                     </div>
                                                     <div class="col-4"></div>
                                                     <div class="col-1 text-start align-center m-auto">

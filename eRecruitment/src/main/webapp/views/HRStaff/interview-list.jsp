@@ -15,7 +15,6 @@
 <html lang = "vi">
     <head>
         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
-        <%ArrayList<InterviewDTO> createdInterviewList = (ArrayList<InterviewDTO>) request.getAttribute("createdInterviewList");%>
         <meta charset="utf-8" />
         <title>Danh sách các cuộc phỏng vấn đã tạo</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -87,23 +86,24 @@
                 <c:choose>
                     <c:when test = "${user.userRole == 2 || user.userRole == 3}">
                         <c:choose>
-                            <c:when test= "<%=(createdInterviewList != null)%>">
+                            <c:when test= "${not empty InterviewList}">
                                 <c:choose>
-                                    <c:when test="<%= (createdInterviewList.size() == 0)%>">
-                                        <p>Bạn chưa tạo cuộc phỏng vấn nào.</p>
+                                    <c:when test="${InterviewList.size() == 0}">
+                                        <p>Hiện tại chưa có cuộc phỏng vấn nào.</p>
                                     </c:when>  
                                     <c:otherwise>
+
                                         <div class="border border-1 m-5 p-4 shadow">
-                                            <c:forEach items="${createdInterviewList}" var="c" varStatus="loop">
+                                            <c:forEach items="${InterviewList}" var="c" varStatus="loop">
                                                 <div class="border border-1 mb-5 p-4 shadow d-flex flex-column">
+                                                    <div class="row g-2 m-1 mx-3">
+                                                        <a href="post?action=post-detail&postID=${c.postID}" target="_blank">Xem bài đăng tuyển dụng</a>
+                                                    </div>
                                                     <div class="row g-2 m-1 mx-3">
                                                         <label class="col-2 fw-bold" for="status">Trạng thái</label>
                                                         <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
                                                             <p class="col-4" id="status">${status}<p>
                                                             </c:forEach>
-                                                    </div>
-                                                    <div class="row g-2 m-1 mx-3">
-                                                        <a href="post?action=post-detail&postID=${c.postID}" target="_blank">Xem bài đăng tuyển dụng</a>
                                                     </div>
                                                     <div class="row g-2 m-1 mx-3">
                                                         <label class="col-2 fw-bold"  for="stage">Vòng</label>
@@ -121,6 +121,7 @@
                                                         <p class="col-4" id="time">${c.getTime()}</p>
                                                     </div>
 <!--                                                        <p>${c.getPostID()}</p>-->
+
                                                     <form class="d-flex justify-content-end m-2" action="interview" method="post" >
                                                         <input type="hidden" name="action" value="showInterviewDetail">
                                                         <input type="hidden" name="interviewID" value="${c.getInterviewID()}">
@@ -135,6 +136,7 @@
                                                             <input class="btn btn-primary" type="submit" value="Chỉnh sửa">
                                                         </form>
                                                     </c:if>
+
                                                 </div>
                                             </c:forEach>
                                         </div>
@@ -143,12 +145,12 @@
 
                             </c:when>    
                             <c:otherwise>
-                                <p>Bạn chưa tạo cuộc phỏng vấn nào.</p>
+                                <p>Hiện tại chưa có cuộc phỏng vấn nào.</p>
                             </c:otherwise>
                         </c:choose>
                     </c:when>
                     <c:otherwise>
-                        <h2>Bạn không được phép chỉnh sửa lịch phỏng vấn</h2>
+                        <h2>Bạn không được phép truy cập trang web này</h2>
                     </c:otherwise>
                 </c:choose>
             </section>

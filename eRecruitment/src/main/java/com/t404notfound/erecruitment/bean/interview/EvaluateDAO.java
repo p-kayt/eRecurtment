@@ -8,6 +8,7 @@ import Util.DBUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -156,5 +157,37 @@ public class EvaluateDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    //get all evaluation of a candidate
+    public ArrayList<EvaluateDTO> getEvaluationOfCandidate(int interviewID, int candidateID) {
+        ArrayList<EvaluateDTO> evaluation = new ArrayList<>();
+        String sql = "SELECT EvaluationID, EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID\n"
+                + " FROM Evaluation\n"
+                + " WHERE InterviewID = ? AND ParticipantID IN (SELECT ParticipantID FROM Participant\n"
+                + " WHERE UserID = ? AND InterviewID = ?)";
+        
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, interviewID);
+            ps.setInt(2, candidateID);
+            ps.setInt(3, interviewID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String description = rs.getString("EvaluationDescription");
+                int interviewerID = rs.getInt("InterviewerID");
+                int participantID = rs.getInt("ParticipantID");
+                int evaluationID = rs.getInt("EvaluationID");
+                int score = rs.getInt("Score");
+
+                EvaluateDTO tmp = new EvaluateDTO(evaluationID, description, score, interviewerID, participantID, interviewID);
+                evaluation.add(tmp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return evaluation;
     }
 }

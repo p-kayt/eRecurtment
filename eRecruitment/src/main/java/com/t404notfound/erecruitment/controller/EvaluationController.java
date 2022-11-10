@@ -65,6 +65,10 @@ public class EvaluationController extends HttpServlet {
 
                     request.getRequestDispatcher("/common-interview").forward(request, response);
                     break;
+                case "viewcandidatevaluation":
+                    
+                    
+                    break;
                 default:
                     response.sendRedirect(request.getContextPath() + "/home");
             }

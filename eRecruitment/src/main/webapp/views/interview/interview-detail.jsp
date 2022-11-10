@@ -16,7 +16,6 @@
         <meta charset="utf-8" />
         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
         <%InterviewDTO interview = (InterviewDTO) request.getAttribute("interview");%>
-        <%String booker = (String) request.getAttribute("booker");%>
         <%ArrayList<String> interviewStage = (ArrayList<String>) request.getAttribute("interviewStage");%>
         <%ArrayList<String> interviewStatus = (ArrayList<String>) request.getAttribute("interviewStatus");%>
         <%ArrayList<String> interviewFormat = (ArrayList<String>) request.getAttribute("interviewFormat");%>
@@ -92,7 +91,7 @@
                                     <form action="interview" method = "post" id="form1">
                                         <div class="d-flex flex-row m-2">
                                             <div class="col-10"> 
-                                                <h4>Mô tả bài đăng ${postDescription}</h4>
+                                                <a href = "post?action=post-detail&postID=${postID}" target="_blank">Xem bài đăng tuyển dụng</a>
                                             </div>
                                             <select class="col-2" id = "statusID" name= "statusID">
                                                 <c:if test ="<%=(interviewStatus != null)%>" >
@@ -108,7 +107,7 @@
                                             <select  id="stage" name ="stage" disabled>
                                                 <c:if test ="<%=(interviewStage != null)%>" >
                                                     <c:forEach items="<%=interviewStage%>" var="i" varStatus="count">
-                                                        <option value = "${count.index + 1}" ${(count.index + 1) == interview.stageID ? "selected" : ""} >${i}</option>   
+                                                        <option value = "${i.split(";")[0]}" ${i.split(";")[0] == interview.stageID ? "selected" : ""} >${i.split(";")[1]}</option>   
                                                     </c:forEach>
                                                 </c:if>
                                             </select>
@@ -167,7 +166,8 @@
 
                                             <div class="col-11 row g-2 m-1 justify-content-center">
                                                 <label class="col-2" for="creator">Người tạo </label>
-                                                <span class="col-8 text-dark" id="creator"> ${booker} </span>
+                                                <span class="col-8 text-dark" id="creator"> ${booker.firstName} ${booker.lastName} </span>
+                                                <span>Email: ${booker.email}</span>                                            
                                             </div>
 
                                             <input type="hidden" name="action" value="updateInterview" > 
@@ -195,6 +195,9 @@
                                                             </div>
                                                             <div class="col-9 text-start align-center m-auto">
                                                                 <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                                            </div>
+                                                            <div class="col-9 text-start align-center m-auto">
+                                                                <p>Email: ${i.email}</p>
                                                             </div>
                                                         </div>
                                                         <div class="col-4"></div>
@@ -234,10 +237,13 @@
                                                             <div class="col-9 text-start align-center m-auto">
                                                                 <p>${i.getFirstName()} ${i.getLastName()}</p>
                                                             </div>
-                                                            <div>
+                                                            <div class="col-9 text-start align-center m-auto">
+                                                                <a href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
+                                                            </div>
+                                                            <div class="col-9 text-start align-center m-auto">
                                                                 <c:forEach items="<%=listParticipant%>" var="p">
                                                                     <c:if test="${p.userID == i.userID}">
-                                                                        <p>Giờ ${p.interviewTime.split("\\s")[1]}</p>
+                                                                        <p>Giờ ${p.interviewTime.split("\\s")[1].split("\\.")[0]}</p>
                                                                     </c:if>
                                                                 </c:forEach>
                                                             </div>
@@ -277,6 +283,9 @@
                                                             </div>
                                                             <div>
                                                                 <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                                            </div>
+                                                            <div class="col-9 text-start align-center m-auto">
+                                                                <a href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
                                                             </div>
                                                         </div>
                                                         <div>

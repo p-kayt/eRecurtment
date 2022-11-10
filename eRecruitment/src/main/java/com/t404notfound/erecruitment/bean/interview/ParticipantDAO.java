@@ -104,6 +104,7 @@ public class ParticipantDAO {
         return list;
     }
 
+    //get candidate by result
     public ArrayList<UserDTO> getListCandidateByResult(int interviewID, int resultID) {
 
         ArrayList<UserDTO> list = new ArrayList<>();
@@ -131,6 +132,60 @@ public class ParticipantDAO {
         }
 
         return list;
+    }
+
+    //Get all candidate that is not candidates that are exempted from interview
+    public ArrayList<UserDTO> getListInterviewCandidate(int interviewID, int resultID) {
+
+        ArrayList<UserDTO> list = new ArrayList<>();
+        UserDAO dao = new UserDAO();
+
+        String sql = "SELECT UserID "
+                + " FROM Participant "
+                + " WHERE InterviewID = ? AND ResultID != ? ";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, interviewID);
+            ps.setInt(2, resultID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int userID = rs.getInt("UserID");
+
+                UserDTO tmp = dao.getUserByID(userID);
+                list.add(tmp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    //Get result of a candidate
+    public String getCandidateResult(int interviewID, int userID) {
+        String sql = " SELECT ResultName\n"
+                + " FROM InterviewResult ir \n"
+                + " WHERE ir.ResultID IN ( SELECT ResultID\n"
+                + " FROM Participant p\n"
+                + " WHERE p.InterviewID = ? AND p.UserID = ?)";
+        String result = "";
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, interviewID);
+            ps.setInt(2, userID);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                result = rs.getString("ResultName");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     //Remove candidate out of interview

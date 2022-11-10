@@ -66,11 +66,10 @@ public class CommonInterviewController extends HttpServlet {
                 ArrayList<String> listInterviewStage = new ArrayList<>();
                 
                 for (int i = 0; i < InterviewList.size(); i++) {
-                    int interviewPostID = InterviewList.get(i).getPostID();
-                    int stageIndex = InterviewList.get(i).getStageID();
+                    int stageID = InterviewList.get(i).getStageID();
                     int statusID = InterviewList.get(i).getInteviewStatusID();
                     
-                    String stageName = interviewDAO.getInteviewStage(interviewPostID, stageIndex);
+                    String stageName = interviewDAO.getInterviewStageByID(stageID);
                     String statusName = interviewDAO.getInteviewStatus(statusID);
                     listInterviewStage.add(stageName);
                     listInterviewStatus.add(statusName);
@@ -92,12 +91,11 @@ public class CommonInterviewController extends HttpServlet {
                 ArrayList<String> candidateInterviewTime = new ArrayList<>();
                 
                 for (int i = 0; i < InterviewList.size(); i++) {
-                    int interviewPostID = InterviewList.get(i).getPostID();
-                    int stageIndex = InterviewList.get(i).getStageID();
+                    int stageID = InterviewList.get(i).getStageID();
                     int statusID = InterviewList.get(i).getInteviewStatusID();
                     
                     String time = interviewDAO.getCandidateInterviewTime(userID, InterviewList.get(i).getInterviewID());
-                    String stageName = interviewDAO.getInteviewStage(interviewPostID, stageIndex);
+                    String stageName = interviewDAO.getInterviewStageByID(stageID);
                     String statusName = interviewDAO.getInteviewStatus(statusID);
                     listInterviewStage.add(stageName);
                     listInterviewStatus.add(statusName);
@@ -118,11 +116,10 @@ public class CommonInterviewController extends HttpServlet {
                 ArrayList<String> listInterviewStage = new ArrayList<>();
                 
                 for (int i = 0; i < InterviewList.size(); i++) {
-                    int interviewPostID = InterviewList.get(i).getPostID();
-                    int stageIndex = InterviewList.get(i).getStageID();
+                    int stageID = InterviewList.get(i).getStageID();
                     int statusID = InterviewList.get(i).getInteviewStatusID();
                     
-                    String stageName = interviewDAO.getInteviewStage(interviewPostID, stageIndex);
+                    String stageName = interviewDAO.getInterviewStageByID(stageID);
                     String statusName = interviewDAO.getInteviewStatus(statusID);
                     listInterviewStage.add(stageName);
                     listInterviewStatus.add(statusName);
@@ -145,13 +142,12 @@ public class CommonInterviewController extends HttpServlet {
                 int userID = user.getUserID();
                 
                 for (int i = 0; i < InterviewList.size(); i++) {
-                    int interviewPostID = InterviewList.get(i).getPostID();
-                    int stageIndex = InterviewList.get(i).getStageID();
+                    int stageID = InterviewList.get(i).getStageID();
                     int statusID = InterviewList.get(i).getInteviewStatusID();
                     
                     String time = interviewDAO.getCandidateInterviewTime(userID, InterviewList.get(i).getInterviewID());
                     String result = interviewDAO.getResultOfCandidate(userID, InterviewList.get(i).getInterviewID());
-                    String stageName = interviewDAO.getInteviewStage(interviewPostID, stageIndex);
+                    String stageName = interviewDAO.getInterviewStageByID(stageID);
                     String statusName = interviewDAO.getInteviewStatus(statusID);
                     listInterviewStage.add(stageName);
                     listInterviewStatus.add(statusName);
@@ -177,7 +173,7 @@ public class CommonInterviewController extends HttpServlet {
                 InterviewDTO interview = interviewDAO.getInterview(interviewID);
                 int bookerID = interview.getBookerID();
                 UserDTO booker = userDAO.getUserByID(bookerID);
-                String stageName = interviewDAO.getInteviewStage(postID, interview.getStageID());
+                String stageName = interviewDAO.getInterviewStageByID(interview.getStageID());
                 String formatName = interviewDAO.getInterviewFormat(interview.getFormatID());
                 String time = interviewDAO.getCandidateInterviewTime(userID, interviewID);
                 String result = interviewDAO.getResultOfCandidate(userID, interviewID);
@@ -216,7 +212,7 @@ public class CommonInterviewController extends HttpServlet {
                 InterviewDTO interview = interviewDAO.getInterview(interviewID);
                 int bookerID = interview.getBookerID();
                 UserDTO booker = userDAO.getUserByID(bookerID);
-                String stageName = interviewDAO.getInteviewStage(postID, interview.getStageID());
+                String stageName = interviewDAO.getInterviewStageByID(interview.getStageID());
                 String formatName = interviewDAO.getInterviewFormat(interview.getFormatID());
                 
                 String statusName = interviewDAO.getInteviewStatus(interview.getInteviewStatusID());
