@@ -124,9 +124,15 @@
                         }
                     }
                     function chooseTab(tab) {
-                        var inProgress = document.getElementById("tab1");
+                        var inProgress = document.querySelectorAll("#tab1");
+                        console.log(inProgress);
+                        inProgress.prototype.forEach((tab1) => {
+                            hide(tab1);
+                        });
                         var cancelled = document.getElementById("tab2");
                         var complete = document.getElementById("tab3");
+
+
                         Array.from(inProgress).forEach(hide("tab1"));
                         Array.from(cancelled).forEach(hide("tab2"));
                         Array.from(complete).forEach(hide("tab3"));
