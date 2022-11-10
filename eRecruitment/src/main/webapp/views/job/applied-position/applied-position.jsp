@@ -56,95 +56,114 @@
                 <jsp:include page="../../header/header_logoutbtn.jsp" />
             </c:if>
 
-            <div class="" onload="chooseTab('In-progress')">
-                <button onclick="chooseTab('In-progress')">In-progress</button>
-                <button onclick="chooseTab('Has-complete')">Has complete</button>
-                <button onclick="chooseTab('Cancelled')">Cancelled</button>
-                <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
+            <div class="" >
+                <button onclick="chooseTab(1)">In-progress</button>
+                <button onclick="chooseTab(2)">Has complete</button>
+                <button onclick="chooseTab(3)">Cancelled</button>
 
-                    <div class="job-item py-4 px-2 mb-3">
-                        <div class="row g-4 justify-content-around" >
-                            <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
-                                <div class="text-start ps-4"  id="tab${i.getStatusID()}" name="tab_element">
-                                    <h5 class="mb-3">${requestScope.postList[loop.count - 1].getPositionName()}</h5>
-                                    <p>${i.getApplyDate()}</p>
-                                    <p><c:if test="${i.getStatusID()==1}">In-progress</c:if>
-                                        <c:if test="${i.getStatusID()==2}">Cancelled</c:if>
-                                        <c:if test="${i.getStatusID()==3}">Fail</c:if>
-                                        <c:if test="${i.getStatusID()==4}">Success</c:if>
-                                        </p>
+
+                <div class="job-item py-4 px-2 mb-3" id="tab1">
+                    <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
+                        <c:if test="${i.getStatusID()==1}">
+                            <div class="row g-4 justify-content-around" >
+                                <div class="col-sm-12 col-md-6 d-flex align-items-center">
+
+                                    <div class="text-start ps-4"   name="tab_element">
+                                        <h5 class="mb-3">${requestScope.postList[loop.count - 1].getPositionName()}</h5>
+                                        <p>${i.getApplyDate()}</p>
+                                        <p>In-progress </p>
+                                        <button>Cancel</button>
                                     </div>
                                 </div>
 
                             </div>
-                        </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+
+
+                <div class="job-item py-4 px-2 mb-3" id="tab2">
+                    <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
+                        <c:if test="${i.getStatusID()==2}">
+                            <div class="row g-4 justify-content-around" >
+                                <div class="col-sm-12 col-md-6 d-flex align-items-center">
+
+                                    <div class="text-start ps-4"   name="tab_element">
+                                        <h5 class="mb-3">${requestScope.postList[loop.count - 1].getPositionName()}</h5>
+                                        <p>${i.getApplyDate()}</p>
+                                        <p>Cancelled</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                </div>
+
+
+                <div class="job-item py-4 px-2 mb-3" id="tab3">
+                    <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
+                        <c:if test="${i.getStatusID()==3 || i.getStatusID()==4}">
+                            <div class="row g-4 justify-content-around" >
+                                <div class="col-sm-12 col-md-6 d-flex align-items-center">
+
+                                    <div class="text-start ps-4"   name="tab_element">
+                                        <h5 class="mb-3">${requestScope.postList[loop.count - 1].getPositionName()}</h5>
+                                        <p>${i.getApplyDate()}</p>
+                                        <p><c:if test="${i.getStatusID()==3}">Fail</c:if>
+                                            <c:if test="${i.getStatusID()==4}">Success</c:if></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                        </c:if>
+                    </c:forEach>
+
+                </div>
 
 
 
-                </c:forEach>
+                <jsp:include page="../../footer/footer.jsp" />
+
+
+                <!-- Back to Top -->
+                <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+                   ><i class="bi bi-arrow-up"></i
+                    ></a>
+                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+                <script src="lib/wow/wow.min.js"></script>
+                <script src="lib/easing/easing.min.js"></script>
+                <script src="lib/waypoints/waypoints.min.js"></script>
+                <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
 
             </div>
+    </body>
+    <!--Javascript -->
+    <script src="js/main.js"></script>
+    <script>
 
-
-
-            <jsp:include page="../../footer/footer.jsp" />
-
-
-            <!-- Back to Top -->
-            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
-               ><i class="bi bi-arrow-up"></i
-                ></a>
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-            <script src="lib/wow/wow.min.js"></script>
-            <script src="lib/easing/easing.min.js"></script>
-            <script src="lib/waypoints/waypoints.min.js"></script>
-            <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-            <!--Javascript -->
-            <script src="js/main.js"></script>
-            <script>
-                    function show(id) {
-                        var x = document.getElementById(id);
-                        x.style.display = "block";
-                    }
-                    function hide(id) {
-                        var x = document.getElementById(id);
-                        x.style.display = "none";
-                    }
-                    function toggle(id) {
-                        var x = document.getElementById(id);
-                        if (x.style.display === "none") {
-                            x.style.display = "block";
-                        } else {
-                            x.style.display = "none";
-                        }
-                    }
+                    var inProgress = document.getElementById("tab1");
+                    var cancelled = document.getElementById("tab2");
+                    var complete = document.getElementById("tab3");
                     function chooseTab(tab) {
-                        var inProgress = document.querySelectorAll("#tab1");
-                        console.log(inProgress);
-                        inProgress.prototype.forEach((tab1) => {
-                            hide(tab1);
-                        });
-                        var cancelled = document.getElementById("tab2");
-                        var complete = document.getElementById("tab3");
 
-
-                        Array.from(inProgress).forEach(hide("tab1"));
-                        Array.from(cancelled).forEach(hide("tab2"));
-                        Array.from(complete).forEach(hide("tab3"));
+                        inProgress.style = "display:none";
+                        cancelled.style = "display:none";
+                        complete.style = "display:none";
                         switch (tab) {
-                            case 'In-progress':
-                                Array.from(inProgress).forEach(show(inProgress.id));
+                            case 1:
+                                inProgress.style = "display:block";
                                 break;
-                            case 'Has-complete':
-                                Array.from(cancelled).forEach(show(cancelled.id));
+                            case 2:
+                                cancelled.style.display = "display:block";
                                 break;
-                            case 'Cancelled':
-                                Array.from(cancelled).forEach(show(cancelled.id));
+                            case 3:
+                                complete.style.display = "display:block";
                                 break;
 
                             default:
@@ -153,7 +172,5 @@
                         }
                     }
 
-            </script>
-        </div>
-    </body>
+    </script>
 </html>
