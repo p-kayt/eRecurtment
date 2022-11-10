@@ -8,8 +8,12 @@ import com.t404notfound.erecruitment.bean.UserDAO;
 import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.interview.EvaluateDAO;
 import com.t404notfound.erecruitment.bean.interview.EvaluateDTO;
+import com.t404notfound.erecruitment.bean.interview.InterviewDAO;
+import com.t404notfound.erecruitment.bean.interview.InterviewDTO;
+import com.t404notfound.erecruitment.bean.interview.InterviewerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,34 +48,52 @@ public class EvaluationController extends HttpServlet {
         UserDAO userDAO = new UserDAO();
 
         if (evaluateAction != null) {
-            switch (evaluateAction.toLowerCase()) {
-                case "evaluate":
-                    String description = request.getParameter("description").trim();
-                    int score = Integer.parseInt(request.getParameter("score"));
-                    int interviewerID = Integer.parseInt(request.getParameter("interviewerID"));
-                    int interviewID = Integer.parseInt(request.getParameter("interviewID"));
-                    int participantID = Integer.parseInt(request.getParameter("participantID"));
+            if (evaluateAction.equalsIgnoreCase("evaluate")) {
+                String description = request.getParameter("description").trim();
+                int score = Integer.parseInt(request.getParameter("score"));
+                int interviewerID = Integer.parseInt(request.getParameter("interviewerID"));
+                int interviewID = Integer.parseInt(request.getParameter("interviewID"));
+                int participantID = Integer.parseInt(request.getParameter("participantID"));
 
-                    EvaluateDAO evaluateDAO = new EvaluateDAO();
+                EvaluateDAO evaluateDAO = new EvaluateDAO();
 
-                    //if evaluation exist then update, else add new evaluation
-                    boolean checkEvaluation = evaluateDAO.checkEvaluation(interviewerID, participantID, interviewID);
-                    if (checkEvaluation) {
-                        evaluateDAO.updateEvaluation(description, score, interviewerID, participantID, interviewID);
-                    } else {
-                        evaluateDAO.addEvaluation(description, score, interviewerID, participantID, interviewID);
-                    }
-                    //if evaluation exist then update, else add new evaluation
+                //if evaluation exist then update, else add new evaluation
+                boolean checkEvaluation = evaluateDAO.checkEvaluation(interviewerID, participantID, interviewID);
+                if (checkEvaluation) {
+                    evaluateDAO.updateEvaluation(description, score, interviewerID, participantID, interviewID);
+                } else {
+                    evaluateDAO.addEvaluation(description, score, interviewerID, participantID, interviewID);
+                }
+                //if evaluation exist then update, else add new evaluation
 
-                    request.getRequestDispatcher("/common-interview").forward(request, response);
-                    break;
-                case "viewcandidatevaluation":
-                    
-                    
-                    break;
-                default:
-                    response.sendRedirect(request.getContextPath() + "/home");
+                request.getRequestDispatcher("/common-interview").forward(request, response);
+            } else if (evaluateAction.equalsIgnoreCase("viewCandidatEvaluation")) {
+                int candidateID = Integer.parseInt(request.getParameter("candidateID"));
+                InterviewDAO interviewDAO = new InterviewDAO();
+                int interviewID = Integer.parseInt(request.getParameter("interviewID"));
+                EvaluateDAO evaluateDAO = new EvaluateDAO();
+                
+                //get evalution of candidate
+                ArrayList<EvaluateDTO> evaluation = evaluateDAO.getEvaluationOfCandidate(interviewID, candidateID);
+                request.setAttribute("evaluation", evaluation);
+                //get evalution of candidate
+                
+                InterviewerDAO interviewerDAO = new InterviewerDAO();
+                //get Interviewer of this interview
+                ArrayList<UserDTO> listInterviewer = interviewerDAO.getInterviewer(interviewID);
+                request.setAttribute("listInterviewer", listInterviewer);
+                //get list interviewer
+                
+                //get candidate information
+                UserDTO candidate = userDAO.getUserByID(candidateID);
+                request.setAttribute("candidate", candidate);
+                //get candidate information
+                
+                request.getRequestDispatcher("views/HRStaff/candidate-evaluation.jsp").forward(request, response);
+            } else {
+                response.sendRedirect(request.getContextPath() + "/home");
             }
+
         } else {
             response.sendRedirect(request.getContextPath() + "/home");
         }

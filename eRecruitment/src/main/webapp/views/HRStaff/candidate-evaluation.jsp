@@ -63,53 +63,65 @@
                 <c:choose>
                     <c:when test = "${user.userRole == 2 || user.userRole == 3}">
                         <c:choose>
-                            <c:when test= "${not empty InterviewList}">
-                                <c:choose>
-                                    <c:when test="${InterviewList.size() == 0}">
-                                        <p>Hiện tại chưa có cuộc phỏng vấn nào.</p>
-                                    </c:when>  
-                                    <c:otherwise>
+                            <c:when test= "${not empty candidate}">
+                                <div class="d-flex flex-column m-2 p-2  border border-1">
+                                    <div>
+                                        <p>Chi tiết đánh giá ứng viên</p>
+                                    </div>
+                                    <p>Ứng viên</p>
+                                    <div >
 
-                                        <div class="border border-1 m-5 p-4 shadow">
-                                            <c:forEach items="${InterviewList}" var="c" varStatus="loop">
-                                                <div class="border border-1 mb-5 p-4 shadow d-flex flex-column">
-                                                    <div class="row g-2 m-1 mx-3">
-                                                        <label class="col-2 fw-bold" for="status">Trạng thái</label>
-                                                        <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
-                                                            <p class="col-4" id="status">${status}<p>
-                                                            </c:forEach>
-                                                    </div>
-                                                    <div class="row g-2 m-1 mx-3">
-                                                        <label class="col-2 fw-bold"  for="stage">Vòng</label>
-                                                        <c:forEach items="${listInterviewStage}" begin="${loop.index}" end="${loop.index}" step="1" var="stage">
-                                                            <p class="col-4" id="stage">${stage}<p>
-                                                            </c:forEach>
-                                                    </div>
-                                                    <div class="d-flex flex-column m-1 mx-3">
-                                                        <label class="col-2 fw-bold " for="description">Mô tả</label>
-                                                        <textarea class="col-11 m-auto" id="description" rows="4" >${c.getDescription()}</textarea>
-
-                                                    </div>
-                                                    <div class="row g-2 m-1 mx-3 ">
-                                                        <label class="col-2 fw-bold" for="time">Thời gian</label>
-                                                        <p class="col-4" id="time">${c.getTime()}</p>
-                                                    </div>
-<!--                                                        <p>${c.getPostID()}</p>-->
-                                                    <form class="d-flex justify-content-end m-2" action="interview" method="post" >
-                                                        <input type="hidden" name="action" value="interviewDetail">
-                                                        <input type="hidden" name="postID" value="${c.getPostID()}">
-                                                        <input type="hidden" name="interviewID" value="${c.getInterviewID()}">
-                                                        <input class="btn btn-primary" type="submit" value="Chỉnh sửa">
-                                                    </form>
-                                                </div>
-                                            </c:forEach>
+                                        <div>
+                                            <div >
+                                                <img class="ava_img" src= "${candidate.getAvatarURL() != null ? candidate.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                            </div>
+                                            <div>
+                                                <p>${candidate.getFirstName()} ${candidate.getLastName()}</p>
+                                            </div>
+                                            <div \>
+                                                <a href = "job?action=view-candidate-cv&userID=${candidate.userID}" target="_blank">Xem CV</a>
+                                            </div>
                                         </div>
-                                    </c:otherwise>
-                                </c:choose>
+                                    </div>
+
+                                    <p>Đánh giá </p>
+                                    <div>
+
+                                        <c:forEach items="${listInterviewer}" var="i" varStatus="loop">
+
+                                            <div >
+                                                <img class="img-thumbnail m-2" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                            </div>
+                                            <div >
+                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
+
+                                            </div>
+                                            <div >
+
+                                                <c:forEach items="${evaluation}" var="e"> 
+                                                    <c:if test="${(e.interviewerID == i.userID)}">
+                                                        
+                                                        <p>Đánh giá</p>
+                                                        <textarea cols="50" rows="4" disabled>${e.evaluationDescription}</textarea>
+                                                        <p>Điểm: ${e.score}</p>
+                                                        <<<continue>>>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </div>
+
+
+
+                                        </c:forEach>
+                                    </div>
+
+                                </div>
+
+
+
 
                             </c:when>    
                             <c:otherwise>
-                                <p>Hiện tại chưa có cuộc phỏng vấn nào.</p>
+                                <p>Hiện tại chưa có ứng viên nào.</p>
                             </c:otherwise>
                         </c:choose>
                     </c:when>
