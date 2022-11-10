@@ -740,14 +740,20 @@ GO
 INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Applying CV and Waiting For Approval', 1, 1)
 INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Candidate''s Skills and Knowledge', 1, 2)
 INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Contract Negotiation', 1, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Final Evalution of Candidate', 1, 4)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Kết thúc quá trình tuyển dụng. Candidate nhân kết quả cuối cùng', 1, 3)
 
-INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Applying CV and Waiting For Approval', 2, 1)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Ứng tuyển và chờ xét duyệt CV', 2, 1)
 INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Candidate''s Skills and Knowledge', 2, 2)
 INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Contract Negotiation', 2, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Final Evalution of Candidate', 2, 4)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Kết thúc quá trình tuyển dụng. Candidate nhân kết quả cuối cùng', 2, 3)
 
-INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Applying CV and Waiting For Approval', 3, 1)
-INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Candidate''s Skills and Knowledge', 3, 2)
-INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Contract Negotiation', 3, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Ứng tuyển và chờ xét duyệt CV', 3, 1)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phỏng vấn kiến thức và kỹ năng của ứng viên', 3, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phòng vấn về hợp đồng lao động', 3, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Đánh giá tổng kết quá trình tuyển dụng', 3, 4)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Kết thúc quá trình tuyển dụng. Candidate nhân kết quả cuối cùng', 3, 3)
 
 -- Bảng chứa các status của quá trình ứng tuyển của ứng viên
 -- bao gồm: StatusID: ID của status
@@ -865,7 +871,7 @@ CREATE TABLE Interview(
 
 	CONSTRAINT PK_Interview PRIMARY KEY (InterviewID),
 	CONSTRAINT FK_Interview_from_Stage FOREIGN KEY (StageID)
-		REFERENCES Stage (StageID),
+		REFERENCES Application_Stage (ID),
 	CONSTRAINT FK_Interview_from_ApplicationPost FOREIGN KEY (PostID)
 		REFERENCES ApplicationPost (PostID),
 	CONSTRAINT FK_Interview_from_InterviewFormat FOREIGN KEY (FormatID)
@@ -878,10 +884,10 @@ CREATE TABLE Interview(
 
 GO
 INSERT INTO Interview([Description], OnlineLink, [Address], InterviewTime, MaxCandidate, StageID, PostID, FormatID, StatusID, BookerID)
-	VALUES(N'Candidate''s Skills and Knowledge', 'https://meet.google.com/', NULL, '2022-10-20 10:00',10, 2, 3, 2, 3, 4);
+	VALUES(N'Candidate''s Skills and Knowledge', 'https://meet.google.com/', NULL, '2022-10-20 10:00',10, 8, 3, 2, 3, 4);
 
 INSERT INTO Interview([Description], OnlineLink, [Address], InterviewTime, MaxCandidate, StageID, PostID, FormatID, StatusID, BookerID)
-	VALUES(N'Contract Negotiation', 'https://meet.google.com/', NULL, '2022-10-25 22:00',10, 2, 3, 2, 1, 4)
+	VALUES(N'Contract Negotiation', 'https://meet.google.com/', NULL, '2022-10-25 22:00',10, 9, 3, 2, 1, 4)
 
 
 -- Bảng chứa thông tin thêm của buổi PV (Interview)
