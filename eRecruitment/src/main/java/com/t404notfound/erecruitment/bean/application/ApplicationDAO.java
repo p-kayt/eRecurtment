@@ -93,6 +93,40 @@ public class ApplicationDAO {
         }
         return null;
     }
+    
+    public ArrayList<ApplicationDTO> listAllApplicationOfAUser(int userID) {
+        String sql = "select ApplicationID, ApplyDate, StatusID, StageID, UserID, PostID from Application where UserID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, userID);
+            ArrayList<ApplicationDTO> list = new ArrayList<>();
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                ApplicationDTO dto = new ApplicationDTO();
+                dto.setId(rs.getInt("ApplicationID"));
+                dto.setApplyDate(rs.getDate("ApplyDate"));
+                dto.setStatusID(rs.getInt("StatusID"));
+                dto.setStageID(rs.getInt("StageID"));
+                dto.setUserID(rs.getInt("UserID"));
+                dto.setPostID(rs.getInt("PostID"));
+
+                list.add(dto);
+            }
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
 
     public int addApplication(ApplicationDTO dto) {
         int result = 0;

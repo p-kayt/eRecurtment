@@ -56,27 +56,36 @@
                 <jsp:include page="../../header/header_logoutbtn.jsp" />
             </c:if>
 
-            <div class="">
+            <div class="" onload="chooseTab('In-progress')">
+                <button onclick="chooseTab('In-progress')">In-progress</button>
+                <button onclick="chooseTab('Has-complete')">Has complete</button>
+                <button onclick="chooseTab('Cancelled')">Cancelled</button>
                 <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
 
                     <div class="job-item py-4 px-2 mb-3">
                         <div class="row g-4 justify-content-around" >
                             <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
-                                <div class="text-start ps-4">
+                                <div class="text-start ps-4"  id="tab${i.getStatusID()}" name="tab_element">
                                     <h5 class="mb-3">${requestScope.postList[loop.count - 1].getPositionName()}</h5>
                                     <p>${i.getApplyDate()}</p>
+                                    <p><c:if test="${i.getStatusID()==1}">In-progress</c:if>
+                                        <c:if test="${i.getStatusID()==2}">Cancelled</c:if>
+                                        <c:if test="${i.getStatusID()==3}">Fail</c:if>
+                                        <c:if test="${i.getStatusID()==4}">Success</c:if>
+                                        </p>
+                                    </div>
                                 </div>
+
                             </div>
-                            
                         </div>
-                    </div>
 
 
 
                 </c:forEach>
-                
+
             </div>
+
 
 
             <jsp:include page="../../footer/footer.jsp" />
@@ -97,6 +106,48 @@
 
             <!--Javascript -->
             <script src="js/main.js"></script>
+            <script>
+                    function show(id) {
+                        var x = document.getElementById(id);
+                        x.style.display = "block";
+                    }
+                    function hide(id) {
+                        var x = document.getElementById(id);
+                        x.style.display = "none";
+                    }
+                    function toggle(id) {
+                        var x = document.getElementById(id);
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        } else {
+                            x.style.display = "none";
+                        }
+                    }
+                    function chooseTab(tab) {
+                        var inProgress = document.getElementById("tab1");
+                        var cancelled = document.getElementById("tab2");
+                        var complete = document.getElementById("tab3");
+                        Array.from(inProgress).forEach(hide("tab1"));
+                        Array.from(cancelled).forEach(hide("tab2"));
+                        Array.from(complete).forEach(hide("tab3"));
+                        switch (tab) {
+                            case 'In-progress':
+                                Array.from(inProgress).forEach(show(inProgress.id));
+                                break;
+                            case 'Has-complete':
+                                Array.from(cancelled).forEach(show(cancelled.id));
+                                break;
+                            case 'Cancelled':
+                                Array.from(cancelled).forEach(show(cancelled.id));
+                                break;
+
+                            default:
+
+                                break;
+                        }
+                    }
+
+            </script>
         </div>
     </body>
 </html>
