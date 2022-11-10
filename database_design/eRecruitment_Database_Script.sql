@@ -796,10 +796,10 @@ CREATE TABLE [Application](
 )
 
 GO
-INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 4, 2, 2)
-INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-13', 1, 4, 3, 2)
+--INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 4, 2, 2)
+--INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-13', 1, 4, 3, 2)
 
-INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 9, 1, 3)
+--INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 9, 1, 3)
 
 ----------------------------------
 -- Interview Section --

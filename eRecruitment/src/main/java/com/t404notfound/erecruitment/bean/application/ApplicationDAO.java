@@ -5,6 +5,7 @@
 package com.t404notfound.erecruitment.bean.application;
 
 import Util.DBUtil;
+import com.t404notfound.erecruitment.bean.interview.InterviewDTO;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -58,7 +59,7 @@ public class ApplicationDAO {
         }
         return null;
     }
-    
+
     public ArrayList<ApplicationDTO> listAllApplicationOfAPost(int postID) {
         String sql = "select ApplicationID, ApplyDate, StatusID, StageID, UserID, PostID from Application where PostID = ?";
         try {
@@ -132,10 +133,9 @@ public class ApplicationDAO {
             pst.setInt(1, userID);
             pst.setInt(2, postID);
             ResultSet rs = pst.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
         } catch (SQLException e) {
@@ -152,13 +152,120 @@ public class ApplicationDAO {
         return true;
     }
 
+    public int rejectApplication(int appID) {
+        String sql = "update Application set StatusID = 3 where ApplicationID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, appID);
+            return pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int getNextStage(int stageOffset, int postID) {
+        String sql = "select top 1 LEAD(ID, ?, 0) OVER ( ORDER BY ID ) AS NextID FROM Application_Stage where PostID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, stageOffset);
+            pst.setInt(2, postID);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int approveToNextStage(int nextStage, int appID) {
+        String sql = "update Application set StageID = ? where ApplicationID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, nextStage);
+            pst.setInt(2, appID);
+            return pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
+
+        public ArrayList<InterviewDTO> getInterviewsOfPost(int postID) {
+        ArrayList<InterviewDTO> list = new ArrayList<>();
+        String sql = " SELECT * FROM [Interview] where PostID = ? ";
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, postID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int interviewID = rs.getInt("InterviewID");
+                String description = rs.getString("Description");
+                String link = rs.getString("OnlineLink");
+                String address = rs.getString("Address");
+
+                /* Convert date to String using DateFormat*/
+                String time = rs.getString("InterviewTime").split("\\.")[0];
+                /* Convert date to String using DateFormat*/
+
+                int maxCandidate = rs.getInt("MaxCandidate");
+                int stageID = rs.getInt("StageID");
+                int formatID = rs.getInt("FormatID");
+                int statusID = rs.getInt("StatusID");
+                int bookerID = rs.getInt("BookerID");
+
+                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, maxCandidate, stageID, postID, statusID, bookerID);
+                list.add(tmp);
+            }
+            return list;
+
+        } catch (Exception e) {
+            System.out.println("Error when get interview list.");
+            e.printStackTrace();
+        }
+        return list;
+    }
     
     public static void main(String[] args) {
         ApplicationDAO dao = new ApplicationDAO();
-        ArrayList<ApplicationDTO> list = dao.listAllApplicationOfAPost(6);
-        for (ApplicationDTO a : list) {
-            System.out.println(a.getId() + "    " + a.getStageID() + "    " + a.getPostID() + "    " + a.getUserID() + "    " + a.getApplyDate().toString());
-        }
+//        ArrayList<ApplicationDTO> list = dao.listAllApplicationOfAPost(6);
+//        for (ApplicationDTO a : list) {
+//            System.out.println(a.getId() + "    " + a.getStageID() + "    " + a.getPostID() + "    " + a.getUserID() + "    " + a.getApplyDate().toString());
+//        }
+
+        int nextStage = dao.getNextStage(5, 6);
+        System.out.println("NEXT STAGE: " + nextStage);
     }
 
 }
