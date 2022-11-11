@@ -80,6 +80,12 @@ public class CVController extends HttpServlet {
                 request.setAttribute("cv", cvdto);
                 request.getRequestDispatcher("/views/cv/cv-read.jsp").forward(request, response);
             }
+            if (action.equalsIgnoreCase("viewCVOfACandidate")) {
+                int userID = Integer.parseInt(request.getParameter("userID").toString());
+                cvdto = cvdao.loadCVByUserID(userID);
+                request.setAttribute("cv", cvdto);
+                request.getRequestDispatcher("/views/cv/cv-read.jsp").forward(request, response);
+            }
             if (action.equalsIgnoreCase("createMyCV")) {
                 request.setAttribute("action", "createCV");
                 request.getRequestDispatcher("/views/cv/cv-write.jsp").forward(request, response);

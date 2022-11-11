@@ -147,7 +147,7 @@
                                                                 </p>
                                                                 <c:if test ="${user.userRole != 1}">
                                                                     <div class="col-9 text-start align-center m-auto">
-                                                                        <a href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
+                                                                        <a href = "cv?action=viewCVOfACandidate&userID=${i.userID}" target="_blank">Xem CV</a>
                                                                     </div>
                                                                 </c:if>
                                                             </div>
