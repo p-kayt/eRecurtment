@@ -40,10 +40,34 @@ public class EvaluateDAO {
         return false;
     }
 
-    public boolean updateEvaluation(String description, int score, int interviewerID, int participantID, int interviewID) {
+    //get participant id
+    public int getParticipantID(int userID, int interviewID) {
+        String sql = "SELECT ParticipantID FROM Participant\n"
+                + "WHERE UserID = ? AND InterviewID = ?";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, userID);
+            ps.setInt(2, interviewID);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("ParticipantID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public boolean updateEvaluation(String description, int score, int interviewerID, int candidateID, int interviewID) {
         String sql = "UPDATE Evaluation\n"
-                + " SET EvaluationDescription = ?, Score = ?\n"
-                + " WHERE InterviewerID = ? AND ParticipantID = ? AND InterviewID = ?";
+                + "SET EvaluationDescription = ?, Score = ?\n"
+                + "WHERE InterviewerID = ?  AND InterviewID = ? AND ParticipantID IN (SELECT ParticipantID\n"
+                + "		FROM Participant\n"
+                + "		WHERE UserID = ? AND InterviewID = ?)";
 
         EvaluateDTO tmp = null;
         try {
@@ -52,8 +76,9 @@ public class EvaluateDAO {
             ps.setString(1, description);
             ps.setInt(2, score);
             ps.setInt(3, interviewerID);
-            ps.setInt(4, participantID);
-            ps.setInt(5, interviewID);
+            ps.setInt(4, interviewID);
+            ps.setInt(5, candidateID);
+            ps.setInt(6, interviewID);
 
             int rs = ps.executeUpdate();
 
@@ -111,15 +136,18 @@ public class EvaluateDAO {
         return id;
     }
 
-    public boolean checkEvaluation(int interviewerID, int participantID, int interviewID) {
+    public boolean checkEvaluation(int interviewerID, int candidateID, int interviewID) {
         String sql = "SELECT * FROM Evaluation\n"
-                + " WHERE InterviewerID = ? AND ParticipantID = ? AND InterviewID = ?";
+                + "WHERE InterviewID = ? AND InterviewerID = ? AND ParticipantID IN (SELECT ParticipantID\n"
+                + "		FROM Participant\n"
+                + "		WHERE UserID = ? AND InterviewID = ?)";
         try {
             Connection con = DBUtil.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, interviewerID);
-            ps.setInt(2, participantID);
-            ps.setInt(3, interviewID);
+            ps.setInt(1, interviewID);
+            ps.setInt(2, interviewerID);
+            ps.setInt(3, candidateID);
+            ps.setInt(4, interviewID);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -131,22 +159,26 @@ public class EvaluateDAO {
         return false;
     }
 
-    //get Evaluation
-    public EvaluateDTO getEvaluation(int interviewerID, int participantID, int interviewID) {
-        String sql = "SELECT EvaluationID, EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID \n"
-                + " FROM Evaluation\n"
-                + " WHERE InterviewerID = ? AND ParticipantID = ? AND InterviewID = ?";
+    //get Evaluation of a candidate that an interviewer has evalauted in an interview
+    public EvaluateDTO getEvaluationOfCandidateOfInterviewer(int interviewID, int interviewerID, int candidateID) {
+        String sql = "SELECT e.EvaluationID, e.EvaluationDescription, e.Score, e.InterviewerID, e.ParticipantID, e.InterviewID \n"
+                + "FROM Evaluation e\n"
+                + "WHERE InterviewID = ? AND InterviewerID = ? AND ParticipantID IN (SELECT ParticipantID \n"
+                + "FROM Participant\n"
+                + "WHERE UserID = ? and InterviewID = ?)";
 
         try {
             Connection con = DBUtil.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, interviewerID);
-            ps.setInt(2, participantID);
-            ps.setInt(3, interviewID);
+            ps.setInt(1, interviewID);
+            ps.setInt(2, interviewerID);
+            ps.setInt(3, candidateID);
+            ps.setInt(4, interviewID);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 String description = rs.getString("EvaluationDescription");
+                int participantID = rs.getInt("ParticipantID");
                 int evaluationID = rs.getInt("EvaluationID");
                 int score = rs.getInt("Score");
 
@@ -159,6 +191,37 @@ public class EvaluateDAO {
         return null;
     }
 
+    //get Evaluation of interviewer in an interview
+    public ArrayList<EvaluateDTO> getEvaluation(int interviewerID, int interviewID) {
+        String sql = "SELECT e.EvaluationID, e.EvaluationDescription, e.Score, e.InterviewerID, e.ParticipantID, e.InterviewID \n"
+                + "FROM Evaluation e\n"
+                + "INNER JOIN Participant p\n"
+                + "ON e.ParticipantID = p.ParticipantID AND e.InterviewerID = ? and e.InterviewID = ?\n"
+                + "Order by p.UserID asc";
+        ArrayList<EvaluateDTO> evaluate = new ArrayList<>();
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, interviewerID);
+            ps.setInt(2, interviewID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String description = rs.getString("EvaluationDescription");
+                int participantID = rs.getInt("ParticipantID");
+                int evaluationID = rs.getInt("EvaluationID");
+                int score = rs.getInt("Score");
+
+                EvaluateDTO tmp = new EvaluateDTO(evaluationID, description, score, interviewerID, participantID, interviewID);
+                evaluate.add(tmp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return evaluate;
+    }
+
     //get all evaluation of a candidate
     public ArrayList<EvaluateDTO> getEvaluationOfCandidate(int interviewID, int candidateID) {
         ArrayList<EvaluateDTO> evaluation = new ArrayList<>();
@@ -166,7 +229,7 @@ public class EvaluateDAO {
                 + " FROM Evaluation\n"
                 + " WHERE InterviewID = ? AND ParticipantID IN (SELECT ParticipantID FROM Participant\n"
                 + " WHERE UserID = ? AND InterviewID = ?)";
-        
+
         try {
             Connection con = DBUtil.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);

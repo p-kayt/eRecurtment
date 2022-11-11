@@ -53,15 +53,16 @@ public class EvaluationController extends HttpServlet {
                 int score = Integer.parseInt(request.getParameter("score"));
                 int interviewerID = Integer.parseInt(request.getParameter("interviewerID"));
                 int interviewID = Integer.parseInt(request.getParameter("interviewID"));
-                int participantID = Integer.parseInt(request.getParameter("participantID"));
+                int candidateID = Integer.parseInt(request.getParameter("candidateID"));
 
                 EvaluateDAO evaluateDAO = new EvaluateDAO();
 
                 //if evaluation exist then update, else add new evaluation
-                boolean checkEvaluation = evaluateDAO.checkEvaluation(interviewerID, participantID, interviewID);
+                boolean checkEvaluation = evaluateDAO.checkEvaluation(interviewerID, candidateID, interviewID);
                 if (checkEvaluation) {
-                    evaluateDAO.updateEvaluation(description, score, interviewerID, participantID, interviewID);
+                    evaluateDAO.updateEvaluation(description, score, interviewerID, candidateID, interviewID);
                 } else {
+                    int participantID = evaluateDAO.getParticipantID(candidateID, interviewID);
                     evaluateDAO.addEvaluation(description, score, interviewerID, participantID, interviewID);
                 }
                 //if evaluation exist then update, else add new evaluation
