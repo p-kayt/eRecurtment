@@ -60,6 +60,60 @@ public class ApplicationDAO {
         return null;
     }
 
+    public ApplicationDTO getApplicationByID(int appID) {
+        String sql = "select ApplicationID, ApplyDate, StatusID, StageID, UserID, PostID from Application where ApplicationID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, appID);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                ApplicationDTO dto = new ApplicationDTO();
+                dto.setId(rs.getInt("ApplicationID"));
+                dto.setApplyDate(rs.getDate("ApplyDate"));
+                dto.setStatusID(rs.getInt("StatusID"));
+                dto.setStageID(rs.getInt("StageID"));
+                dto.setUserID(rs.getInt("UserID"));
+                dto.setPostID(rs.getInt("PostID"));
+
+                return dto;
+            }
+            return null;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
+
+    public int cancelApplication(int appID) {
+        String sql = "update Application set StatusID = 2 where ApplicationID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, appID);
+            return pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
+
     public ArrayList<ApplicationDTO> listAllApplicationOfAPost(int postID) {
         String sql = "select ApplicationID, ApplyDate, StatusID, StageID, UserID, PostID from Application where PostID = ?";
         try {
@@ -93,7 +147,7 @@ public class ApplicationDAO {
         }
         return null;
     }
-    
+
     public ArrayList<ApplicationDTO> listAllApplicationOfAUser(int userID) {
         String sql = "select ApplicationID, ApplyDate, StatusID, StageID, UserID, PostID from Application where UserID = ?";
         try {
@@ -255,7 +309,7 @@ public class ApplicationDAO {
         return 0;
     }
 
-        public ArrayList<InterviewDTO> getInterviewsOfPost(int postID) {
+    public ArrayList<InterviewDTO> getInterviewsOfPost(int postID) {
         ArrayList<InterviewDTO> list = new ArrayList<>();
         String sql = " SELECT * FROM [Interview] where PostID = ? ";
         try {
@@ -290,7 +344,7 @@ public class ApplicationDAO {
         }
         return list;
     }
-    
+
     public static void main(String[] args) {
         ApplicationDAO dao = new ApplicationDAO();
 //        ArrayList<ApplicationDTO> list = dao.listAllApplicationOfAPost(6);

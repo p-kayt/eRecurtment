@@ -75,7 +75,7 @@
                                                 <h5 class="mb-3">${j.getPositionName()}</h5>
                                                 <p>${i.getApplyDate()}</p>
                                                 <p>In-progress </p>
-                                                <button>Cancel</button>
+                                                <a class="btn btn-primary" href="./application?action=cancel-application&appID=${i.id}">Cancel</a>                                                
                                             </div>
                                         </div>
 

@@ -54,6 +54,9 @@ public class ApplicationController extends HttpServlet {
             interviewID = Integer.parseInt(request.getParameter("interviewID"));
         };
         String action = request.getParameter("action");
+        if (action == null) {
+            action = "view-applied-position";
+        }
 
         int postID = 0;
         if (request.getParameter("postID") != null) {
@@ -66,18 +69,31 @@ public class ApplicationController extends HttpServlet {
 
             if (action.equalsIgnoreCase("view-applied-position")) {
                 ArrayList<ApplicationDTO> appList = appdao.listAllApplicationOfAUser(user.getUserID());
-//                appList.get(0).getApplyDate()
                 ArrayList<ApplicationPostDTO> postList = new ArrayList<>();
-//                postList.get(0).getPositionName();
                 for (ApplicationDTO x : appList) {
                     postList.add(postdao.loadApplicationPostWithName(x.getPostID()));
                 }
-                //chỗ này cần xem lại vì ko load được đống post ra
                 
                 request.setAttribute("postList", postList);
                 request.setAttribute("appList", appList);
                 request.getRequestDispatcher("/views/job/applied-position/applied-position.jsp").forward(request, response);
             }
+            if (action.equalsIgnoreCase("cancel-application")) {
+                int applicationID = Integer.parseInt(request.getParameter("appID"));
+                ApplicationDTO appdto = appdao.getApplicationByID(applicationID);
+                appdao.cancelApplication(applicationID);
+                
+                ArrayList<ApplicationDTO> appList = appdao.listAllApplicationOfAUser(user.getUserID());
+                ArrayList<ApplicationPostDTO> postList = new ArrayList<>();
+                for (ApplicationDTO x : appList) {
+                    postList.add(postdao.loadApplicationPostWithName(x.getPostID()));
+                }
+                
+                request.setAttribute("postList", postList);
+                request.setAttribute("appList", appList);
+                request.getRequestDispatcher("/views/job/applied-position/applied-position.jsp").forward(request, response);
+            }
+            
         }
     }
 

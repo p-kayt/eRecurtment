@@ -820,18 +820,6 @@ public class CVDAO {
             } else {
                 ps.setNString(9, "");
             }
-//            int genderID = 1;
-//            switch (cv.getGender().toLowerCase()) {
-//                case "female":
-//                    genderID = 2;
-//                    break;
-//                case "other":
-//                    genderID = 3;
-//                    break;
-//                default:
-//                    genderID = 1;
-//                    break;
-//            }
             ps.setInt(10, cv.getGender());
 
             int CVID = cv.getCVID();
