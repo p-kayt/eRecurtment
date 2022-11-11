@@ -81,7 +81,7 @@
             <!-- Breadcrumb End -->
 
             <!-- Content Start -->
-            <c:if test="${not empty requestScope.post.stageList}">
+            <c:if test="${not empty requestScope.post.stageList and not empty requestScope.appList}">
                 <c:forEach var="stage" items="${requestScope.post.stageList}" varStatus="stageLoop">
                     <div>
                         <div>
@@ -108,6 +108,7 @@
                                 <input class="d-none" type="submit" value="Tạo buổi phỏng vấn">
                             </form>
                         </c:if>
+
                         <c:if test="${not empty stage.interviewList}">
                             <!-- Insert link to view Interview of stage -->
                             <!-- Insert link to view Interview of stage -->
@@ -123,7 +124,11 @@
                                         <th scope="col" class="col-2 text-center align-middle">Ngày Ứng Tuyển</th>
                                         <th scope="col" class="col-2 text-center align-middle">CV Ứng Viên</th>
                                         <th scope="col" class="col-2 text-center align-middle">Trạng Thái</th>
+
                                         <th scope="col" class="col-2 text-center align-middle">Xét Duyệt</th>
+                                            <c:if test="${not empty stage.interviewList}">
+                                            <th scope="col" class="col-2 text-center align-middle">Đánh Giá PV</th>
+                                            </c:if>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -178,7 +183,7 @@
                                                 </td>
                                             </c:if>
                                             <!-- If Staff reject the candidate's application (CV) -->
-                                            
+
                                             <!-- If Stage is an interview stage but does not have Interview -->
                                             <c:if test="${stage.stageID == 2 and empty stage.interviewList}">
                                                 <td scope="col" class="col-1 text-center align-middle">
@@ -186,7 +191,7 @@
                                                 </td>
                                             </c:if>
                                             <!-- If Stage is an interview stage but does not have Interview -->
-                                            
+
                                             <!-- If Stage is an interview stage and has Interview -->
                                             <c:if test="${stage.stageID == 2 and not empty stage.interviewList}">
                                                 <td scope="col" class="col-1 text-center align-middle">
@@ -196,7 +201,7 @@
                                                 </td>
                                             </c:if>
                                             <!-- If Stage is an interview stage and has Interview -->
-                                            
+
                                             </tr>
                                         </c:if>
                                     </c:forEach>
@@ -213,10 +218,14 @@
                     </br>
                 </c:forEach>
             </c:if>
-
             <c:if test="${empty requestScope.post.stageList}">
                 <div>
                     <h3>Bài Đăng Chưa Có Các Vòng Tuyển Dụng</h3>
+                </div>
+            </c:if>
+            <c:if test="${empty requestScope.appList}">
+                <div>
+                    <h3>Bài Đăng Chưa Có Ứng Viên Ứng Tuyển</h3>
                 </div>
             </c:if>
             <!-- Content End -->

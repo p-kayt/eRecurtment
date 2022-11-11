@@ -802,9 +802,9 @@ CREATE TABLE [Application](
 )
 
 GO
-INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 4, 2, 2)
-INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-13', 1, 4, 3, 2)
-INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 9, 1, 3)
+INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 6, 2, 2)
+INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-13', 1, 6, 3, 2)
+INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 14, 1, 3)
 
 ----------------------------------
 -- Interview Section --
@@ -883,10 +883,10 @@ CREATE TABLE Interview(
 
 GO
 INSERT INTO Interview([Description], OnlineLink, [Address], InterviewTime, MaxCandidate, StageID, PostID, FormatID, StatusID, BookerID)
-	VALUES(N'Candidate''s Skills and Knowledge', 'https://meet.google.com/', NULL, '2022-10-20 10:00',10, 8, 3, 2, 3, 4);
+	VALUES(N'Phỏng vấn kiến thức và kỹ năng của ứng viên', 'https://meet.google.com/', NULL, '2022-10-20 10:00',10, 12, 3, 2, 3, 4);
 
 INSERT INTO Interview([Description], OnlineLink, [Address], InterviewTime, MaxCandidate, StageID, PostID, FormatID, StatusID, BookerID)
-	VALUES(N'Contract Negotiation', 'https://meet.google.com/', NULL, '2022-10-25 22:00',10, 9, 3, 2, 1, 4)
+	VALUES(N'Phòng vấn về hợp đồng lao động', 'https://meet.google.com/', NULL, '2022-10-25 22:00',10, 13, 3, 2, 1, 4)
 
 
 -- Bảng chứa thông tin thêm của buổi PV (Interview)
@@ -959,7 +959,7 @@ CREATE TABLE Participant(
 
 GO
 INSERT INTO Participant(UserID, InterviewID, InterviewTime, ResultID) VALUES(1, 1, '2022-10-20 10:00', 3)
-INSERT INTO Participant(UserID, InterviewID, InterviewTime, ResultID) VALUES(1, 2, '2022-10-25 22:00', 1)
+INSERT INTO Participant(UserID, InterviewID, InterviewTime, ResultID) VALUES(1, 2, '2022-10-25 22:00', 3)
 
 -- Bảng chứa thông tin đánh giá ứng viên trong buổi PV
 -- 1 kết quả đánh giá sẽ cho 1 ứng viên (Participant), do 1 người đánh giá (Interviewer) và trong 1 buổi PV
