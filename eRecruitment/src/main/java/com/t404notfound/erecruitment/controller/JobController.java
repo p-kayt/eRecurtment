@@ -17,7 +17,11 @@ import com.t404notfound.erecruitment.bean.applicationpost.PostSkillDTO;
 import com.t404notfound.erecruitment.bean.applicationpost.PostStageDTO;
 import com.t404notfound.erecruitment.bean.cv.CVDAO;
 import com.t404notfound.erecruitment.bean.cv.CVDTO;
+import com.t404notfound.erecruitment.bean.interview.EvaluateDAO;
+import com.t404notfound.erecruitment.bean.interview.EvaluateDTO;
 import com.t404notfound.erecruitment.bean.interview.InterviewDTO;
+import com.t404notfound.erecruitment.bean.interview.InterviewerDAO;
+import com.t404notfound.erecruitment.bean.interview.InterviewerDTO;
 import com.t404notfound.erecruitment.bean.interview.ParticipantDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -56,6 +60,8 @@ public class JobController extends HttpServlet {
             ApplicationPostDAO postDAO = new ApplicationPostDAO();
             ApplicationDAO appDAO = new ApplicationDAO();
             ParticipantDAO parDAO = new ParticipantDAO();
+            InterviewerDAO itvrDAO = new InterviewerDAO();
+            EvaluateDAO evaDAO = new EvaluateDAO();
             String msg = "";
             String action = request.getParameter("action");
             HttpSession session = request.getSession();
@@ -572,7 +578,7 @@ public class JobController extends HttpServlet {
                 case "managing-applications":
                     postID = Integer.parseInt(request.getParameter("postID"));
                     positionID = Integer.parseInt(request.getParameter("positionID"));
-                    
+
                     position = positionDAO.loadApplicationPositions(positionID);
                     post = postDAO.loadApplicationPostWithName(postID);
                     for (PostStageDTO stage : post.getStageList()) {
@@ -582,12 +588,11 @@ public class JobController extends HttpServlet {
                         }
                     }
                     ArrayList<ApplicationDTO> appList = appDAO.listAllApplicationOfAPost(postID);
-                    
-                    
-                    
+
                     request.setAttribute("appList", appList);
                     request.setAttribute("post", post);
                     request.setAttribute("position", position);
+
                     request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
                     break;
                 case "view-candidate-cv":
@@ -601,17 +606,23 @@ public class JobController extends HttpServlet {
                     postID = Integer.parseInt(request.getParameter("postID"));
                     positionID = Integer.parseInt(request.getParameter("positionID"));
                     int appID = Integer.parseInt(request.getParameter("appID"));
+
                     result = appDAO.rejectApplication(appID);
-                    
-                    post = postDAO.loadApplicationPostWithName(postID);
+
                     position = positionDAO.loadApplicationPositions(positionID);
+                    post = postDAO.loadApplicationPostWithName(postID);
+                    for (PostStageDTO stage : post.getStageList()) {
+                        stage.setInterviewList(postDAO.getStageInterviewsList(stage));
+                        for (InterviewDTO itv : stage.getInterviewList()) {
+                            itv.setParticipantList(parDAO.getParticipant(itv.getInterviewID()));
+                        }
+                    }
                     appList = appDAO.listAllApplicationOfAPost(postID);
-                    
+
                     request.setAttribute("appList", appList);
                     request.setAttribute("post", post);
                     request.setAttribute("position", position);
 
-                    
                     if (result == 1) {
                         msg = "Từ Chối Thành Công Hồ Sơ Ứng Tuyển Với ID: " + appID;
                         request.setAttribute("msg", msg);
@@ -627,21 +638,28 @@ public class JobController extends HttpServlet {
                     positionID = Integer.parseInt(request.getParameter("positionID"));
                     appID = Integer.parseInt(request.getParameter("appID"));
                     int stageOffset = Integer.parseInt(request.getParameter("stageOffset"));
+
                     int nextStageID = appDAO.getNextStage(stageOffset, postID);
-                    if(nextStageID != 0){
+                    if (nextStageID != 0) {
                         result = appDAO.approveToNextStage(nextStageID, appID);
-                    }
-                    else{
+                    } else {
                         result = 0;
                     }
-                    
-                    post = postDAO.loadApplicationPostWithName(postID);
+
                     position = positionDAO.loadApplicationPositions(positionID);
+                    post = postDAO.loadApplicationPostWithName(postID);
+                    for (PostStageDTO stage : post.getStageList()) {
+                        stage.setInterviewList(postDAO.getStageInterviewsList(stage));
+                        for (InterviewDTO itv : stage.getInterviewList()) {
+                            itv.setParticipantList(parDAO.getParticipant(itv.getInterviewID()));
+                        }
+                    }
                     appList = appDAO.listAllApplicationOfAPost(postID);
 
                     request.setAttribute("appList", appList);
                     request.setAttribute("post", post);
                     request.setAttribute("position", position);
+
                     if (result == 1) {
                         msg = "Duyệt Hồ Sơ Ứng Tuyển Với ID: " + appID + " Đến Vòng Tiếp Theo Thành Công";
                         request.setAttribute("msg", msg);
@@ -650,6 +668,156 @@ public class JobController extends HttpServlet {
                         msg = "Duyệt Hồ Sơ Ứng Tuyển Với ID: " + appID + " Đến Vòng Tiếp Theo Thất Bại";
                         request.setAttribute("msg", msg);
                         request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                    }
+                    break;
+                case "reject-pass-interview":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    appID = Integer.parseInt(request.getParameter("appID"));
+                    userID = Integer.parseInt(request.getParameter("userID"));
+                    int itvID = Integer.parseInt(request.getParameter("itvID"));
+
+                    // Check if candidate have enough evaluations
+                    ArrayList<UserDTO> interviewerList = itvrDAO.getInterviewer(itvID);
+                    ArrayList<EvaluateDTO> evaluateList = evaDAO.getEvaluationOfCandidate(itvID, userID);
+                    if (interviewerList.size() != evaluateList.size()) {
+                        msg = "Từ Chối Thất Bại Hồ Sơ Ứng Tuyển Với ID: " + appID + " - Ứng Viên Chưa Có Đủ Đánh Giá Cho Vòng Phỏng Vấn Để Xét Duyệt";
+                        request.setAttribute("msg", msg);
+
+                        position = positionDAO.loadApplicationPositions(positionID);
+                        post = postDAO.loadApplicationPostWithName(postID);
+                        for (PostStageDTO stage : post.getStageList()) {
+                            stage.setInterviewList(postDAO.getStageInterviewsList(stage));
+                            for (InterviewDTO itv : stage.getInterviewList()) {
+                                itv.setParticipantList(parDAO.getParticipant(itv.getInterviewID()));
+                            }
+                        }
+                        appList = appDAO.listAllApplicationOfAPost(postID);
+
+                        request.setAttribute("appList", appList);
+                        request.setAttribute("post", post);
+                        request.setAttribute("position", position);
+
+                        request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                    } else {
+                        result = appDAO.rejectApplication(appID);
+                        if (result == 1) {
+                            msg = "Từ Chối Thành Công Hồ Sơ Ứng Tuyển Với ID: " + appID;
+                            request.setAttribute("msg", msg);
+
+                            position = positionDAO.loadApplicationPositions(positionID);
+                            post = postDAO.loadApplicationPostWithName(postID);
+                            for (PostStageDTO stage : post.getStageList()) {
+                                stage.setInterviewList(postDAO.getStageInterviewsList(stage));
+                                for (InterviewDTO itv : stage.getInterviewList()) {
+                                    itv.setParticipantList(parDAO.getParticipant(itv.getInterviewID()));
+                                }
+                            }
+                            appList = appDAO.listAllApplicationOfAPost(postID);
+
+                            request.setAttribute("appList", appList);
+                            request.setAttribute("post", post);
+                            request.setAttribute("position", position);
+
+                            request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                        } else {
+                            msg = "Từ Chối Thất Bại Hồ Sơ Ứng Tuyển Với ID: " + appID;
+                            request.setAttribute("msg", msg);
+
+                            position = positionDAO.loadApplicationPositions(positionID);
+                            post = postDAO.loadApplicationPostWithName(postID);
+                            for (PostStageDTO stage : post.getStageList()) {
+                                stage.setInterviewList(postDAO.getStageInterviewsList(stage));
+                                for (InterviewDTO itv : stage.getInterviewList()) {
+                                    itv.setParticipantList(parDAO.getParticipant(itv.getInterviewID()));
+                                }
+                            }
+                            appList = appDAO.listAllApplicationOfAPost(postID);
+
+                            request.setAttribute("appList", appList);
+                            request.setAttribute("post", post);
+                            request.setAttribute("position", position);
+
+                            request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                        }
+                    }
+                    break;
+                case "approve-pass-interview":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    appID = Integer.parseInt(request.getParameter("appID"));
+                    stageOffset = Integer.parseInt(request.getParameter("stageOffset"));
+                    itvID = Integer.parseInt(request.getParameter("itvID"));
+                    userID = Integer.parseInt(request.getParameter("userID"));
+
+                    // Check if candidate have enough evaluations
+                    interviewerList = itvrDAO.getInterviewer(itvID);
+                    evaluateList = evaDAO.getEvaluationOfCandidate(itvID, userID);
+                    if (interviewerList.size() != evaluateList.size()) {
+                        msg = "Duyệt Thất Bại Hồ Sơ Ứng Tuyển Với ID: " + appID + " - Ứng Viên Chưa Có Đủ Đánh Giá Cho Vòng Phỏng Vấn Để Xét Duyệt";
+                        request.setAttribute("msg", msg);
+
+                        position = positionDAO.loadApplicationPositions(positionID);
+                        post = postDAO.loadApplicationPostWithName(postID);
+                        for (PostStageDTO stage : post.getStageList()) {
+                            stage.setInterviewList(postDAO.getStageInterviewsList(stage));
+                            for (InterviewDTO itv : stage.getInterviewList()) {
+                                itv.setParticipantList(parDAO.getParticipant(itv.getInterviewID()));
+                            }
+                        }
+                        appList = appDAO.listAllApplicationOfAPost(postID);
+
+                        request.setAttribute("appList", appList);
+                        request.setAttribute("post", post);
+                        request.setAttribute("position", position);
+
+                        request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                    } else {
+                        nextStageID = appDAO.getNextStage(stageOffset, postID);
+                        if (nextStageID != 0) {
+                            result = appDAO.approveToNextStage(nextStageID, appID);
+                        } else {
+                            result = 0;
+                        }
+                        if (result == 1) {
+                            msg = "Duyệt Thành Công Hồ Sơ Ứng Tuyển Với ID: " + appID + " Đến Vòng Tiếp Theo";
+                            request.setAttribute("msg", msg);
+
+                            position = positionDAO.loadApplicationPositions(positionID);
+                            post = postDAO.loadApplicationPostWithName(postID);
+                            for (PostStageDTO stage : post.getStageList()) {
+                                stage.setInterviewList(postDAO.getStageInterviewsList(stage));
+                                for (InterviewDTO itv : stage.getInterviewList()) {
+                                    itv.setParticipantList(parDAO.getParticipant(itv.getInterviewID()));
+                                }
+                            }
+                            appList = appDAO.listAllApplicationOfAPost(postID);
+
+                            request.setAttribute("appList", appList);
+                            request.setAttribute("post", post);
+                            request.setAttribute("position", position);
+
+                            request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                        } else {
+                            msg = "Duyệt Thất Bại Hồ Sơ Ứng Tuyển Với ID: " + appID + " Đến Vòng Tiếp Theo";
+                            request.setAttribute("msg", msg);
+
+                            position = positionDAO.loadApplicationPositions(positionID);
+                            post = postDAO.loadApplicationPostWithName(postID);
+                            for (PostStageDTO stage : post.getStageList()) {
+                                stage.setInterviewList(postDAO.getStageInterviewsList(stage));
+                                for (InterviewDTO itv : stage.getInterviewList()) {
+                                    itv.setParticipantList(parDAO.getParticipant(itv.getInterviewID()));
+                                }
+                            }
+                            appList = appDAO.listAllApplicationOfAPost(postID);
+
+                            request.setAttribute("appList", appList);
+                            request.setAttribute("post", post);
+                            request.setAttribute("position", position);
+
+                            request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                        }
                     }
                     break;
                 default:

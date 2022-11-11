@@ -211,14 +211,32 @@
 
                                             <!-- If Stage is an interview stage and has Interview -->
                                             <c:if test="${stage.stageID == 2 and not empty stage.interviewList}">
-                                                <td scope="col" class="col-1 text-center align-middle">
-                                                    <!-- If application does -->
-                                                    <!-- Insert link to interview of stage -->
-                                                    <!-- Insert link to interview of stage -->
-                                                </td>
                                                 <c:forEach var="itv" items="${stage.interviewList}" varStatus="loopItv">
                                                     <c:forEach var="par" items="${itv.participantList}" varStatus="loopPar">
                                                         <c:if test="${par.userID == app.userID}">
+                                                            <c:if test="${app.statusID == 1}">
+                                                            <td scope="col" class="col-1 text-center align-middle">
+                                                                <form id="reject-pass-interview" action="./job" method="post">
+                                                                    <input type="hidden" name="action" value="reject-pass-interview">
+                                                                    <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                                                    <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                                                                    <input type="hidden" name="appID" value="${app.id}">
+                                                                    <input type="hidden" name="itvID" value="${itv.interviewID}">
+                                                                    <input type="hidden" name="userID" value="${app.userID}">
+                                                                    <input class="btn btn-danger" type="submit" value="Từ Chối">
+                                                                </form>
+                                                                <form id="approve-pass-interview" action="./job" method="post">
+                                                                    <input type="hidden" name="action" value="approve-pass-interview">
+                                                                    <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                                                    <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                                                                    <input type="hidden" name="appID" value="${app.id}">
+                                                                    <input type="hidden" name="itvID" value="${itv.interviewID}">
+                                                                    <input type="hidden" name="stageOffset" value="${stageLoop.count}">
+                                                                    <input type="hidden" name="userID" value="${app.userID}">
+                                                                    <input class="btn btn-success" type="submit" value="Duyệt">
+                                                                </form>
+                                                            </td>
+                                                            </c:if>
                                                             <td scope="col" class="col-1 text-center align-middle">
                                                                 <form action="evaluate" target="_blank" method="post">
                                                                     <input type="hidden" name="evaluateAction" value="viewCandidatEvaluation">
@@ -233,8 +251,9 @@
 
                                             </c:if>
                                             <!-- If Stage is an interview stage and has Interview -->
-
                                             <!-- ========================== Interview ========================== -->
+
+
 
                                             </tr>
                                         </c:if>
