@@ -5,6 +5,7 @@
 package com.t404notfound.erecruitment.bean.interview;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
@@ -24,6 +25,8 @@ public class InterviewDTO {
     protected int postID;
     protected int inteviewStatusID;  //pending/ occured...
     protected int bookerID; // ID of person who create this interview
+    
+    protected ArrayList<ParticipantDTO> participantList;
 
     public InterviewDTO(int interviewID, String description, int formatID, String link, String address, String time, int maxCandidate, int stageID, int postID, int inteviewStatusID, int bookerID) {
         this.interviewID = interviewID;
@@ -38,6 +41,16 @@ public class InterviewDTO {
         this.inteviewStatusID = inteviewStatusID;
         this.bookerID = bookerID;
     }
+
+    public ArrayList<ParticipantDTO> getParticipantList() {
+        return participantList;
+    }
+
+    public void setParticipantList(ArrayList<ParticipantDTO> participantList) {
+        this.participantList = participantList;
+    }
+    
+    
 
     public int getMaxCandidate() {
         return maxCandidate;

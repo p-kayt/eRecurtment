@@ -12,7 +12,6 @@
 <html lang = "vi">
     <head>
         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
-        <%ArrayList<String> interviewStage = (ArrayList<String>) request.getAttribute("interviewStage");%>
         <%ArrayList<String> interviewFormat = (ArrayList<String>) request.getAttribute("interviewFormat");%>
         <meta charset="utf-8" />
         <title><c:if test="${not empty user}"><%=user.getFirstName()%> <%=user.getLastName()%></c:if></title>
@@ -126,13 +125,8 @@
                                 </div>
                                 <div class="d-flex flex-row justify-content-center row g-2 m-1">
                                     <label class="col-3" for="stage">Vòng phỏng vấn</label>
-                                    <select class="col-6" name = "stage" id="stage">
-                                        <c:if test ="<%=(interviewStage != null)%>" >
-                                            <c:forEach items="<%=interviewStage%>" var="i" varStatus="count">
-                                                
-                                                <option value = "${i.split(";")[0]}" ${(stage == i.split(";")[0]) ? "selected" : ""}>${i.split(";")[1]}</option>   
-                                            </c:forEach>
-                                        </c:if>
+                                    <select class="col-6" name = "stage" id="stage" disabled>
+                                        <option value = "${interviewStage.split(";")[0]}">${interviewStage.split(";")[1]}</option>   
                                     </select>
                                     <span class="col-2"></span>
                                 </div>

@@ -4,8 +4,10 @@
  */
 package com.t404notfound.erecruitment.bean.application;
 
+import com.t404notfound.erecruitment.bean.interview.EvaluateDTO;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,7 +21,9 @@ public class ApplicationDTO implements Serializable {
     private int stageID;
     private int userID;
     private int postID;
-
+    
+    private ArrayList<EvaluateDTO> evaluateList;
+    
     public ApplicationDTO() {
     }
 
@@ -31,6 +35,16 @@ public class ApplicationDTO implements Serializable {
         this.userID = userID;
         this.postID = postID;
     }
+
+    public ArrayList<EvaluateDTO> getEvaluateList() {
+        return evaluateList;
+    }
+
+    public void setEvaluateList(ArrayList<EvaluateDTO> evaluateList) {
+        this.evaluateList = evaluateList;
+    }
+    
+    
 
     public int getId() {
         return id;

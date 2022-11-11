@@ -100,11 +100,11 @@
 
                                                 <c:forEach items="${evaluation}" var="e"> 
                                                     <c:if test="${(e.interviewerID == i.userID)}">
-                                                        
+
                                                         <p>Đánh giá</p>
                                                         <textarea cols="50" rows="4" disabled>${e.evaluationDescription}</textarea>
                                                         <p>Điểm: ${e.score}</p>
-                                                        <<<continue>>>
+
                                                     </c:if>
                                                 </c:forEach>
                                             </div>

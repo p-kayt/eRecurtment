@@ -17,6 +17,8 @@ import com.t404notfound.erecruitment.bean.applicationpost.PostSkillDTO;
 import com.t404notfound.erecruitment.bean.applicationpost.PostStageDTO;
 import com.t404notfound.erecruitment.bean.cv.CVDAO;
 import com.t404notfound.erecruitment.bean.cv.CVDTO;
+import com.t404notfound.erecruitment.bean.interview.InterviewDTO;
+import com.t404notfound.erecruitment.bean.interview.ParticipantDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -53,6 +55,7 @@ public class JobController extends HttpServlet {
             ApplicationPositionDAO positionDAO = new ApplicationPositionDAO();
             ApplicationPostDAO postDAO = new ApplicationPostDAO();
             ApplicationDAO appDAO = new ApplicationDAO();
+            ParticipantDAO parDAO = new ParticipantDAO();
             String msg = "";
             String action = request.getParameter("action");
             HttpSession session = request.getSession();
@@ -574,6 +577,9 @@ public class JobController extends HttpServlet {
                     post = postDAO.loadApplicationPostWithName(postID);
                     for (PostStageDTO stage : post.getStageList()) {
                         stage.setInterviewList(postDAO.getStageInterviewsList(stage));
+                        for (InterviewDTO itv : stage.getInterviewList()) {
+                            itv.setParticipantList(parDAO.getParticipant(itv.getInterviewID()));
+                        }
                     }
                     ArrayList<ApplicationDTO> appList = appDAO.listAllApplicationOfAPost(postID);
                     

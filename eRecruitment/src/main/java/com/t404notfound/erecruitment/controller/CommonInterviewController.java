@@ -223,15 +223,18 @@ public class CommonInterviewController extends HttpServlet {
                 request.setAttribute("listCandidate", listCandidate);
                 //get list candidate
                 //get time of candidates
+                
+                EvaluateDAO evaluateDAO = new EvaluateDAO();
                 ArrayList<String> candidateInterviewTime = new ArrayList<>();
+                ArrayList<EvaluateDTO> evaluate = new ArrayList<>();
                 for (UserDTO u : listCandidate) {
                     String time = interviewDAO.getCandidateInterviewTime(u.getUserID(), interviewID);
                     candidateInterviewTime.add(time);
+                    
+                    EvaluateDTO e = evaluateDAO.getEvaluationOfCandidateOfInterviewer(interviewID ,user.getUserID(), u.getUserID());
+                    evaluate.add(e);
                 }
                 //get time of candidates
-                
-                EvaluateDAO evaluateDAO = new EvaluateDAO();
-                EvaluateDTO evaluate = evaluateDAO.getEvaluation(user.getUserID(), resultID, interviewID);
                 
                 request.setAttribute("evaluate", evaluate);
                 request.setAttribute("listInterviewer", listInterviewer);
