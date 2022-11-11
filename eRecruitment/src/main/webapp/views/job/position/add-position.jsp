@@ -91,7 +91,7 @@
                     <div class="d-flex flex-row justify-content-center m-2">
 
                         <label class="col-2" for="date">Ngày Tạo</label>
-                        <input class="col-4" type="date" id="date" name="date" value=""/>
+                        <input class="col-4" type="date" id="date" name="date" value="" readonly/>
                         <span class="col-4"></span>
                     </div>
 
@@ -114,5 +114,14 @@
             </form>
         </div>
         <jsp:include page="../../footer/footer.jsp" />
+        <script type="text/javascript">
+            function getCurrentDate() {
+                var currentDate = new Date().toJSON().slice(0, 10);
+                return currentDate;
+            }
+            var createdDate = document.getElementById("date");
+            createdDate.value = getCurrentDate();
+            
+        </script>
     </body>
 </html>

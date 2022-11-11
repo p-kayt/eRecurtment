@@ -105,6 +105,7 @@
                             <!--  -->
                             <form class="col-2 m-3" action="interview" method="get" id="createInterviewForm">
                                 <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                <input type="hidden" name="stageID" value="${stage.id}">
                                 <input class="d-none" type="submit" value="Tạo buổi phỏng vấn">
                             </form>
                         </c:if>
@@ -127,7 +128,7 @@
 
                                         <th scope="col" class="col-2 text-center align-middle">Xét Duyệt</th>
                                             <c:if test="${not empty stage.interviewList}">
-                                            <th scope="col" class="col-2 text-center align-middle">Đánh Giá PV</th>
+                                            <th scope="col" class="col-2 text-center align-middle">Xem Đánh Giá PV</th>
                                             </c:if>
                                     </tr>
                                 </thead>

@@ -538,7 +538,6 @@ public class JobController extends HttpServlet {
                         request.getRequestDispatcher("./job?action=load-add-post&positionID=" + positionID).forward(request, response);
                     }
                     break;
-                // NOT FINISHED ================================
                 case "delete-post":
                     postID = Integer.parseInt(request.getParameter("postID"));
                     positionID = Integer.parseInt(request.getParameter("positionID"));
@@ -578,14 +577,6 @@ public class JobController extends HttpServlet {
                     }
                     ArrayList<ApplicationDTO> appList = appDAO.listAllApplicationOfAPost(postID);
                     
-                    log("===================================================");
-                    for (ApplicationDTO app : appList) {
-                        log(app.getId() + " " + app.getApplyDate().toString() + " " + app.getStageID());
-                    }
-                    for (PostStageDTO stage : post.getStageList()) {
-                        log(stage.getId() + " " + stage.getDescription());
-                    }
-                    log("===================================================");
                     
                     
                     request.setAttribute("appList", appList);

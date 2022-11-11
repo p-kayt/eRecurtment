@@ -140,8 +140,8 @@
                             <label class="col-2" for="statusID">Trạng Thái</label>
                             <select class="col-3" id="statusID" name="statusID">
                                 <option value="1">inActive</option>
-                                <option value="2" selected>Pending</option>
-                                <option value="3">Hiring</option>
+                                <option value="2">Pending</option>
+                                <option value="3" selected>Hiring</option>
                                 <option value="4">Closed</option>
                             </select>
                             <span class="col-3"></span>
@@ -155,10 +155,6 @@
                     </div>
                     <div class="d-flex flex-column m-auto col-10 border border-1 shadow p-4">
                         <div id="requirementList">
-                            <!--                            <div class="d-flex flex-column m-2 px-3" id="requirementContainer">
-                                                            <label for="requirement">Yêu Cầu 1</label>
-                                                            <input class="col-11 mx-5 p-1" type="text" id="requirement" name="requirement" value="" placeholder="Nhập yêu cầu công việc...">
-                                                        </div>-->
                         </div>
                         <div class="d-flex flex-column m-2 mx-3">
                             <div class="col-2">
@@ -177,16 +173,6 @@
                     </div>
                     <div class="d-flex flex-column m-auto col-10 border border-1 shadow p-4">
                         <div id="skillList">
-                            <!--                            <div class="d-flex flex-row justify-content-center row g-2 mx-2" id="skillContainer">
-                                                            <div class="d-flex flex-column col-6">
-                                                                <label class="m-1" for="skillName">Kỹ Năng 1</label>
-                                                                <input class="m-1 p-1" type="text" id="skillName" name="skillName" value="" placeholder="Nhập tên kỹ năng...">
-                                                            </div>
-                                                            <div class="d-flex flex-column col-6">
-                                                                <label class="m-1" for="skillDescription">Mô Tả</label>
-                                                                <input class="m-1 p-1" type="text" id="skillDescription" name="skillDescription" value="" placeholder="Nhập mô tả kỹ năng...">
-                                                            </div>
-                                                        </div>-->
                         </div>
                         <div class="d-flex flex-column m-2 mx-3">
                             <div class="col-2">
@@ -205,10 +191,6 @@
                     </div>
                     <div class="d-flex flex-column m-auto col-10 border border-1 shadow p-4">
                         <div id="benefitList">
-                            <!--                            <div id="benefitContainer">
-                                                            <label for="benefit">Quyền Lợi 1</label>
-                                                            <input type="text" id="benefit" name="benefit" value="" placeholder="Nhập quyền lợi...">
-                                                        </div>-->
                         </div>
                         <div class="d-flex flex-column m-2 mx-3">
                             <div class="col-2">
@@ -228,17 +210,6 @@
 
                         <div id="stageList">
                             <div id="stageContainer">
-                                <!--                                <div><label for="stageID">Vòng Ứng Tuyển 1</label>
-                                                                    <select id="stageID" name="stageID"><option value="1" selected>CV Applying</option>
-                                                                        <option value="2">Interview</option>
-                                                                        <option value="3">Finish</option>
-                                                                        <option value="4">Final Evaluation</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div>
-                                                                    <label for="description">Mô Tả 1</label>
-                                                                    <input type="text" id="description" name="description" value="" placeholder="Nhập mô tả vòng ứng tuyển...">
-                                                                </div>-->
                             </div>
                         </div>
                         <div class="d-flex flex-column m-2 mx-3">
@@ -260,6 +231,22 @@
         </div>
     </div>
     <jsp:include page="../../footer/footer.jsp" />
+    <script type="text/javascript">
+        function getCurrentDate() {
+            var currentDate = new Date().toJSON().slice(0, 10);
+            return currentDate;
+        }
+        var createdDate = document.getElementById("createdDate");
+        createdDate.value = getCurrentDate();
+        var startDate = document.getElementById("startDate");
+        startDate.min = getCurrentDate();
+        startDate.onchange = function(){
+            var expiredate = document.getElementById("expiredDate");
+            expiredate.setAttribute("min", this.value)
+        }
+        var expiredDate = document.getElementById("expiredDate");
+        expiredDate.min = getCurrentDate();
+    </script>
 
 
     <!-- Back to Top -->
@@ -270,18 +257,8 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <script type="text/javascript">
-                                function getCurrentDate() {
-                                    var currentDate = new Date().toJSON().slice(0, 10);
-                                    return currentDate;
-                                }
-                                var createdDate = document.getElementById("createdDate");
-                                createdDate.value = getCurrentDate();
-                                var startDate = document.getElementById("startDate");
-                                startDate.min = getCurrentDate();
-                                var expiredDate = document.getElementById("expiredDate");
-                                expiredDate.min = getCurrentDate();
-    </script>
+
+
     <script src="js/jobutility.js"></script>
 </body>
 </html>
