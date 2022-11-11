@@ -65,20 +65,24 @@
 
                 <div class="job-item py-4 px-2 mb-3" id="tab1">
                     <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
-                        <c:if test="${i.getStatusID()==1}">
-                            <div class="row g-4 justify-content-around" >
-                                <div class="col-sm-12 col-md-6 d-flex align-items-center">
+                        <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
+                            <c:if test="${i.postID == j.postID}">
+                                <c:if test="${i.getStatusID()==1}">
+                                    <div class="row g-4 justify-content-around" >
+                                        <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
-                                    <div class="text-start ps-4"   name="tab_element">
-                                        <h5 class="mb-3">${requestScope.postList[loop.count - 1].getPositionName()}</h5>
-                                        <p>${i.getApplyDate()}</p>
-                                        <p>In-progress </p>
-                                        <button>Cancel</button>
+                                            <div class="text-start ps-4"   name="tab_element">
+                                                <h5 class="mb-3">${j.getPositionName()}</h5>
+                                                <p>${i.getApplyDate()}</p>
+                                                <p>In-progress </p>
+                                                <button>Cancel</button>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                </div>
-
-                            </div>
-                        </c:if>
+                                </c:if>
+                            </c:if>
+                        </c:forEach>
                     </c:forEach>
                 </div>
 
@@ -104,6 +108,7 @@
 
                 <div class="job-item py-4 px-2 mb-3" id="tab3">
                     <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
+
                         <c:if test="${i.getStatusID()==3 || i.getStatusID()==4}">
                             <div class="row g-4 justify-content-around" >
                                 <div class="col-sm-12 col-md-6 d-flex align-items-center">
@@ -118,6 +123,7 @@
 
                                 </div>
                         </c:if>
+
                     </c:forEach>
 
                 </div>
