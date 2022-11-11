@@ -139,14 +139,16 @@
                                                 <tr class="col-12 rounded-9 justify-content-around">
                                                     <td scope="col" class="col-1 text-center align-middle">${app.id}</td>
                                                     <td scope="col" class="col-1 text-center align-middle">${app.applyDate}</td>
-                                                    <td scope="col" class="col-1 text-center align-middle"><a class="link-info" href="./job?action=view-candidate-cv&userID=${app.userID}" target="_blank">${app.userID}</a></td>
+                                                    <td scope="col" class="col-1 text-center align-middle">
+                                                        <a class="btn btn-info" href="./job?action=view-candidate-cv&userID=${app.userID}" target="_blank">Xem CV</a>
+                                                    </td>
                                                     <td scope="col" class="col-1 text-center align-middle">
                                                         <c:if test="${app.statusID == 1}">In-progress</c:if>
                                                         <c:if test="${app.statusID == 2}">Cancelled</c:if>
                                                         <c:if test="${app.statusID == 3}">Fail</c:if>
                                                         <c:if test="${app.statusID == 4}">Success</c:if>
                                                         </td>
-
+                                                        <!-- ========================== CV Applying ========================== -->
                                                         <!-- If Candidate application is waiting for staff's review -->
                                                     <c:if test="${stage.stageID == 1 and app.statusID == 1}">
                                                         <td scope="col" class="col-1 text-center align-middle">
@@ -168,7 +170,10 @@
                                                 </form>
                                             </c:if>
                                             <!-- If Candidate application is waiting for staff's review -->
+                                            <!-- ========================== CV Applying ========================== -->
 
+
+                                            <!-- ========================== Application Status ========================== -->
                                             <!-- If Candidate cancel the application -->
                                             <c:if test="${app.statusID == 2}">
                                                 <td scope="col" class="col-1 text-center align-middle">
@@ -177,14 +182,25 @@
                                             </c:if>
                                             <!-- If Candidate cancel the application -->
 
-                                            <!-- If Staff reject the candidate's application (CV) -->
+                                            <!-- If Staff reject the candidate's application -->
                                             <c:if test="${app.statusID == 3}">
                                                 <td scope="col" class="col-1 text-center align-middle">
                                                     Rớt
                                                 </td>
                                             </c:if>
-                                            <!-- If Staff reject the candidate's application (CV) -->
+                                            <!-- If Staff reject the candidate's application -->
 
+                                            <!-- If Staff reject the candidate's application -->
+                                            <c:if test="${app.statusID == 4}">
+                                                <td scope="col" class="col-1 text-center align-middle">
+                                                    Đậu
+                                                </td>
+                                            </c:if>
+                                            <!-- If Staff reject the candidate's application -->
+                                            <!-- ========================== Application Status ========================== -->
+
+
+                                            <!-- ========================== Interview ========================== -->
                                             <!-- If Stage is an interview stage but does not have Interview -->
                                             <c:if test="${stage.stageID == 2 and empty stage.interviewList}">
                                                 <td scope="col" class="col-1 text-center align-middle">
@@ -196,12 +212,29 @@
                                             <!-- If Stage is an interview stage and has Interview -->
                                             <c:if test="${stage.stageID == 2 and not empty stage.interviewList}">
                                                 <td scope="col" class="col-1 text-center align-middle">
-                                                    <!-- Insert link to interview of stage -->
+                                                    <!-- If application does -->
                                                     <!-- Insert link to interview of stage -->
                                                     <!-- Insert link to interview of stage -->
                                                 </td>
+                                                <c:forEach var="itv" items="${stage.interviewList}" varStatus="loopItv">
+                                                    <c:forEach var="par" items="${itv.participantList}" varStatus="loopPar">
+                                                        <c:if test="${par.userID == app.userID}">
+                                                            <td scope="col" class="col-1 text-center align-middle">
+                                                                <form action="evaluate" target="_blank" method="post">
+                                                                    <input type="hidden" name="evaluateAction" value="viewCandidatEvaluation">
+                                                                    <input type="hidden" name="interviewID" value="${itv.interviewID}">
+                                                                    <input type="hidden" name="candidateID" value="${app.userID}">
+                                                                    <input class="btn btn-info" type="submit" value="Xem đánh giá">
+                                                                </form>
+                                                            </td>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </c:forEach>
+
                                             </c:if>
                                             <!-- If Stage is an interview stage and has Interview -->
+
+                                            <!-- ========================== Interview ========================== -->
 
                                             </tr>
                                         </c:if>
