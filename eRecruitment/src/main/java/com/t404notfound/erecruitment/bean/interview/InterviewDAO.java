@@ -284,6 +284,30 @@ public class InterviewDAO {
         }
         return list;
     }
+    
+    //get interview stage name by stageID
+    
+    public String getInterviewStageNameByID(int stageID) {
+        String sql = " SELECT ID, [Description]\n"
+                + " FROM Application_Stage\n"
+                + " WHERE ID = ?";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, stageID);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String interviewStage = rs.getInt("ID") + ";" + rs.getString("Description");
+                return interviewStage;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public ArrayList<String> getInterviewStatus() {
         ArrayList<String> list = new ArrayList<>();
