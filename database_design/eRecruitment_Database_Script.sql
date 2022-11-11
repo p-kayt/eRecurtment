@@ -535,7 +535,7 @@ INSERT INTO WorkingForm(FormName) VALUES ('Part Time - Hybrid')
 GO
 CREATE TABLE ApplicationPost(
 	PostID INT IDENTITY(1,1) NOT NULL,
-	PostDescription NVARCHAR(1000) NULL,
+	PostDescription NVARCHAR(2000) NULL,
 	Salary NVARCHAR(30) NULL,
 	HiringQuantity INT NULL,
 	CreateDate DATE NULL,
@@ -584,6 +584,7 @@ Thu thập ý kiến phản hồi và xây dựng các hướng giải quyết c
 Nghiên cứu, tìm hiểu các công nghệ về HTML/CSS Javascript mới nhất để áp dụng cái tiến sản phẩm', 
 N'Around $3000', 5, '2022-10-7', '2022-10-10', '2022-10-13', 1, 1, 4)
 
+/*
 INSERT INTO ApplicationPost(PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID) 
 VALUES (N' CLOSED - Tham gia phát triển các dự án về Web, xây dựng các chức năng front-end của Website, Web application.
 
@@ -596,7 +597,40 @@ Phối hợp với các back-end developers và web designers để cải thiệ
 Thu thập ý kiến phản hồi và xây dựng các hướng giải quyết cho người sử dụng và khách hàng
 
 Nghiên cứu, tìm hiểu các công nghệ về HTML/CSS Javascript mới nhất để áp dụng cái tiến sản phẩm', 
-N'Around $3000', 10, '2022-10-7', '2022-10-10', '2022-10-13', 2, 1, 4)
+N'Around $3000', 10, '2022-10-7', '2022-10-10', '2022-10-13', 2, 1, 4)*/
+
+INSERT INTO ApplicationPost(PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID) 
+VALUES (N'Chúng tôi đang tìm kiếm một Nhà phát triển Android có niềm đam mê thúc đẩy công nghệ di động đến giới hạn. Nhà phát triển ứng dụng Android này sẽ làm việc với đội ngũ kỹ sư tài năng của chúng tôi để thiết kế và xây dựng thế hệ ứng dụng di động tiếp theo của chúng tôi. Lập trình Android hợp tác chặt chẽ với các nhóm kỹ thuật và phát triển ứng dụng khác.', 
+N'Around $3000', 10, '2022-10-7', '2022-10-10', '2022-10-13', 3, 1, 3)
+
+INSERT INTO ApplicationPost(PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID) 
+VALUES (N'Chúng tôi đang tìm kiếm một nhà phát triển Back-end có kinh nghiệm để tham gia vào nhóm CNTT của chúng tôi. Bạn sẽ chịu trách nhiệm về phía máy chủ của các ứng dụng web của chúng tôi.
+Nếu bạn có kỹ năng lập trình xuất sắc và đam mê phát triển các ứng dụng hoặc cải thiện những ứng dụng hiện có, chúng tôi muốn gặp bạn. Với tư cách là nhà phát triển Back-end, bạn sẽ hợp tác chặt chẽ với các kỹ sư của chúng tôi để đảm bảo tính nhất quán của hệ thống và cải thiện trải nghiệm người dùng.
+Cuối cùng, bạn sẽ có thể phát triển và duy trì các ứng dụng web hoạt động và ổn định để đáp ứng nhu cầu của công ty chúng tôi.', 
+N'Around $4000', 10, '2022-10-7', '2022-10-10', '2022-10-13', 4, 1, 3)
+
+INSERT INTO ApplicationPost(PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID) 
+VALUES (N'Chúng tôi đang tìm kiếm một Nhà phân tích kinh doanh, người sẽ là liên kết quan trọng giữa năng lực công nghệ thông tin và mục tiêu kinh doanh của chúng tôi bằng cách hỗ trợ và đảm bảo hoàn thành thành công các nhiệm vụ phân tích, xây dựng, thử nghiệm và triển khai các tính năng của sản phẩm phần mềm của chúng tôi.', 
+N'Around $5000', 10, '2022-10-7', '2022-10-10', '2022-10-13', 5, 1, 3)
+
+INSERT INTO ApplicationPost(PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID) 
+VALUES (N'Chúng tôi đang tìm kiếm một Kiến trúc sư đám mây để tham gia vào nhóm của chúng tôi và lãnh đạo việc quản lý và duy trì kiến trúc đám mây của tổ chức chúng tôi.
+Các trách nhiệm của Kiến trúc sư đám mây bao gồm xây dựng và duy trì hệ thống đám mây tại tổ chức của chúng tôi, cùng với việc quản lý máy chủ, bộ nhớ và mạng của chúng tôi.
+Cuối cùng, bạn sẽ làm việc với các nhóm CNTT khác nhau để đảm bảo khả năng trực tuyến của chúng tôi đáp ứng nhu cầu của tổ chức của chúng tôi.', 
+N'Around $6000', 10, '2022-10-7', '2022-10-10', '2022-10-13', 6, 1, 3)
+
+INSERT INTO ApplicationPost(PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID) 
+VALUES (N'Chúng tôi đang tìm kiếm một Kỹ sư DevOps để giúp chúng tôi xây dựng các hệ thống chức năng nhằm cải thiện trải nghiệm của khách hàng.
+Trách nhiệm của Kỹ sư DevOps bao gồm triển khai các bản cập nhật sản phẩm, xác định các vấn đề sản xuất và triển khai tích hợp đáp ứng nhu cầu của khách hàng. Nếu bạn có nền tảng vững chắc về kỹ thuật phần mềm và quen thuộc với Ruby hoặc Python, chúng tôi muốn gặp bạn.
+Cuối cùng, bạn sẽ thực hiện và tự động hóa các quy trình hoạt động nhanh chóng, chính xác và an toàn.', 
+N'Around $7000', 10, '2022-10-7', '2022-10-10', '2022-10-13', 7, 1, 3)
+
+INSERT INTO ApplicationPost(PostDescription, Salary, HiringQuantity, CreateDate, StartDate, ExpiredDate, PositionID, FormID, StatusID) 
+VALUES (N'Chúng tôi đang tìm kiếm một Chuyên gia An ninh mạng tham gia vào nhóm của chúng tôi để hợp tác chặt chẽ với các bên liên quan nhằm đảm bảo rằng các dự án an ninh mạng đáp ứng các mục tiêu trong toàn tổ chức của chúng tôi. Họ chịu trách nhiệm về các nhiệm vụ khác nhau, bao gồm cả tái thiết kế quy trình và lập hồ sơ về các hoạt động liên quan đến lĩnh vực này.
+Trách nhiệm của Chuyên gia an ninh mạng bao gồm sử dụng các kỹ năng của họ để phát hiện các tính năng không an toàn và các hoạt động độc hại trong mạng và cơ sở hạ tầng của chúng tôi. Họ sẽ thực hiện các đánh giá bảo mật ứng dụng tùy chỉnh đối với rủi ro tài sản dựa trên khách hàng, tuân thủ chính sách của công ty cũng như tiến hành đánh giá lỗ hổng bảo mật. Họ phải có hiểu biết nâng cao về TCP / IP, các cổng và giao thức mạng chung, luồng lưu lượng, quản trị hệ thống, mô hình OSI, các yếu tố bảo mật chuyên sâu và chung về quốc phòng.
+Trọng tâm của chuyên gia không chỉ giới hạn trong việc đánh giá xem các lỗ hổng bảo mật có tồn tại hay không mà còn cả cách những rủi ro đó có thể được giảm thiểu để có thể giúp các tổ chức tự tin hơn về sự ổn định của hệ thống trong tương lai.
+Cuối cùng, bạn sẽ làm việc để đảm bảo tính bảo mật của thông tin doanh nghiệp, dữ liệu nhân viên và thông tin khách hàng của chúng tôi trên toàn bộ mạng lưới của chúng tôi.', 
+N'Around $8000', 10, '2022-10-7', '2022-10-10', '2022-10-13', 8, 1, 3)
 
 -- Bảng phụ chứa thêm thông tin cho các bài đăng tuyển dụng (Application Post)
 -- Chứa thông tin phúc lợi của bài đăng tuyển dụng
@@ -617,26 +651,96 @@ CREATE TABLE ApplicationBenefit(
 )
 
 GO
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Attractive salary package and 100% Gross Salary in probation period', 1)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'13th-month salary', 1)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Monthly performance bonus. (over $600 on average and over $2000 for top performers)', 1)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'18 days of annual leaves (cashback allowed if not used) and plus 4 days for an oversea company trip', 1)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Multiple allowances (Lunch, Gym, Parking, Birthday/Tet/Wedding voucher... )', 1)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Full social, healthy and unemployment insurance', 1)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Premium healthcare insurance', 1)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Annual company trip abroad', 1)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Monthly team-building activities (Bowling, Go-Kart,....) and special celebrations on Autumn Festival, Halloween, Christmas, Tet, ...', 1)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Monthly happy lunch/birthday celebration and happy hours every day with free snacks, soft drinks, fruit, and coffee', 1)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Sports activities (Badminton, Ping Pong, etc...)', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Gói lương hấp dẫn và 100% lương gộp trong thời gian thử việc', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Lương tháng 13', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Thưởng hiệu suất hàng tháng. (hơn 600 đô la trung bình và hơn 2000 đô la cho những người hoạt động tốt nhất)', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'18 ngày nghỉ phép hàng năm (được phép hoàn tiền nếu không sử dụng) và cộng thêm 4 ngày cho chuyến du lịch nước ngoài của công ty', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Nhiều phụ cấp (Ăn trưa, tập gym, gửi xe, tặng voucher sinh nhật / tết / cưới ...)', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'BHXH đầy đủ, lành mạnh và bảo hiểm thất nghiệp', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bảo hiểm chăm sóc sức khỏe cao cấp', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Chuyến đi nước ngoài hàng năm của công ty', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Các hoạt động team-building hàng tháng (Bowling, Go-Kart, ....) và các lễ kỷ niệm đặc biệt vào Lễ hội mùa thu, Halloween, Giáng sinh, Tết, ...', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bữa trưa vui vẻ hàng tháng / lễ kỷ niệm sinh nhật và giờ hạnh phúc hàng ngày với đồ ăn nhẹ, nước ngọt, trái cây và cà phê miễn phí', 1)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Hoạt động thể thao (Cầu lông, Ping Pong, v.v.)', 1)
 
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Attractive salary package and 100% Gross Salary in probation period', 2)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'13th-month salary', 2)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Monthly performance bonus. (over $600 on average and over $2000 for top performers)', 2)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'18 days of annual leaves (cashback allowed if not used) and plus 4 days for an oversea company trip', 2)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Multiple allowances (Lunch, Gym, Parking, Birthday/Tet/Wedding voucher... )', 2)
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Full social, healthy and unemployment insurance', 2)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Gói lương hấp dẫn và 100% lương gộp trong thời gian thử việc', 2)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Lương tháng 13', 2)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Thưởng hiệu suất hàng tháng. (hơn 600 đô la trung bình và hơn 2000 đô la cho những người hoạt động tốt nhất)', 2)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'18 ngày nghỉ phép hàng năm (được phép hoàn tiền nếu không sử dụng) và cộng thêm 4 ngày cho chuyến du lịch nước ngoài của công ty', 2)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Nhiều phụ cấp (Ăn trưa, tập gym, gửi xe, tặng voucher sinh nhật / tết / cưới ...)', 2)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'BHXH đầy đủ, lành mạnh và bảo hiểm thất nghiệp', 2)
 
-INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Attractive salary package and 100% Gross Salary in probation period', 3)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Gói lương hấp dẫn và 100% lương gộp trong thời gian thử việc', 3)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Lương tháng 13', 3)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Thưởng hiệu suất hàng tháng. (hơn 600 đô la trung bình và hơn 2000 đô la cho những người hoạt động tốt nhất)', 3)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'18 ngày nghỉ phép hàng năm (được phép hoàn tiền nếu không sử dụng) và cộng thêm 4 ngày cho chuyến du lịch nước ngoài của công ty', 3)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Nhiều phụ cấp (Ăn trưa, tập gym, gửi xe, tặng voucher sinh nhật / tết / cưới ...)', 3)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'BHXH đầy đủ, lành mạnh và bảo hiểm thất nghiệp', 3)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bảo hiểm chăm sóc sức khỏe cao cấp', 3)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Chuyến đi nước ngoài hàng năm của công ty', 3)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Các hoạt động team-building hàng tháng (Bowling, Go-Kart, ....) và các lễ kỷ niệm đặc biệt vào Lễ hội mùa thu, Halloween, Giáng sinh, Tết, ...', 3)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bữa trưa vui vẻ hàng tháng / lễ kỷ niệm sinh nhật và giờ hạnh phúc hàng ngày với đồ ăn nhẹ, nước ngọt, trái cây và cà phê miễn phí', 3)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Hoạt động thể thao (Cầu lông, Ping Pong, v.v.)', 3)
+
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Gói lương hấp dẫn và 100% lương gộp trong thời gian thử việc', 4)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Lương tháng 13', 4)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Thưởng hiệu suất hàng tháng. (hơn 600 đô la trung bình và hơn 2000 đô la cho những người hoạt động tốt nhất)', 4)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'18 ngày nghỉ phép hàng năm (được phép hoàn tiền nếu không sử dụng) và cộng thêm 4 ngày cho chuyến du lịch nước ngoài của công ty', 4)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Nhiều phụ cấp (Ăn trưa, tập gym, gửi xe, tặng voucher sinh nhật / tết / cưới ...)', 4)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'BHXH đầy đủ, lành mạnh và bảo hiểm thất nghiệp', 4)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bảo hiểm chăm sóc sức khỏe cao cấp', 4)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Chuyến đi nước ngoài hàng năm của công ty', 4)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Các hoạt động team-building hàng tháng (Bowling, Go-Kart, ....) và các lễ kỷ niệm đặc biệt vào Lễ hội mùa thu, Halloween, Giáng sinh, Tết, ...', 4)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bữa trưa vui vẻ hàng tháng / lễ kỷ niệm sinh nhật và giờ hạnh phúc hàng ngày với đồ ăn nhẹ, nước ngọt, trái cây và cà phê miễn phí', 4)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Hoạt động thể thao (Cầu lông, Ping Pong, v.v.)', 4)
+
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Gói lương hấp dẫn và 100% lương gộp trong thời gian thử việc', 5)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Lương tháng 13', 5)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Thưởng hiệu suất hàng tháng. (hơn 600 đô la trung bình và hơn 2000 đô la cho những người hoạt động tốt nhất)', 5)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'18 ngày nghỉ phép hàng năm (được phép hoàn tiền nếu không sử dụng) và cộng thêm 4 ngày cho chuyến du lịch nước ngoài của công ty', 5)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Nhiều phụ cấp (Ăn trưa, tập gym, gửi xe, tặng voucher sinh nhật / tết / cưới ...)', 5)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'BHXH đầy đủ, lành mạnh và bảo hiểm thất nghiệp', 5)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bảo hiểm chăm sóc sức khỏe cao cấp', 5)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Chuyến đi nước ngoài hàng năm của công ty', 5)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Các hoạt động team-building hàng tháng (Bowling, Go-Kart, ....) và các lễ kỷ niệm đặc biệt vào Lễ hội mùa thu, Halloween, Giáng sinh, Tết, ...', 5)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bữa trưa vui vẻ hàng tháng / lễ kỷ niệm sinh nhật và giờ hạnh phúc hàng ngày với đồ ăn nhẹ, nước ngọt, trái cây và cà phê miễn phí', 5)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Hoạt động thể thao (Cầu lông, Ping Pong, v.v.)', 5)
+
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Gói lương hấp dẫn và 100% lương gộp trong thời gian thử việc', 6)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Lương tháng 13', 6)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Thưởng hiệu suất hàng tháng. (hơn 600 đô la trung bình và hơn 2000 đô la cho những người hoạt động tốt nhất)', 6)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'18 ngày nghỉ phép hàng năm (được phép hoàn tiền nếu không sử dụng) và cộng thêm 4 ngày cho chuyến du lịch nước ngoài của công ty', 6)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Nhiều phụ cấp (Ăn trưa, tập gym, gửi xe, tặng voucher sinh nhật / tết / cưới ...)', 6)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'BHXH đầy đủ, lành mạnh và bảo hiểm thất nghiệp', 6)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bảo hiểm chăm sóc sức khỏe cao cấp', 6)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Chuyến đi nước ngoài hàng năm của công ty', 6)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Các hoạt động team-building hàng tháng (Bowling, Go-Kart, ....) và các lễ kỷ niệm đặc biệt vào Lễ hội mùa thu, Halloween, Giáng sinh, Tết, ...', 6)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bữa trưa vui vẻ hàng tháng / lễ kỷ niệm sinh nhật và giờ hạnh phúc hàng ngày với đồ ăn nhẹ, nước ngọt, trái cây và cà phê miễn phí', 6)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Hoạt động thể thao (Cầu lông, Ping Pong, v.v.)', 6)
+
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Gói lương hấp dẫn và 100% lương gộp trong thời gian thử việc', 7)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Lương tháng 13', 7)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Thưởng hiệu suất hàng tháng. (hơn 600 đô la trung bình và hơn 2000 đô la cho những người hoạt động tốt nhất)', 7)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'18 ngày nghỉ phép hàng năm (được phép hoàn tiền nếu không sử dụng) và cộng thêm 4 ngày cho chuyến du lịch nước ngoài của công ty', 7)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Nhiều phụ cấp (Ăn trưa, tập gym, gửi xe, tặng voucher sinh nhật / tết / cưới ...)', 7)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'BHXH đầy đủ, lành mạnh và bảo hiểm thất nghiệp', 7)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bảo hiểm chăm sóc sức khỏe cao cấp', 7)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Chuyến đi nước ngoài hàng năm của công ty', 7)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Các hoạt động team-building hàng tháng (Bowling, Go-Kart, ....) và các lễ kỷ niệm đặc biệt vào Lễ hội mùa thu, Halloween, Giáng sinh, Tết, ...', 7)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bữa trưa vui vẻ hàng tháng / lễ kỷ niệm sinh nhật và giờ hạnh phúc hàng ngày với đồ ăn nhẹ, nước ngọt, trái cây và cà phê miễn phí', 7)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Hoạt động thể thao (Cầu lông, Ping Pong, v.v.)', 7)
+
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Gói lương hấp dẫn và 100% lương gộp trong thời gian thử việc', 8)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Lương tháng 13', 8)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Thưởng hiệu suất hàng tháng. (hơn 600 đô la trung bình và hơn 2000 đô la cho những người hoạt động tốt nhất)', 8)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'18 ngày nghỉ phép hàng năm (được phép hoàn tiền nếu không sử dụng) và cộng thêm 4 ngày cho chuyến du lịch nước ngoài của công ty', 8)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Nhiều phụ cấp (Ăn trưa, tập gym, gửi xe, tặng voucher sinh nhật / tết / cưới ...)', 8)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'BHXH đầy đủ, lành mạnh và bảo hiểm thất nghiệp', 8)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bảo hiểm chăm sóc sức khỏe cao cấp', 8)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Chuyến đi nước ngoài hàng năm của công ty', 8)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Các hoạt động team-building hàng tháng (Bowling, Go-Kart, ....) và các lễ kỷ niệm đặc biệt vào Lễ hội mùa thu, Halloween, Giáng sinh, Tết, ...', 8)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Bữa trưa vui vẻ hàng tháng / lễ kỷ niệm sinh nhật và giờ hạnh phúc hàng ngày với đồ ăn nhẹ, nước ngọt, trái cây và cà phê miễn phí', 8)
+INSERT INTO ApplicationBenefit(Benefit, PostID) VALUES(N'Hoạt động thể thao (Cầu lông, Ping Pong, v.v.)', 8)
 
 -- Bảng phụ chứa thêm thông tin cho các bài đăng tuyển dụng (Application Post)
 -- Chứa các kỹ năng mà bài đăng tuyển dụng yêu cầu
@@ -667,7 +771,27 @@ INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Reac
 INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Front-End', N'5+ Years', 2)
 INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'JavaScript', N'Advance Knowledge', 2)
 
-INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Front-End', N'5+ Years', 3)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Android', N'5+ Years', 3)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Android studio', N'5+ Years', 3)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Kotlin', N'5+ Years', 3)
+
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Back-end', N'5+ Years', 4)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Java or C#', N'5+ Years', 4)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Framework', N'5+ Years', 4)
+
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'BA', N'5+ Years', 5)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'IELST or Toeic', N'5+ Years', 5)
+
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Cloud', N'5+ Years', 6)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'MS Azure', N'5+ Years', 6)
+
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Dev-ops', N'5+ Years', 7)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Terraform', N'5+ Years', 7)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Jenkins', N'5+ Years', 7)
+
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Cyber Security', N'5+ Years', 8)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Network', N'5+ Years', 8)
+INSERT INTO ApplicationSkill(SkillName, SkillDescription, PostID) VALUES (N'Assembly', N'5+ Years', 8)
 
 -- Bảng phụ chứa thêm thông tin cho các bài đăng tuyển dụng (Application Post)
 -- Chứa các yêu cầu của bài đăng tuyển dụng cần cho vị trí tương ứng
@@ -688,18 +812,67 @@ CREATE TABLE ApplicationRequirement(
 )
 
 GO
-INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'A Bachelor’s Degree in any relevant major (e.g. Information Technology, Computer Science, etc.)', 1)
-INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Proficiency in English (both verbal and written)', 1)
-INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Having experience in leading software development projects', 1)
-INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Having previous full-stack/ backend experience is a strong plus', 1)
-INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'A strong fundamental understanding of software development', 1)
-INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Strong self-discipline for delivering well-tested, complete features/modules under a tight schedule and the capability for rational thinking', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kinh nghiệm làm việc đã được chứng minh với tư cách là nhà phát triển Front-end', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Thực hành kinh nghiệm với các ngôn ngữ đánh dấu', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kinh nghiệm với JavaScript, CSS và jQuery', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Quen thuộc với kiểm tra trình duyệt và gỡ lỗi', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Hiểu biết sâu sắc về toàn bộ quy trình phát triển web (thiết kế, phát triển và triển khai)', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Hiểu biết về thẩm mỹ bố cục', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kiến thức về các nguyên tắc SEO', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Làm quen với các phần mềm như Adobe Suite, Photoshop và các hệ thống quản lý nội dung', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Khả năng hoạt động tốt trong môi trường có nhịp độ nhanh', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kỹ năng phân tích và đa nhiệm xuất sắc', 1)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Bằng Cử nhân Khoa học Máy tính hoặc lĩnh vực liên quan', 1)
+
 
 INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'A Bachelor’s Degree in any relevant major (e.g. Information Technology, Computer Science, etc.)', 2)
 INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Proficiency in English (both verbal and written)', 2)
 
-INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'A Bachelor’s Degree in any relevant major (e.g. Information Technology, Computer Science, etc.)', 3)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Bằng BS / MS trong Khoa học Máy tính, Kỹ thuật hoặc một chủ đề liên quan', 3)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kinh nghiệm phát triển phần mềm đã được chứng minh và phát triển kỹ năng Android', 3)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kinh nghiệm làm việc đã được chứng minh trong phát triển ứng dụng Android và', 3)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Đã xuất bản ít nhất một ứng dụng Android gốc', 3)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Trải nghiệm với Android SDK', 3)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kinh nghiệm làm việc với dữ liệu từ xa qua REST và JSON', 3)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Trải nghiệm với các thư viện và API của bên thứ ba', 3)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kiến thức làm việc về bối cảnh di động nói chung, kiến trúc, xu hướng và công nghệ mới nổi', 3)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Hiểu biết vững chắc về vòng đời phát triển thiết bị di động đầy đủ.', 3)
 
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kinh nghiệm làm việc đã được chứng minh với tư cách là nhà phát triển Back-end', 4)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Hiểu biết sâu sắc về toàn bộ quy trình phát triển web (thiết kế, phát triển và triển khai)', 4)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Thực hành kinh nghiệm với các ngôn ngữ lập trình như Java, Ruby, PHP và Python', 4)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kiến thức làm việc về CMS framework', 4)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Quen thuộc với các ngôn ngữ giao diện người dùng (ví dụ: HTML, JavaScript và CSS)', 4)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kỹ năng phân tích và quản lý thời gian xuất sắc', 4)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kỹ năng làm việc nhóm với thái độ giải quyết vấn đề', 4)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Bằng Cử nhân Khoa học Máy tính hoặc lĩnh vực liên quan', 4)
+
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kinh nghiệm trước đây trong Kinh doanh / Hệ thống Phân tích hoặc Đảm bảo Chất lượng', 5)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Bằng CNTT / Khoa học Máy tính', 5)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kinh nghiệm đã được chứng minh trong việc đưa ra các yêu cầu và thử nghiệm', 5)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Có kinh nghiệm phân tích dữ liệu để rút ra các kết luận phù hợp với doanh nghiệp và trong các kỹ thuật và công cụ trực quan hóa dữ liệu', 5)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Có kinh nghiệm viết các truy vấn SQL', 5)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kiến thức cơ bản trong việc tạo tài liệu quy trình', 5)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kỹ năng giao tiếp bằng văn bản và bằng lời nói mạnh mẽ bao gồm kỹ năng viết kỹ thuật', 5)
+
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kinh nghiệm làm việc đã được chứng minh với tư cách là Kiến trúc sư đám mây hoặc vai trò tương tự', 6)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Thái độ tích cực và cam kết mạnh mẽ để cung cấp công việc chất lượng', 6)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kiến thức tuyệt vời về công nghệ điện toán đám mây và xu hướng điện toán hiện tại', 6)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kỹ năng giao tiếp hiệu quả (bằng văn bản và bằng lời nói) để trình bày chính xác các báo cáo đám mây phức tạp với ban quản lý và các đối tác phát triển CNTT khác', 6)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Đào tạo và / hoặc chứng chỉ có liên quan với tư cách là Kiến trúc sư đám mây', 6)
+
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kinh nghiệm làm việc với tư cách là Kỹ sư DevOps hoặc vai trò kỹ sư phần mềm tương tự', 7)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kiến thức tốt về Ruby hoặc Python', 7)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kiến thức làm việc về cơ sở dữ liệu và SQL', 7)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Thái độ giải quyết vấn đề', 7)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Tinh thần đồng đội', 7)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Cử nhân Khoa học Máy tính, Kỹ thuật hoặc lĩnh vực liên quan', 7)
+
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Kinh nghiệm làm việc đã được chứng minh với tư cách là Chuyên gia An ninh mạng hoặc vai trò tương tự', 8)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Trải nghiệm thực tế khi phân tích khối lượng lớn nhật ký, dữ liệu mạng và các hiện vật tấn công khác', 8)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Trải nghiệm các giải pháp quét lỗ hổng bảo mật', 8)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Thành thạo với phần mềm chống vi-rút và bảo mật', 8)
+INSERT INTO ApplicationRequirement(Requirement, PostID) VALUES(N'Bằng cử nhân về Khoa học máy tính, Hệ thống thông tin hoặc giáo dục tương đương hoặc kinh nghiệm làm việc', 8)
 
 -- Bảng phụ chứa các vòng của quá trình tuyển dụng
 -- Sử dụng để các bảng tham chiếu
@@ -760,6 +933,38 @@ INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phỏng v
 INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phòng vấn về hợp đồng lao động', 3, 2)
 INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Đánh giá tổng kết quá trình tuyển dụng', 3, 4)
 INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Kết thúc quá trình tuyển dụng. Candidate nhân kết quả cuối cùng', 3, 3)
+
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Ứng tuyển và chờ xét duyệt CV', 4, 1)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phỏng vấn kiến thức và kỹ năng của ứng viên', 4, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phòng vấn về hợp đồng lao động', 4, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Đánh giá tổng kết quá trình tuyển dụng', 4, 4)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Kết thúc quá trình tuyển dụng. Candidate nhân kết quả cuối cùng', 4, 3)
+
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Ứng tuyển và chờ xét duyệt CV', 5, 1)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phỏng vấn kiến thức và kỹ năng của ứng viên', 5, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phòng vấn về hợp đồng lao động', 5, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Đánh giá tổng kết quá trình tuyển dụng', 5, 4)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Kết thúc quá trình tuyển dụng. Candidate nhân kết quả cuối cùng', 5, 3)
+
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Ứng tuyển và chờ xét duyệt CV', 6, 1)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phỏng vấn kiến thức và kỹ năng của ứng viên', 6, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phòng vấn về hợp đồng lao động', 6, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Đánh giá tổng kết quá trình tuyển dụng', 6, 4)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Kết thúc quá trình tuyển dụng. Candidate nhân kết quả cuối cùng', 6, 3)
+
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Ứng tuyển và chờ xét duyệt CV', 7, 1)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phỏng vấn kiến thức và kỹ năng của ứng viên', 7, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phòng vấn về hợp đồng lao động', 7, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Đánh giá tổng kết quá trình tuyển dụng', 7, 4)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Kết thúc quá trình tuyển dụng. Candidate nhân kết quả cuối cùng', 7, 3)
+
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Ứng tuyển và chờ xét duyệt CV', 8, 1)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phỏng vấn kiến thức và kỹ năng của ứng viên', 8, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Phòng vấn về hợp đồng lao động', 8, 2)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Đánh giá tổng kết quá trình tuyển dụng', 8, 4)
+INSERT INTO Application_Stage([Description], PostID, StageID) VALUES(N'Kết thúc quá trình tuyển dụng. Candidate nhân kết quả cuối cùng', 8, 3)
+
+
 
 -- Bảng chứa các status của quá trình ứng tuyển của ứng viên
 -- bao gồm: StatusID: ID của status
