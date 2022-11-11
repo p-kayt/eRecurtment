@@ -84,6 +84,12 @@
 
 
             <section>
+                <c:if test="${not empty deleteMess}">
+                    <div class="alert alert-danger" role="alert">
+                        <h3>${deleteMess}</h3>
+                    </div>
+                </c:if>
+
                 <c:choose>
                     <c:when test = "${user.userRole == 2 || user.userRole == 3}">
                         <c:choose>
