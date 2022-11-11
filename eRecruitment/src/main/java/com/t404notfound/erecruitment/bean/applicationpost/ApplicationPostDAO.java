@@ -1567,6 +1567,52 @@ public class ApplicationPostDAO {
         }
         return null;
     }
+    
+    
+    public ArrayList<InterviewDTO> getStageInterviewsList(PostStageDTO stage) {
+        String sql = "select InterviewID, itv.Description, OnlineLink, Address, InterviewTime, MaxCandidate, itv.StageID, itv.PostID, FormatID, StatusID, BookerID"
+                + " from Interview as itv join Application_Stage as app on itv.StageID = app.ID"
+                + " where app.ID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, stage.getId());
+            ResultSet rs = pst.executeQuery();
+            ArrayList<InterviewDTO> list = new ArrayList<>();
+            while (rs.next()) {
+                int interviewID = rs.getInt("InterviewID");
+                String description = rs.getString("Description");
+                String link = rs.getString("OnlineLink");
+                String address = rs.getString("Address");
+
+                /* Convert date to String using DateFormat*/
+                String time = rs.getString("InterviewTime").split("\\.")[0];
+                /* Convert date to String using DateFormat*/
+                
+                int maxCandidate = rs.getInt("MaxCandidate");
+                int stageID = rs.getInt("StageID");
+                int postID = rs.getInt("PostID");
+                int formatID = rs.getInt("FormatID");
+                int statusID = rs.getInt("StatusID");
+                int bookerID = rs.getInt("BookerID");
+
+                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, maxCandidate, stageID, postID, statusID, bookerID);
+                list.add(tmp);
+            }
+            return list;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
 

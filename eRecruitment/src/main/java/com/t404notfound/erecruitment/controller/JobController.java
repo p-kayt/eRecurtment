@@ -574,9 +574,19 @@ public class JobController extends HttpServlet {
                     position = positionDAO.loadApplicationPositions(positionID);
                     post = postDAO.loadApplicationPostWithName(postID);
                     for (PostStageDTO stage : post.getStageList()) {
-                        stage.setInterviewList(postDAO.getStageInterviews(stage));
+                        stage.setInterviewList(postDAO.getStageInterviewsList(stage));
                     }
                     ArrayList<ApplicationDTO> appList = appDAO.listAllApplicationOfAPost(postID);
+                    
+                    log("===================================================");
+                    for (ApplicationDTO app : appList) {
+                        log(app.getId() + " " + app.getApplyDate().toString() + " " + app.getStageID());
+                    }
+                    for (PostStageDTO stage : post.getStageList()) {
+                        log(stage.getId() + " " + stage.getDescription());
+                    }
+                    log("===================================================");
+                    
                     
                     request.setAttribute("appList", appList);
                     request.setAttribute("post", post);
