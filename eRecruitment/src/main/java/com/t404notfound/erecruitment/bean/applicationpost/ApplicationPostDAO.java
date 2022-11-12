@@ -1542,7 +1542,7 @@ public class ApplicationPostDAO {
                 /* Convert date to String using DateFormat*/
                 String time = rs.getString("InterviewTime").split("\\.")[0];
                 /* Convert date to String using DateFormat*/
-                
+
                 int maxCandidate = rs.getInt("MaxCandidate");
                 int stageID = rs.getInt("StageID");
                 int postID = rs.getInt("PostID");
@@ -1567,8 +1567,7 @@ public class ApplicationPostDAO {
         }
         return null;
     }
-    
-    
+
     public ArrayList<InterviewDTO> getStageInterviewsList(PostStageDTO stage) {
         String sql = "select InterviewID, itv.Description, OnlineLink, Address, InterviewTime, MaxCandidate, itv.StageID, itv.PostID, FormatID, StatusID, BookerID"
                 + " from Interview as itv join Application_Stage as app on itv.StageID = app.ID"
@@ -1588,7 +1587,7 @@ public class ApplicationPostDAO {
                 /* Convert date to String using DateFormat*/
                 String time = rs.getString("InterviewTime").split("\\.")[0];
                 /* Convert date to String using DateFormat*/
-                
+
                 int maxCandidate = rs.getInt("MaxCandidate");
                 int stageID = rs.getInt("StageID");
                 int postID = rs.getInt("PostID");
@@ -1614,9 +1613,40 @@ public class ApplicationPostDAO {
         return null;
     }
 
+    public int getIDOfNextStage(int postID, int stageID) {
+        String sql = "select next_ID from"
+                + " (select ID, lead(ID, 1, 0) over (order by ID) as next_ID from Application_Stage where PostID = ?) as stage"
+                + " where ID =  ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            
+            pst.setInt(1, postID);
+            pst.setInt(2, stageID);
+
+            ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
 
         ApplicationPostDAO dao = new ApplicationPostDAO();
+        int res = dao.getIDOfNextStage(4, 19);
+        System.out.println(res);
 
     }
 }
