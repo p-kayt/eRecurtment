@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -137,16 +138,30 @@ public class InterviewDAO {
         if (checkInterview(interviewID)) {
             String sql = "DELETE Interview "
                     + " WHERE InterviewID = ?";
+
+            Connection con = null;
+
             try {
-                Connection con = DBUtil.getConnection();
+                con = DBUtil.getConnection();
+                con.setAutoCommit(false);
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setInt(1, interviewID);
                 int rs = ps.executeUpdate();
-                if (rs != 0) {
-                    return true;
+                if (rs == 0) {
+                    return false;
                 }
+                con.commit();
+                return true;
             } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                if (con != null) {
+                    try {
+                        con.close();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
             }
         }
         return false;
@@ -284,9 +299,8 @@ public class InterviewDAO {
         }
         return list;
     }
-    
+
     //get interview stage name by stageID
-    
     public String getInterviewStageNameByID(int stageID) {
         String sql = " SELECT ID, [Description]\n"
                 + " FROM Application_Stage\n"
@@ -614,58 +628,4 @@ public class InterviewDAO {
         return time;
     }
 
-    public static void main(String[] args) {
-        InterviewDAO dao = new InterviewDAO();
-        String description = "Phỏng vấn sơ bộ vị trí Marketing.";
-        int formatID = 1;
-        String link = null;
-        String address = null;
-        String time = "2013-12-01 12:30";
-        int maxCandidate = 10;
-        int stageID = 1;
-        int postID = 1;
-        int inteviewStatusID = 1;
-        int bookerID = 1;
-        int interviewID = 8;
-
-//        System.out.println(dao.createAnInterview(description, formatID, link, address, time, stageID, postID, bookerID));
-//
-//        System.out.println(dao.deleteInterview(6));
-//
-//        link = "https://abc.com";
-//        InterviewDTO t = dao.updateInterview(interviewID, description, formatID, link, address, time, stageID, inteviewStatusID);
-//        System.out.println(t.toString());
-        System.out.println("=====================================================================================");
-//        ArrayList<InterviewDTO> li = dao.getInterviewList();
-//        System.out.println("List interview: ");
-//        for (InterviewDTO o : li) {
-//            System.out.println(o.toString());
-//        }
-//        System.out.println(dao.getNewestInterview());
-//        ArrayList<String> status = dao.getInterviewStatus();
-//        for (String s : status) {
-//            System.out.println(s);
-//        }
-//
-//        System.out.println("=====================================================================================");
-//        ArrayList<InterviewDTO> createdList = dao.getCreatedInterview(1);
-//        for (InterviewDTO i : createdList) {
-//            System.out.println("ID: " + i.getInterviewID() + "to String: " + i.toString());
-//        }
-//        System.out.println("=====================================================================================");
-//        ArrayList<InterviewDTO> getList = dao.getCreatedInterview(4);
-//        for (InterviewDTO i : getList) {
-//            System.out.println("ID: " + i.getInterviewID() + " to String: " + i.toString());
-//        }
-//        System.out.println("=====================================================================================");
-//        System.out.println("Show pending interview");
-//        getList = dao.getInterviewByStatus(1);
-//        for (InterviewDTO i : getList) {
-//            System.out.println("ID: " + i.getInterviewID() + " to String: " + i.toString());
-//        }
-        System.out.println("=====================================================================================");
-        System.out.println("Show candidate time");
-        System.out.println(dao.getCandidateInterviewTime(1, 2));
-        System.out.println("=====================================================================================");
-    }
 }

@@ -71,7 +71,14 @@
             </c:if>
 
 
+
             <section>
+                <c:if test="${not empty deleteMess}">
+                    <div class="alert alert-danger" role="alert">
+                        <h3>${deleteMess}</h3>
+                    </div>
+                </c:if>
+
                 <c:choose>
                     <c:when test = "${user.userRole == 2 || user.userRole == 3}">
                         <div class="container-xxl py-5 bg-dark page-header mb-5">
@@ -304,8 +311,15 @@
                                     <div class=" m-auto col-3 m-2 p-3">
                                         <button class="btn btn-primary"  type = "button" onclick = "UpdateInterview()">Cập nhật phỏng vấn</button>
                                     </div>
+
+                                    <form action="interview" method="post">
+                                        <input type="hidden" name="action" value="deleteInterview">
+                                        <input type="hidden" name ="interviewID" value = "${interview.interviewID}">
+                                        <input type="submit" value="Xóa">
+                                    </form>
                                 </div>
                             </div>
+
                         </c:if>
                     </c:when>
                     <c:otherwise>

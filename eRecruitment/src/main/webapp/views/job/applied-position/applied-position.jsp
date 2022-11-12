@@ -56,21 +56,61 @@
                 <jsp:include page="../../header/header_logoutbtn.jsp" />
             </c:if>
 
-            <div class="" >
-                <button onclick="chooseTab(1)">In-progress</button>
-                <button onclick="chooseTab(2)">Has complete</button>
-                <button onclick="chooseTab(3)">Cancelled</button>
+            <div class="tab-class text-center mt-4" >
 
+                <!--xài nav như này thì k cần cái script button nữa :v--> 
+                
+                <!--                <button class="btn btn-primary border-0" onclick="chooseTab(1)">In-progress</button>
+                                <button class="btn btn-primary border-0" onclick="chooseTab(2)">Has complete</button>
+                                <button class="btn btn-primary border-0" onclick="chooseTab(3)">Cancelled</button>-->
+                <!--nav as btn-->
+                <ul
+                    class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5"
+                    >
+                    <li class="nav-item">
+                        <a
+                            class="d-flex align-items-center text-start mx-3 ms-0 pb-3 active"
+                            data-bs-toggle="pill"
+                            href="#tab-1"
+                            >
+                            <h6 class="mt-n1 m-0">In-progress</h6>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            class="d-flex align-items-center text-start mx-3 pb-3"
+                            data-bs-toggle="pill"
+                            href="#tab-2"
+                            >
+                            <h6 class="mt-n1 mb-0">Has complete</h6>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            class="d-flex align-items-center text-start mx-3 me-0 pb-3"
+                            data-bs-toggle="pill"
+                            href="#tab-3"
+                            >
+                            <h6 class="mt-n1 mb-0">Cancelled</h6>
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
+            <div class="tab-content">
+                <!--div as nav-->
+                <div id="tab-1" class="tab-pane fade show p-0 active">
 
-                <div class="job-item py-4 px-2 mb-3" id="tab1">
-                    <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
-                        <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
-                            <c:if test="${i.postID == j.postID}">
-                                <c:if test="${i.getStatusID()==1}">
-                                    <div class="row g-4 justify-content-around" >
-                                        <div class="col-sm-12 col-md-6 d-flex align-items-center">
+                    <div class="job-item py-4 px-2 mb-3" id="tab1">
+                        <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
+                            <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
+                                <c:if test="${i.postID == j.postID}">
+                                    <c:if test="${i.getStatusID()==1}">
+                                        <div class="job-item py-4 px-2 mb-3 border border-1">
+                                            <div class="row g-4 justify-content-around" >
+                                                <div class="col-sm-12 col-md-5 d-flex align-items-center">
 
+<<<<<<< HEAD
                                             <div class="text-start ps-4"   name="tab_element">
                                                 <h5 class="mb-3">${j.getPositionName()}</h5>
                                                 <p>${i.getApplyDate()}</p>
@@ -123,66 +163,142 @@
                                                 <p>${i.getApplyDate()}</p>
                                                 <p><c:if test="${i.getStatusID()==3}">Fail</c:if>
                                                     <c:if test="${i.getStatusID()==4}">Success</c:if></p>
+=======
+                                                    <div class="text-start ps-4 col-11"   name="tab_element">
+                                                        <h5 class="mb-3">${j.getPositionName()}</h5>
+                                                        <p>${i.getApplyDate()}</p>
+                                                        <p>In-progress </p>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
+                                                    >
+                                                    <div class="d-flex mb-3">
+                                                        <a class="btn btn-danger" href="">Cancel</a>
+                                                    </div>
+>>>>>>> 13cd27ee2e9225fd184b7d7db7ad2c567fe4b621
                                                 </div>
                                             </div>
-
                                         </div>
+                                    </c:if>
                                 </c:if>
-                            </c:if>
+                            </c:forEach>
                         </c:forEach>
-                    </c:forEach>
-
+                    </div>
                 </div>
 
 
+                <!--div as nav-->
+                <div id="tab-2" class="tab-pane fade show p-0">
 
-                <jsp:include page="../../footer/footer.jsp" />
+                    <div class="job-item py-4 px-2 mb-3" id="tab2" style="display: none">
+                        <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
+                            <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
+                                <c:if test="${i.postID == j.postID}">
+                                    <c:if test="${i.getStatusID()==2}">
+                                        <div class="job-item py-4 px-2 mb-3 border border-1">
+                                            <div class="row g-4 justify-content-around" >
+                                                <div class="col-sm-12 col-md-6 d-flex align-items-center">
+
+                                                    <div class="text-start ps-4"   name="tab_element">
+                                                        <h5 class="mb-3">${j.getPositionName()}</h5>
+                                                        <p>${i.getApplyDate()}</p>
+                                                        <p>Cancelled</p>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
+                                                    >
+                                                    <div class="d-flex mb-3">
+                                                        <a class="btn btn-danger" href="">Cancel</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>
+                        </c:forEach>
+                    </div>
+                </div>
+                <!--div as nav-->
+                <div id="tab-3" class="tab-pane fade show p-0"> 
+
+                    <div class="job-item py-4 px-2 mb-3" id="tab3" style="display: none">
+                        <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
+                            <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
+                                <c:if test="${i.postID == j.postID}">
+                                    <c:if test="${i.getStatusID()==3 || i.getStatusID()==4}">
+                                        <div class="job-item py-4 px-2 mb-3 border border-1">
+                                            <div class="row g-4 justify-content-around" >
+                                                <div class="col-sm-12 col-md-6 d-flex align-items-center">
+
+                                                    <div class="text-start ps-4"   name="tab_element">
+                                                        <h5 class="mb-3">${j.getPositionName()}</h5>
+                                                        <p>${i.getApplyDate()}</p>
+                                                        <p><c:if test="${i.getStatusID()==3}">Fail</c:if>
+                                                            <c:if test="${i.getStatusID()==4}">Success</c:if></p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
 
 
-                <!-- Back to Top -->
-                <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" 
-                   ><i class="bi bi-arrow-up"></i
-                    ></a>
-                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+                                            </div>
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>
+                        </c:forEach>
 
-                <script src="lib/wow/wow.min.js"></script>
-                <script src="lib/easing/easing.min.js"></script>
-                <script src="lib/waypoints/waypoints.min.js"></script>
-                <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-
+                    </div>
+                </div>
             </div>
+        </div>
+
+
+        <jsp:include page="../../footer/footer.jsp" />
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" 
+           ><i class="bi bi-arrow-up"></i
+            ></a>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+        <!--Javascript -->
+        <script src="js/main.js"></script>
+        <script>
+
+            var inProgress = document.getElementById("tab1");
+            var cancelled = document.getElementById("tab2");
+            var complete = document.getElementById("tab3");
+            function chooseTab(tab) {
+
+                inProgress.style = "display:none";
+                cancelled.style = "display:none";
+                complete.style = "display:none";
+                switch (tab) {
+                    case 1:
+                        inProgress.style = "display:block";
+                        break;
+                    case 2:
+                        cancelled.style.display = "display:block";
+                        break;
+                    case 3:
+                        complete.style.display = "display:block";
+                        break;
+
+                    default:
+
+                        break;
+                }
+            }
+
+        </script>
     </body>
-    <!--Javascript -->
-    <script src="js/main.js"></script>
-    <script>
-
-                    var inProgress = document.getElementById("tab1");
-                    var cancelled = document.getElementById("tab2");
-                    var complete = document.getElementById("tab3");
-                    function chooseTab(tab) {
-
-                        inProgress.style = "display:none";
-                        cancelled.style = "display:none";
-                        complete.style = "display:none";
-                        switch (tab) {
-                            case 1:
-                                inProgress.style = "display:block";
-                                break;
-                            case 2:
-                                cancelled.style.display = "display:block";
-                                break;
-                            case 3:
-                                complete.style.display = "display:block";
-                                break;
-
-                            default:
-
-                                break;
-                        }
-                    }
-
-    </script>
 </html>

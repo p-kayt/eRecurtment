@@ -59,6 +59,8 @@
                 <jsp:include page="../header/header_logoutbtn.jsp" />
             </c:if>
 
+
+
             <div class="container-xxl py-5 bg-dark page-header mb-5">
                 <div class="container my-5 pt-5 pb-4">
                     <h1 class="display-3 text-white mb-3 animated slideInDown">Đặt lịch phỏng vấn</h1>
@@ -76,7 +78,7 @@
                 <c:choose>
                     <c:when test = "${user.userRole == 2 || user.userRole == 3}">
                         <div class="d-flex flex-column m-auto my-4 col-10 border border-1 shadow p-4 pb-5">
-                            <form class="m-auto col-10" action = "interview" method = "post" id = "form1">
+                            <form class="m-auto col-10" action = "interview" method = "get" id = "form1">
                                 <div class="d-flex flex-row justify-content-center row g-2 m-1">
                                     <a href="post?action=post-detail&postID=${postID}" target="_blank">Xem bài đăng tuyển dụng</a>
                                 </div>
@@ -125,9 +127,10 @@
                                 </div>
                                 <div class="d-flex flex-row justify-content-center row g-2 m-1">
                                     <label class="col-3" for="stage">Vòng phỏng vấn</label>
-                                    <select class="col-6" name = "stage" id="stage" disabled>
+                                    <select class="col-6"  id="stage" disabled>
                                         <option value = "${interviewStage.split(";")[0]}">${interviewStage.split(";")[1]}</option>   
                                     </select>
+                                    <input type="hidden" name = "stage" value="${interviewStage.split(";")[0]}">
                                     <span class="col-2"></span>
                                 </div>
                                 <div class="d-flex flex-row justify-content-center row g-2 m-1">

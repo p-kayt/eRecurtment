@@ -10,6 +10,7 @@ import com.t404notfound.erecruitment.bean.UserDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -108,18 +109,31 @@ public class InterviewerDAO {
     public boolean removeInterviewer(int userID, int interviewID) {
         String sql = "DELETE Interviewer "
                 + " WHERE UserID = ? AND InterviewID = ? ";
+        Connection con = null;
         try {
-            Connection con = DBUtil.getConnection();
+            con = DBUtil.getConnection();
+            con.setAutoCommit(false);
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, userID);
             ps.setInt(2, interviewID);
             int rs = ps.executeUpdate();
+            if (rs == 0) {
+                return false;
+            }
+            con.commit();
 
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-            // if exception ouccur then return false
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
         }
     }
 
