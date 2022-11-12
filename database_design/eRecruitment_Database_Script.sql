@@ -1114,8 +1114,7 @@ CREATE TABLE Interviewer(
 	UserID INT NOT NULL,
 	InterviewID INT NOT NULL,
 
-	CONSTRAINT PK_Interviewer PRIMARY KEY (InterviewerID),
-	CONSTRAINT UNIQUE_Interviewer_in_Interview UNIQUE (UserID, InterviewID),
+	CONSTRAINT PK_Interviewer PRIMARY KEY (UserID, InterviewID),
 	CONSTRAINT FK_Interviewer_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Interviewer_from_Interview FOREIGN KEY (InterviewID)
@@ -1162,8 +1161,7 @@ CREATE TABLE Participant(
 	InterviewTime SMALLDATETIME NULL,
 	ResultID INT NOT NULL,
 
-	CONSTRAINT PK_Participant PRIMARY KEY (ParticipantID),
-	CONSTRAINT UNIQUE_Participant_in_Interview UNIQUE (UserID, InterviewID),
+	CONSTRAINT PK_Participant PRIMARY KEY (UserID, InterviewID),
 	CONSTRAINT FK_Participant_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Participant_from_Interview FOREIGN KEY (InterviewID)
@@ -1197,9 +1195,9 @@ CREATE TABLE Evaluation(
 
 	CONSTRAINT PK_Evaluation PRIMARY KEY (EvaluationID),
 	CONSTRAINT FK_Evaluation_from_Interviewer_User FOREIGN KEY (InterviewerID)
-		REFERENCES Interviewer(InterviewerID),
+		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Evaluation_from_Participant_User FOREIGN KEY (ParticipantID)
-		REFERENCES Participant (ParticipantID),
+		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Evaluation_from_Interview FOREIGN KEY (InterviewID)
 		REFERENCES Interview (InterviewID),
 	CONSTRAINT Score_Range_Check CHECK(Score >= 0 AND Score <= 10)
@@ -1207,11 +1205,11 @@ CREATE TABLE Evaluation(
 
 GO
 INSERT INTO Evaluation(EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID) 
-	VALUES(N'Best Candidate Ever. Hire Immediately', 10, 1, 1, 1)
+	VALUES(N'Best Candidate Ever. Hire Immediately', 10, 5, 1, 1)
 INSERT INTO Evaluation(EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID) 
-	VALUES(N'Best Candidate Ever. Hire Immediately', 9, 2, 1, 1)
+	VALUES(N'Best Candidate Ever. Hire Immediately', 9, 6, 1, 1)
 
 INSERT INTO Evaluation(EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID) 
-	VALUES(N'Best Candidate Ever. Hire Immediately To The Company', 8, 3, 1, 2)
+	VALUES(N'Best Candidate Ever. Hire Immediately To The Company', 8, 5, 1, 2)
 INSERT INTO Evaluation(EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID) 
-	VALUES(N'Best Candidate Ever. Hire Immediately To The Company', 9, 4, 1, 2)
+	VALUES(N'Best Candidate Ever. Hire Immediately To The Company', 9, 6, 1, 2)
