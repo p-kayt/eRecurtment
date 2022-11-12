@@ -701,7 +701,8 @@ public class JobController extends HttpServlet {
                         request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
                     } else {
                         result = appDAO.rejectApplication(appID);
-                        if (result == 1) {
+                        int itvResult = parDAO.setFailInterview(userID, itvID);
+                        if (result == 1 && itvResult == 1) {
                             msg = "Từ Chối Thành Công Hồ Sơ Ứng Tuyển Với ID: " + appID;
                             request.setAttribute("msg", msg);
 
@@ -779,7 +780,10 @@ public class JobController extends HttpServlet {
                         } else {
                             result = 0;
                         }
-                        if (result == 1) {
+                        
+                        int itvResult = parDAO.setPassInterview(userID, itvID);
+                        
+                        if (result == 1 && itvResult == 1) {
                             msg = "Duyệt Thành Công Hồ Sơ Ứng Tuyển Với ID: " + appID + " Đến Vòng Tiếp Theo";
                             request.setAttribute("msg", msg);
 

@@ -202,11 +202,11 @@ public class ParticipantDAO {
             ps.setInt(1, userID);
             ps.setInt(2, interviewID);
             int rs = ps.executeUpdate();
-            if(rs == 0) {
+            if (rs == 0) {
                 return false;
             }
             con.commit();
-            
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -274,6 +274,52 @@ public class ParticipantDAO {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public int setPassInterview(int userID, int itvID) {
+        String sql = "update Participant set ResultID = 3 where UserID = ? and InterviewID = ?";
+        Connection con = null;
+        try {
+            con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, userID);
+            ps.setInt(2, itvID);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int setFailInterview(int userID, int itvID) {
+        String sql = "update Participant set ResultID = 4 where UserID = ? and InterviewID = ?";
+        Connection con = null;
+        try {
+            con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, userID);
+            ps.setInt(2, itvID);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
     }
 
     public static void main(String[] args) {

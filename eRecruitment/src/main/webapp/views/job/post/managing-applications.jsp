@@ -105,7 +105,7 @@
                             <!--  -->
                             <form class="col-2 m-3" action="interview" method="get" id="createInterviewForm">
                                 <input type="hidden" name="postID" value="${requestScope.post.postID}">
-                                <input type="hidden" name="stageID" value="${stage.id}">
+                                <input type="hidden" name="stage" value="${stage.id}">
                                 <input class="d-none" type="submit" value="Tạo buổi phỏng vấn">
                             </form>
                         </c:if>
