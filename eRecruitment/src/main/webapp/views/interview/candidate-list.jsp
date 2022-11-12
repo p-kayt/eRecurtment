@@ -122,7 +122,7 @@
                                                             <input type="hidden" name="time" value = "<%=hour%>">
                                                             <input type = "hidden" name="day" value = "<%=date%>">
                                                             <input type="hidden" name="interviewResultID" value="2">
-                                                            <input type="hidden" name ="action" value ="addCandidate">
+                                                            <input type="hidden" name ="action" value ="addExemptCandidate" ><!--sua cho nay-->
                                                             <input type="hidden" name ="userID" value="${i.getUserID()}" >
                                                             <input type="hidden" name ="interviewID" value="${interviewID}" >
                                                             <input class="btn btn-primary col-12" type="submit" value="Miễn phỏng vấn">

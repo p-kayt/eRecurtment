@@ -187,12 +187,7 @@ public class HRInterviewController extends HttpServlet {
                 iDAO.addInterviewer(userID, interviewID);
 
                 /*reload list interview page*/
-                InterviewerDAO interviewerDAO = new InterviewerDAO();
-                ArrayList<UserDTO> listInterviewer = interviewerDAO.getAvailableInterviewer(interviewID);
-                request.setAttribute("postID", postID);
-                request.setAttribute("listInterviewer", listInterviewer);
-                request.setAttribute("interviewID", interviewID);
-                request.getRequestDispatcher("/views/interview/interviewer-list.jsp").forward(request, response);
+                request.getRequestDispatcher("interview?action=showListInterviewer").forward(request, response);
                 /*reload list interview page*/
 
             } else if (action.equalsIgnoreCase("removeInterviewer")) {
@@ -201,43 +196,12 @@ public class HRInterviewController extends HttpServlet {
                 int interviewID = Integer.parseInt(request.getParameter("interviewID"));
                 InterviewerDAO iDAO = new InterviewerDAO();
                 boolean check = iDAO.removeInterviewer(userID, interviewID);
-                /*reload detail page*/
-                InterviewerDAO interviewerDAO = new InterviewerDAO();
-                ArrayList<UserDTO> listInterviewer = interviewerDAO.getInterviewer(interviewID);
-
-                InterviewDAO interviewDAO = new InterviewDAO();
-                InterviewDTO interview = interviewDAO.getInterview(interviewID);
-
-                InterviewDAO dao = new InterviewDAO();
-                ArrayList<String> interviewStage = dao.getInterviewStage(postID);
-                ArrayList<String> interviewStatus = dao.getInterviewStatus();
-                ArrayList<String> interviewFormat = dao.getInterviewFormat();
-                request.setAttribute("interviewFormat", interviewFormat);
-                request.setAttribute("interviewStatus", interviewStatus);
-                request.setAttribute("interviewStage", interviewStage);
-
-                ParticipantDAO participantDAO = new ParticipantDAO();
-                //get list candidate
-                ArrayList<UserDTO> listCandidate = participantDAO.getListInterviewCandidate(interviewID, 2);
-                request.setAttribute("listMainCandidate", listCandidate);
-                //get list candidate
-
-                //get list candidate that have not to interview
-                ArrayList<UserDTO> listNoInterviewCandidate = participantDAO.getListCandidateByResult(interviewID, 2);
-                request.setAttribute("listNoInterviewCandidate", listNoInterviewCandidate);
-                //get list candidate that have not to interview
-
-                request.setAttribute("postID", postID);
-
                 if (!check) {
                     request.setAttribute("deleteMess", "Xóa người phỏng vấn không thành công vì người này đã đánh giá ứng viên");
                 }
 
-                request.setAttribute("booker", user);
-                request.setAttribute("interview", interview);
-                request.setAttribute("listMainInterviewer", listInterviewer);
-                request.setAttribute("interviewID", interviewID);
-                request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
+                /*reload detail page*/
+                request.getRequestDispatcher("interview?action=interviewDetail").forward(request, response);
                 /*reload detail page*/
             } else if (action.equalsIgnoreCase("updateInterview")) {
                 int interviewID = Integer.parseInt(request.getParameter("interviewID"));
@@ -248,43 +212,9 @@ public class HRInterviewController extends HttpServlet {
                 InterviewDAO iDAO = new InterviewDAO();
                 InterviewDTO update = iDAO.updateInterview(interviewID, description, link, address, time, maxCandidate, stageID, formatID, statusID);
 
-                /*Load list participant and interviewer*/
-                InterviewerDAO interviewerDAO = new InterviewerDAO();
-                ParticipantDAO participantDAO = new ParticipantDAO();
-                //get Interviewer of this interview
-                ArrayList<UserDTO> listInterviewer = interviewerDAO.getInterviewer(interviewID);
-                //get list interviewer
-                request.setAttribute("listMainInterviewer", listInterviewer);
-
-                ArrayList<ParticipantDTO> listParticipant = participantDAO.getParticipant(interviewID);
-                request.setAttribute("listParticipant", listParticipant);
-
-                //get list candidate
-                ArrayList<UserDTO> listCandidate = participantDAO.getListInterviewCandidate(interviewID, 2);
-                request.setAttribute("listMainCandidate", listCandidate);
-                //get list candidate
-
-                //get list candidate that have not to interview
-                ArrayList<UserDTO> listNoInterviewCandidate = participantDAO.getListCandidateByResult(interviewID, 2);
-                request.setAttribute("listNoInterviewCandidate", listNoInterviewCandidate);
-                //get list candidate that have not to interview
-                /*Load list participant and interviewer*/
-
-                InterviewDAO dao = new InterviewDAO();
-                ArrayList<String> interviewStage = dao.getInterviewStage(postID);
-                ArrayList<String> interviewStatus = dao.getInterviewStatus();
-                ArrayList<String> interviewFormat = dao.getInterviewFormat();
-                request.setAttribute("interviewFormat", interviewFormat);
-                request.setAttribute("interviewStatus", interviewStatus);
-                request.setAttribute("interviewStage", interviewStage);
-
-                request.setAttribute("interviewID", interviewID);
-                request.setAttribute("postID", postID);
-                request.setAttribute("interview", update);
-                request.setAttribute("booker", user);
-                request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
-                return;
-
+                //Reload interview detail
+                request.getRequestDispatcher("interview?action=interviewDetail").forward(request, response);
+                //Reload interview detail
             } else if (action.equalsIgnoreCase("showListCandidate")) {
                 ParticipantDAO pDAO = new ParticipantDAO();
                 int interviewID = Integer.parseInt(request.getParameter("interviewID"));
@@ -315,76 +245,43 @@ public class HRInterviewController extends HttpServlet {
                 cTime = cDay + " " + cHour;
 
                 pDAO.addCandidate(userID, interviewID, cTime, resultID);
+
                 /*reload list candidate page*/
+                request.getRequestDispatcher("interview?action=showListCandidate").forward(request, response);
+                /*reload list candidate page*/
+
+            } else if (action.equalsIgnoreCase("addExemptCandidate")) {
+                int userID = Integer.parseInt((String) request.getParameter("userID"));
+                int interviewID = Integer.parseInt(request.getParameter("interviewID"));
                 InterviewDAO interviewDAO = new InterviewDAO();
                 InterviewDTO interview = interviewDAO.getInterview(interviewID);
+                String time = interview.getTime();
+                ParticipantDAO pDAO = new ParticipantDAO();
 
-                int iPostID = interview.getPostID();
-                int iStageID = interview.getStageID();
-                ArrayList<UserDTO> listCandidate = pDAO.getAvailablePariticipant(iPostID, iStageID);
+                int resultID = Integer.parseInt(request.getParameter("interviewResultID"));
 
-                request.setAttribute("postID", postID);
-                request.setAttribute("interview", interview);
-                request.setAttribute("listCandidate", listCandidate);
-                request.setAttribute("interviewID", interviewID);
-                request.getRequestDispatcher("/views/interview/candidate-list.jsp").forward(request, response);
+                pDAO.addCandidate(userID, interviewID, time, 2);
+                //need to do more  thing here to update stage of user 
+
                 /*reload list candidate page*/
-
+                request.getRequestDispatcher("interview?action=showListCandidate").forward(request, response);
+                /*reload list candidate page*/
             } else if (action.equalsIgnoreCase("removeCandidate")) {
 
                 int userID = Integer.parseInt((String) request.getParameter("userID"));
                 int interviewID = Integer.parseInt(request.getParameter("interviewID"));
                 ParticipantDAO pDAO = new ParticipantDAO();
                 boolean check = pDAO.removeCandidate(userID, interviewID);
-                /*reload list candidate page*/
-                InterviewDAO interviewDAO = new InterviewDAO();
-                InterviewDTO interview = interviewDAO.getInterview(interviewID);
-
-                InterviewDAO dao = new InterviewDAO();
-                ArrayList<String> interviewStage = dao.getInterviewStage(postID);
-                ArrayList<String> interviewStatus = dao.getInterviewStatus();
-                ArrayList<String> interviewFormat = dao.getInterviewFormat();
-                request.setAttribute("interviewFormat", interviewFormat);
-                request.setAttribute("interviewStatus", interviewStatus);
-                request.setAttribute("interviewStage", interviewStage);
-
-                /*Load list participant and interviewer*/
-                InterviewerDAO interviewerDAO = new InterviewerDAO();
-                ParticipantDAO participantDAO = new ParticipantDAO();
-                //get Interviewer of this interview
-                ArrayList<UserDTO> listInterviewer = interviewerDAO.getInterviewer(interviewID);
-                //get list interviewer
-                request.setAttribute("listMainInterviewer", listInterviewer);
-
-                ArrayList<ParticipantDTO> listParticipant = participantDAO.getParticipant(interviewID);
-                request.setAttribute("listParticipant", listParticipant);
-
-                //get list candidate
-                ArrayList<UserDTO> listCandidate = participantDAO.getListInterviewCandidate(interviewID, 2);
-                request.setAttribute("listMainCandidate", listCandidate);
-                //get list candidate
-
-                //get list candidate that have not to interview
-                ArrayList<UserDTO> listNoInterviewCandidate = participantDAO.getListCandidateByResult(interviewID, 2);
-                request.setAttribute("listNoInterviewCandidate", listNoInterviewCandidate);
-                //get list candidate that have not to interview
-
                 String mess = null;
                 if (!check) {
                     mess = "Xóa ứng viên không thành công vì ứng viên đã có kết quả đánh giá từ người phỏng vấn";
                 }
-                request.setAttribute("deleteMess", mess);
-                request.setAttribute("postID", postID);
-                request.setAttribute("interview", interview);
-                request.setAttribute("listMainCandidate", listCandidate);
-                request.setAttribute("interviewID", interviewID);
-                request.setAttribute("booker", user);
-                request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
-                /*reload list candidate page*/
+
+                //Reload interview detail
+                request.getRequestDispatcher("interview?action=interviewDetail").forward(request, response);
+                //Reload interview detail
             } else if (action.equalsIgnoreCase("showCreatedInterview")) {
 
-                //get URL for Back function of each page
-//            String url = request.getServletPath();
                 int bookerID = user.getUserID();
                 InterviewDAO interviewDAO = new InterviewDAO();
                 ArrayList<String> listInterviewStatus = new ArrayList<>();
@@ -518,75 +415,15 @@ public class HRInterviewController extends HttpServlet {
                 boolean check = interviewDAO.deleteInterview(interviewID);
                 if (!check) {
                     request.setAttribute("deleteMess", "Bạn không thể xóa cuộc phỏng vấn vì cuộc phỏng vấn đang được sử dụng");
-                    InterviewerDAO interviewerDAO = new InterviewerDAO();
-                    ParticipantDAO participantDAO = new ParticipantDAO();
-
-                    InterviewDAO iDAO = new InterviewDAO();
-                    InterviewDTO interview = iDAO.getInterview(interviewID);
-                    request.setAttribute("interview", interview);
-
-                    //get booker
-                    UserDAO uDAO = new UserDAO();
-                    UserDTO booker = uDAO.getUserByID(interview.getBookerID());
-                    request.setAttribute("booker", booker);
-                    //get booker
-
-                    //get Interviewer of this interview
-                    ArrayList<UserDTO> listInterviewer = interviewerDAO.getInterviewer(interviewID);
-                    //get list interviewer
-                    request.setAttribute("listMainInterviewer", listInterviewer);
-
-                    ArrayList<ParticipantDTO> listParticipant = participantDAO.getParticipant(interviewID);
-                    request.setAttribute("listParticipant", listParticipant);
-
-                    //get list candidate
-                    ArrayList<UserDTO> listCandidate = participantDAO.getListInterviewCandidate(interviewID, 2);
-                    request.setAttribute("listMainCandidate", listCandidate);
-                    //get list candidate
-
-                    //get list candidate that have not to interview
-                    ArrayList<UserDTO> listNoInterviewCandidate = participantDAO.getListCandidateByResult(interviewID, 2);
-                    request.setAttribute("listNoInterviewCandidate", listNoInterviewCandidate);
-                    //get list candidate that have not to interview
-
-                    InterviewDAO dao = new InterviewDAO();
-                    ArrayList<String> interviewStage = dao.getInterviewStage(postID);
-                    ArrayList<String> interviewStatus = dao.getInterviewStatus();
-                    ArrayList<String> interviewFormat = dao.getInterviewFormat();
-                    request.setAttribute("interviewFormat", interviewFormat);
-                    request.setAttribute("interviewStatus", interviewStatus);
-                    request.setAttribute("interviewStage", interviewStage);
-
-                    request.setAttribute("postID", postID);
-                    request.setAttribute("interviewID", interviewID);
-                    request.getRequestDispatcher("/views/interview/interview-detail.jsp").forward(request, response);
-
+                    //Reload interview detail
+                    request.getRequestDispatcher("interview?action=interviewDetail").forward(request, response);
+                    //Reload interview detail
                 } else {
                     request.setAttribute("deleteMess", "Xóa cuộc phỏng vấn thành công");
-                    int bookerID = user.getUserID();
-                    ArrayList<String> listInterviewStatus = new ArrayList<>();
-                    ArrayList<String> listInterviewStage = new ArrayList<>();
 
-                    ArrayList<InterviewDTO> createdInterviewList = interviewDAO.getCreatedInterview(bookerID);
-
-                    for (int i = 0; i < createdInterviewList.size(); i++) {
-                        int interviewStageID = createdInterviewList.get(i).getStageID();
-                        int statusID = createdInterviewList.get(i).getInteviewStatusID();
-
-                        String stageName = interviewDAO.getInterviewStageByID(interviewStageID);
-                        String statusName = interviewDAO.getInteviewStatus(statusID);
-                        listInterviewStage.add(stageName);
-                        listInterviewStatus.add(statusName);
-                    }
-
-                    request.setAttribute("listInterviewStatus", listInterviewStatus);
-                    request.setAttribute("listInterviewStage", listInterviewStage);
-
-                    request.setAttribute("createdInterviewList", createdInterviewList);
-                    request.getRequestDispatcher("/views/HRStaff/created-inteview-list.jsp").forward(request, response);
-
+                    //reload created interview
+                    request.getRequestDispatcher("interview?action=showCreatedInterview").forward(request, response);
                 }
-
             } else {
                 InterviewDAO dao = new InterviewDAO();
                 String interviewStage = dao.getInterviewStageNameByID(stageID);

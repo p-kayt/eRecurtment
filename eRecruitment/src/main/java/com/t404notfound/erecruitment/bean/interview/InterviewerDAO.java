@@ -157,7 +157,6 @@ public class InterviewerDAO {
     }
 
     //get all interviewer that does not exist in an interview
-    //tested done
     public ArrayList<UserDTO> getAvailableInterviewer(int interviewID) {
         ArrayList<UserDTO> interviewerList = new ArrayList<>();
         ArrayList<Integer> availableInterviewerIDList = new ArrayList<>();
