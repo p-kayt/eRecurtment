@@ -155,13 +155,12 @@
 
                                                                 <c:forEach items="${evaluate}" begin="${loop.index}" end="${loop.index}" step="1" var="e">
                                                                     <div>
-                                                                        <form action="evaluate" method = "post" id = "Ca${loop.index}">
+                                                                        <form action="evaluate" method = "get" id = "Ca${loop.index}">
                                                                             <p>Đánh giá</p>
                                                                             <textarea form ="Ca${loop.index}" cols="50" rows="4" name="description">${not empty e ? e.evaluationDescription : ""}</textarea>
 
                                                                             <label for ="score" >Điểm </label>
                                                                             <input type="number" name="score" value="${not empty e ? e.score : 5}" min="0" max="10" required><br>
-                                                                            <input type="hidden" name="action" value="showInterviewerInterviewDetail">
                                                                             <input type="hidden" name = "evaluateAction" value= "evaluate">
                                                                             <input type="hidden" name="interviewerID" value="${user.userID}">
                                                                             <input type="hidden" name="interviewID" value="${interview.interviewID}">

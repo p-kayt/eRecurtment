@@ -49,6 +49,29 @@ public class ParticipantDAO {
         return false;
     }
 
+    //get participantID of a user in an interview
+    public int getParticipantID(int userID, int interviewID) {
+        String sql = "SELECT ParticipantID "
+                + " FROM Participant\n"
+                + "WHERE UserID = ? AND InterviewID = ?";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, userID);
+            ps.setInt(2, interviewID);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("ParticipantID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     //Get all the candidate of an interview
     public ArrayList<ParticipantDTO> getParticipant(int interviewID) {
         ArrayList<ParticipantDTO> list = new ArrayList<>();
