@@ -16,6 +16,7 @@ import com.t404notfound.erecruitment.bean.cv.CVDAO;
 import com.t404notfound.erecruitment.bean.cv.CVDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -80,7 +81,7 @@ public class ApplicationController extends HttpServlet {
             }
             if (action.equalsIgnoreCase("cancel-application")) {
                 int applicationID = Integer.parseInt(request.getParameter("appID"));
-                ApplicationDTO appdto = appdao.getApplicationByID(applicationID);
+                
                 appdao.cancelApplication(applicationID);
                 
                 ArrayList<ApplicationDTO> appList = appdao.listAllApplicationOfAUser(user.getUserID());

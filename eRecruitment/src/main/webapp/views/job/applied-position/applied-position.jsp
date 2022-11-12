@@ -59,7 +59,7 @@
             <div class="tab-class text-center mt-4" >
 
                 <!--xài nav như này thì k cần cái script button nữa :v--> 
-                
+
                 <!--                <button class="btn btn-primary border-0" onclick="chooseTab(1)">In-progress</button>
                                 <button class="btn btn-primary border-0" onclick="chooseTab(2)">Has complete</button>
                                 <button class="btn btn-primary border-0" onclick="chooseTab(3)">Cancelled</button>-->
@@ -99,9 +99,9 @@
 
             <div class="tab-content">
                 <!--div as nav-->
-                <div id="tab-1" class="tab-pane fade show p-0 active">
+                <div id="tab-1" class="tab-pane fade show p-0 bg-transparent active">
 
-                    <div class="job-item py-4 px-2 mb-3" id="tab1">
+                    <div class="job-item py-4 px-2 mb-3 bg-transparent" >
                         <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
                             <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
                                 <c:if test="${i.postID == j.postID}">
@@ -110,73 +110,18 @@
                                             <div class="row g-4 justify-content-around" >
                                                 <div class="col-sm-12 col-md-5 d-flex align-items-center">
 
-<<<<<<< HEAD
-                                            <div class="text-start ps-4"   name="tab_element">
-                                                <h5 class="mb-3">${j.getPositionName()}</h5>
-                                                <p>${i.getApplyDate()}</p>
-                                                <p>In-progress </p>
-                                                <a class="btn btn-primary" href="./application?action=cancel-application&appID=${i.id}">Cancel</a>                                                
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </c:if>
-                            </c:if>
-                        </c:forEach>
-                    </c:forEach>
-                </div>
-
-
-                <div class="job-item py-4 px-2 mb-3" id="tab2" style="display: none">
-                    <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
-                        <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
-                            <c:if test="${i.postID == j.postID}">
-                                <c:if test="${i.getStatusID()==2}">
-                                    <div class="row g-4 justify-content-around" >
-                                        <div class="col-sm-12 col-md-6 d-flex align-items-center">
-
-                                            <div class="text-start ps-4"   name="tab_element">
-                                                <h5 class="mb-3">${j.getPositionName()}</h5>
-                                                <p>${i.getApplyDate()}</p>
-                                                <p>Cancelled</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </c:if>
-                            </c:if>
-                        </c:forEach>
-                    </c:forEach>
-                </div>
-
-
-                <div class="job-item py-4 px-2 mb-3" id="tab3" style="display: none">
-                    <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
-                        <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
-                            <c:if test="${i.postID == j.postID}">
-                                <c:if test="${i.getStatusID()==3 || i.getStatusID()==4}">
-                                    <div class="row g-4 justify-content-around" >
-                                        <div class="col-sm-12 col-md-6 d-flex align-items-center">
-
-                                            <div class="text-start ps-4"   name="tab_element">
-                                                <h5 class="mb-3">${j.getPositionName()}</h5>
-                                                <p>${i.getApplyDate()}</p>
-                                                <p><c:if test="${i.getStatusID()==3}">Fail</c:if>
-                                                    <c:if test="${i.getStatusID()==4}">Success</c:if></p>
-=======
                                                     <div class="text-start ps-4 col-11"   name="tab_element">
                                                         <h5 class="mb-3">${j.getPositionName()}</h5>
                                                         <p>${i.getApplyDate()}</p>
-                                                        <p>In-progress </p>
+                                                        <p style="color: yellowgreen">In-progress </p>
                                                     </div>
                                                 </div>
                                                 <div
                                                     class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
                                                     >
                                                     <div class="d-flex mb-3">
-                                                        <a class="btn btn-danger" href="">Cancel</a>
+                                                        <a class="btn btn-danger" href="./application?action=cancel-application&appID=${i.id}">Cancel</a>
                                                     </div>
->>>>>>> 13cd27ee2e9225fd184b7d7db7ad2c567fe4b621
                                                 </div>
                                             </div>
                                         </div>
@@ -188,43 +133,11 @@
                 </div>
 
 
+
                 <!--div as nav-->
-                <div id="tab-2" class="tab-pane fade show p-0">
+                <div id="tab-2" class="tab-pane fade show bg-transparent p-0"> 
 
-                    <div class="job-item py-4 px-2 mb-3" id="tab2" style="display: none">
-                        <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
-                            <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
-                                <c:if test="${i.postID == j.postID}">
-                                    <c:if test="${i.getStatusID()==2}">
-                                        <div class="job-item py-4 px-2 mb-3 border border-1">
-                                            <div class="row g-4 justify-content-around" >
-                                                <div class="col-sm-12 col-md-6 d-flex align-items-center">
-
-                                                    <div class="text-start ps-4"   name="tab_element">
-                                                        <h5 class="mb-3">${j.getPositionName()}</h5>
-                                                        <p>${i.getApplyDate()}</p>
-                                                        <p>Cancelled</p>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
-                                                    >
-                                                    <div class="d-flex mb-3">
-                                                        <a class="btn btn-danger" href="">Cancel</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                </c:if>
-                            </c:forEach>
-                        </c:forEach>
-                    </div>
-                </div>
-                <!--div as nav-->
-                <div id="tab-3" class="tab-pane fade show p-0"> 
-
-                    <div class="job-item py-4 px-2 mb-3" id="tab3" style="display: none">
+                    <div class="job-item py-4 px-2 mb-3 bg-transparent" id="tab3">
                         <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
                             <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
                                 <c:if test="${i.postID == j.postID}">
@@ -236,20 +149,58 @@
                                                     <div class="text-start ps-4"   name="tab_element">
                                                         <h5 class="mb-3">${j.getPositionName()}</h5>
                                                         <p>${i.getApplyDate()}</p>
-                                                        <p><c:if test="${i.getStatusID()==3}">Fail</c:if>
-                                                            <c:if test="${i.getStatusID()==4}">Success</c:if></p>
+                                                        <p style="color: red"><c:if test="${i.getStatusID()==3}">Fail</c:if></p>
+                                                        <p style="color: green"><c:if test="${i.getStatusID()==4}">Success</c:if></p>
                                                         </div>
                                                     </div>
-
+                                                    <div
+                                                        class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
+                                                        >
+                                                        <div class="d-flex mb-3">
+                                                            <a class="btn btn-danger" href="" style="visibility: hidden">Cancel</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
-
-
                                             </div>
                                     </c:if>
                                 </c:if>
                             </c:forEach>
                         </c:forEach>
 
+                    </div>
+                </div>
+
+                <!--div as nav-->
+                <div id="tab-3" class="tab-pane fade show bg-transparent p-0">
+
+                    <div class="job-item py-4 px-2 mb-3 bg-transparent" id="tab2" >
+                        <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
+                            <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
+                                <c:if test="${i.postID == j.postID}">
+                                    <c:if test="${i.getStatusID()==2}">
+                                        <div class="job-item py-4 px-2 mb-3 border border-1">
+                                            <div class="row g-4 justify-content-around" >
+                                                <div class="col-sm-12 col-md-5 d-flex align-items-center">
+
+                                                    <div class="text-start ps-4 col-11"   name="tab_element">
+                                                        <h5 class="mb-3">${j.getPositionName()}</h5>
+                                                        <p>${i.getApplyDate()}</p>
+                                                        <p style="color: gray">Cancelled </p>
+                                                    </div>
+                                                </div>    
+                                                <div
+                                                    class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
+                                                    >
+                                                    <div class="d-flex mb-3">
+                                                        <a class="btn btn-danger" href="" style="visibility: hidden">Cancel</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
