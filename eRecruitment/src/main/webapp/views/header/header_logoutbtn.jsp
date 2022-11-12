@@ -98,7 +98,7 @@
                         <a href="profile" class="nav-item nav-link">Hồ sơ</a>
                         <c:if test = "${user.getUserRole() == 1}">
                             
-                            <a href="./application?action=view-applied-position" class="nav-item nav-link" >Danh sách ứng tuyển</a>
+                            <a href="./application" class="nav-item nav-link" >Danh sách ứng tuyển</a>
                             <a href="./cv?action=viewCV" class="nav-item nav-link" target="_blank">Xem CV</a>
                         </c:if>
                         <c:if test = "${user.getUserRole() == 2 || user.getUserRole() == 3}">
