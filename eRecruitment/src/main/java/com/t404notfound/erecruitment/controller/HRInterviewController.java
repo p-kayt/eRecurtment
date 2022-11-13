@@ -349,6 +349,28 @@ public class HRInterviewController extends HttpServlet {
 
                 request.setAttribute("InterviewList", InterviewList);
                 request.getRequestDispatcher("/views/HRStaff/interview-list.jsp").forward(request, response);
+            } else if (action.equalsIgnoreCase("showInterviewByPostStage")) {
+                InterviewDAO interviewDAO = new InterviewDAO();
+                ArrayList<InterviewDTO> InterviewList = interviewDAO.getInterviewByStageID(stageID);
+                ArrayList<String> listInterviewStatus = new ArrayList<>();
+                ArrayList<String> listInterviewStage = new ArrayList<>();
+
+                for (int i = 0; i < InterviewList.size(); i++) {
+                    int satgeID = InterviewList.get(i).getStageID();
+                    int statusID = InterviewList.get(i).getInteviewStatusID();
+
+                    String stageName = interviewDAO.getInterviewStageByID(satgeID);
+                    String statusName = interviewDAO.getInteviewStatus(statusID);
+                    listInterviewStage.add(stageName);
+                    listInterviewStatus.add(statusName);
+                }
+
+                request.setAttribute("userID", user.getUserID());
+                request.setAttribute("listInterviewStatus", listInterviewStatus);
+                request.setAttribute("listInterviewStage", listInterviewStage);
+
+                request.setAttribute("InterviewList", InterviewList);
+                request.getRequestDispatcher("/views/HRStaff/interview-list-of-a-post-stage.jsp").forward(request, response);
             } else if (action.equalsIgnoreCase("showInterviewDetail")) {
 
                 InterviewerDAO interviewerDAO = new InterviewerDAO();

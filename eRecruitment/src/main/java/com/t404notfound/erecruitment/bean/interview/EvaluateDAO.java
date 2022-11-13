@@ -5,6 +5,7 @@
 package com.t404notfound.erecruitment.bean.interview;
 
 import Util.DBUtil;
+import com.t404notfound.erecruitment.bean.UserDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -222,5 +223,59 @@ public class EvaluateDAO {
             e.printStackTrace();
         }
         return evaluation;
+    }
+
+    //get interviewID of a candidate by stageID
+    public int getInterviewIDOfCandidateInAStage(int userID, int stageID) {
+        String sql = "SELECT InterviewID FROM Interview\n"
+                + "WHERE StageID = ? AND InterviewID IN (SELECT InterviewID \n"
+                + "FROM Participant \n"
+                + "WHERE UserID = ?)";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, stageID);
+            ps.setInt(2, userID);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("InterviewID");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    //get list inteviewer of a candidate in a stage
+    public ArrayList<UserDTO> getInterviewerByStageID(int stageID, int candidateID) {
+        ArrayList<UserDTO> listInterviewer = new ArrayList<>();
+        int interviewID = getInterviewIDOfCandidateInAStage(candidateID, stageID);
+        InterviewerDAO interviewerDAO = new InterviewerDAO();
+
+        listInterviewer = interviewerDAO.getInterviewer(interviewID);
+
+        return listInterviewer;
+    }
+    
+    public static void main(String[] args) {
+        EvaluateDAO dao = new EvaluateDAO();
+        InterviewDAO iDAO = new InterviewDAO();
+        ArrayList<String> stage= new ArrayList<>();
+        stage = iDAO.getInterviewStagesOfAPost(2);
+        for (String s : stage) {
+            System.out.println(s);
+        }
+        System.out.println("===================================================");
+        ArrayList<UserDTO> interviewerList = dao.getInterviewerByStageID(8, 1);
+        for (UserDTO u : interviewerList) {
+            System.out.println(u.getFirstName() + " " + u.getLastName());
+        }
+        System.out.println("===================================================");
+        
+        int interviewID = dao.getInterviewIDOfCandidateInAStage(2, 8);
+        System.out.println(interviewID);
     }
 }
