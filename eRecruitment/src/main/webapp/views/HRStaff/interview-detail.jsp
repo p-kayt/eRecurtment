@@ -100,7 +100,7 @@
                                             String hour = datetime[1].split("\\.")[0];
                                         %>
                                         <p>Ngày    <%=date%></p>
-                                        <p>Giờ     <%=hour%></p>
+                                        <p>Thời gian     <%=hour%></p>
 
                                         <c:choose>
                                             <c:when test="${interviewFormat == 'Online'}">
@@ -168,7 +168,7 @@
                                                             <div class="col-4 text-start align-center m-auto"> 
                                                                 <c:forEach items="${listParticipant}" var="p">
                                                                     <c:if test="${p.userID == i.userID}">
-                                                                        <p>Giờ ${p.interviewTime.split("\\s")[1].split("\\.")[0]}</p>
+                                                                        <p>Thời gian ${p.interviewTime.split("\\s")[1].split("\\.")[0]}</p>
                                                                     </c:if>
                                                                 </c:forEach>
                                                             </div>
@@ -228,7 +228,7 @@
                         </c:if>
                     </c:when>
                     <c:otherwise>
-                        <div class="alert alert-secondary alert-dismissible fade show d-flex justify-content-between" role="alert">
+                        <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-between" role="alert">
                             Bạn không được phép truy cập trang web này
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>

@@ -66,49 +66,38 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto p-4 p-lg-0">
-                        <a href="home" class="nav-item nav-link active">Trang chủ</a>
-                        <!--            <div class="nav-item dropdown">
-                                          <a
-                                            href="#"
-                                            class="nav-link dropdown-toggle"
-                                            data-bs-toggle="dropdown"
-                                            >Jobs</a
-                                          >
-                                          <div class="dropdown-menu rounded-0 m-0">
-                                            <a href="job-list.html" class="dropdown-item">Job List</a>
-                                            <a href="job-detail.html" class="dropdown-item">Job Detail</a>
-                                          </div>
-                                        </div> -->
+                        <a href="home" class="nav-item nav-link active col-auto">Trang chủ</a>
 
-                        <a href="#" class="nav-item nav-link">Giới thiệu</a>
                         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
 
                         <c:choose>
                             <c:when test = "${user.getUserRole() == 1}">
-                                <a href="./common-interview?action=showCandidatePendingInterview" class="nav-item nav-link">Lịch phỏng vấn</a>
+                                <a href="./common-interview?action=showCandidatePendingInterview" class="nav-item nav-link col-auto">Lịch phỏng vấn</a>
                             </c:when>
                             <c:when test = "${user.getUserRole() == 2}">
-                                <a href="./interview?action=showCreatedInterview" class="nav-item nav-link">Lịch phỏng vấn</a>
+                                <a href="./interview?action=showCreatedInterview" class="nav-item nav-link col-auto">Lịch phỏng vấn</a>
                             </c:when>
                             <c:when test = "${user.getUserRole() == 4}">
-                                <a href="./common-interview?action=showInterviewerPendingInterview" class="nav-item nav-link">Lịch phỏng vấn</a>
+                                <a href="./common-interview?action=showInterviewerPendingInterview" class="nav-item nav-link col-auto">Lịch phỏng vấn</a>
                             </c:when>
                         </c:choose>
 
-                        <a href="profile" class="nav-item nav-link">Hồ sơ</a>
+                        <a href="profile" class="nav-item nav-link col-auto">Hồ sơ</a>
                         <c:if test = "${user.getUserRole() == 1}">
                             
-                            <a href="./application" class="nav-item nav-link" >Danh sách ứng tuyển</a>
-                            <a href="./cv?action=viewCV" class="nav-item nav-link" target="_blank">Xem CV</a>
+                            <a href="./application" class="nav-item nav-link col-auto" >Danh sách ứng tuyển</a>
+                            <a href="./cv?action=viewCV" class="nav-item nav-link col-auto" target="_blank">Xem CV</a>
                         </c:if>
                         <c:if test = "${user.getUserRole() == 2 || user.getUserRole() == 3}">
-                            <a href="./job?action=position-list" class="nav-item nav-link">Quản lý tuyển dụng</a>
+                            <a href="./job?action=position-list" class="nav-item nav-link col-auto">Quản lý tuyển dụng</a>
                         </c:if>
+<!--                            
                         <c:if test = "${user.getUserRole() == 3}">
-                            <a href="./ManagerViewCandidates?txtSearch=&action=All" class="nav-item nav-link">Phê duyệt ứng viên</a>
+                            <a href="./ManagerViewCandidates?txtSearch=&action=All" class="nav-item nav-link col-auto">Phê duyệt ứng viên</a>
                         </c:if>
+                            -->
                         <c:if test = "${user.getUserRole() == 5}">
-                            <a href="./adminViewUser?txtSearch=&action=All" class="nav-item nav-link">Quản lý các user</a>
+                            <a href="./adminViewUser?txtSearch=&action=All" class="nav-item nav-link col-auto">Quản lý các user</a>
                         </c:if>
                         <a href="logout" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">
                             Đăng xuất

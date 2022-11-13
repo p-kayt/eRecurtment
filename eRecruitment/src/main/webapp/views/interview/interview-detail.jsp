@@ -108,6 +108,7 @@
                                                 </c:if>
                                             </select>
                                         </div>
+                                            
                                         <div class="d-flex flex-column m-2">
                                             <label for="stageID">Tên vòng phỏng vấn</label>
                                             <%--Need fix this, must load stage from database--%>
@@ -244,7 +245,7 @@
                                                             <div class="col-9 text-start align-center m-auto">
                                                                 <p>${i.getFirstName()} ${i.getLastName()}</p>
                                                             </div>
-                                                            <div class="col-9 text-start align-center m-auto">
+                                                            <div class="col-3 text-start align-center m-auto">
                                                                 <a href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
                                                             </div>
                                                             <div class="col-9 text-start align-center m-auto">
@@ -255,12 +256,12 @@
                                                                 </c:forEach>
                                                             </div>
                                                         </div>
-                                                        <div>
+                                                        <div class="col-1 text-start align-center m-auto">
                                                             <form action="interview" method="post">
                                                                 <input type="hidden" name ="action" value ="removeCandidate">
                                                                 <input type="hidden" name ="userID" value="${i.getUserID()}" >
                                                                 <input type="hidden" name ="interviewID" value ="${interviewID}">
-                                                                <input type="submit" value="Xóa">
+                                                                <input class="btn btn-danger col-12" type="submit" value="Xóa">
                                                             </form>
                                                         </div>
                                                     </div>
@@ -284,23 +285,23 @@
                                             <c:if test="<%=listNoInterviewCandidate != null%>">
                                                 <c:forEach items="<%=listNoInterviewCandidate%>" var="i">
                                                     <div class="d-flex flex-row justify-content-between align-center border border-2 m-1 bg-light">
-                                                        <div class="col-6 d-flex flex-row text-center">
+                                                        <div class="col-8 d-flex flex-row text-center">
                                                             <div class="col-3 d-flex justify-content-center">
                                                                 <img class="ava_img" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
                                                             </div>
                                                             <div>
                                                                 <p>${i.getFirstName()} ${i.getLastName()}</p>
                                                             </div>
-                                                            <div class="col-9 text-start align-center m-auto">
+                                                            <div class="col-2 text-start align-center m-auto">
                                                                 <a href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
                                                             </div>
                                                         </div>
-                                                        <div>
+                                                        <div class="col-1 text-start align-center m-auto">
                                                             <form action="interview" method="post">
                                                                 <input type="hidden" name ="action" value ="removeCandidate">
                                                                 <input type="hidden" name ="userID" value="${i.getUserID()}" >
                                                                 <input type="hidden" name ="interviewID" value ="${interviewID}">
-                                                                <input type="submit" value="Xóa">
+                                                                <input class="btn btn-danger col-12" type="submit" value="Xóa">
                                                             </form>
                                                         </div>
                                                     </div>
@@ -308,15 +309,17 @@
                                             </c:if>
                                         </div>
                                     </div>
-                                    <div class=" m-auto col-3 m-2 p-3">
-                                        <button class="btn btn-primary"  type = "button" onclick = "UpdateInterview()">Cập nhật phỏng vấn</button>
-                                    </div>
+                                    <div class="d-flex flex-row justify-content-center">
+                                        <div class="col-3 m-2 p-3">
+                                            <button class="btn btn-primary"  type = "button" onclick = "UpdateInterview()">Cập nhật phỏng vấn</button>
+                                        </div>
 
-                                    <form action="interview" method="post">
-                                        <input type="hidden" name="action" value="deleteInterview">
-                                        <input type="hidden" name ="interviewID" value = "${interview.interviewID}">
-                                        <input type="submit" value="Xóa">
-                                    </form>
+                                        <form class="col-1 m-2 p-3" action="interview" method="post">
+                                            <input type="hidden" name="action" value="deleteInterview">
+                                            <input type="hidden" name ="interviewID" value = "${interview.interviewID}">
+                                            <input class="btn btn-danger col-12" type="submit" value="Xóa">
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
 
@@ -344,10 +347,10 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
         <script>
-                                            function UpdateInterview() {
-                                                var f = document.getElementById("form1");
-                                                f.submit();
-                                            }
+                                                function UpdateInterview() {
+                                                    var f = document.getElementById("form1");
+                                                    f.submit();
+                                                }
         </script>
     </body>
 </html>
