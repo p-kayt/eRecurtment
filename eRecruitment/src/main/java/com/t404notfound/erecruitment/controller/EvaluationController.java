@@ -93,6 +93,62 @@ public class EvaluationController extends HttpServlet {
                 //get candidate information
 
                 request.getRequestDispatcher("views/HRStaff/candidate-evaluation.jsp").forward(request, response);
+            } else if (evaluateAction.equalsIgnoreCase("viewCandidateEvaluationInAPost")) {
+
+                //need candidateID and postID
+                int candidateID = Integer.parseInt(request.getParameter("candidateID"));
+                int postID;
+                try {
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                } catch (Exception e) {
+                    postID = -1;
+                }
+                
+                EvaluateDAO evaluateDAO = new EvaluateDAO();
+                InterviewDAO interviewDAO = new InterviewDAO();
+                
+                //get stage list
+                ArrayList<String> stageList = interviewDAO.getInterviewStage(postID);
+                request.setAttribute("stageList", stageList);
+                //get stage list
+                
+                //get list inteviewer in a stage of a candidate
+                ArrayList<ArrayList<UserDTO>> listInterviewer = new ArrayList<>();
+                ArrayList<ArrayList<EvaluateDTO>> listEvaluation = new ArrayList<>();
+                
+                for (String s : stageList) {
+                    int stageID = Integer.parseInt(s.split(";")[0]);
+                    int inteviewID = evaluateDAO.getInterviewIDOfCandidateInAStage(candidateID, stageID);
+                    
+                    InterviewerDAO interviewerDAO = new InterviewerDAO();
+                    
+                    ArrayList<UserDTO> interviewer = interviewerDAO.getInterviewer(inteviewID);
+                    
+                    ArrayList<EvaluateDTO> evaluation = new ArrayList<>();
+                    
+                    for (UserDTO i : interviewer) {
+                        EvaluateDTO e = evaluateDAO.getEvaluationOfCandidateOfInterviewer(inteviewID, i.getUserID(), candidateID);
+                        evaluation.add(e);
+                    }
+                    listInterviewer.add(interviewer);
+                }
+                //get list inteviewer in a stage of a candidate
+                
+
+                //get Interviewer of this interview
+                request.setAttribute("listInterviewer", listInterviewer);
+                //get list interviewer
+
+                //get evaluation of candidate
+                request.setAttribute("evaluation", listEvaluation);
+                //get evaluation of candidate
+
+                //get candidate information
+                UserDTO candidate = userDAO.getUserByID(candidateID);
+                request.setAttribute("candidate", candidate);
+                //get candidate information
+
+                request.getRequestDispatcher("views/HRManager/canidate-evaluation.jsp").forward(request, response);
             } else {
                 response.sendRedirect(request.getContextPath() + "/home");
             }

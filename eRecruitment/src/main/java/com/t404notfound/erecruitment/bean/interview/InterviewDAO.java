@@ -628,4 +628,102 @@ public class InterviewDAO {
         return time;
     }
 
+    //get all interview of a stage in a post
+    public ArrayList<InterviewDTO> getInterviewByStageID(int stageID) {
+        ArrayList<InterviewDTO> interviewList = new ArrayList<>();
+        String sql = "SELECT * FROM Interview "
+                + " WHERE StageID = ?";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, stageID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int interviewID = rs.getInt("InterviewID");
+                String description = rs.getString("Description");
+                String link = rs.getString("OnlineLink");
+                String address = rs.getString("Address");
+
+                /* Convert date to String using DateFormat*/
+                String time = rs.getString("InterviewTime").split("\\.")[0];
+                /* Convert date to String using DateFormat*/
+                int maxCadidate = rs.getInt("MaxCandidate");
+                int postID = rs.getInt("PostID");
+                int formatID = rs.getInt("FormatID");
+                int statusID = rs.getInt("StatusID");
+                int bookerID = rs.getInt("BookerID");
+
+                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, maxCadidate, stageID, postID, statusID, bookerID);
+                interviewList.add(tmp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return interviewList;
+    }
+
+    //get all interview of a stage in a post by status (Booked, have occured or cancel)
+    public ArrayList<InterviewDTO> getInterviewByStageIDAndStatusID(int stageID, int statusID) {
+        ArrayList<InterviewDTO> interviewList = new ArrayList<>();
+        String sql = "SELECT * FROM Interview "
+                + " WHERE StageID = ? AND StatusID  = ?";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, stageID);
+            ps.setInt(2, statusID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int interviewID = rs.getInt("InterviewID");
+                String description = rs.getString("Description");
+                String link = rs.getString("OnlineLink");
+                String address = rs.getString("Address");
+
+                /* Convert date to String using DateFormat*/
+                String time = rs.getString("InterviewTime").split("\\.")[0];
+                /* Convert date to String using DateFormat*/
+                int maxCadidate = rs.getInt("MaxCandidate");
+                int postID = rs.getInt("PostID");
+                int formatID = rs.getInt("FormatID");
+                int bookerID = rs.getInt("BookerID");
+
+                InterviewDTO tmp = new InterviewDTO(interviewID, description, formatID, link, address, time, maxCadidate, stageID, postID, statusID, bookerID);
+                interviewList.add(tmp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return interviewList;
+    }
+
+    //get interview stageName of a post format ("stageID;desctiption")
+    public ArrayList<String> getInterviewStagesOfAPost(int postID) {
+        ArrayList<String> stage = new ArrayList<>();
+
+        String sql = "SELECT *\n"
+                + "FROM Application_Stage\n"
+                + "WHERE StageID = 2 AND PostID = ?";
+
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, postID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int stageID = rs.getInt("ID");
+                String des = rs.getString("Description");
+
+                String stageName = stageID + ";" + des;
+                stage.add(des);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return stage;
+    }
+
 }
