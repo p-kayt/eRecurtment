@@ -1015,10 +1015,10 @@ CREATE TABLE [Application](
 GO
 --INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 6, 2, 2)
 --INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-13', 1, 6, 3, 2)
-INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 14, 1, 1)
-INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 2, 14, 1, 5)
-INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 3, 14, 1, 3)
-INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 4, 14, 1, 4)
+INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 3, 1, 1, 1)
+INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 2, 21, 1, 5)
+INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 1, 14, 1, 3)
+INSERT INTO [Application](ApplyDate, StatusID, StageID, UserID, PostID) VALUES('2022-10-12', 3, 16, 1, 4)
 ----------------------------------
 -- Interview Section --
 ----------------------------------
@@ -1115,6 +1115,7 @@ CREATE TABLE Interviewer(
 	InterviewID INT NOT NULL,
 
 	CONSTRAINT PK_Interviewer PRIMARY KEY (UserID, InterviewID),
+	CONSTRAINT Unique_InterviewerID UNIQUE (InterviewerID),
 	CONSTRAINT FK_Interviewer_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Interviewer_from_Interview FOREIGN KEY (InterviewID)
@@ -1162,6 +1163,7 @@ CREATE TABLE Participant(
 	ResultID INT NOT NULL,
 
 	CONSTRAINT PK_Participant PRIMARY KEY (UserID, InterviewID),
+	CONSTRAINT Unique_ParticipantID UNIQUE (ParticipantID), 
 	CONSTRAINT FK_Participant_from_User FOREIGN KEY (UserID)
 		REFERENCES [User] (UserID),
 	CONSTRAINT FK_Participant_from_Interview FOREIGN KEY (InterviewID)
