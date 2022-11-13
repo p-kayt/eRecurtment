@@ -1099,7 +1099,7 @@ INSERT INTO Interview([Description], OnlineLink, [Address], InterviewTime, MaxCa
 	VALUES(N'Phỏng vấn kiến thức và kỹ năng của ứng viên', 'https://meet.google.com/', NULL, '2022-10-20 10:00',10, 12, 3, 2, 3, 4);
 
 INSERT INTO Interview([Description], OnlineLink, [Address], InterviewTime, MaxCandidate, StageID, PostID, FormatID, StatusID, BookerID)
-	VALUES(N'Phòng vấn về hợp đồng lao động', 'https://meet.google.com/', NULL, '2022-10-25 22:00',10, 13, 3, 2, 1, 4)
+	VALUES(N'Phòng vấn về hợp đồng lao động', 'https://meet.google.com/', NULL, '2022-10-25 22:00',10, 13, 3, 2, 3, 4)
 
 
 -- Bảng chứa thông tin thêm của buổi PV (Interview)
@@ -1207,11 +1207,11 @@ CREATE TABLE Evaluation(
 
 GO
 INSERT INTO Evaluation(EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID) 
-	VALUES(N'Best Candidate Ever. Hire Immediately', 10, 5, 1, 1)
+	VALUES(N'Best Candidate Ever. Hire Immediately', 10, 4, 1, 1)
 INSERT INTO Evaluation(EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID) 
 	VALUES(N'Best Candidate Ever. Hire Immediately', 9, 6, 1, 1)
 
 INSERT INTO Evaluation(EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID) 
-	VALUES(N'Best Candidate Ever. Hire Immediately To The Company', 8, 5, 1, 2)
+	VALUES(N'Best Candidate Ever. Hire Immediately To The Company', 8, 4, 1, 2)
 INSERT INTO Evaluation(EvaluationDescription, Score, InterviewerID, ParticipantID, InterviewID) 
 	VALUES(N'Best Candidate Ever. Hire Immediately To The Company', 9, 6, 1, 2)
