@@ -4,6 +4,8 @@
  */
 package com.t404notfound.erecruitment.controller;
 
+import applicationstage.ApplicationStageDAO;
+import applicationstage.ApplicationStageDTO;
 import com.t404notfound.erecruitment.bean.UserDAO;
 import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.application.ApplicationDAO;
@@ -93,6 +95,21 @@ public class ApplicationController extends HttpServlet {
                 request.setAttribute("postList", postList);
                 request.setAttribute("appList", appList);
                 request.getRequestDispatcher("/views/job/applied-position/applied-position.jsp").forward(request, response);
+            }
+            if (action.equalsIgnoreCase("view-application-detail")) {
+                int applicationID = Integer.parseInt(request.getParameter("appID"));
+                appdao.cancelApplication(applicationID);
+                
+                ArrayList<ApplicationDTO> appList = appdao.listAllApplicationOfAUser(user.getUserID());
+                ArrayList<ApplicationPostDTO> postList = new ArrayList<>();
+                for (ApplicationDTO x : appList) {
+                    postList.add(postdao.loadApplicationPostWithName(x.getPostID()));
+                }
+                ApplicationStageDAO appstagedao = new ApplicationStageDAO();
+//                ApplicationStageDTO appstagedto = appstagedao.listAllApplicationStageByPostID(postID);
+                
+                
+                
             }
             
         }
