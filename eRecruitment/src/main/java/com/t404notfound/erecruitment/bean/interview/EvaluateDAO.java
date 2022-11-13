@@ -275,7 +275,7 @@ public class EvaluateDAO {
         }
         System.out.println("===================================================");
         
-        int interviewID = dao.getInterviewIDOfCandidateInAStage(2, 8);
+        int interviewID = dao.getInterviewIDOfCandidateInAStage(2, 12);
         System.out.println(interviewID);
     }
 }

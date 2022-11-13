@@ -131,6 +131,7 @@ public class EvaluationController extends HttpServlet {
                         evaluation.add(e);
                     }
                     listInterviewer.add(interviewer);
+                    listEvaluation.add(evaluation);
                 }
                 //get list inteviewer in a stage of a candidate
                 

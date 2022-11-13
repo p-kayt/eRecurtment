@@ -88,36 +88,41 @@
 
                                             <c:forEach items="${listInterviewer}" begin="${loop.index}" end="${loop.index}" step="1" var="lI">
 
-                                                <c:if test = "${empty lI}" >
-                                                    <h1>This interviewer is empty</h1>
-                                                </c:if>
-                                                <c:forEach items="${lI}" var="i" varStatus="iLoop">
+                                                <c:choose>
 
-                                                    <div >
-                                                        <img class="img-thumbnail m-2" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
-                                                    </div>
-                                                    <div >
-                                                        <p>${i.getFirstName()} ${i.getLastName()}</p>
-                                                    </div>
+                                                    <c:when test = "${empty lI}" >
+                                                        <h1>Không tìm thấy người phỏng vấn ở vòng này</h1>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:forEach items="${lI}" var="i" varStatus="iLoop">
 
-                                                    <c:forEach items="${evaluation}" begin="${loop.index}" end="${loop.index}" step="1" var="lE">
-                                                        <div>
-                                                            <c:forEach items="${lE}" begin="${iLoop.index}" end="${iLoop.index}" step="1" var="e"> 
-                                                                <c:choose>
-                                                                    <c:when test = "${e == null}">
-                                                                        <p>Chưa có đánh giá</p>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        <p>Đánh giá</p>
-                                                                        <textarea cols="50" rows="4" disabled>${e.evaluationDescription}</textarea>
-                                                                        <p>Điểm: ${e.score}</p>
-                                                                    </c:otherwise>
-                                                                </c:choose>    
+                                                            <div >
+                                                                <img class="img-thumbnail m-2" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                                            </div>
+                                                            <div >
+                                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                                            </div>
 
+                                                            <c:forEach items="${evaluation}" begin="${loop.index}" end="${loop.index}" step="1" var="lE">
+                                                                <div>
+                                                                    <c:forEach items="${lE}" begin="${iLoop.index}" end="${iLoop.index}" step="1" var="e">
+                                                                        <c:choose>
+                                                                            <c:when test = "${e == null}">
+                                                                                <p>Chưa có đánh giá</p>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <p>Đánh giá</p>
+                                                                                <textarea cols="50" rows="4" disabled>${e.evaluationDescription}</textarea>
+                                                                                <p>Điểm: ${e.score}</p>
+                                                                            </c:otherwise>
+                                                                        </c:choose>    
+
+                                                                    </c:forEach>
+                                                                </div>
                                                             </c:forEach>
-                                                        </div>
-                                                    </c:forEach>
-                                                </c:forEach>
+                                                        </c:forEach>
+                                                    </c:otherwise>
+                                                </c:choose>
 
 
                                             </c:forEach>
