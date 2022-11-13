@@ -51,3 +51,10 @@
   display: none;
 }
 
+.white-text {
+    color: #f5f5f5;
+}
+
+.white-text a{
+    color: #f5f5f5;
+}

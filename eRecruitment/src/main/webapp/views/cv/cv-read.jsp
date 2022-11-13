@@ -32,17 +32,17 @@
         <%cv = (CVDTO) request.getAttribute("cv");%>
         <c:choose>
             <c:when test = "${not empty cv}">
-                <div id="element" class="cv m-auto d m-1"> 
+                <div id="element" class="cv m-auto d m-1 border shadow"> 
 
-                    <div class="cv-column border border-1 shadow">
+                    <div class="cv-column ">
                         <div class="cv-element">
                             <!-- Avatar -->
                             <img src="${cv.getAvatar() != null ? cv.getAvatar() : 'image/avatar/default.png'}"/>
                         </div>
-                        <div class="cv-element border-bottom shadow">
+                        <div class="cv-element ">
                             <h3> Introduction </h3>
                             <span><%=cv.getIntroduction()%></span>
-                            <br>
+                            
                             <!-- Basic information -->
                             <div><b>First name: </b> <%=cv.getFirstName()%></div>
                             <div><b>Last name: </b> <%=cv.getLastName()%></div>
@@ -56,7 +56,7 @@
                             <div><b>Address: </b> <%=cv.getAddress()%></div>
                             <div><b>City: </b> <%=cv.getCity()%></div>
                         </div>
-                        <div class="cv-element  border-bottom shadow">
+                        <div class="cv-element  ">
                             <h3> Education </h3>
                             <% for (int i = 0; i < cv.getEducations().size(); i += 1) {%>
                             <div>
@@ -66,7 +66,6 @@
                                 <div><b>Organization: </b> <%=education.getOrganizationName()%></div>
                                 <div><b>Status: </b> <%=education.getStatus()%></div>
                             </div>
-                            <br>
                             <% }%>                    
                         </div>
                         <div class="cv-element">
@@ -78,12 +77,13 @@
                                 <div><b>Skill <%=i + 1%>: </b> <%=skill.getSkillName()%></div>
                                 <div><b>Description: </b> <%=skill.getSkillDescription()%></div>
                             </div>
-                            <br>
-                            <% }%>  
+                            
+                            <% }%> 
+                            
                         </div>
                     </div>
-                    <div class="cv-column" style="background: #80bdff">
-                        <div class="cv-element border-bottom-dark shadow">
+                    <div class="cv-column white-text" style="background: #00b074">
+                        <div class="cv-element ">
                             <h3> Interest </h3>
                             <% for (int i = 0; i < cv.getInterests().size(); i += 1) {%>
                             <div>
@@ -91,10 +91,11 @@
                                 <%interest = (InterestDTO) cv.getInterests().get(i);%>
                                 <div><b>Interest <%=i + 1%>: </b> <%=interest.getInterestName()%></div>
                             </div>
-                            <br>
+                            
                             <% }%> 
+                            
                         </div>
-                        <div class="cv-element border-bottom-dark shadow">
+                        <div class="cv-element ">
                             <h3> Experience </h3>
                             <% for (int i = 0; i < cv.getExperiences().size(); i += 1) {%>
                             <div>
@@ -104,11 +105,12 @@
                                 <div><b>Organization: </b> <%=experience.getExperienceOrganizationName()%></div>
                                 <div><b>Description: </b> <%=experience.getExperienceDescription()%></div>
                                 <div><b>Duration: </b> <%=experience.getExperienceDuration()%></div>
-                                <br>
+                                
                             </div>
                             <% }%> 
+                            
                         </div>
-                        <div class="cv-element border-bottom-dark shadow">
+                        <div class="cv-element">
                             <h3> Language </h3>
                             <% for (int i = 0; i < cv.getLanguages().size(); i += 1) {%>
                             <div>
@@ -117,10 +119,11 @@
                                 <div><b>Language <%=i + 1%>: </b> <%=language.getLanguageName()%></div>
                                 <div><b>Description: </b> <%=language.getLanguageDescription()%></div>
                             </div>
-                            <br>
+                            
                             <% }%> 
+                            
                         </div>
-                        <div class="cv-element border-bottom-dark shadow">
+                        <div class="cv-element">
                             <h3> Certificate </h3>
                             <% for (int i = 0; i < cv.getCertificates().size(); i += 1) {%>
                             <div>
@@ -129,10 +132,10 @@
                                 <div><b>Certificate <%=i + 1%>: </b> <%=certificate.getCertificateName()%></div>
                                 <div><b>Link: </b> <a href="<%=certificate.getCertificateLink()%>"><%=certificate.getCertificateLink()%></a></div>
                             </div>
-                            <br>
+                            
                             <% }%> 
                         </div> 
-                        <div class="cv-element border-bottom-dark shadow">
+                        <div class="cv-element">
                             <h3> Achievement </h3>
                             <% for (int i = 0; i < cv.getAchievements().size(); i += 1) {%>
                             <div>
@@ -142,8 +145,8 @@
                                 <div><b>Description: </b> <%=achievement.getAchievementDescription()%></div>
                                 <div><b>Link: </b> <a href="<%=achievement.getAchievementLink()%>"><%=achievement.getAchievementLink()%></a></div>
                             </div>
-                            <br>
-                            <% }%> 
+                            
+                            <% }%>
                         </div>
                         <div class="cv-element">
                             <h3> Social media </h3>

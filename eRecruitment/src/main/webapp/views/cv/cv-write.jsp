@@ -183,7 +183,7 @@
 
                             </div>
 
-                            <div class="cv-column" style="background: #80bdff">
+                            <div class="cv-column white-text" style="background: #00B074">
 
                                 <div class="cv-element">
                                     <h3> Interest </h3>
