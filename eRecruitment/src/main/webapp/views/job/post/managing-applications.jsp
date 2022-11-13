@@ -111,11 +111,12 @@
                         </c:if>
 
                         <c:if test="${not empty stage.interviewList}">
-                            <!-- Insert link to view Interview of stage -->
-                            <!-- Insert link to view Interview of stage -->
-                            <!-- Insert link to view Interview of stage -->
-                            <!-- Insert link to view Interview of stage -->
-                            <!-- Insert link to view Interview of stage -->
+                            <form action="interview" target="_blank" method="post">
+                                <input type="hidden" name="action" value="showInterviewByPostStage">
+                                <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                <input type="hidden" name="stage" value="${stage.id}">
+                                <input class="btn btn-info" type="submit" value="Danh sách phỏng vấn">
+                            </form>
                         </c:if>
                         <div>
                             <table>
@@ -321,6 +322,23 @@
                     </div>
                     </br>
                 </c:forEach>
+                <div>
+                    <div>
+                        <h3>Thống Kê Tuyển Dụng</h3>
+                    </div>
+                    <div>
+                        <p>Tổng Số Ứng Viên: ${requestScope.appList.size()}</p>
+                    </div>
+                    <div>
+                        <p>Đang Tuyển Dụng: ${requestScope.appList.size()}</p>
+                    </div>
+                    <div>
+                        <p>Tổng Số Ứng Viên: ${requestScope.appList.size()}</p>
+                    </div>
+                    <div>
+                        <p>Tổng Số Ứng Viên: ${requestScope.appList.size()}</p>
+                    </div>
+                </div>
             </c:if>
             <c:if test="${empty requestScope.post.stageList}">
                 <div>
