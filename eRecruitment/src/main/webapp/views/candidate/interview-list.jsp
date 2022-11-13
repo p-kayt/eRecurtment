@@ -17,10 +17,36 @@
         <%UserDTO user = (UserDTO) session.getAttribute("user");%>
 
         <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lịch sử phỏng vấn</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <meta content="" name="keywords" />
+        <meta content="" name="description" />
 
-        <title>Danh sách các cuộc phỏng vấn sắp diễn ra</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap"
+            rel="stylesheet"
+            />
+
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+            rel="stylesheet"
+            />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+            rel="stylesheet"
+            />
+
+        <link href="lib/animate/animate.min.css" rel="stylesheet" />
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+        <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+        <link href="css/style-dltemp.css" rel="stylesheet" />
+
+        <link rel="stylesheet" href="css/style_profile.css"/>
+        <!--css/style-dltemp.css-->
 
     </head>
     <body>
@@ -36,20 +62,20 @@
                 <c:when test = "${user.userRole == 1}">
                     <ul class="nav nav-tabs bg-dark row pt-2 justify-content-start mx-auto">
                         <li class="nav-item col-auto">
-                            <a class="nav-link py-3 fw-bold border-0 active" href="./common-interview?action=showCandidatePendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
+                            <a class="nav-link py-3 fw-bold border-0" href="./common-interview?action=showCandidatePendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
                         </li>
                         <li class="nav-item col-auto">
-                            <a class="nav-link py-3 fw-bold border-0" href="./common-interview?action=showCandidateInterviewHistory">Lịch sử phỏng vấn</a>
+                            <a class="nav-link py-3 fw-bold border-0  active" href="./common-interview?action=showCandidateInterviewHistory">Lịch sử phỏng vấn</a>
                         </li>
                     </ul>
                 </c:when>
                 <c:when test = "${user.userRole == 4}">
                     <ul class="nav nav-tabs bg-dark row pt-2 justify-content-start mx-auto">
                         <li class="nav-item col-auto">
-                            <a class="nav-link py-3 fw-bold border-0 active" href="./common-interview?action=showInterviewerPendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
+                            <a class="nav-link py-3 fw-bold border-0" href="./common-interview?action=showInterviewerPendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
                         </li>
                         <li class="nav-item col-auto">
-                            <a class="nav-link py-3 fw-bold border-0" href="./common-interview?action=showInterviewerInterviewHistory">Lịch sử phỏng vấn</a>
+                            <a class="nav-link py-3 fw-bold border-0  active" href="./common-interview?action=showInterviewerInterviewHistory">Lịch sử phỏng vấn</a>
                         </li>
                     </ul>
                 </c:when>
@@ -65,10 +91,10 @@
                             <a class="nav-link py-3 fw-bold border-0" href="./interview?action=showInterviewHisory">Các cuộc phỏng vấn đã xảy ra</a>
                         </li>
                         <li class="nav-item col-auto">
-                            <a class="nav-link py-3 fw-bold border-0 active" href="./common-interview?action=showInterviewerPendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
+                            <a class="nav-link py-3 fw-bold border-0" href="./common-interview?action=showInterviewerPendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
                         </li>
                         <li class="nav-item col-auto">
-                            <a class="nav-link py-3 fw-bold border-0" href="./common-interview?action=showInterviewerInterviewHistory">Lịch sử phỏng vấn</a>
+                            <a class="nav-link py-3 fw-bold border-0  active" href="./common-interview?action=showInterviewerInterviewHistory">Lịch sử phỏng vấn</a>
                         </li>
                     </ul>
                 </c:when>
@@ -81,7 +107,6 @@
                             <c:when test="${(InterviewList.size() == 0)}">
                                 <div class="alert alert-secondary alert-dismissible fade show" role="alert">
                                     Chưa có cuộc phỏng vấn nào
-
                                 </div>
                             </c:when>  
                             <c:otherwise>
@@ -90,11 +115,25 @@
                                     <c:forEach items="${InterviewList}" var="p" varStatus="loop">
                                         <div class="border border-1 mb-5 p-4 shadow d-flex flex-column">
 
-                                            <div class="d-flex flex-row justify-content-end m-1 mx-3">
-                                                <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
-                                                    <p class="col-2 bg-primary text-white text-center p-2 rounded rounded-9" id="status">${status}<p>
+                                            <div class="d-flex flex-row m-2 justify-content-end align-items-center">
+                                                <!--chia trang jsp : này là history-->
+                                                <c:if test = "${user.userRole == 1}"> 
+                                                    <c:if test = "${not empty listResultOfCandidate}">
+                                                        <div class="col-3">
+                                                            <c:forEach items="${listResultOfCandidate}" begin="${loop.index}" end="${loop.index}" step="1" var="result">
+                                                                <p class="text-white fw-bold bg-primary p-2 text-center">Trạng thái: ${result}</p>
+                                                            </c:forEach>
+                                                        </div>
+                                                    </c:if>
+                                                </c:if>
+                                                
+                                                    <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
+                                                        <p class="col-2 bg-primary text-white text-center p-2 rounded rounded-9" id="status">${status}</p>
                                                     </c:forEach>
+                                                
                                             </div>
+
+
                                             <%--Hiển thị kết quả phỏng vấn của ứng viên nếu hành động là sem lịch sử phỏng vấn--%>
 
                                             <c:if test = "${user.userRole == 1}"> 
@@ -164,7 +203,7 @@
                         <div class="alert alert-secondary alert-dismissible fade show" role="alert">
                             Chưa có cuộc phỏng vấn nào
                         </div>
-<!--                        <div style="height: 100px"></div>-->
+                        <!--                        <div style="height: 100px"></div>-->
                     </c:otherwise>
                 </c:choose>
 
