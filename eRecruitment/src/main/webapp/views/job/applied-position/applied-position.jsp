@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Tìm kiếm bài đăng</title>
+        <title>Danh sách ứng tuyển</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content="" name="keywords" />
         <meta content="" name="description" />
@@ -73,7 +73,7 @@
                             data-bs-toggle="pill"
                             href="#tab-1"
                             >
-                            <h6 class="mt-n1 m-0">In-progress</h6>
+                            <h6 class="mt-n1 m-0">Đang tiến hành</h6>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -82,7 +82,7 @@
                             data-bs-toggle="pill"
                             href="#tab-2"
                             >
-                            <h6 class="mt-n1 mb-0">Has complete</h6>
+                            <h6 class="mt-n1 mb-0">Đã hoàn thành</h6>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -91,7 +91,7 @@
                             data-bs-toggle="pill"
                             href="#tab-3"
                             >
-                            <h6 class="mt-n1 mb-0">Cancelled</h6>
+                            <h6 class="mt-n1 mb-0">Đã huỷ</h6>
                         </a>
                     </li>
                 </ul>
@@ -120,7 +120,11 @@
                                                     class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
                                                     >
                                                     <div class="d-flex mb-3">
-                                                        <a class="btn btn-danger" href="./application?action=cancel-application&appID=${i.id}">Cancel</a>
+                                                        <form action="application" method="get" onsubmit="cancelAlert()">
+                                                            <input name="action" value="cancel-application" style="display: none"></input>
+                                                            <input name="appID" value="${i.id}" style="display: none"></input>
+                                                            <button class="btn btn-danger" type="submit">Huỷ ứng tuyển</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -224,31 +228,9 @@
         <!--Javascript -->
         <script src="js/main.js"></script>
         <script>
-
-            var inProgress = document.getElementById("tab1");
-            var cancelled = document.getElementById("tab2");
-            var complete = document.getElementById("tab3");
-            function chooseTab(tab) {
-
-                inProgress.style = "display:none";
-                cancelled.style = "display:none";
-                complete.style = "display:none";
-                switch (tab) {
-                    case 1:
-                        inProgress.style = "display:block";
-                        break;
-                    case 2:
-                        cancelled.style.display = "display:block";
-                        break;
-                    case 3:
-                        complete.style.display = "display:block";
-                        break;
-
-                    default:
-
-                        break;
-                }
-            }
+                                                            function cancelAlert() {
+                                                                alert("Bạn đã huỷ ứng tuyển thành công, hãy xem lại trong tab đã huỷ!");
+                                                            }
 
         </script>
     </body>

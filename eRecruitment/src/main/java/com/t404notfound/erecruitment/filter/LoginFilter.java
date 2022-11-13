@@ -125,23 +125,20 @@ public class LoginFilter implements Filter {
                         session.setAttribute("url", url);
                         httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
                     }
+                    if (url.contains("profile")) {
+                        session.setAttribute("url", url);
+                        httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
+                    }
                     session.setAttribute("url", url);
                     httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
                 } else {
                     chain.doFilter(request, response);
                 }
             } else {
-
-                if (url.contains("profile")) {
-                    session.setAttribute("url", url);
-                    httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
-                } else {
-                    chain.doFilter(request, response);
-                }
-
+                chain.doFilter(request, response);
             }
-            /* lọc trang web khi đã login */
 
+            /* lọc trang web khi đã login */
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,
             // we still want to execute our after processing, and then
