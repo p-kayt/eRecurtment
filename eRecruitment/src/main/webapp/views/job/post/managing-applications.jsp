@@ -323,6 +323,17 @@
                     </br>
                 </c:forEach>
                 <div>
+                    <c:set var = "inProgress" value = "${0}"/>
+                    <c:set var = "success" value = "${0}"/>
+                    <c:set var = "fail" value = "${0}"/>
+                    <c:set var = "cancel" value = "${0}"/>
+                    <c:forEach var="app" items="${requestScope.appList}" varStatus="loop">
+                        <c:if test="${app.statusID == 1}"><c:set var = "inProgress" value = "${inProgress + 1}"/></c:if>
+                        <c:if test="${app.statusID == 2}"><c:set var = "cancel" value = "${cancel + 1}"/></c:if>
+                        <c:if test="${app.statusID == 3}"><c:set var = "fail" value = "${fail + 1}"/></c:if>
+                        <c:if test="${app.statusID == 4}"><c:set var = "success" value = "${success + 1}"/></c:if>
+                    </c:forEach>
+
                     <div>
                         <h3>Thống Kê Tuyển Dụng</h3>
                     </div>
@@ -330,13 +341,16 @@
                         <p>Tổng Số Ứng Viên: ${requestScope.appList.size()}</p>
                     </div>
                     <div>
-                        <p>Đang Tuyển Dụng: ${requestScope.appList.size()}</p>
+                        <p>Đang Tuyển Dụng: ${inProgress}</p>
                     </div>
                     <div>
-                        <p>Tổng Số Ứng Viên: ${requestScope.appList.size()}</p>
+                        <p>Đậu: ${success}</p>
                     </div>
                     <div>
-                        <p>Tổng Số Ứng Viên: ${requestScope.appList.size()}</p>
+                        <p>Rớt: ${fail}</p>
+                    </div>
+                    <div>
+                        <p>Hủy: ${cancel}</p>
                     </div>
                 </div>
             </c:if>

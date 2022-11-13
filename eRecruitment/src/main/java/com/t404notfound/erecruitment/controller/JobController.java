@@ -638,7 +638,7 @@ public class JobController extends HttpServlet {
                     positionID = Integer.parseInt(request.getParameter("positionID"));
                     appID = Integer.parseInt(request.getParameter("appID"));
                     int stageOffset = Integer.parseInt(request.getParameter("stageOffset"));
-
+                    
                     int nextStageID = appDAO.getNextStage(stageOffset, postID);
                     if (nextStageID != 0) {
                         result = appDAO.approveToNextStage(nextStageID, appID);
