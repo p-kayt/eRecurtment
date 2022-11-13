@@ -121,10 +121,7 @@ public class LoginFilter implements Filter {
 
             if (session.getAttribute("user") == null) {
                 if (!url.contains("login") && !url.contains("signup") && !url.contains("home") && !url.contains("post") && !url.contains("image")) {
-                    if (url.contains(".jsp")) {
-                        session.setAttribute("url", url);
-                        httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
-                    }
+
                     if (url.contains("profile")) {
                         session.setAttribute("url", url);
                         httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
@@ -134,6 +131,9 @@ public class LoginFilter implements Filter {
                 } else {
                     chain.doFilter(request, response);
                 }
+            } else if (url.contains(".jsp")) {
+                session.setAttribute("url", url);
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
             } else {
                 chain.doFilter(request, response);
             }
