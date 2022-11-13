@@ -130,6 +130,9 @@
                                             <c:if test="${not empty stage.interviewList}">
                                             <th scope="col" class="col-2 text-center align-middle">Xem Đánh Giá PV</th>
                                             </c:if>
+                                            <c:if test="${stage.stageID == 3 || stage.stageID == 4}">
+                                            <th scope="col" class="col-2 text-center align-middle">Xem Đánh Giá PV</th>
+                                            </c:if>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -215,27 +218,27 @@
                                                     <c:forEach var="par" items="${itv.participantList}" varStatus="loopPar">
                                                         <c:if test="${par.userID == app.userID}">
                                                             <c:if test="${app.statusID == 1}">
-                                                            <td scope="col" class="col-1 text-center align-middle">
-                                                                <form id="reject-pass-interview" action="./job" method="post">
-                                                                    <input type="hidden" name="action" value="reject-pass-interview">
-                                                                    <input type="hidden" name="postID" value="${requestScope.post.postID}">
-                                                                    <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
-                                                                    <input type="hidden" name="appID" value="${app.id}">
-                                                                    <input type="hidden" name="itvID" value="${itv.interviewID}">
-                                                                    <input type="hidden" name="userID" value="${app.userID}">
-                                                                    <input class="btn btn-danger" type="submit" value="Từ Chối">
-                                                                </form>
-                                                                <form id="approve-pass-interview" action="./job" method="post">
-                                                                    <input type="hidden" name="action" value="approve-pass-interview">
-                                                                    <input type="hidden" name="postID" value="${requestScope.post.postID}">
-                                                                    <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
-                                                                    <input type="hidden" name="appID" value="${app.id}">
-                                                                    <input type="hidden" name="itvID" value="${itv.interviewID}">
-                                                                    <input type="hidden" name="stageOffset" value="${stageLoop.count}">
-                                                                    <input type="hidden" name="userID" value="${app.userID}">
-                                                                    <input class="btn btn-success" type="submit" value="Duyệt">
-                                                                </form>
-                                                            </td>
+                                                                <td scope="col" class="col-1 text-center align-middle">
+                                                                    <form id="reject-pass-interview" action="./job" method="post">
+                                                                        <input type="hidden" name="action" value="reject-pass-interview">
+                                                                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                                                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                                                                        <input type="hidden" name="appID" value="${app.id}">
+                                                                        <input type="hidden" name="itvID" value="${itv.interviewID}">
+                                                                        <input type="hidden" name="userID" value="${app.userID}">
+                                                                        <input class="btn btn-danger" type="submit" value="Từ Chối">
+                                                                    </form>
+                                                                    <form id="approve-pass-interview" action="./job" method="post">
+                                                                        <input type="hidden" name="action" value="approve-pass-interview">
+                                                                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                                                        <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                                                                        <input type="hidden" name="appID" value="${app.id}">
+                                                                        <input type="hidden" name="itvID" value="${itv.interviewID}">
+                                                                        <input type="hidden" name="stageOffset" value="${stageLoop.count}">
+                                                                        <input type="hidden" name="userID" value="${app.userID}">
+                                                                        <input class="btn btn-success" type="submit" value="Duyệt">
+                                                                    </form>
+                                                                </td>
                                                             </c:if>
                                                             <td scope="col" class="col-1 text-center align-middle">
                                                                 <form action="evaluate" target="_blank" method="post">
@@ -253,6 +256,54 @@
                                             <!-- If Stage is an interview stage and has Interview -->
                                             <!-- ========================== Interview ========================== -->
 
+
+                                            <!-- ========================== Final Evaluation ========================== -->
+                                            <c:if test="${stage.stageID == 4}">
+                                                <c:if test="${app.statusID == 1}">
+                                                    <td scope="col" class="col-1 text-center align-middle">
+                                                        <form id="reject-final-evaluation" action="./job" method="post">
+                                                            <input type="hidden" name="action" value="reject-final-evaluation">
+                                                            <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                                            <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                                                            <input type="hidden" name="appID" value="${app.id}">
+                                                            <input type="hidden" name="userID" value="${app.userID}">
+                                                            <input class="btn btn-danger" type="submit" value="Từ Chối">
+                                                        </form>
+                                                        <form id="approve-final-evaluation" action="./job" method="post">
+                                                            <input type="hidden" name="action" value="approve-final-evaluation">
+                                                            <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                                            <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
+                                                            <input type="hidden" name="appID" value="${app.id}">
+                                                            <input type="hidden" name="stageOffset" value="${stageLoop.count}">
+                                                            <input type="hidden" name="userID" value="${app.userID}">
+                                                            <input class="btn btn-success" type="submit" value="Duyệt">
+                                                        </form>
+                                                    </td>
+                                                </c:if>
+                                                <td scope="col" class="col-1 text-center align-middle">
+                                                    <form action="evaluate" target="_blank" method="post">
+                                                        <input type="hidden" name="evaluateAction" value="viewCandidateEvaluationInAPost">
+                                                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                                        <input type="hidden" name="candidateID" value="${app.userID}">
+                                                        <input class="btn btn-info" type="submit" value="Xem đánh giá">
+                                                    </form>
+                                                </td>
+                                            </c:if>
+
+                                            <!-- ========================== Final Evaluation ========================== -->
+
+                                            <!-- ========================== Finish ========================== -->
+                                            <c:if test="${stage.stageID == 3}">
+                                                <td scope="col" class="col-1 text-center align-middle">
+                                                    <form action="evaluate" target="_blank" method="post">
+                                                        <input type="hidden" name="evaluateAction" value="viewCandidateEvaluationInAPost">
+                                                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                                        <input type="hidden" name="candidateID" value="${app.userID}">
+                                                        <input class="btn btn-info" type="submit" value="Xem đánh giá">
+                                                    </form>
+                                                </td>
+                                            </c:if>
+                                            <!-- ========================== Finish ========================== -->
 
 
                                             </tr>

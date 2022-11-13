@@ -780,9 +780,9 @@ public class JobController extends HttpServlet {
                         } else {
                             result = 0;
                         }
-                        
+
                         int itvResult = parDAO.setPassInterview(userID, itvID);
-                        
+
                         if (result == 1 && itvResult == 1) {
                             msg = "Duyệt Thành Công Hồ Sơ Ứng Tuyển Với ID: " + appID + " Đến Vòng Tiếp Theo";
                             request.setAttribute("msg", msg);
@@ -823,6 +823,129 @@ public class JobController extends HttpServlet {
                             request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
                         }
                     }
+                    break;
+                case "reject-final-evaluation":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    appID = Integer.parseInt(request.getParameter("appID"));
+                    userID = Integer.parseInt(request.getParameter("userID"));
+
+                    // Only HR Manager can reject candidate in final evaluation stage
+                    // If user role is not HR Manager (3)
+                    if (user.getUserRole() != 3) {
+                        msg = "Bạn Phải Là Quản Lý Nhân Sự (HR Manager) Để Đánh Giá Vòng FInal Evaluation";
+                        request.setAttribute("msg", msg);
+
+                        position = positionDAO.loadApplicationPositions(positionID);
+                        post = postDAO.loadApplicationPostWithName(postID);
+                        for (PostStageDTO stage : post.getStageList()) {
+                            stage.setInterviewList(postDAO.getStageInterviewsList(stage));
+                            for (InterviewDTO itv : stage.getInterviewList()) {
+                                itv.setParticipantList(parDAO.getParticipant(itv.getInterviewID()));
+                            }
+                        }
+                        appList = appDAO.listAllApplicationOfAPost(postID);
+
+                        request.setAttribute("appList", appList);
+                        request.setAttribute("post", post);
+                        request.setAttribute("position", position);
+
+                        request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                    } // If user role is HR Manager (3)
+                    else {
+                        result = appDAO.rejectApplication(appID);
+
+                        position = positionDAO.loadApplicationPositions(positionID);
+                        post = postDAO.loadApplicationPostWithName(postID);
+                        for (PostStageDTO stage : post.getStageList()) {
+                            stage.setInterviewList(postDAO.getStageInterviewsList(stage));
+                            for (InterviewDTO itv : stage.getInterviewList()) {
+                                itv.setParticipantList(parDAO.getParticipant(itv.getInterviewID()));
+                            }
+                        }
+                        appList = appDAO.listAllApplicationOfAPost(postID);
+
+                        request.setAttribute("appList", appList);
+                        request.setAttribute("post", post);
+                        request.setAttribute("position", position);
+
+                        if (result == 1) {
+                            msg = "Từ Chối Thành Công Hồ Sơ Ứng Tuyển Với ID: " + appID;
+                            request.setAttribute("msg", msg);
+
+                            request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                        } else {
+                            msg = "Từ Chối Thất Bại Hồ Sơ Ứng Tuyển Với ID: " + appID;
+                            request.setAttribute("msg", msg);
+
+                            request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                        }
+                    }
+
+                    break;
+                case "approve-final-evaluation":
+                    postID = Integer.parseInt(request.getParameter("postID"));
+                    positionID = Integer.parseInt(request.getParameter("positionID"));
+                    appID = Integer.parseInt(request.getParameter("appID"));
+                    stageOffset = Integer.parseInt(request.getParameter("stageOffset"));
+                    userID = Integer.parseInt(request.getParameter("userID"));
+
+                    // Only HR Manager can approve candidate in final evaluation stage
+                    // If user role is not HR Manager (3)
+                    if (user.getUserRole() != 3) {
+                        msg = "Bạn Phải Là Quản Lý Nhân Sự (HR Manager) Để Đánh Giá Vòng FInal Evaluation";
+                        request.setAttribute("msg", msg);
+
+                        position = positionDAO.loadApplicationPositions(positionID);
+                        post = postDAO.loadApplicationPostWithName(postID);
+                        for (PostStageDTO stage : post.getStageList()) {
+                            stage.setInterviewList(postDAO.getStageInterviewsList(stage));
+                            for (InterviewDTO itv : stage.getInterviewList()) {
+                                itv.setParticipantList(parDAO.getParticipant(itv.getInterviewID()));
+                            }
+                        }
+                        appList = appDAO.listAllApplicationOfAPost(postID);
+
+                        request.setAttribute("appList", appList);
+                        request.setAttribute("post", post);
+                        request.setAttribute("position", position);
+
+                        request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                    } // If user role is HR Manager (3)
+                    else {
+                        nextStageID = appDAO.getNextStage(stageOffset, postID);
+                        if (nextStageID != 0) {
+                            result = appDAO.approveApplicationSuccess(nextStageID, appID);
+                        } else {
+                            result = 0;
+                        }
+                        position = positionDAO.loadApplicationPositions(positionID);
+                        post = postDAO.loadApplicationPostWithName(postID);
+                        for (PostStageDTO stage : post.getStageList()) {
+                            stage.setInterviewList(postDAO.getStageInterviewsList(stage));
+                            for (InterviewDTO itv : stage.getInterviewList()) {
+                                itv.setParticipantList(parDAO.getParticipant(itv.getInterviewID()));
+                            }
+                        }
+                        appList = appDAO.listAllApplicationOfAPost(postID);
+
+                        request.setAttribute("appList", appList);
+                        request.setAttribute("post", post);
+                        request.setAttribute("position", position);
+
+                        if (result == 1) {
+                            msg = "Tổng Đánh Giá Thành Công Hồ Sơ Ứng Tuyển Với ID: " + appID;
+                            request.setAttribute("msg", msg);
+
+                            request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                        } else {
+                            msg = "Tổng Đánh Giá Thất Bại Hồ Sơ Ứng Tuyển Với ID: " + appID;
+                            request.setAttribute("msg", msg);
+
+                            request.getRequestDispatcher("views/job/post/managing-applications.jsp").forward(request, response);
+                        }
+                    }
+
                     break;
                 default:
                     break;

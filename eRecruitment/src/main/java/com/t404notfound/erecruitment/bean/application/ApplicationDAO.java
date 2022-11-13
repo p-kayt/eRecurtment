@@ -308,6 +308,28 @@ public class ApplicationDAO {
         }
         return 0;
     }
+    
+    public int approveApplicationSuccess(int nextStage, int appID) {
+        String sql = "update Application set StageID = ?, StatusID = 4 where ApplicationID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, nextStage);
+            pst.setInt(2, appID);
+            return pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
 
     public ArrayList<InterviewDTO> getInterviewsOfPost(int postID) {
         ArrayList<InterviewDTO> list = new ArrayList<>();
