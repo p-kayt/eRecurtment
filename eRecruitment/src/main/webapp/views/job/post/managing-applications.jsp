@@ -102,7 +102,7 @@
                                     <span class="btn btn-primary" onclick="document.getElementById('createInterviewForm${stageLoop.index}').submit()">Tạo buổi phỏng vấn</span>
                                 </div>
                                 <!--  -->
-                                <form action="interview" method="get" id="createInterviewForm${stageLoop.index}">
+                                <form action="interview" method="get" id="createInterviewForm${stageLoop.index}" target="_blank">
                                     <input type="hidden" name="postID" value="${requestScope.post.postID}">
                                     <input type="hidden" name="stage" value="${stage.id}">
                                     <input class="d-none" type="submit" value="Tạo buổi phỏng vấn">

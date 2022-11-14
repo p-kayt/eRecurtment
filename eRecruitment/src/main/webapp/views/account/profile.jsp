@@ -132,8 +132,6 @@
                                     </select>
                                 </label>
 
-
-
                                 <div class="d-flex flex-row col-12 justify-content-start m-2">
                                     <input type="hidden" name="action" value="updateProfile">
                                     <button class="col-4 btn btn-primary" type="submit" >Lưu</button>
