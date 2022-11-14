@@ -80,13 +80,13 @@
                                                     <div class="row g-2 m-1 mx-3">
                                                         <label class="col-2 fw-bold" for="status">Trạng thái</label>
                                                         <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
-                                                            <p class="col-4" id="status">${status}<p>
+                                                            <p class="col-4" id="status">${status}</p>
                                                             </c:forEach>
                                                     </div>
                                                     <div class="row g-2 m-1 mx-3">
                                                         <label class="col-2 fw-bold"  for="stage">Vòng</label>
                                                         <c:forEach items="${listInterviewStage}" begin="${loop.index}" end="${loop.index}" step="1" var="stage">
-                                                            <p class="col-4" id="stage">${stage.split(";")[1]}<p>
+                                                            <p class="col-4" id="stage">${stage.split(";")[1]}</p>
                                                             </c:forEach>
                                                     </div>
                                                     <div class="d-flex flex-column m-1 mx-3">

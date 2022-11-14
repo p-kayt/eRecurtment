@@ -113,7 +113,7 @@
                                 <!--                                <h3>Danh sách các cuộc phỏng vấn</h3>-->
                                 <div class="border border-1 m-5 p-4 shadow">
                                     <c:forEach items="${InterviewList}" var="p" varStatus="loop">
-                                        <div class="border border-1 mb-5 p-4 shadow d-flex flex-column">
+                                        <div class="border border-1 mb-4 p-3 shadow d-flex flex-column">
 
                                             <div class="d-flex flex-row m-2 justify-content-end align-items-center">
                                                 <!--chia trang jsp : này là history-->
@@ -128,7 +128,7 @@
                                                 </c:if>
 
                                                 <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
-                                                    <p class="col-2 bg-primary text-white text-center p-2 rounded rounded-9" id="status">${status}</p>
+                                                    <p class="col-2 bg-primary text-white text-center p-1" id="status">${status}</p>
                                                 </c:forEach>
 
                                             </div>
@@ -139,7 +139,7 @@
                                             <c:if test = "${user.userRole == 1}"> 
                                                 <c:if test = "${not empty listResultOfCandidate}">
                                                     <c:forEach items="${listResultOfCandidate}" begin="${loop.index}" end="${loop.index}" step="1" var="result">
-                                                        <p>${result}<p>
+                                                        <p>${result}</p>
                                                         </c:forEach>
                                                     </c:if>
                                                 </c:if>
@@ -148,7 +148,7 @@
                                             <div class="row g-2 m-1 mx-3 fs-5 fw-bolder text-dark">
                                                 <label class="col-2 fw-bold"  for="stage">Vòng</label>
                                                 <c:forEach items="${listInterviewStage}" begin="${loop.index}" end="${loop.index}" step="1" var="stage">
-                                                    <p class="col-6" id="stage">${stage.split(";")[1]}<p>
+                                                    <p class="col-6" id="stage">${stage.split(";")[1]}</p>
                                                     </c:forEach>
                                             </div>
                                             <div class="d-flex flex-column m-0 mx-3 text-dark">
