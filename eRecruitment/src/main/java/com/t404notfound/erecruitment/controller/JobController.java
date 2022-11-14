@@ -495,15 +495,32 @@ public class JobController extends HttpServlet {
                     positionID = Integer.parseInt(request.getParameter("positionID"));
 
                     postDescription = request.getParameter("postDescription");
+                    request.setAttribute("postDescription", postDescription);
+                    
                     salary = request.getParameter("salary");
+                    request.setAttribute("salary", salary);
+                    
                     hiringQuantity = Integer.parseInt(request.getParameter("hiringQuantity"));
+                    request.setAttribute("hiringQuantity", hiringQuantity);
+                    
                     createdDate = Date.valueOf(request.getParameter("createdDate"));
+                    
                     startDate = Date.valueOf(request.getParameter("startDate"));
+                    request.setAttribute("startDate", startDate);
+                    
                     expiredDate = Date.valueOf(request.getParameter("expiredDate"));
+                    request.setAttribute("expiredDate", expiredDate);
+                    
                     formID = Integer.parseInt(request.getParameter("formID"));
+                    
                     statusID = Integer.parseInt(request.getParameter("statusID"));
 
                     requirements = request.getParameterValues("requirement");
+                    if(requirements == null){
+                        msg = "Tạo Bài Đăng Tuyển Dụng Thất Bại - Bài Đăng Chưa Có Yêu Cầu Công Việc";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=load-add-post&positionID=" + positionID).forward(request, response);
+                    }
                     reqList = new ArrayList<>();
                     for (int i = 0; i < requirements.length; i++) {
                         reqList.add(new PostRequirementDTO(0, requirements[i], 0));
@@ -511,23 +528,38 @@ public class JobController extends HttpServlet {
 
                     String[] skillNames = request.getParameterValues("skillName");
                     String[] skillDescriptions = request.getParameterValues("skillDescription");
+                    if(skillNames == null || skillDescriptions == null){
+                        msg = "Tạo Bài Đăng Tuyển Dụng Thất Bại - Bài Đăng Chưa Có Kỹ Năng Cần Thiết";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=load-add-post&positionID=" + positionID).forward(request, response);
+                    }
                     skillList = new ArrayList<>();
                     for (int i = 0; i < skillNames.length; i++) {
                         skillList.add(new PostSkillDTO(0, skillNames[i], skillDescriptions[i], 0));
                     }
 
                     benefits = request.getParameterValues("benefit");
+                    if(benefits == null){
+                        msg = "Tạo Bài Đăng Tuyển Dụng Thất Bại - Bài Đăng Chưa Có Quyền Lợi Công Việc";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=load-add-post&positionID=" + positionID).forward(request, response);
+                    }
                     benefitList = new ArrayList<>();
                     for (int i = 0; i < benefits.length; i++) {
                         benefitList.add(new PostBenefitDTO(0, benefits[i], 0));
                     }
 
                     stageIDs = request.getParameterValues("stageID");
+                    descriptions = request.getParameterValues("description");
+                    if(stageIDs == null || descriptions == null){
+                        msg = "Tạo Bài Đăng Tuyển Dụng Thất Bại - Bài Đăng Chưa Có Quy Trình Ứng Tuyển";
+                        request.setAttribute("msg", msg);
+                        request.getRequestDispatcher("./job?action=load-add-post&positionID=" + positionID).forward(request, response);
+                    }
                     stageIDList = new ArrayList<>();
                     for (int i = 0; i < stageIDs.length; i++) {
                         stageIDList.add(Integer.parseInt(stageIDs[i]));
                     }
-                    descriptions = request.getParameterValues("description");
                     stageList = new ArrayList<>();
                     for (int i = 0; i < descriptions.length; i++) {
                         stageList.add(new PostStageDTO(0, descriptions[i], 0, stageIDList.get(i)));
