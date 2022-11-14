@@ -309,6 +309,55 @@ public class ApplicationDAO {
         return 0;
     }
     
+    public int rollbackToPreviousStage(int previousStage, int appID) {
+        String sql = "update Application set StageID = ? where ApplicationID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, previousStage);
+            pst.setInt(2, appID);
+            return pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
+    
+    public int getIDOfApplication(int userID, int postID) {
+        String sql = "select ApplicationID from Application where UserID = ? and PostID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+
+            pst.setInt(1, userID);
+            pst.setInt(2, postID);
+
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
+    
     public int approveApplicationSuccess(int nextStage, int appID) {
         String sql = "update Application set StageID = ?, StatusID = 4 where ApplicationID = ?";
         try {
@@ -369,13 +418,8 @@ public class ApplicationDAO {
 
     public static void main(String[] args) {
         ApplicationDAO dao = new ApplicationDAO();
-//        ArrayList<ApplicationDTO> list = dao.listAllApplicationOfAPost(6);
-//        for (ApplicationDTO a : list) {
-//            System.out.println(a.getId() + "    " + a.getStageID() + "    " + a.getPostID() + "    " + a.getUserID() + "    " + a.getApplyDate().toString());
-//        }
-
-        int nextStage = dao.getNextStage(5, 6);
-        System.out.println("NEXT STAGE: " + nextStage);
+        int r = dao.getIDOfApplication(1, 3);
+        System.out.println(r);
     }
 
 }
