@@ -230,9 +230,12 @@
                                                     <div
                                                         class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
                                                         >
-                                                        <div class="d-flex mb-3">
-                                                            <a class="btn btn-primary" href="./post?action=apply-for-post&postID=${post.postID}">Ứng tuyển ngay</a>
-                                                        </div>
+                                                        <c:if test="${post.statusID == 3}">
+                                                            <div class="d-flex mb-3">
+                                                                <a class="btn btn-primary" href="./post?action=apply-for-post&postID=${post.postID}">Ứng tuyển ngay</a>
+                                                            </div>
+                                                        </c:if>
+
                                                         <small class="text-truncate"
                                                                ><i class="far fa-calendar-alt text-primary me-2"></i
                                                             >Bắt Đầu: ${post.startDate}</small
@@ -246,6 +249,13 @@
                                             </div>
                                         </c:forEach>
                                     </c:if>
+                                    <c:if test="${empty requestScope.highestQuantity}">
+                                        <div>
+                                            <h3 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+                                                Chưa Có Việc Làm Đề Xuất
+                                            </h3>
+                                        </div>
+                                    </c:if>
                                 </div>
                                 <div class="p-3">
                                     <nav aria-label="Page navigation">
@@ -257,7 +267,7 @@
                                     </nav>
                                 </div>
                             </div>
-                            
+
                             <div id="tab-2" class="tab-pane fade show p-0">
                                 <div class="row g-3">
                                     <c:if test="${not empty requestScope.fulltime}">
@@ -295,9 +305,11 @@
                                                     <div
                                                         class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
                                                         >
-                                                        <div class="d-flex mb-3">
-                                                            <a class="btn btn-primary" href="./post?action=apply-for-post&postID=${post.postID}">Ứng tuyển ngay</a>
-                                                        </div>
+                                                        <c:if test="${post.statusID == 3}">
+                                                            <div class="d-flex mb-3">
+                                                                <a class="btn btn-primary" href="./post?action=apply-for-post&postID=${post.postID}">Ứng tuyển ngay</a>
+                                                            </div>
+                                                        </c:if>
                                                         <small class="text-truncate"
                                                                ><i class="far fa-calendar-alt text-primary me-2"></i
                                                             >Bắt Đầu: ${post.startDate}</small
@@ -310,6 +322,13 @@
                                                 </div>
                                             </div>
                                         </c:forEach>
+                                    </c:if>
+                                    <c:if test="${empty requestScope.fulltime}">
+                                        <div>
+                                            <h3 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+                                                Chưa Có Việc Làm Full Time
+                                            </h3>
+                                        </div>
                                     </c:if>
                                 </div>
                                 <div class="p-3">
@@ -359,12 +378,11 @@
                                                     <div
                                                         class="col-sm-12 col-md-6 d-flex flex-column align-items-start align-items-md-end justify-content-center"
                                                         >
-                                                        <div class="d-flex mb-3">
-                                                            <a class="btn btn-light btn-square me-3" href=""
-                                                               ><i class="far fa-heart text-primary"></i
-                                                                ></a>
-                                                            <a class="btn btn-primary" href="./post?action=apply-for-post&postID=${post.postID}">Ứng tuyển ngay</a>
-                                                        </div>
+                                                        <c:if test="${post.statusID == 3}">
+                                                            <div class="d-flex mb-3">
+                                                                <a class="btn btn-primary" href="./post?action=apply-for-post&postID=${post.postID}">Ứng tuyển ngay</a>
+                                                            </div>
+                                                        </c:if>
                                                         <small class="text-truncate"
                                                                ><i class="far fa-calendar-alt text-primary me-2"></i
                                                             >Bắt Đầu: ${post.startDate}</small
@@ -377,6 +395,13 @@
                                                 </div>
                                             </div>
                                         </c:forEach>
+                                    </c:if>
+                                    <c:if test="${empty requestScope.parttime}">
+                                        <div>
+                                            <h3 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+                                                Chưa Có Việc Làm Part Time
+                                            </h3>
+                                        </div>
                                     </c:if>
                                 </div>
                                 <div class="p-3">

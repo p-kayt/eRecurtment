@@ -96,17 +96,17 @@
                     <div class="d-flex flex-column m-auto col-10 border border-1 shadow p-4 pb-5">
                         <div class="d-flex flex-row justify-content-center m-2">
                             <label class="col-2" for="postDescription">Mô Tả</label>
-                            <textarea class="col-6" rows="5" type="text" id="postDescription" name="postDescription" placeholder="Nhập mô tả bài đăng..."></textarea>
+                            <textarea class="col-6" rows="5" type="text" id="postDescription" name="postDescription" placeholder="Nhập mô tả bài đăng..." required>${requestScope.postDescription}</textarea>
 
                         </div>
                         <div class="d-flex flex-row justify-content-center m-2">
                             <label class="col-2" for="salary">Mức Lương</label>
-                            <input class="col-3" type="text" id="salary" name="salary" value="" placeholder="Nhập lương (1 - 100, khoảng 100, ...)">
+                            <input class="col-3" type="text" id="salary" name="salary" value="${requestScope.salary}" placeholder="Nhập lương (1 - 100, khoảng 100, ...)" required>
                             <span class="col-3"></span>
                         </div>
                         <div class="d-flex flex-row justify-content-center m-2">
                             <label class="col-2" for="hiringQuantity">Số Lượng Tuyển</label>
-                            <input class="col-3" type="number" id="hiringQuantity" name="hiringQuantity" value="" placeholder="1" min="0" max="${requestScope.position.hiringQuantity}">
+                            <input class="col-3" type="number" id="hiringQuantity" name="hiringQuantity" value="${requestScope.hiringQuantity}" placeholder="1" min="0" max="${requestScope.position.hiringQuantity}" required>
                             <span class="col-3"></span>
                         </div>
                         <div class="d-flex flex-row justify-content-center m-2">
@@ -116,12 +116,12 @@
                         </div>
                         <div class="d-flex flex-row justify-content-center m-2">
                             <label class="col-2" for="startDate">Ngày Bắt Đầu</label>
-                            <input class="col-3" type="date" id="startDate" name="startDate" value="">
+                            <input class="col-3" type="date" id="startDate" name="startDate" value="${requestScope.startDate}" required>
                             <span class="col-3"></span>
                         </div>
                         <div class="d-flex flex-row justify-content-center m-2">
                             <label class="col-2" for="expiredDate">Ngày Kết Thúc</label>
-                            <input class="col-3" type="date" id="expiredDate" name="expiredDate" value="">
+                            <input class="col-3" type="date" id="expiredDate" name="expiredDate" value="${requestScope.expiredDate}" required>
                             <span class="col-3"></span>
                         </div>
                         <div class="d-flex flex-row justify-content-center m-2">
