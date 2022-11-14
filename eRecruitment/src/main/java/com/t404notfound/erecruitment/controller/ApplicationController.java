@@ -106,7 +106,7 @@ public class ApplicationController extends HttpServlet {
                     postList.add(postdao.loadApplicationPostWithName(x.getPostID()));
                 }
                 ApplicationStageDAO appstagedao = new ApplicationStageDAO();
-//                ApplicationStageDTO appstagedto = appstagedao.listAllApplicationStageByPostID(postID);
+                ArrayList<ApplicationStageDTO> appstagedto = appstagedao.listAllApplicationStageByPostID(postID);
                 
                 
                 

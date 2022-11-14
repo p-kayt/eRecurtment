@@ -119,24 +119,26 @@ public class LoginFilter implements Filter {
             String url = httpRequest.getServletPath();
             boolean checkLogin = false;
 
-            if (session.getAttribute("user") == null) {
-                if (!url.contains("login") && !url.contains("signup") && !url.contains("home") && !url.contains("post") && !url.contains("image")) {
-
-                    if (url.contains("profile")) {
-                        session.setAttribute("url", url);
-                        httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
-                    }
+             if (session.getAttribute("user") != null) {
+                if (url.contains("login") || url.contains("signup")) {
                     session.setAttribute("url", url);
                     httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
                 } else {
                     chain.doFilter(request, response);
                 }
-            } else if (url.contains(".jsp")) {
-                session.setAttribute("url", url);
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
             } else {
-                chain.doFilter(request, response);
+
+                if (url.contains("profile")) {
+                    session.setAttribute("url", url);
+                    httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
+                } else {
+                    chain.doFilter(request, response);
+                }
+
             }
+
+            
+        
 
             /* lọc trang web khi đã login */
         } catch (Throwable t) {
