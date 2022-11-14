@@ -102,6 +102,9 @@
                 <div id="tab-1" class="tab-pane fade show p-0 bg-transparent active">
 
                     <div class="job-item py-4 px-2 mb-3 bg-transparent" >
+                        <c:if test="${empty requestScope.appList}">
+                            <p>Bạn không có ứng tuyển nào đang diễn ra</p>
+                        </c:if>
                         <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
                             <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
                                 <c:if test="${i.postID == j.postID}">
@@ -144,6 +147,9 @@
                 <div id="tab-2" class="tab-pane fade show bg-transparent p-0"> 
 
                     <div class="job-item py-4 px-2 mb-3 bg-transparent" id="tab3">
+                        <c:if test="${empty requestScope.appList}">
+                            <p>Bạn chưa hoàn thành ứng tuyển nào</p>
+                        </c:if>
                         <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
                             <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
                                 <c:if test="${i.postID == j.postID}">
@@ -182,7 +188,11 @@
                 <div id="tab-3" class="tab-pane fade show bg-transparent p-0">
 
                     <div class="job-item py-4 px-2 mb-3 bg-transparent" id="tab2" >
+                        <c:if test="${empty requestScope.appList}">
+                            <p>Bạn chưa huỷ ứng tuyển nào</p>
+                        </c:if>
                         <c:forEach var="i"  items="${requestScope.appList}" varStatus="loop">
+                            
                             <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
                                 <c:if test="${i.postID == j.postID}">
                                     <c:if test="${i.getStatusID()==2}">
