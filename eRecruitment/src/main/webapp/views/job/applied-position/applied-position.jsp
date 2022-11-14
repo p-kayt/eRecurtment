@@ -106,29 +106,31 @@
                             <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
                                 <c:if test="${i.postID == j.postID}">
                                     <c:if test="${i.getStatusID()==1}">
-                                        <div class="job-item py-4 px-2 mb-3 border border-1">
-                                            <div class="row g-4 justify-content-around" >
-                                                <div class="col-sm-12 col-md-5 d-flex align-items-center">
+                                        <a style="display: block"  href="./application?action=view-application-detail&appID=${i.id}&postID=${i.postID}&stageID=${i.stageID}" target="_blank">
+                                            <div class="job-item py-4 px-2 mb-3 border border-1">
+                                                <div class="row g-4 justify-content-around" >
+                                                    <div class="col-sm-12 col-md-5 d-flex align-items-center">
 
-                                                    <div class="text-start ps-4 col-11"   name="tab_element">
-                                                        <h5 class="mb-3">${j.getPositionName()}</h5>
-                                                        <p>${i.getApplyDate()}</p>
-                                                        <p style="color: yellowgreen">In-progress </p>
+                                                        <div class="text-start ps-4 col-11"   name="tab_element">
+                                                            <h5 class="mb-3">${j.getPositionName()}</h5>
+                                                            <p>${i.getApplyDate()}</p>
+                                                            <p style="color: yellowgreen">In-progress </p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div
-                                                    class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
-                                                    >
-                                                    <div class="d-flex mb-3">
-                                                        <form action="application" method="get" onsubmit="cancelAlert()">
-                                                            <input name="action" value="cancel-application" style="display: none"></input>
-                                                            <input name="appID" value="${i.id}" style="display: none"></input>
-                                                            <button class="btn btn-danger" type="submit">Huỷ ứng tuyển</button>
-                                                        </form>
+                                                    <div
+                                                        class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
+                                                        >
+                                                        <div class="d-flex mb-3">
+                                                            <form action="application" method="get" onsubmit="cancelAlert()">
+                                                                <input name="action" value="cancel-application" style="display: none"></input>
+                                                                <input name="appID" value="${i.id}" style="display: none"></input>
+                                                                <button class="btn btn-danger" type="submit">Huỷ ứng tuyển</button>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </c:if>
                                 </c:if>
                             </c:forEach>
@@ -146,26 +148,28 @@
                             <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
                                 <c:if test="${i.postID == j.postID}">
                                     <c:if test="${i.getStatusID()==3 || i.getStatusID()==4}">
-                                        <div class="job-item py-4 px-2 mb-3 border border-1">
-                                            <div class="row g-4 justify-content-around" >
-                                                <div class="col-sm-12 col-md-6 d-flex align-items-center">
+                                        <a style="display: block"  href="./application?action=view-application-detail&appID=${i.id}&postID=${i.postID}&stageID=${i.stageID}" target="_blank">
+                                            <div class="job-item py-4 px-2 mb-3 border border-1">
+                                                <div class="row g-4 justify-content-around" >
+                                                    <div class="col-sm-12 col-md-6 d-flex align-items-center">
 
-                                                    <div class="text-start ps-4"   name="tab_element">
-                                                        <h5 class="mb-3">${j.getPositionName()}</h5>
-                                                        <p>${i.getApplyDate()}</p>
-                                                        <p style="color: red"><c:if test="${i.getStatusID()==3}">Fail</c:if></p>
-                                                        <p style="color: green"><c:if test="${i.getStatusID()==4}">Success</c:if></p>
+                                                        <div class="text-start ps-4"   name="tab_element">
+                                                            <h5 class="mb-3">${j.getPositionName()}</h5>
+                                                            <p>${i.getApplyDate()}</p>
+                                                            <p style="color: red"><c:if test="${i.getStatusID()==3}">Fail</c:if></p>
+                                                            <p style="color: green"><c:if test="${i.getStatusID()==4}">Success</c:if></p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div
-                                                        class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
-                                                        >
-                                                        <div class="d-flex mb-3">
-                                                            <a class="btn btn-danger" href="" style="visibility: hidden">Cancel</a>
+                                                        <div
+                                                            class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
+                                                            >
+                                                            <div class="d-flex mb-3">
+                                                                <a class="btn btn-danger" href="" style="visibility: hidden">Cancel</a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </a>
                                     </c:if>
                                 </c:if>
                             </c:forEach>
@@ -182,25 +186,27 @@
                             <c:forEach var="j"  items="${requestScope.postList}" varStatus="loop">
                                 <c:if test="${i.postID == j.postID}">
                                     <c:if test="${i.getStatusID()==2}">
-                                        <div class="job-item py-4 px-2 mb-3 border border-1">
-                                            <div class="row g-4 justify-content-around" >
-                                                <div class="col-sm-12 col-md-5 d-flex align-items-center">
+                                        <a style="display: block"  href="./application?action=view-application-detail&appID=${i.id}&postID=${i.postID}&stageID=${i.stageID}" target="_blank">
+                                            <div class="job-item py-4 px-2 mb-3 border border-1">
+                                                <div class="row g-4 justify-content-around" >
+                                                    <div class="col-sm-12 col-md-5 d-flex align-items-center">
 
-                                                    <div class="text-start ps-4 col-11"   name="tab_element">
-                                                        <h5 class="mb-3">${j.getPositionName()}</h5>
-                                                        <p>${i.getApplyDate()}</p>
-                                                        <p style="color: gray">Cancelled </p>
-                                                    </div>
-                                                </div>    
-                                                <div
-                                                    class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
-                                                    >
-                                                    <div class="d-flex mb-3">
-                                                        <a class="btn btn-danger" href="" style="visibility: hidden">Cancel</a>
+                                                        <div class="text-start ps-4 col-11"   name="tab_element">
+                                                            <h5 class="mb-3">${j.getPositionName()}</h5>
+                                                            <p>${i.getApplyDate()}</p>
+                                                            <p style="color: gray">Cancelled </p>
+                                                        </div>
+                                                    </div>    
+                                                    <div
+                                                        class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
+                                                        >
+                                                        <div class="d-flex mb-3">
+                                                            <a class="btn btn-danger" href="" style="visibility: hidden">Cancel</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </c:if>
                                 </c:if>
                             </c:forEach>
@@ -228,9 +234,9 @@
         <!--Javascript -->
         <script src="js/main.js"></script>
         <script>
-                                                            function cancelAlert() {
-                                                                alert("Bạn đã huỷ ứng tuyển thành công, hãy xem lại trong tab đã huỷ!");
-                                                            }
+            function cancelAlert() {
+                alert("Bạn đã huỷ ứng tuyển thành công, hãy xem lại trong tab đã huỷ!");
+            }
 
         </script>
     </body>

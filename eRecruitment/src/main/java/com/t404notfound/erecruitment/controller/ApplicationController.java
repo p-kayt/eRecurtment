@@ -10,17 +10,10 @@ import com.t404notfound.erecruitment.bean.UserDAO;
 import com.t404notfound.erecruitment.bean.UserDTO;
 import com.t404notfound.erecruitment.bean.application.ApplicationDAO;
 import com.t404notfound.erecruitment.bean.application.ApplicationDTO;
-import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositionDAO;
-import com.t404notfound.erecruitment.bean.applicationposition.ApplicationPositionDTO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDAO;
 import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDTO;
-import com.t404notfound.erecruitment.bean.cv.CVDAO;
-import com.t404notfound.erecruitment.bean.cv.CVDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -76,42 +69,47 @@ public class ApplicationController extends HttpServlet {
                 for (ApplicationDTO x : appList) {
                     postList.add(postdao.loadApplicationPostWithName(x.getPostID()));
                 }
-                
+
                 request.setAttribute("postList", postList);
                 request.setAttribute("appList", appList);
                 request.getRequestDispatcher("/views/job/applied-position/applied-position.jsp").forward(request, response);
             }
             if (action.equalsIgnoreCase("cancel-application")) {
                 int applicationID = Integer.parseInt(request.getParameter("appID"));
-                
+
                 appdao.cancelApplication(applicationID);
-                
+
                 ArrayList<ApplicationDTO> appList = appdao.listAllApplicationOfAUser(user.getUserID());
                 ArrayList<ApplicationPostDTO> postList = new ArrayList<>();
                 for (ApplicationDTO x : appList) {
                     postList.add(postdao.loadApplicationPostWithName(x.getPostID()));
                 }
-                
+
                 request.setAttribute("postList", postList);
                 request.setAttribute("appList", appList);
                 request.getRequestDispatcher("/views/job/applied-position/applied-position.jsp").forward(request, response);
             }
             if (action.equalsIgnoreCase("view-application-detail")) {
                 int applicationID = Integer.parseInt(request.getParameter("appID"));
-                appdao.cancelApplication(applicationID);
+                int stageID = Integer.parseInt(request.getParameter("stageID"));
+                postID = Integer.parseInt(request.getParameter("postID"));
                 
-                ArrayList<ApplicationDTO> appList = appdao.listAllApplicationOfAUser(user.getUserID());
-                ArrayList<ApplicationPostDTO> postList = new ArrayList<>();
-                for (ApplicationDTO x : appList) {
-                    postList.add(postdao.loadApplicationPostWithName(x.getPostID()));
-                }
-                ApplicationStageDAO appstagedao = new ApplicationStageDAO();
-                ArrayList<ApplicationStageDTO> appstagedto = appstagedao.listAllApplicationStageByPostID(postID);
+                ApplicationStageDAO stagedao = new ApplicationStageDAO();
                 
+                ArrayList<ApplicationStageDTO> stageList = stagedao.listAllApplicationStageByPostID(postID);
+                ApplicationStageDTO currentStage = stagedao.getApplicationStage(stageID);
+                ApplicationDTO app = appdao.getApplicationByID(applicationID);
+                ApplicationPostDTO post = postdao.loadApplicationPostWithName(postID);
+                boolean check = false;
                 
-                
+                request.setAttribute("check", check);
+                request.setAttribute("post", post);
+                request.setAttribute("application", app);
+                request.setAttribute("stage", currentStage);
+                request.setAttribute("stageList", stageList);
+                request.getRequestDispatcher("/views/job/applied-position/application-detail.jsp").forward(request, response);
             }
-            
+
         }
     }
 
