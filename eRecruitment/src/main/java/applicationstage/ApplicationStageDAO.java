@@ -23,7 +23,7 @@ public class ApplicationStageDAO {
     }
 
     public ArrayList<ApplicationStageDTO> listAllApplicationStage() {
-        String sql = "select ID, [Description], PostID, StageID from Application_Stage";
+        String sql = "select ID, Description, PostID, StageID from Application_Stage";
         try {
             cn = DBUtil.getConnection();
             PreparedStatement pst = cn.prepareStatement(sql);
@@ -32,7 +32,7 @@ public class ApplicationStageDAO {
             while (rs.next()) {
                 ApplicationStageDTO dto = new ApplicationStageDTO();
                 dto.setId(rs.getInt("ID"));
-                dto.setDescription(rs.getNString("[Description]"));
+                dto.setDescription(rs.getNString("Description"));
                 dto.setPostID(rs.getInt("PostID"));
                 dto.setStageID(rs.getInt("StageID"));
                 list.add(dto);
@@ -52,8 +52,37 @@ public class ApplicationStageDAO {
         return null;
     }
     
+    public ApplicationStageDTO getApplicationStage(int stageID) {
+        String sql = "select ID, Description, PostID, StageID from Application_Stage where ID = ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, String.valueOf(stageID));
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                ApplicationStageDTO dto = new ApplicationStageDTO();
+                dto.setId(rs.getInt("ID"));
+                dto.setDescription(rs.getNString("Description"));
+                dto.setPostID(rs.getInt("PostID"));
+                dto.setStageID(rs.getInt("StageID"));
+                return dto;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return null;
+    }
+    
     public ArrayList<ApplicationStageDTO> listAllApplicationStageByPostID(int postID) {
-        String sql = "select ID, [Description], PostID, StageID from Application_Stage where PostID = ?";
+        String sql = "select ID, Description, PostID, StageID from Application_Stage where PostID = ?";
         try {
             cn = DBUtil.getConnection();
             PreparedStatement pst = cn.prepareStatement(sql);
@@ -63,7 +92,7 @@ public class ApplicationStageDAO {
             while (rs.next()) {
                 ApplicationStageDTO dto = new ApplicationStageDTO();
                 dto.setId(rs.getInt("ID"));
-                dto.setDescription(rs.getNString("[Description]"));
+                dto.setDescription(rs.getNString("Description"));
                 dto.setPostID(rs.getInt("PostID"));
                 dto.setStageID(rs.getInt("StageID"));
                 list.add(dto);
