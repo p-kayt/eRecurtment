@@ -31,23 +31,49 @@
 
             <c:if test="${i.id != requestScope.application.stageID}">
                 <c:if test="<%=!check%>">
-                    <p>${i.description}: Đậu</p>
-                    <p>1) <%=check%></p>
+                    <p>${i.description}: <span style="color: green">Đậu</span></p>
                 </c:if>
             </c:if>
-            <c:if test="${i.id == requestScope.application.stageID}">
-                <p>${i.description}: Đang diễn ra</p>
+            <c:if test="${i.id == requestScope.application.stageID}">                
+                <c:if test="${requestScope.application.statusID == 1}">
+                    <p>${i.description}: <span style="color: greenyellow">Đang diễn ra</span></p>
+                </c:if>
+                <c:if test="${requestScope.application.statusID == 2}">
+                    <p>${i.description}: <span style="color: gray">Đã huỷ</span></p>
+                </c:if>
+                <c:if test="${requestScope.application.statusID == 3}">
+                    <p>${i.description}: <span style="color: red">Rớt</span></p>
+                </c:if>
+                <c:if test="${requestScope.application.statusID == 4}">
+                    <p>${i.description}: <span style="color: green">Đậu</span></p>
+                </c:if>
                 <%check = true;%>
-                <p>2) <%=check%></p>
             </c:if>
             <c:if test="${i.id != requestScope.application.stageID}">
                 <c:if test="<%=check%>">
-                    <p>${i.description}: Chưa diễn ra</p>
-                    <p>3) <%=check%></p>
+                    <p>${i.description}: <span style="color: gray">Chưa diễn ra</span></p>
                 </c:if>
             </c:if>
         </c:forEach>
 
+
+
+        <c:if test="${requestScope.application.statusID == 1}">
+            <form action="application" method="get" onsubmit="cancelAlert()">
+                <input name="action" value="cancel-application" style="display: none"></input>
+                <input name="appID" value="${requestScope.application.id}" style="display: none"></input>
+                <button class="btn btn-danger" type="submit">Huỷ ứng tuyển</button>
+            </form>
+        </c:if>
         <jsp:include page="../../footer/footer.jsp" />
     </body>
+    
+    <!--Javascript -->
+        <script src="js/main.js"></script>
+        <script>
+            function cancelAlert() {
+                alert("Bạn đã huỷ ứng tuyển thành công, hãy xem lại trong tab đã huỷ!");
+            }
+
+        </script>
 </html>
