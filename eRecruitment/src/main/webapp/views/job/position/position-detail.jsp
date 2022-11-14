@@ -88,12 +88,12 @@
                             </div>
                             <div class="d-flex flex-row justify-content-center m-2">
                                 <label class="col-2" for="name">Tên</label>
-                                <input class="col-4" type="text" id="name" name="name" value="${requestScope.position.positionName}" />
+                                <input class="col-4" type="text" id="name" name="name" value="${requestScope.position.positionName}" maxlength="100"/>
                                 <span class="col-4"></span>
                             </div>
                             <div class="d-flex flex-row justify-content-center m-2">
                                 <label class="col-2" for="description">Mô Tả</label>
-                                <textarea class="col-8" rows="5" type="text" id="description" name="description" value="${requestScope.position.positionDescription}">${requestScope.position.positionDescription}</textarea>
+                                <textarea class="col-8" rows="5" type="text" id="description" name="description" value="${requestScope.position.positionDescription}" maxlength="1000">${requestScope.position.positionDescription}</textarea>
 
                             </div>
                             <div class="d-flex flex-row justify-content-center m-2">
