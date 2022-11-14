@@ -69,6 +69,9 @@ public class LoginController extends HttpServlet {
             if (user == null) {
                 request.setAttribute("email", email);
                 request.setAttribute("errorMessage", "Email hoặc mật khẩu không chính xác");
+            } else if (user.getStatusID() == 2) {
+                request.setAttribute("email", email);
+                request.setAttribute("errorMessage", "Tài khoản này hiện đang bị chặn");
             } else {
                 session.setAttribute("user", user);
 
