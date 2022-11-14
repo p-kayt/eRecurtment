@@ -165,12 +165,12 @@
                 </div>
                 <div class="html2pdf__page-break"></div>
                 <div class="text-center">
-                    <button class="btn cancel col-4 border border-1 m-1 " style="text-align: center" onclick="saveCV()">Save to your device</button>
+                    <button class="btn cancel col-4 border border-1 m-1 " style="text-align: center" onclick="saveCV()">Tải xuống</button>
                 </div>
                 
             </c:when>  
             <c:otherwise>
-                <h3>CV not found</h3>
+                <h3>Không tìm thấy CV</h3>
             </c:otherwise>
         </c:choose>
 

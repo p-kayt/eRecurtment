@@ -329,7 +329,7 @@
                     <input type="hidden" name="action" value="${requestScope.action}">
                     <div class="d-flex justify-content-center">
                         <button class="mb-2 btn btn-primary" type="submit">
-                            Submit
+                            Lưu
                         </button>
                     </div>
                 </form>
