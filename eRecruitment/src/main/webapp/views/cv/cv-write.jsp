@@ -44,7 +44,7 @@
                     <form id="f" action="cv" method="post" enctype="multipart/form-data" onsubmit="createAlert()">
                     </c:if>
                     <div class="d-flex justify-content-center m-5">
-                        <div class="cv ">
+                        <div class="cv border border-1 shadow">
                             <div class="cv-column">
                                 <div class="cv-element image-upload">
 

@@ -66,7 +66,7 @@
                     <c:when test = "${user.userRole == 2 || user.userRole == 3}">
                         <div class="container-xxl py-5 bg-dark page-header mb-5">
                             <div class="container my-5 pt-5 pb-4">
-                                <h1 class="display-3 text-white mb-3 animated slideInDown">Mô tả bài đăng</h1>
+                                <h1 class="display-3 text-white mb-3 animated slideInDown">Chi tiết</h1>
                                 <nav aria-label="breadcrumb">
                                     <!--                                                    <ol class="breadcrumb text-uppercase">
                                                                                             <li class="breadcrumb-item"><a href="job?action=position-list">Danh sách vị trí</a></li>
@@ -77,21 +77,33 @@
                         </div>
                         <c:if test="${not empty interview}"> 
                             <div class="d-flex flex-column align-middle m-4 p-5 border border-2 shadow">
-                                <div class="d-flex flex-column">
-                                    <div class="d-flex flex-row m-2">
-                                        <div class="d-flex flex-row justify-content-center row g-2 m-1">
-                                            <p><a href="post?action=post-detail&postID=${postID}" target="_blank">Xem bài đăng tuyển dụng</a></p>
+                                <div class="d-flex flex-column">                                  
+                                    <div class="d-flex flex-row m-2 align-items-center">
+                                        <div class="col-10"> 
+                                            <a class="text-decoration-underline fw-bold mx-5 " href = "post?action=post-detail&postID=${postID}" target="_blank">Xem bài đăng tuyển dụng</a>
                                         </div>
-                                        <p>${interviewStatus}</p>
+                                        <div class="col-2">
+                                            <p class="text-white fw-bold bg-primary p-2 text-center">${interviewStatus}</p>
+                                        </div>
                                     </div>
-                                    <div class="d-flex flex-column m-2">
-                                        <p>Tên vòng phỏng vấn:     ${interviewStage.split(";")[1]}</p>
 
-                                        <div style="background: #ccc">
-                                            <p>Mô tả</p>
-                                            <p>${interview.description}</p>
+                                    <div class="d-flex flex-column m-2 pb-5">
+                                        <div class="col-11 row g-2 m-1 justify-content-center">
+                                            <label class="col-2 fw-bold text-dark" for="stageID">Tên vòng phỏng vấn</label>
+                                            <span class="col-4 text-dark">${interviewStage.split(";")[1]}</span>
+                                            <span class="col-4"></span>
                                         </div>
-                                        <p>Hình thức ${interviewFormat}</p>
+
+                                        <div class="col-11 row g-2 m-1 justify-content-center">
+                                            <label class="col-2 fw-bold text-dark" for="description">Mô tả</label>
+                                            <textarea class="col-8 bg-transparent border-1" rows="4" disabled="">${interview.description}</textarea>
+                                        </div>
+
+                                        <div class="col-11 row g-2 m-1 justify-content-center">
+                                            <label class="col-2 fw-bold text-dark" for="format">Hình thức</label>
+                                            <p class="col-8">${interviewFormat}</p>
+                                        </div>
+
 
 
                                         <%
@@ -99,96 +111,113 @@
                                             String date = datetime[0];
                                             String hour = datetime[1].split("\\.")[0];
                                         %>
-                                        <p>Ngày    <%=date%></p>
-                                        <p>Giờ     <%=hour%></p>
-
-                                        <c:choose>
-                                            <c:when test="${interviewFormat == 'Online'}">
-                                                <div class="col-11 row g-2 m-1 justify-content-center">
-                                                    <p>Link     ${interview.link}</p>
-                                                </div>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <div class="col-11 row g-2 m-1 justify-content-center">
-                                                    <p>Địa chỉ     ${interview.address}</p>
-                                                </div>
-                                            </c:otherwise>
-                                        </c:choose>
 
                                         <div class="col-11 row g-2 m-1 justify-content-center">
-                                            <p>Người tạo    ${booker.firstName} ${booker.lastName}</p>
-                                            <p>Email: ${booker.email}</p>
+                                            <label class="col-2 fw-bold text-dark" for="date" >Ngày</label>
+                                            <span class="col-4"><%=date%></span>
+                                            <span class="col-4"></span>
                                         </div>
+                                        <div class="col-11 row g-2 m-1 justify-content-center">
+                                            <label class="col-2 fw-bold text-dark" for="time">Thời gian</label>
+                                            <span class="col-4"><%=hour%></span>
+                                            <span class="col-4"></span>
+                                        </div>
+
+                                        <div class="col-11 row g-2 m-1 justify-content-center">
+                                            <c:choose>
+                                                <c:when test="${interviewFormat == 'Online'}">
+                                                    <label class="col-2 fw-bold text-dark" for = "link">Link</label>
+                                                    <span class="col-8" id="link">${interview.link}</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <label class="col-2 fw-bold text-dark" for = "address">Địa chỉ</label>
+                                                    <span class="col-8" id="address">${interview.address}</span>
+
+                                                </c:otherwise>
+                                            </c:choose>
+
+                                        </div>
+
+                                        <div class="col-11 row g-3 m-0 justify-content-center">
+                                            <label class="col-2 fw-bold text-dark" for="creator">Người tạo</label>
+                                            <span class="col-4 text-dark" id="creator"> ${booker.firstName} ${booker.lastName} </span>
+                                            <span class="col-4 text-dark">${booker.email}</span>                                            
+                                        </div>
+
                                     </div>
 
                                     <div class="d-flex flex-column m-2 p-2 border border-1">
                                         <div class="d-flex flex-row justify-content-between align-middle">
-                                            <p>Người phỏng vấn</p>
+                                            <label class="col-3 m-2 px-3 fw-bold">Người phỏng vấn</label>
                                         </div>
                                         <div  class="d-flex flex-column align-middle">
                                             <c:if test="${not empty listInterviewer}">
                                                 <c:forEach items="${listInterviewer}" var="i">
                                                     <div class="d-flex flex-row justify-content-between align-center border border-2 m-1 bg-light">
-                                                        <div class="col-6 d-flex flex-row text-center">
+                                                        <div class="col-10 d-flex flex-row text-center">
                                                             <div class="col-3 d-flex justify-content-center">
                                                                 <img class="ava_img_icon m-2 border border-1" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
                                                             </div>
-                                                            <div class="col-9 text-start align-center m-auto">
-                                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                                            <div class="col-4 text-start align-center m-auto">
+                                                                <p class="my-auto">${i.getFirstName()} ${i.getLastName()}</p>
                                                             </div>
-                                                            <div class="col-9 text-start align-center m-auto">
-                                                                <p>Email: ${i.email}</p>
+                                                            <div class="col-4 text-start align-center m-auto">
+                                                                <p class="my-auto">Email: ${i.email}</p>
                                                             </div>
                                                         </div>
-                                                        <div class="col-4"></div>
+                                                        <div class="col-2"></div>
                                                     </div>
                                                 </c:forEach>
                                             </c:if>
                                         </div>
                                     </div>
 
+                                    
+
+
+
                                     <div class="d-flex flex-column m-2 p-2  border border-1">
                                         <div class="d-flex flex-row justify-content-between align-middle">
-                                            <p>Ứng viên</p>
+                                            <label class="col-3 m-2 px-3 fw-bold">Ứng viên</label>
                                         </div>
                                         <div  class="d-flex flex-column align-middle">
                                             <c:if test="${not empty listCandidate}">
                                                 <c:forEach items="${listCandidate}" var="i" varStatus="loop">
                                                     <div class="d-flex flex-row justify-content-between align-center border border-2 m-1 bg-light">
-                                                        <div class="col-6 d-flex flex-row text-center">
+                                                        <div class="col-10 d-flex flex-row text-center">
                                                             <div class="col-3 d-flex justify-content-center">
                                                                 <img class="ava_img_icon m-2" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
                                                             </div>
-                                                            <div class="col-6 text-start align-center m-auto">
-                                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
-                                                            </div>
+
                                                             <div class="col-3 text-start align-center m-auto">
-                                                                <a href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
+                                                                <p class="my-auto">${i.getFirstName()} ${i.getLastName()}</p>
                                                             </div>
-                                                            <div class="col-4 text-start align-center m-auto"> 
+
+                                                            <div class="col-2 align-center m-auto">
+                                                                <a class="my-auto" href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
+                                                            </div>
+                                                            <div class="col-2 align-center m-auto"> 
                                                                 <c:forEach items="${listParticipant}" var="p">
                                                                     <c:if test="${p.userID == i.userID}">
-                                                                        <p>Giờ ${p.interviewTime.split("\\s")[1].split("\\.")[0]}</p>
+                                                                        <p class="my-auto">Thời gian ${p.interviewTime.split("\\s")[1].split("\\.")[0]}</p>
                                                                     </c:if>
                                                                 </c:forEach>
                                                             </div>
-                                                            <div class="col-4 text-start align-center m-auto">
+                                                            <div class="col-2 align-center m-auto">
+
                                                                 <c:forEach items="${result}" begin="${loop.index}" end="${loop.index}" step="1" var="r">
-                                                                    <p>${r}<p>
-                                                                    </c:forEach>
-                                                            </div>
-                                                            <div class="col-4 text-start align-center m-auto">
-                                                                <form action="evaluate" target="_blank" method="post">
-                                                                    <input type="hidden" name="evaluateAction" value="viewCandidatEvaluation">
-                                                                    <input type="hidden" name="interviewID" value="${interview.interviewID}">
-                                                                    <input type="hidden" name="candidateID" value="${i.userID}">
-                                                                    <input type="submit" value="Xem đánh giá">
-                                                                </form>
-                                                            </div>
-                                                            <div class="col-9 text-start align-center m-auto"> 
+                                                                    <p class="my-auto"> ${r}</p>
+                                                                </c:forEach>
 
                                                             </div>
                                                         </div>
+
+                                                        <form class="col-2 m-auto" action="evaluate" target="_blank" method="post">
+                                                            <input type="hidden" name="evaluateAction" value="viewCandidatEvaluation">
+                                                            <input type="hidden" name="interviewID" value="${interview.interviewID}">
+                                                            <input type="hidden" name="candidateID" value="${i.userID}">
+                                                            <input class="btn btn-primary m-1" type="submit" value="Xem đánh giá">
+                                                        </form>
 
                                                     </div>
                                                 </c:forEach>
@@ -198,25 +227,23 @@
 
                                     <div class="d-flex flex-column m-2 p-2  border border-1">
                                         <div class="d-flex flex-row justify-content-between align-middle">
-                                            <p>Ứng viên miễn phỏng vấn</p>
-
+                                            <label class="col-3 m-2 px-3 fw-bold">Ứng viên miễn phỏng vấn</label>
                                         </div>
                                         <div  class="d-flex flex-column align-middle">
                                             <c:if test="${not empty listNoInterviewCandidate}">
                                                 <c:forEach items="${listNoInterviewCandidate}" var="i">
                                                     <div class="d-flex flex-row justify-content-between align-center border border-2 m-1 bg-light">
-                                                        <div class="col-6 d-flex flex-row text-center">
+                                                        <div class="col-11 d-flex flex-row text-center">
                                                             <div class="col-3 d-flex justify-content-center">
-                                                                <img class="ava_img" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                                                <img class="ava_img_icon m-2" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
                                                             </div>
-                                                            <div>
-                                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                                            <div class="col-4 text-start align-center m-auto">
+                                                                <p class="my-auto">${i.getFirstName()} ${i.getLastName()}</p>
                                                             </div>
-                                                            <div class="col-9 text-start align-center m-auto">
-                                                                <a href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
+                                                            <div class="col-4 text-start align-center m-auto">
+                                                                <a class="my-auto" href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </c:forEach>
                                             </c:if>
@@ -228,7 +255,7 @@
                         </c:if>
                     </c:when>
                     <c:otherwise>
-                        <div class="alert alert-secondary alert-dismissible fade show d-flex justify-content-between" role="alert">
+                        <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-between" role="alert">
                             Bạn không được phép truy cập trang web này
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>

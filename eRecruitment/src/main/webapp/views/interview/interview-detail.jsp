@@ -83,7 +83,7 @@
                     <c:when test = "${user.userRole == 2 || user.userRole == 3}">
                         <div class="container-xxl py-5 bg-dark page-header mb-5">
                             <div class="container my-5 pt-5 pb-4">
-                                <h1 class="display-3 text-white mb-3 animated slideInDown">Mô tả bài đăng</h1>
+                                <h1 class="display-3 text-white mb-3 animated slideInDown">Chỉnh sửa</h1>
                                 <nav aria-label="breadcrumb">
                                     <!--                                                    <ol class="breadcrumb text-uppercase">
                                                                                             <li class="breadcrumb-item"><a href="job?action=position-list">Danh sách vị trí</a></li>
@@ -98,36 +98,50 @@
                                     <form action="interview" method = "post" id="form1">
                                         <div class="d-flex flex-row m-2">
                                             <div class="col-10"> 
-                                                <a href = "post?action=post-detail&postID=${postID}" target="_blank">Xem bài đăng tuyển dụng</a>
+                                                <a class="text-decoration-underline fw-bold mx-5" href = "post?action=post-detail&postID=${postID}" target="_blank">Xem bài đăng tuyển dụng</a>
                                             </div>
                                             <select class="col-2" id = "statusID" name= "statusID">
                                                 <c:if test ="<%=(interviewStatus != null)%>" >
                                                     <c:forEach items="<%=interviewStatus%>" var="i" varStatus="count">
                                                         <option value = "${count.index + 1}" ${(count.index + 1) == interview.inteviewStatusID ? "selected" : ""} >${i}</option>   
+
                                                     </c:forEach>
                                                 </c:if>
                                             </select>
                                         </div>
+
                                         <div class="d-flex flex-column m-2">
-                                            <label for="stageID">Tên vòng phỏng vấn</label>
-                                            <%--Need fix this, must load stage from database--%>
-                                            <select  id="stage" name ="stage" disabled>
+                                            <div class="col-11 row g-2 m-1 justify-content-center">
+                                                <label class="col-2 fw-bold text-dark" for="stageID">Tên vòng phỏng vấn</label>
+                                                <%--Need fix this, must load stage from database--%>
+                                                <!--
+                                                                                                <select  id="stage" name ="stage" disabled>
                                                 <c:if test ="<%=(interviewStage != null)%>" >
                                                     <c:forEach items="<%=interviewStage%>" var="i" varStatus="count">
                                                         <option value = "${i.split(";")[0]}" ${i.split(";")[0] == interview.stageID ? "selected" : ""} >${i.split(";")[1]}</option>   
                                                     </c:forEach>
                                                 </c:if>
                                             </select>
+                                                -->
+                                                <c:if test ="<%=(interviewStage != null)%>" >
+                                                    <c:forEach items="<%=interviewStage%>" var="i" varStatus="count">
+                                                        <c:if test="${i.split(';')[0] == interview.stageID}">
+                                                            <span class="col-4 text-dark">${i.split(';')[1]}</span>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </c:if>
 
+                                                <span class="col-4"></span>
+                                            </div>
                                             <input type="hidden" name = "stage" value="${interview.stageID}">
 
                                             <div class="col-11 row g-2 m-1 justify-content-center">
-                                                <label class="col-2" for="description">Mô tả</label>
+                                                <label class="col-2 fw-bold text-dark" for="description">Mô tả</label>
                                                 <textarea class="col-8" rows="4" cols="60" name="description" form="form1"><%=interview.getDescription()%></textarea> <br/>
                                             </div>
 
                                             <div class="col-11 row g-2 m-1 justify-content-center">
-                                                <label class="col-2" for="format">Hình thức</label>
+                                                <label class="col-2 fw-bold text-dark" for="format">Hình thức</label>
                                                 <%int formatID = interview.getFormatID();%>
                                                 <select class="col-8" id = "format" name= "format">
                                                     <c:if test ="<%=(interviewFormat != null)%>" >
@@ -143,27 +157,27 @@
                                                 String hour = datetime[1];
                                             %>
                                             <div class="col-11 row g-2 m-1 justify-content-center">
-                                                <label class="col-2" for="date" >Ngày</label>
+                                                <label class="col-2 fw-bold text-dark" for="date" >Ngày</label>
                                                 <input class="col-4" type="date" name="date" value = <%=date%> required>
                                                 <span class="col-4"></span>
                                             </div>
                                             <div class="col-11 row g-2 m-1 justify-content-center">
-                                                <label class="col-2" for="time">Giờ</label>
+                                                <label class="col-2 fw-bold text-dark" for="time">Thời gian</label>
                                                 <input class="col-4" type="time" name="time" value = <%=hour%> required>
                                                 <span class="col-4"></span>
                                             </div>
                                             <div class="col-11 row g-2 m-1 justify-content-center">
-                                                <label class="col-2" for = "link">Link</label>
+                                                <label class="col-2 fw-bold text-dark" for = "link">Link</label>
                                                 <input class="col-8" type = "url" name="link" id="link" value="<%=interview.getLink()%>" >
                                             </div>
 
                                             <div class="col-11 row g-2 m-1 justify-content-center">
-                                                <label class="col-2" for="address" >Địa chỉ</label>
+                                                <label class="col-2 fw-bold text-dark" for="address" >Địa chỉ</label>
                                                 <input class="col-8" type="text" name="address" id="address" value="<%=interview.getAddress()%>" >
                                             </div>
 
                                             <div class="col-11 row g-2 m-1 justify-content-center">
-                                                <label class="col-2" for="maxCandidate">Số ứng viên tối đa</label>
+                                                <label class="col-2 fw-bold text-dark" for="maxCandidate">Số ứng viên tối đa</label>
                                                 <input class="col-4" type="number" name="maxCandidate" min="1" value = "<%=interview.getMaxCandidate()%>" required>
                                                 <span class="col-4"></span>
                                             </div>
@@ -171,10 +185,10 @@
                                             <input type="hidden" name="interviewID" value="${interviewID}" >
 
 
-                                            <div class="col-11 row g-2 m-1 justify-content-center">
-                                                <label class="col-2" for="creator">Người tạo </label>
-                                                <span class="col-8 text-dark" id="creator"> ${booker.firstName} ${booker.lastName} </span>
-                                                <span>Email: ${booker.email}</span>                                            
+                                            <div class="col-11 row g-3 m-0 justify-content-center">
+                                                <label class="col-2 fw-bold text-dark" for="creator">Người tạo </label>
+                                                <span class="col-4 text-dark" id="creator"> ${booker.firstName} ${booker.lastName} </span>
+                                                <span class="col-4 text-dark">${booker.email}</span>                                            
                                             </div>
 
                                             <input type="hidden" name="action" value="updateInterview" > 
@@ -183,7 +197,7 @@
 
                                     <div class="d-flex flex-column m-2 p-2 border border-1">
                                         <div class="d-flex flex-row justify-content-between align-middle">
-                                            <label class="col-3 m-2 px-3">Người phỏng vấn</label>
+                                            <label class="col-3 m-2 px-3 fw-bold">Người phỏng vấn</label>
                                             <div>
                                                 <form action="interview" method="post">
                                                     <input type="hidden" name="action" value="showListInterviewer">
@@ -196,18 +210,17 @@
                                             <c:if test="<%=interviewerList != null%>">
                                                 <c:forEach items="<%=interviewerList%>" var="i">
                                                     <div class="d-flex flex-row justify-content-between align-center border border-2 m-1 bg-light">
-                                                        <div class="col-6 d-flex flex-row text-center">
+                                                        <div class="col-10 d-flex flex-row text-center">
                                                             <div class="col-3 d-flex justify-content-center">
                                                                 <img class="ava_img_icon m-2 border border-1" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
                                                             </div>
-                                                            <div class="col-9 text-start align-center m-auto">
-                                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                                            <div class="col-4 text-start align-center m-auto">
+                                                                <p class="my-auto">${i.getFirstName()} ${i.getLastName()}</p>
                                                             </div>
-                                                            <div class="col-9 text-start align-center m-auto">
-                                                                <p>Email: ${i.email}</p>
+                                                            <div class="col-4 text-start align-center m-auto">
+                                                                <p class="my-auto">Email: ${i.email}</p>
                                                             </div>
                                                         </div>
-                                                        <div class="col-4"></div>
                                                         <div class="col-1 text-start align-center m-auto">
                                                             <form action="interview" method="post">
                                                                 <input type="hidden" name ="action" value ="removeInterviewer">
@@ -224,7 +237,7 @@
 
                                     <div class="d-flex flex-column m-2 p-2  border border-1">
                                         <div class="d-flex flex-row justify-content-between align-middle">
-                                            <label class="col-3 m-2 px-3">Ứng viên</label>
+                                            <label class="col-3 m-2 px-3  fw-bold">Ứng viên</label>
                                             <div>
                                                 <form action="interview" method="post">
                                                     <input type="hidden" name="action" value="showListCandidate">
@@ -237,30 +250,34 @@
                                             <c:if test="<%=candidateList != null%>">
                                                 <c:forEach items="<%=candidateList%>" var="i">
                                                     <div class="d-flex flex-row justify-content-between align-center border border-2 m-1 bg-light">
-                                                        <div class="col-6 d-flex flex-row text-center">
+                                                        <div class="col-10 d-flex flex-row text-center">
                                                             <div class="col-3 d-flex justify-content-center">
                                                                 <img class="ava_img_icon m-2" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
                                                             </div>
-                                                            <div class="col-9 text-start align-center m-auto">
-                                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                                            <div class="col-4 text-start align-center m-auto">
+                                                                <p class="my-auto">${i.getFirstName()} ${i.getLastName()}</p>
                                                             </div>
-                                                            <div class="col-9 text-start align-center m-auto">
-                                                                <a href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
+                                                            <div class="col-4 d-flex flex-row align-center m-auto">
+                                                                <div class="col-6">
+                                                                    <a class="my-auto" href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <c:forEach items="<%=listParticipant%>" var="p">
+                                                                        <c:if test="${p.userID == i.userID}">
+                                                                            <p class="my-auto">Thời gian ${p.interviewTime.split("\\s")[1].split("\\.")[0]}</p>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-9 text-start align-center m-auto">
-                                                                <c:forEach items="<%=listParticipant%>" var="p">
-                                                                    <c:if test="${p.userID == i.userID}">
-                                                                        <p>Giờ ${p.interviewTime.split("\\s")[1].split("\\.")[0]}</p>
-                                                                    </c:if>
-                                                                </c:forEach>
-                                                            </div>
+
                                                         </div>
-                                                        <div>
+
+                                                        <div class="col-1 text-start align-center m-auto">
                                                             <form action="interview" method="post">
                                                                 <input type="hidden" name ="action" value ="removeCandidate">
                                                                 <input type="hidden" name ="userID" value="${i.getUserID()}" >
                                                                 <input type="hidden" name ="interviewID" value ="${interviewID}">
-                                                                <input type="submit" value="Xóa">
+                                                                <input class="btn btn-danger col-12" type="submit" value="Xóa">
                                                             </form>
                                                         </div>
                                                     </div>
@@ -271,36 +288,29 @@
 
                                     <div class="d-flex flex-column m-2 p-2  border border-1">
                                         <div class="d-flex flex-row justify-content-between align-middle">
-                                            <label class="col-3 m-2 px-3">Ứng viên miễn phỏng vấn</label>
-                                            <div>
-                                                <form action="interview" method="post">
-                                                    <input type="hidden" name="action" value="showListCandidate">
-                                                    <input type="hidden" name="interviewID" value = "${interviewID}">
-                                                    <input class="btn btn-primary m-2" type="submit" value="Thêm">
-                                                </form>
-                                            </div>
+                                            <label class="col-3 m-2 px-3 fw-bold">Ứng viên miễn phỏng vấn</label>
                                         </div>
                                         <div  class="d-flex flex-column align-middle">
                                             <c:if test="<%=listNoInterviewCandidate != null%>">
                                                 <c:forEach items="<%=listNoInterviewCandidate%>" var="i">
                                                     <div class="d-flex flex-row justify-content-between align-center border border-2 m-1 bg-light">
-                                                        <div class="col-6 d-flex flex-row text-center">
+                                                        <div class="col-10 d-flex flex-row text-center">
                                                             <div class="col-3 d-flex justify-content-center">
-                                                                <img class="ava_img" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                                                <img class="ava_img_icon m-2" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
                                                             </div>
-                                                            <div>
-                                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
+                                                            <div class="col-4 text-start align-center m-auto">
+                                                                <p class="my-auto">${i.getFirstName()} ${i.getLastName()}</p>
                                                             </div>
-                                                            <div class="col-9 text-start align-center m-auto">
-                                                                <a href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
+                                                            <div class="col-4 text-start align-center m-auto">
+                                                                <a class="my-auto" href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
                                                             </div>
                                                         </div>
-                                                        <div>
+                                                        <div class="col-1 text-start align-center m-auto">
                                                             <form action="interview" method="post">
                                                                 <input type="hidden" name ="action" value ="removeCandidate">
                                                                 <input type="hidden" name ="userID" value="${i.getUserID()}" >
                                                                 <input type="hidden" name ="interviewID" value ="${interviewID}">
-                                                                <input type="submit" value="Xóa">
+                                                                <input class="btn btn-danger col-12" type="submit" value="Xóa">
                                                             </form>
                                                         </div>
                                                     </div>
@@ -308,15 +318,17 @@
                                             </c:if>
                                         </div>
                                     </div>
-                                    <div class=" m-auto col-3 m-2 p-3">
-                                        <button class="btn btn-primary"  type = "button" onclick = "UpdateInterview()">Cập nhật phỏng vấn</button>
-                                    </div>
+                                    <div class="d-flex flex-row justify-content-center">
+                                        <div class="col-3 m-2 p-3">
+                                            <button class="btn btn-primary"  type = "button" onclick = "UpdateInterview()">Cập nhật phỏng vấn</button>
+                                        </div>
 
-                                    <form action="interview" method="post">
-                                        <input type="hidden" name="action" value="deleteInterview">
-                                        <input type="hidden" name ="interviewID" value = "${interview.interviewID}">
-                                        <input type="submit" value="Xóa">
-                                    </form>
+                                        <form class="col-2 m-2 p-3" action="interview" method="post">
+                                            <input type="hidden" name="action" value="deleteInterview">
+                                            <input type="hidden" name ="interviewID" value = "${interview.interviewID}">
+                                            <input class="btn btn-danger col-10" type="submit" value="Xóa">
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
 
@@ -344,10 +356,10 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
         <script>
-                                            function UpdateInterview() {
-                                                var f = document.getElementById("form1");
-                                                f.submit();
-                                            }
+                                                function UpdateInterview() {
+                                                    var f = document.getElementById("form1");
+                                                    f.submit();
+                                                }
         </script>
     </body>
 </html>

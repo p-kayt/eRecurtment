@@ -78,7 +78,6 @@
                   </div>
                 </div> -->
                 
-                <a href="#" class="nav-item nav-link">Giới thiệu</a>
                 <a href="login" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">
                     <span>Đăng nhập</span>
                 </a>
