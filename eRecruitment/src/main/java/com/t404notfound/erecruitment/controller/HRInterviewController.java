@@ -260,25 +260,20 @@ public class HRInterviewController extends HttpServlet {
                 InterviewDAO interviewDAO = new InterviewDAO();
                 InterviewDTO interview = interviewDAO.getInterview(interviewID);
 
+                // increase stage 
                 postID = interview.getPostID();
                 stageID = interview.getStageID();
-                
-                
                 ApplicationDAO appDAO = new ApplicationDAO();
                 ApplicationPostDAO postDAO = new ApplicationPostDAO();
-                
+
                 //get applicationID
                 int appID = interviewDAO.getApplicationID(userID, postID);
                 //get ApplicationID
 
-                // increase stage 
                 int nextStageID = postDAO.getIDOfNextStage(postID, stageID);
                 appDAO.approveToNextStage(nextStageID, appID);
                 // increase stage 
 
-                
-                
-                
                 String time = interview.getTime();
                 ParticipantDAO pDAO = new ParticipantDAO();
 
@@ -294,6 +289,39 @@ public class HRInterviewController extends HttpServlet {
 
                 int userID = Integer.parseInt((String) request.getParameter("userID"));
                 int interviewID = Integer.parseInt(request.getParameter("interviewID"));
+                ParticipantDAO pDAO = new ParticipantDAO();
+                boolean check = pDAO.removeCandidate(userID, interviewID);
+                String mess = null;
+                if (!check) {
+                    mess = "Xóa ứng viên không thành công vì ứng viên đã có kết quả đánh giá từ người phỏng vấn";
+                }
+
+                //Reload interview detail
+                request.getRequestDispatcher("interview?action=interviewDetail").forward(request, response);
+                //Reload interview detail
+            } else if (action.equalsIgnoreCase("removeExemptCandidate")) {
+
+                int userID = Integer.parseInt((String) request.getParameter("userID"));
+                int interviewID = Integer.parseInt(request.getParameter("interviewID"));
+                InterviewDAO interviewDAO = new InterviewDAO();
+                InterviewDTO interview = interviewDAO.getInterview(interviewID);
+
+                
+                // decrease stage 
+                postID = interview.getPostID();
+                stageID = interview.getStageID();
+                ApplicationDAO appDAO = new ApplicationDAO();
+                ApplicationPostDAO postDAO = new ApplicationPostDAO();
+
+                //get applicationID
+                int appID = interviewDAO.getApplicationID(userID, postID);
+                //get ApplicationID
+
+                int preStage = postDAO.getIDOfPreviousStage(postID, stageID);
+                appDAO.rollbackToPreviousStage(preStage, appID);
+                // decrease stage 
+
+                
                 ParticipantDAO pDAO = new ParticipantDAO();
                 boolean check = pDAO.removeCandidate(userID, interviewID);
                 String mess = null;
