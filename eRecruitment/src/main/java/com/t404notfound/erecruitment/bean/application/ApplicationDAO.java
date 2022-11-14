@@ -420,6 +420,7 @@ public class ApplicationDAO {
         ApplicationDAO dao = new ApplicationDAO();
         int r = dao.getIDOfApplication(1, 3);
         System.out.println(r);
+        
     }
 
 }
