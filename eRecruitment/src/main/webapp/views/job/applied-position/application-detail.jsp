@@ -83,6 +83,7 @@
 
 
 
+
                     <c:if test="${requestScope.application.statusID == 1}">
                         <form class="m-auto p-3" action="application" method="get" onsubmit="cancelAlert()">
                             <input name="action" value="cancel-application" style="display: none"></input>
@@ -91,6 +92,10 @@
                         </form>
                     </c:if>
                 </div>
+                <c:if test="${requestScope.application.statusID == 4}">
+                    <label class="fw-bold align-center" style="color: green">Chúc mừng bạn đã vượt qua quá trình ứng tuyển công việc này! Vui lòng kiểm tra email hoặc liên hệ với công ty để tiến hành bàn sâu hơn về công việc.</label>
+
+                </c:if>
             </div>
             <jsp:include page="../../footer/footer.jsp" />
         </div>
