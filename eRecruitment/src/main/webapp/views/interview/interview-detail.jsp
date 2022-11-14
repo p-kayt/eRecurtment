@@ -307,7 +307,7 @@
                                                         </div>
                                                         <div class="col-1 text-start align-center m-auto">
                                                             <form action="interview" method="post">
-                                                                <input type="hidden" name ="action" value ="removeCandidate">
+                                                                <input type="hidden" name ="action" value ="removeExemptCandidate">
                                                                 <input type="hidden" name ="userID" value="${i.getUserID()}" >
                                                                 <input type="hidden" name ="interviewID" value ="${interviewID}">
                                                                 <input class="btn btn-danger col-12" type="submit" value="Xóa">

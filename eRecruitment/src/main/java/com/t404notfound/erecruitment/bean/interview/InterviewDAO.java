@@ -722,8 +722,28 @@ public class InterviewDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return stage;
+    }
+
+    //get application id of a user by postID
+    public int getApplicationID(int candidateID, int postID) {
+        String sql = "SELECT ApplicationID FROM [Application]\n"
+                + "WHERE UserID = ? and PostID = ?";
+        
+        try {
+            Connection con = DBUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, candidateID);
+            ps.setInt(2, postID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("ApplicationID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
 }
