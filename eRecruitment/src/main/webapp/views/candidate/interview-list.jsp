@@ -117,32 +117,26 @@
 
                                             <div class="d-flex flex-row m-2 justify-content-end align-items-center">
                                                 <!--chia trang jsp : này là history-->
+
                                                 <c:if test = "${user.userRole == 1}"> 
                                                     <c:if test = "${not empty listResultOfCandidate}">
                                                         <div class="col-3">
                                                             <c:forEach items="${listResultOfCandidate}" begin="${loop.index}" end="${loop.index}" step="1" var="result">
-                                                                <p class="text-white fw-bold bg-primary p-2 text-center">Trạng thái: ${result}</p>
+                                                                <p class="text-white fw-bold bg-primary p-1 text-center">Trạng thái: ${result}</p>
                                                             </c:forEach>
                                                         </div>
                                                     </c:if>
                                                 </c:if>
-
-                                                <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
-                                                    <p class="col-2 bg-primary text-white text-center p-1" id="status">${status}</p>
-                                                </c:forEach>
+                                                <c:if test = "${action == 'showCandidatePendingInterview'}"> 
+                                                    <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
+                                                        <p class="col-2 bg-primary text-white text-center p-1" id="status">${status}</p>
+                                                    </c:forEach>
+                                                </c:if>
 
                                             </div>
 
 
                                             <%--Hiển thị kết quả phỏng vấn của ứng viên nếu hành động là sem lịch sử phỏng vấn--%>
-
-                                            <c:if test = "${user.userRole == 1}"> 
-                                                <c:if test = "${not empty listResultOfCandidate}">
-                                                    <c:forEach items="${listResultOfCandidate}" begin="${loop.index}" end="${loop.index}" step="1" var="result">
-                                                        <p>${result}</p>
-                                                    </c:forEach>
-                                                </c:if>
-                                            </c:if>
 
                                             <%--Hiển thị kết quả phỏng vấn của ứng viên nếu hành động là xem lịch sử phỏng vấn--%>
                                             <div class="row g-2 m-1 mx-3 fs-5 fw-bolder text-dark">

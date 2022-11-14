@@ -133,7 +133,9 @@
                                                                                 <c:forEach items="${lE}" begin="${iLoop.index}" end="${iLoop.index}" step="1" var="e">
                                                                                     <c:choose>
                                                                                         <c:when test = "${e == null}">
-                                                                                            <p>Chưa có đánh giá</p>
+                                                                                            <div class="col-8 d-flex flex-column m-1">
+                                                                                                <p class="fw-bold text-dark m-auto">Chưa có đánh giá</p>
+                                                                                            </div>
                                                                                         </c:when>
                                                                                         <c:otherwise>
                                                                                             <div class="col-8 d-flex flex-column m-1 align-middle">
@@ -142,7 +144,7 @@
                                                                                             </div>
                                                                                             <div class=" col-4 d-flex flex-column m-1 align-items-center ">
                                                                                                 <label class="fw-bold text-dark m-1 " for ="score" >Điểm</label>
-                                                                                                <span class="m-auto ">${e.score}</span>
+                                                                                                <span class="mx-auto mt-2">${e.score}</span>
                                                                                             </div>
 
                                                                                         </c:otherwise>

@@ -15,7 +15,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>JSP Page</title>
+        <title>Danh sách ứng viên</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content="" name="keywords" />
         <meta content="" name="description" />
@@ -87,46 +87,51 @@
                                         <div class="border border-1 m-5 p-4 shadow">
                                             <c:forEach items="<%=candidateList%>" var="i">
                                                 <div class="d-flex flex-row align-center border border-2 m-1 bg-light">
-                                                    <div class="col-6 d-flex flex-row text-center">
+                                                    <div class="col-8 d-flex flex-row text-center">
                                                         <div class="col-3 d-flex justify-content-center">
                                                             <img class="ava_img_icon m-2" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
                                                         </div>
-                                                        <div class="col-9 text-start align-center m-auto">
+                                                        <div class="col-4 text-start align-center m-auto">
                                                             <p class="m-0">${i.getFirstName()} ${i.getLastName()}</p>
                                                         </div>
-                                                        <div class="col-9 text-start align-center m-auto">
+                                                        <div class="col-4 text-start align-center m-auto">
                                                             <a href = "job?action=view-candidate-cv&userID=${i.userID}" target="_blank">Xem CV</a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-1 text-start align-center m-auto">
+                                                    <div class="col-3 text-start align-center m-auto">
                                                         <%
                                                             String[] datetime = interview.getTime().split("\\s");
                                                             String date = datetime[0];
                                                             String hour = datetime[1].split("\\.")[0];
                                                         %>
-                                                        <form action="interview" method="get">
+                                                        <div class="d-flex flex-row">
+                                                            <form action="interview" method="get" id="timeform">
+                                                                <label for="time">Thời gian</label>
+                                                                <input type="time" name="time" required>
 
-                                                            <label for="time">Giờ</label>
-                                                            <input type="time" name="time" required> <br/>
+                                                                <input type = "hidden" name="day" value = "<%=date%>">
+                                                                <input type="hidden" name="interviewResultID" value="1">
+                                                                <input type="hidden" name ="action" value ="addCandidate">
+                                                                <input type="hidden" name ="userID" value="${i.getUserID()}" >
+                                                                <input type="hidden" name ="interviewID" value="${interviewID}" >
 
-                                                            <input type = "hidden" name="day" value = "<%=date%>">
-                                                            <input type="hidden" name="interviewResultID" value="1">
-                                                            <input type="hidden" name ="action" value ="addCandidate">
-                                                            <input type="hidden" name ="userID" value="${i.getUserID()}" >
-                                                            <input type="hidden" name ="interviewID" value="${interviewID}" >
-                                                            <input class="btn btn-primary col-12" type="submit" value="Thêm">
-                                                        </form>
 
-                                                        <form action="interview" method="post">
+                                                            </form>
 
-                                                            <input type="hidden" name="time" value = "<%=hour%>">
-                                                            <input type = "hidden" name="day" value = "<%=date%>">
-                                                            <input type="hidden" name="interviewResultID" value="2">
-                                                            <input type="hidden" name ="action" value ="addExemptCandidate" ><!--sua cho nay-->
-                                                            <input type="hidden" name ="userID" value="${i.getUserID()}" >
-                                                            <input type="hidden" name ="interviewID" value="${interviewID}" >
-                                                            <input class="btn btn-primary col-12" type="submit" value="Miễn phỏng vấn">
-                                                        </form>
+                                                            <form action="interview" method="post" id="passform">
+                                                                <input type="hidden" name="time" value = "<%=hour%>">
+                                                                <input type = "hidden" name="day" value = "<%=date%>">
+                                                                <input type="hidden" name="interviewResultID" value="2">
+                                                                <input type="hidden" name ="action" value ="addExemptCandidate" ><!--sua cho nay-->
+                                                                <input type="hidden" name ="userID" value="${i.getUserID()}" >
+                                                                <input type="hidden" name ="interviewID" value="${interviewID}" >
+
+                                                            </form>
+                                                                <div class="d-flex flex-column">
+                                                                <input class="btn btn-primary col-12 mb-1" type="submit" value="Thêm" form="timeform">
+                                                                <input class="btn btn-primary col-12" type="submit" value="Miễn phỏng vấn" form="passform">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </c:forEach>
