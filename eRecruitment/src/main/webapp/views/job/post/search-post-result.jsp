@@ -165,9 +165,11 @@
                                     <div
                                         class="col-sm-12 col-md-5 d-flex flex-column align-items-start align-items-md-end justify-content-center align-middle"
                                         >
+                                        <c:if test="${post.statusID == 3}">
                                         <div class="d-flex mb-3">
                                             <a class="btn btn-primary" href="./post?action=apply-for-post&postID=${post.postID}">Ứng tuyển ngay</a>
                                         </div>
+                                        </c:if>
                                         <small class="text-truncate"
                                                ><i class="far fa-calendar-alt text-primary me-2"></i
                                             >Bắt Đầu: ${post.startDate}</small
