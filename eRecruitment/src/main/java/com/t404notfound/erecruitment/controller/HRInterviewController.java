@@ -6,6 +6,10 @@ package com.t404notfound.erecruitment.controller;
 
 import com.t404notfound.erecruitment.bean.UserDAO;
 import com.t404notfound.erecruitment.bean.UserDTO;
+import com.t404notfound.erecruitment.bean.application.ApplicationDAO;
+import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDAO;
+import com.t404notfound.erecruitment.bean.applicationpost.ApplicationPostDTO;
+import com.t404notfound.erecruitment.bean.applicationpost.PostStageDTO;
 import com.t404notfound.erecruitment.bean.interview.InterviewDAO;
 import com.t404notfound.erecruitment.bean.interview.InterviewDTO;
 import com.t404notfound.erecruitment.bean.interview.InterviewerDAO;
@@ -255,6 +259,26 @@ public class HRInterviewController extends HttpServlet {
                 int interviewID = Integer.parseInt(request.getParameter("interviewID"));
                 InterviewDAO interviewDAO = new InterviewDAO();
                 InterviewDTO interview = interviewDAO.getInterview(interviewID);
+
+                postID = interview.getPostID();
+                stageID = interview.getStageID();
+                
+                
+                ApplicationDAO appDAO = new ApplicationDAO();
+                ApplicationPostDAO postDAO = new ApplicationPostDAO();
+                
+                //get applicationID
+                int appID = interviewDAO.getApplicationID(userID, postID);
+                //get ApplicationID
+
+                // increase stage 
+                int nextStageID = postDAO.getIDOfNextStage(postID, stageID);
+                appDAO.approveToNextStage(nextStageID, appID);
+                // increase stage 
+
+                
+                
+                
                 String time = interview.getTime();
                 ParticipantDAO pDAO = new ParticipantDAO();
 

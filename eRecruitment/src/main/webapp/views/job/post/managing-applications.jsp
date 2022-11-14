@@ -100,10 +100,10 @@
                         <c:if test="${stage.stageID == 2}">
                             <!-- Form chua thong tin de tao buoi phong van Interview -->
                             <div class="col-3 m-1 text-center">
-                                <span class="btn btn-primary" onclick="document.getElementById('createInterviewForm').submit()">Tạo buổi phỏng vấn</span>
+                                <span class="btn btn-primary" onclick="document.getElementById('createInterviewForm${stageLoop.index}').submit()">Tạo buổi phỏng vấn</span>
                             </div>
                             <!--  -->
-                            <form class="col-2 m-3" action="interview" method="get" id="createInterviewForm">
+                            <form class="col-2 m-3" action="interview" method="get" id="createInterviewForm${stageLoop.index}">
                                 <input type="hidden" name="postID" value="${requestScope.post.postID}">
                                 <input type="hidden" name="stage" value="${stage.id}">
                                 <input class="d-none" type="submit" value="Tạo buổi phỏng vấn">
