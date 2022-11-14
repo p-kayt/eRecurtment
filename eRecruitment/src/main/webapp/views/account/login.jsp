@@ -67,7 +67,7 @@
 
                             <input type="hidden" name = "action" value="login">
 
-                            <a href="">Quên mật khẩu?</a>
+                           
                         </div>
                     </div>
                     <div class="form-row">
