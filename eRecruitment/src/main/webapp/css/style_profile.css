@@ -49,6 +49,14 @@ body{
     object-fit: cover;
 }
 
+.ava_img_icon_lg{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
 .ava_form{
     display: inline-block;
     /*    border: solid #00B074 1px;*/

@@ -168,15 +168,15 @@
                     </c:when>
                     <c:otherwise>
                         <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-between" role="alert">
-                           Chỉ ứng viên mới có thể xem trang này
+                            Chỉ ứng viên mới có thể xem trang này
                         </div>
                     </c:otherwise>
                 </c:choose>
             </section>
 
-
+            <jsp:include page="../footer/footer.jsp" />
         </div>
-        <jsp:include page="../footer/footer.jsp" />
+
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
            ><i class="bi bi-arrow-up"></i
             ></a>

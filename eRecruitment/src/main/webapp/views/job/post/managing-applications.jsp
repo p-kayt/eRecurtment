@@ -83,43 +83,47 @@
             <!-- Content Start -->
             <c:if test="${not empty requestScope.post.stageList and not empty requestScope.appList}">
                 <c:forEach var="stage" items="${requestScope.post.stageList}" varStatus="stageLoop">
-                    <div>
-                        <div>
-                            <h3>
-                                Vòng: 
-                                <c:if test="${stage.stageID == 1}">CV Applying</c:if>
-                                <c:if test="${stage.stageID == 2}">Interview</c:if>
-                                <c:if test="${stage.stageID == 3}">Finish</c:if>
-                                <c:if test="${stage.stageID == 4}">Final Evaluation</c:if>
-                                </h3>
+                    <div class="d-flex flex-column m-auto col-10 border border-1 shadow p-4 pb-5 mb-3">
+                        <div  class="d-flex flex-column mb-2">
+                            <div class="m-auto fs-4 fw-bold">
+                                <span>Vòng</span>
+                                <c:if test="${stage.stageID == 1}"><span>CV Applying</span></c:if>
+                                <c:if test="${stage.stageID == 2}"><span>Interview</span></c:if>
+                                <c:if test="${stage.stageID == 3}"><span>Finish</span></c:if>
+                                <c:if test="${stage.stageID == 4}"><span>Final Evaluation</span></c:if>
 
-                            </div>
-                            <div>
-                                <p>${stage.description}</p>
+                                </div>
+                                <p class="text-muted m-auto">${stage.description}</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-center">
+                            <c:if test="${stage.stageID == 2}">
+                                <!-- Form chua thong tin de tao buoi phong van Interview -->
+                                <div class="col-3 m-1 text-center">
+                                    <span class="btn btn-primary" onclick="document.getElementById('createInterviewForm${stageLoop.index}').submit()">Tạo buổi phỏng vấn</span>
+                                </div>
+                                <!--  -->
+                                <form action="interview" method="get" id="createInterviewForm${stageLoop.index}">
+                                    <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                    <input type="hidden" name="stage" value="${stage.id}">
+                                    <input class="d-none" type="submit" value="Tạo buổi phỏng vấn">
+                                </form>
+                            </c:if>
+
+                            <c:if test="${not empty stage.interviewList}">
+                                <form class="col-3 m-1 text-center" action="interview" target="_blank" method="post">
+                                    <input type="hidden" name="action" value="showInterviewByPostStage">
+                                    <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                    <input type="hidden" name="stage" value="${stage.id}">
+                                    <input class="btn btn-info" type="submit" value="Danh sách phỏng vấn">
+                                </form>
+                            </c:if>
+
                         </div>
                         <c:if test="${stage.stageID == 2}">
-                            <!-- Form chua thong tin de tao buoi phong van Interview -->
-                            <div class="col-3 m-1 text-center">
-                                <span class="btn btn-primary" onclick="document.getElementById('createInterviewForm${stageLoop.index}').submit()">Tạo buổi phỏng vấn</span>
-                            </div>
-                            <!--  -->
-                            <form class="col-2 m-3" action="interview" method="get" id="createInterviewForm${stageLoop.index}">
-                                <input type="hidden" name="postID" value="${requestScope.post.postID}">
-                                <input type="hidden" name="stage" value="${stage.id}">
-                                <input class="d-none" type="submit" value="Tạo buổi phỏng vấn">
-                            </form>
+                            <p>Ứng viên cần phải được thêm vào các buổi phỏng vấn đã tạo để có thể xét duyệt và xem đánh giá của ứng viên</p>
                         </c:if>
-
-                        <c:if test="${not empty stage.interviewList}">
-                            <form action="interview" target="_blank" method="post">
-                                <input type="hidden" name="action" value="showInterviewByPostStage">
-                                <input type="hidden" name="postID" value="${requestScope.post.postID}">
-                                <input type="hidden" name="stage" value="${stage.id}">
-                                <input class="btn btn-info" type="submit" value="Danh sách phỏng vấn">
-                            </form>
-                        </c:if>
-                        <div>
-                            <table>
+                        <div class="d-flex flex-column justify-content-center">
+                            <table class="table table-hover table-bordered">
                                 <thead>
                                     <tr class="col-12 rounded-9 justify-content-around">
                                         <th scope="col" class="col-1 text-center align-middle">ID</th>
@@ -320,9 +324,10 @@
                             </table>
                         </div>
                     </div>
-                    </br>
                 </c:forEach>
-                <div>
+
+
+                <div class="d-flex flex-column m-auto col-10 border border-1 shadow p-4 pb-5 mb-3">
                     <c:set var = "inProgress" value = "${0}"/>
                     <c:set var = "success" value = "${0}"/>
                     <c:set var = "fail" value = "${0}"/>
@@ -334,23 +339,37 @@
                         <c:if test="${app.statusID == 4}"><c:set var = "success" value = "${success + 1}"/></c:if>
                     </c:forEach>
 
-                    <div>
+                    <div class="m-auto">
                         <h3>Thống Kê Tuyển Dụng</h3>
                     </div>
-                    <div>
-                        <p>Tổng Số Ứng Viên: ${requestScope.appList.size()}</p>
-                    </div>
-                    <div>
-                        <p>Đang Tuyển Dụng: ${inProgress}</p>
-                    </div>
-                    <div>
-                        <p>Đậu: ${success}</p>
-                    </div>
-                    <div>
-                        <p>Rớt: ${fail}</p>
-                    </div>
-                    <div>
-                        <p>Hủy: ${cancel}</p>
+                    <div class="d-flex flex-column m-auto col-10 border border-1 shadow p-4">
+                        <div class="d-flex flex-row justify-content-around m-2">
+                            <label class="col-2 fw-bold">Tổng Số Ứng Viên</label>
+
+                            <span class="col-3 text-center">${requestScope.appList.size()}</span>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around m-2">
+                            <label class="col-2 fw-bold">Đang Tuyển Dụng</label>
+
+                            <span class="col-3 text-center">${inProgress}</span>
+                        </div>
+                        <div class="d-flex flex-row justify-content-around m-2">
+                            <label class="col-2 fw-bold">Đậu</label>
+
+                            <span class="col-3 text-center">${success}</span>
+                        </div>
+                        <div class="d-flex flex-row justify-content-around m-2">
+                            <label class="col-2 fw-bold">Rớt</label>
+
+                            <span class="col-3 text-center">${fail}</span>
+                        </div>
+                        <div class="d-flex flex-row justify-content-around m-2">
+                            <label class="col-2 fw-bold">Hủy</label>
+
+                            <span class="col-3 text-center">${cancel}</span>
+                        </div>
+
                     </div>
                 </div>
             </c:if>
@@ -365,10 +384,14 @@
                 </div>
             </c:if>
             <!-- Content End -->
-
+            <jsp:include page="../../footer/footer.jsp" />
         </div>
-        <!-- Footer Start -->
-        <jsp:include page="../../footer/footer.jsp" />
-        <!-- Footer End -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+           ><i class="bi bi-arrow-up"></i
+            ></a>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     </body>
 </html>

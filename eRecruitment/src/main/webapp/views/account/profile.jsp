@@ -17,6 +17,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title><%=user.getFirstName()%> <%=user.getLastName()%></title>
+        <meta content="" name="keywords" />
+        <meta content="" name="description" />
+
         <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -41,8 +44,10 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/bootstrap.min.css" rel="stylesheet" />
+
+        <!-- Template Stylesheet -->
         <link rel="stylesheet" href="css/style_profile.css"/>
-        <!--        <link href="css/style-dltemp.css" rel="stylesheet"/>-->
+        <link href="css/style-dltemp.css" rel="stylesheet" />
     </head>
     <body>
         <div class="container-xxl bg-white p-0">
@@ -58,7 +63,7 @@
             <!--Show CV-->
             <c:if test="${not empty user}">
                 <div class="d-flex flex-row mt-4 justify-content-center">
-                    
+
                     <div class="col-3">
                         <div class="profile-img d-flex flex-column col-12 h-auto border border-1 rounded rounded-2">
                             <div class="user_name">
@@ -170,20 +175,20 @@
                     </div>
                     <div class="col-9 d-flex flex-column justify-content-between">
 
-                    <c:if test="${not empty (requestScope.msg)}">
-                        <div class="alert alert-secondary alert-dismissible fade show d-flex justify-content-between" role="alert">
-                            ${requestScope.msg}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    </c:if>
+                        <c:if test="${not empty (requestScope.msg)}">
+                            <div class="alert alert-secondary alert-dismissible fade show d-flex justify-content-between" role="alert">
+                                ${requestScope.msg}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </c:if>
                         <c:if test="${user.getUserRole() == 1}">
                             <div class="col-10 m-auto">
                                 <div class="d-flex flex-row justify-content-between">
-                                    <h2 class="text-primary col-4">CV của tôi</h2>
+                                    <h3 class="text-primary col-4">CV của tôi</h3>
                                     <c:if test = "${not empty cv}">
-                                        <form class="col-2" action="cv" method = "post">
+                                        <form class="col-3" action="cv" method = "post">
                                             <input type="hidden" name="action" value="editMyCV">
                                             <button class="btn btn-primary m-3" type="submit">Chỉnh sửa CV</button>
                                         </form>
@@ -284,9 +289,9 @@
                 </script>
             </c:if>
 
-
+            <jsp:include page="../footer/footer.jsp" />
         </div>
-        <jsp:include page="../footer/footer.jsp" />
+
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i>
         </a>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

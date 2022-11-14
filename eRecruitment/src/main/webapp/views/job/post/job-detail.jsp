@@ -132,13 +132,20 @@
                                             </c:forEach>
                                     </ul>
                                 </div>
-                                <div class="mb-5">
-                                    <form action="./post" method="post">
-                                        <input type="hidden" name="action" value="apply-for-post">
-                                        <input type="hidden" name="postID" value="${requestScope.post.postID}">
-                                        <input class="btn btn-primary" type="submit" value="Ứng Tuyển Ngay">
-                                    </form>
-                                </div>
+                                <c:if test="${requestScope.post.statusID == 3}">  
+                                    <div class="mb-5">
+                                        <form action="./post" method="post">
+                                            <input type="hidden" name="action" value="apply-for-post">
+                                            <input type="hidden" name="postID" value="${requestScope.post.postID}">
+                                            <input class="btn btn-primary" type="submit" value="Ứng Tuyển Ngay">
+                                        </form>
+                                    </div>
+                                </c:if>
+                                <c:if test="${requestScope.post.statusID != 3}">  
+                                    <div class="mb-5">
+                                        <h3 class="mb-3">Bài Đăng Đang Ở Trạng Thái Không Nhận Ứng Viên</h3>
+                                    </div>
+                                </c:if>
                             </div>
 
                             <div class="col-lg-4">
@@ -197,9 +204,10 @@
             </c:if>
 
             <!-- Back to Top -->
-            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+            <jsp:include page="../../footer/footer.jsp" />
         </div>
-        <jsp:include page="../../footer/footer.jsp" />
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

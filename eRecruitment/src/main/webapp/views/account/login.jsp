@@ -23,7 +23,7 @@
         <link rel="stylesheet" href="css/style_lgin.css">
     </head>
     <body>
-        <div class="container bg-white p-0">
+        <div class="container-xxl bg-white p-0">
             <c:if test="${empty sessionScope.user}">
                 <jsp:include page="../header/header_loginbtn.jsp" />
             </c:if>
@@ -67,7 +67,7 @@
 
                             <input type="hidden" name = "action" value="login">
 
-                            <a href="">Quên mật khẩu?</a>
+                           
                         </div>
                     </div>
                     <div class="form-row">

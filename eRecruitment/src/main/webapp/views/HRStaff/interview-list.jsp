@@ -157,15 +157,15 @@
                     <c:otherwise>
                         <div class="alert alert-warning alert-dismissible fade show" role="alert">
                             Bạn không được phép truy cập trang web này
-                           
+
                         </div>
 
                     </c:otherwise>
                 </c:choose>
             </section>
-
+            <jsp:include page="../footer/footer.jsp" />
         </div>
-        <jsp:include page="../footer/footer.jsp" />
+
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"

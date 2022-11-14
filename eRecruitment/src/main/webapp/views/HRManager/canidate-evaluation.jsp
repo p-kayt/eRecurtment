@@ -48,6 +48,8 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style-dltemp.css" rel="stylesheet" />
+
+        <link rel="stylesheet" href="css/style_profile.css"/>
     </head>
 
     <body>
@@ -62,71 +64,101 @@
             <section>
                 <c:choose>
                     <c:when test = "${user.userRole == 2 || user.userRole == 3}">
+                        <div class="container-xxl py-5 bg-dark page-header mb-5">
+                            <div class="container my-5 pt-5 pb-4">
+                                <h1 class="display-3 text-white mb-3 animated slideInDown">Đánh giá</h1>
+                                <nav aria-label="breadcrumb">
+                                    <!--                                                    <ol class="breadcrumb text-uppercase">
+                                                                                            <li class="breadcrumb-item"><a href="job?action=position-list">Danh sách vị trí</a></li>
+                                                                                            <li class="breadcrumb-item text-white active" aria-current="page">Chi tiết</li>
+                                                                                        </ol>-->
+                                </nav> 
+                            </div>
+                        </div>
                         <c:choose>
                             <c:when test= "${not empty candidate}">
                                 <div class="d-flex flex-column m-2 p-2  border border-1">
-                                    <p>Ứng viên</p>
-                                    <div >
-                                        <div>
-                                            <div >
-                                                <img class="ava_img" src= "${candidate.getAvatarURL() != null ? candidate.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
-                                            </div>
-                                            <div>
-                                                <p>${candidate.getFirstName()} ${candidate.getLastName()}</p>
-                                            </div>
-                                            <div \>
-                                                <a href = "job?action=view-candidate-cv&userID=${candidate.userID}" target="_blank">Xem CV</a>
-                                            </div>
+                                    <div class="d-flex flex-row justify-content-between align-middle">
+                                        <label class="col-3 m-2 px-3 fw-bold fs-5">Ứng viên</label>
+                                    </div>
+
+                                    <div class="col-10 d-flex flex-row mx-4 text-center mb-3">
+                                        <div class="col-3 d-flex justify-content-center">
+                                            <img class="ava_img_icon_lg border border-1" src= "${candidate.getAvatarURL() != null ? candidate.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                        </div>
+                                        <div class="col-7 text-start align-center m-auto">
+                                            <p class="my-auto">${candidate.getFirstName()} ${candidate.getLastName()}</p>
+                                        </div>
+
+                                        <div class="col-2 align-center m-auto">
+                                            <a class="my-auto btn btn-primary" href = "job?action=view-candidate-cv&userID=${candidate.userID}" target="_blank">Xem CV</a>
                                         </div>
                                     </div>
 
-                                    <p>Đánh giá </p>
 
-                                    <div>
-                                        <c:forEach items="${stageList}" var="s" varStatus="loop">
-                                            <p>Vòng ${s.split(";")[1]}</p>
+                                    <div class="d-flex flex-column m-2 p-3 border border-1">
+                                        <div class="d-flex flex-row justify-content-between align-middle">
+                                            <label class="col-3 m-1 fw-bold fs-5">Đánh giá</label>
+                                        </div>
 
-                                            <c:forEach items="${listInterviewer}" begin="${loop.index}" end="${loop.index}" step="1" var="lI">
-
-                                                <c:choose>
-
-                                                    <c:when test = "${empty lI}" >
-                                                        <h1>Không tìm thấy người phỏng vấn ở vòng này</h1>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <c:forEach items="${lI}" var="i" varStatus="iLoop">
-
-                                                            <div >
-                                                                <img class="img-thumbnail m-2" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                        <div>
+                                            <c:forEach items="${stageList}" var="s" varStatus="loop">
+                                                <div class="col-11 row g-2 m-1">
+                                                    <label class="col-2 fw-bold fs-5 text-dark" for="stageID">Vòng phỏng vấn</label>
+                                                    <span class="col-4 text-dark align-middle">${s.split(";")[1]}</span>
+                                                    <span class="col-4"></span>
+                                                </div>
+                                                <c:forEach items="${listInterviewer}" begin="${loop.index}" end="${loop.index}" step="1" var="lI">
+                                                    <c:choose>
+                                                        <c:when test = "${empty lI}" >
+                                                            <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-between" role="alert">
+                                                                Không tìm thấy người phỏng vấn ở vòng này
                                                             </div>
-                                                            <div >
-                                                                <p>${i.getFirstName()} ${i.getLastName()}</p>
-                                                            </div>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:forEach items="${lI}" var="i" varStatus="iLoop">
 
-                                                            <c:forEach items="${evaluation}" begin="${loop.index}" end="${loop.index}" step="1" var="lE">
-                                                                <div>
-                                                                    <c:forEach items="${lE}" begin="${iLoop.index}" end="${iLoop.index}" step="1" var="e">
-                                                                        <c:choose>
-                                                                            <c:when test = "${e == null}">
-                                                                                <p>Chưa có đánh giá</p>
-                                                                            </c:when>
-                                                                            <c:otherwise>
-                                                                                <p>Đánh giá</p>
-                                                                                <textarea cols="50" rows="4" disabled>${e.evaluationDescription}</textarea>
-                                                                                <p>Điểm: ${e.score}</p>
-                                                                            </c:otherwise>
-                                                                        </c:choose>    
+                                                                <div class="d-flex flex-row justify-content-center align-center border border-2 m-1 bg-light">
+                                                                    <div class="col-11 d-flex flex-row justify-content-between my-auto">
 
-                                                                    </c:forEach>
+                                                                        <div class="col-2 d-flex justify-content-center">
+                                                                            <img class="ava_img_icon m-2" src= "${i.getAvatarURL() != null ? i.getAvatarURL() : 'image/avatar/default.png'}" alt="avatar" />
+                                                                        </div>
+                                                                        <div class="col-4 d-flex flex-column text-start">
+                                                                            <span class="col-12 align-center m-1 fw-bold my-auto">${i.getFirstName()} ${i.getLastName()}</span>
+                                                                        </div>
+
+                                                                        <c:forEach items="${evaluation}" begin="${loop.index}" end="${loop.index}" step="1" var="lE">
+                                                                            <div class="col-6 d-flex flex-row">
+                                                                                <c:forEach items="${lE}" begin="${iLoop.index}" end="${iLoop.index}" step="1" var="e">
+                                                                                    <c:choose>
+                                                                                        <c:when test = "${e == null}">
+                                                                                            <p>Chưa có đánh giá</p>
+                                                                                        </c:when>
+                                                                                        <c:otherwise>
+                                                                                            <div class="col-8 d-flex flex-column m-1 align-middle">
+                                                                                                <label class="fw-bold text-dark m-1" for="creator">Đánh giá</label>
+                                                                                                <textarea class="border-0 bg-transparent" cols="40" rows="3"  disabled>${e.evaluationDescription}</textarea>
+                                                                                            </div>
+                                                                                            <div class=" col-4 d-flex flex-column m-1 align-items-center ">
+                                                                                                <label class="fw-bold text-dark m-1 " for ="score" >Điểm</label>
+                                                                                                <span class="m-auto ">${e.score}</span>
+                                                                                            </div>
+
+                                                                                        </c:otherwise>
+                                                                                    </c:choose>    
+
+                                                                                </c:forEach>
+                                                                            </div>
+                                                                        </c:forEach>
+                                                                    </div>
                                                                 </div>
                                                             </c:forEach>
-                                                        </c:forEach>
-                                                    </c:otherwise>
-                                                </c:choose>
-
-
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
                                             </c:forEach>
-                                        </c:forEach>
+                                        </div>
                                     </div>
                                 </div>
                             </c:when>    
@@ -140,9 +172,9 @@
                     </c:otherwise>
                 </c:choose>
             </section>
-
+            <jsp:include page="../footer/footer.jsp" />
         </div>
-        <jsp:include page="../footer/footer.jsp" />
+
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"

@@ -159,7 +159,7 @@
                                         Xóa bài đăng
                                     </button>
                                 </div>
-                                
+
                                 <c:if test="${requestScope.post.statusID == 4 || requestScope.post.statusID == 3}">
                                     <div class="col-3 m-1 text-center">
                                         <span class="btn btn-primary" onclick="document.getElementById('managing-applications').submit()">Quản lý ứng tuyển</span>
@@ -429,8 +429,9 @@
                         </div>-->
 
 
+            <jsp:include page="../../footer/footer.jsp" />
         </div>
-        <jsp:include page="../../footer/footer.jsp" />
+
 
 
         <!-- Back to Top -->

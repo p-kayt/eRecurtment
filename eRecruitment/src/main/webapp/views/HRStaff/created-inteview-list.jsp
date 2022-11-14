@@ -173,9 +173,9 @@
                     </c:otherwise>
                 </c:choose>
             </section>
-
+            <jsp:include page="../footer/footer.jsp" />
         </div>
-        <jsp:include page="../footer/footer.jsp" />
+
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"

@@ -72,19 +72,19 @@
                 <div class="d-flex flex-column w-75 m-5 m-auto border border-1">
                     <div class="d-flex flex-row justify-content-center m-2">
                         <label class="col-2" for="name">Tên</label>
-                        <input class="col-4" type="text" id="name" name="name" value="" placeholder="Nhập tên vị trí..."/>
+                        <input class="col-4" type="text" id="name" name="name" value="" placeholder="Nhập tên vị trí..." required/>
                         <span class="col-4"></span>
                     </div>
 
                     <div class="d-flex flex-row justify-content-center m-2">
                         <label class="col-2" for="description">Mô Tả</label>
-                        <textarea class="col-8" rows="5" type="text" id="description" name="description" value="" placeholder="Nhập mô tả vị trí..."></textarea>
+                        <textarea class="col-8" rows="5" type="text" id="description" name="description" value="" placeholder="Nhập mô tả vị trí..." required></textarea>
                     </div>
 
                     <div class="d-flex flex-row justify-content-center m-2">
 
                         <label class="col-2" for="quantity">Số Lượng Tuyển</label>
-                        <input class="col-4" type="number" id="quantity" name="quantity" value="" min="0" max="999999" placeholder="Nhập số lượng tuyển"/>
+                        <input class="col-4" type="number" id="quantity" name="quantity" value="" min="0" max="999999" placeholder="Nhập số lượng tuyển" required=""/>
                         <span class="col-4"></span>
                     </div>
 
@@ -112,8 +112,20 @@
                     </div>
                 </div>
             </form>
+            <jsp:include page="../../footer/footer.jsp" />
         </div>
-        <jsp:include page="../../footer/footer.jsp" />
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" 
+           ><i class="bi bi-arrow-up"></i
+            ></a>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+        <!--Javascript -->
+        <script src="js/main.js"></script>
         <script type="text/javascript">
             function getCurrentDate() {
                 var currentDate = new Date().toJSON().slice(0, 10);
@@ -121,7 +133,7 @@
             }
             var createdDate = document.getElementById("date");
             createdDate.value = getCurrentDate();
-            
+
         </script>
     </body>
 </html>

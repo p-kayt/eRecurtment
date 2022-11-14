@@ -16,64 +16,106 @@
         <title>Chi tiết ứng tuyển</title>
     </head>
     <body>
-        <c:if test="${empty sessionScope.user}">
-            <jsp:include page="../../header/header_loginbtn.jsp" />
-        </c:if>
-
-        <c:if test="${not empty sessionScope.user}">
-            <jsp:include page="../../header/header_logoutbtn.jsp" />
-        </c:if>
-
-        <%boolean check = false;%>
-        <h2>Position: ${requestScope.post.positionName}</h2>
-        <p>Apply Date: ${requestScope.application.applyDate}</p>
-        <c:forEach var="i"  items="${requestScope.stageList}" varStatus="loop">
-
-            <c:if test="${i.id != requestScope.application.stageID}">
-                <c:if test="<%=!check%>">
-                    <p>${i.description}: <span style="color: green">Đậu</span></p>
-                </c:if>
+        <div class="container-xxl bg-white p-0" >
+            <c:if test="${empty sessionScope.user}">
+                <jsp:include page="../../header/header_loginbtn.jsp" />
             </c:if>
-            <c:if test="${i.id == requestScope.application.stageID}">                
-                <c:if test="${requestScope.application.statusID == 1}">
-                    <p>${i.description}: <span style="color: greenyellow">Đang diễn ra</span></p>
-                </c:if>
-                <c:if test="${requestScope.application.statusID == 2}">
-                    <p>${i.description}: <span style="color: gray">Đã huỷ</span></p>
-                </c:if>
-                <c:if test="${requestScope.application.statusID == 3}">
-                    <p>${i.description}: <span style="color: red">Rớt</span></p>
-                </c:if>
-                <c:if test="${requestScope.application.statusID == 4}">
-                    <p>${i.description}: <span style="color: green">Đậu</span></p>
-                </c:if>
-                <%check = true;%>
+
+            <c:if test="${not empty sessionScope.user}">
+                <jsp:include page="../../header/header_logoutbtn.jsp" />
             </c:if>
-            <c:if test="${i.id != requestScope.application.stageID}">
-                <c:if test="<%=check%>">
-                    <p>${i.description}: <span style="color: gray">Chưa diễn ra</span></p>
-                </c:if>
-            </c:if>
-        </c:forEach>
+
+            <%boolean check = false;%>
+            <div class="d-flex flex-column justify-content-center align-middle m-4 p-5 border border-2 shadow">
+                <div class="row g-2 m-auto p-3 fs-4 fw-bold text-dark">
+                    <label class="col-auto ">Vị trí</label>
+                    <span class="col-auto">${requestScope.post.positionName}</span>
+                </div>
+                <div class="d-flex flex-column pb-5">
 
 
 
-        <c:if test="${requestScope.application.statusID == 1}">
-            <form action="application" method="get" onsubmit="cancelAlert()">
-                <input name="action" value="cancel-application" style="display: none"></input>
-                <input name="appID" value="${requestScope.application.id}" style="display: none"></input>
-                <button class="btn btn-danger" type="submit">Huỷ ứng tuyển</button>
-            </form>
-        </c:if>
-        <jsp:include page="../../footer/footer.jsp" />
-    </body>
-    
-    <!--Javascript -->
+                    <div class="row g-2 m-1 justify-content-around">
+                        <label class="col-4 fw-bold text-dark">Ngày ứng tuyển</label>
+                        <p class="col-4">${requestScope.application.applyDate}</p>
+                    </div>
+
+                    <c:forEach var="i"  items="${requestScope.stageList}" varStatus="loop">
+                        <div class="row g-2 m-1 justify-content-around">
+                            <c:if test="${i.id != requestScope.application.stageID}">
+                                <c:if test="<%=!check%>">
+                                    <label class="col-4 fw-bold text-dark">${i.description}</label>
+                                    <p class="col-4">Đậu</p>
+                                </c:if>
+                            </c:if>
+                        </div>
+                        <div class="row g-2 m-1 justify-content-around">
+                            <c:if test="${i.id == requestScope.application.stageID}">                
+                                <c:if test="${requestScope.application.statusID == 1}">
+                                    <label class="col-4 fw-bold text-dark">${i.description}</label>
+                                    <p class="col-4 text-warning">Đang diễn ra</p>
+                                </c:if>
+                                <c:if test="${requestScope.application.statusID == 2}">
+                                    <label class="col-4 fw-bold text-dark">${i.description}</label>
+                                    <p class="col-4 text-dark">Đã huỷ</p>
+
+                                </c:if>
+                                <c:if test="${requestScope.application.statusID == 3}">
+                                    <label class="col-4 fw-bold text-dark">${i.description}</label>
+                                    <p class="col-4 text-danger">Rớt</p>
+                                </c:if>
+                                <c:if test="${requestScope.application.statusID == 4}">
+                                    <label class="col-4 fw-bold text-dark">${i.description}</label>
+                                    <p class="col-4 text-primary">Đậu</p>
+
+                                </c:if>
+                                <%check = true;%>
+                            </c:if>
+
+                            <c:if test="${i.id != requestScope.application.stageID}">
+                                <c:if test="<%=check%>">
+                                    <label class="col-4 fw-bold text-dark">${i.description}</label>
+                                    <p class="col-4 text-dark">Chưa diễn ra</p>
+                                </c:if>
+                            </c:if>
+                        </div>
+                    </c:forEach>
+
+
+
+                    <c:if test="${requestScope.application.statusID == 1}">
+                        <form class="m-auto p-3" action="application" method="get" onsubmit="cancelAlert()">
+                            <input name="action" value="cancel-application" style="display: none"></input>
+                            <input name="appID" value="${requestScope.application.id}" style="display: none"></input>
+                            <button class="btn btn-danger" type="submit">Huỷ ứng tuyển</button>
+                        </form>
+                    </c:if>
+                </div>
+            </div>
+            <jsp:include page="../../footer/footer.jsp" />
+        </div>
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" 
+           ><i class="bi bi-arrow-up"></i
+            ></a>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+        <!--Javascript -->
         <script src="js/main.js"></script>
         <script>
-            function cancelAlert() {
-                alert("Bạn đã huỷ ứng tuyển thành công, hãy xem lại trong tab đã huỷ!");
-            }
+                            function cancelAlert() {
+                                alert("Bạn đã huỷ ứng tuyển thành công, hãy xem lại trong tab đã huỷ!");
+                            }
 
         </script>
+    </body>
+
+
 </html>
