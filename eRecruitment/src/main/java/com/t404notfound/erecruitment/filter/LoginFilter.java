@@ -116,10 +116,9 @@ public class LoginFilter implements Filter {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             HttpSession session = httpRequest.getSession();
-            String url = httpRequest.getServletPath();
-            boolean checkLogin = false;
+            String url = httpRequest.getServletPath().toLowerCase();
 
-             if (session.getAttribute("user") != null) {
+            if (session.getAttribute("user") != null) {
                 if (url.contains("login") || url.contains("signup")) {
                     session.setAttribute("url", url);
                     httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
@@ -128,7 +127,10 @@ public class LoginFilter implements Filter {
                 }
             } else {
 
-                if (url.contains("profile")) {
+                if (url.contains("profile") || url.contains("interview")
+                        || url.contains("admin") || url.toLowerCase().contains("application")
+                        || url.contains("cv") || url.contains("evaluate")
+                        || url.contains("job") || url.contains("manager")) {
                     session.setAttribute("url", url);
                     httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
                 } else {
@@ -136,10 +138,6 @@ public class LoginFilter implements Filter {
                 }
 
             }
-
-            
-        
-
             /* lọc trang web khi đã login */
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,
