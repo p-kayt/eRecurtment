@@ -58,7 +58,7 @@
 
                                     <div class="cv-element">
                                         <label for="file-input">
-                                            <img id="output" class="ava_img" src="${cv.avatar != null ? cv.avatar : 'image/avatar/default.png'}" alt="avatar"/>
+                                            <img id="output" class="ava_img" src="${(cv.getAvatar() != null && cv.getAvatar().trim() != '') ? cv.avatar : 'image/avatar/default.png'}" alt="avatar"/>
                                     </label>
                                 </div>
 

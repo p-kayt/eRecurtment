@@ -37,7 +37,7 @@
                     <div class="cv-column ">
                         <div class="cv-element">
                             <!-- Avatar -->
-                            <img src="${cv.getAvatar() != null ? cv.getAvatar() : 'image/avatar/default.png'}"/>
+                            <img src="${(cv.getAvatar() != null && cv.getAvatar().trim() != '') ? cv.getAvatar() : 'image/avatar/default.png'}"/>
                         </div>
                         <div class="cv-element ">
                             <h3> Introduction </h3>
