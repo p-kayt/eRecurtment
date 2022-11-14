@@ -60,22 +60,21 @@
                 <jsp:include page="../header/header_logoutbtn.jsp" />
             </c:if>
 
-
             <ul class="nav nav-tabs bg-dark row pt-2 justify-content-between mx-auto">
                 <li class="nav-item col-auto">
-                    <a class="nav-link  py-3 fw-bold border-0"  href="./interview?action=showCreatedInterview">Các cuộc phỏng vấn đã tạo</a>
+                    <a class="nav-link  py-3 fw-bold border-0 ${action == 'showCreatedInterview' ? 'active' :'' }"  href="./interview?action=showCreatedInterview">Các cuộc phỏng vấn đã tạo</a>
                 </li>
                 <li class="nav-item col-auto">
-                    <a class="nav-link py-3 fw-bold border-0 active" aria-current="page" href="./interview?action=showPendingInterview">Các cuộc phỏng vấn đang chờ</a>
+                    <a class="nav-link py-3 fw-bold border-0 ${action == 'showPendingInterview' ? 'active' :'' }" aria-current="page" href="./interview?action=showPendingInterview">Các cuộc phỏng vấn đang chờ</a>
                 </li>
                 <li class="nav-item col-auto">
-                    <a class="nav-link py-3 fw-bold border-0" href="./interview?action=showInterviewHisory">Các cuộc phỏng vấn đã xảy ra</a>
+                    <a class="nav-link py-3 fw-bold border-0 ${action == 'showInterviewHisory' ? 'active' :'' }" href="./interview?action=showInterviewHisory">Các cuộc phỏng vấn đã xảy ra</a>
                 </li>
                 <li class="nav-item col-auto">
-                    <a class="nav-link py-3 fw-bold border-0" href="./common-interview?action=showInterviewerPendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
+                    <a class="nav-link py-3 fw-bold border-0 ${action == 'showInterviewerPendingInterview' ? 'active' :'' }" href="./common-interview?action=showInterviewerPendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
                 </li>
                 <li class="nav-item col-auto">
-                    <a class="nav-link py-3 fw-bold border-0" href="./common-interview?action=showInterviewerInterviewHistory">Lịch sử phỏng vấn</a>
+                    <a class="nav-link py-3 fw-bold border-0 ${action == 'showInterviewerInterviewHistory' ? 'active' :'' }" href="./common-interview?action=showInterviewerInterviewHistory">Lịch sử phỏng vấn</a>
                 </li>
             </ul>
 
