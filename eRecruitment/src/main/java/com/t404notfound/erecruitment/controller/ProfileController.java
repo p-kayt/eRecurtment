@@ -117,7 +117,6 @@ public class ProfileController extends HttpServlet {
                     }
                 } else if (action.equalsIgnoreCase("updateAvatar")) {
 
-//                    request.setAttribute("infor", "Hello");
                     //Lấy đường dẫn tương đối
                     String dir;
 
@@ -143,11 +142,12 @@ public class ProfileController extends HttpServlet {
                     //Lấy đường dẫn tương đối
 
                     Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
-                    //tạo file .png và ghi đè img vào
-                    String fileName = "avatar";
-                    File file = File.createTempFile(fileName, ".png", image);
-                    //tạo file .png và ghi đè img vào
+
                     if (filePart.getSize() > 0) {
+                        //tạo file .png và ghi đè img vào
+                        String fileName = "avatar";
+                        File file = File.createTempFile(fileName, ".png", image);
+                        //tạo file .png và ghi đè img vào
                         try {
 
                             try ( InputStream input = filePart.getInputStream()) {
@@ -169,11 +169,14 @@ public class ProfileController extends HttpServlet {
                         //rename img
                     }
 //                request.setAttribute("path", file.getAbsolutePath());
-                    String url = "image/avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/avatar.png";
-                    if (dao.changeAvatar(url, user.getUserID())) {
-                        user.setAvatarURL(url);
-                        session.setAttribute("user", user);
+                    if (user.getAvatarURL() != null && user.getAvatarURL().contains("image/avatar")) {
+                        String url = "image/avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/avatar.png";
+                        if (dao.changeAvatar(url, user.getUserID())) {
+                            user.setAvatarURL(url);
+                            session.setAttribute("user", user);
+                        }
                     }
+
                 }
             }
 //            CVDAO cvdao = new CVDAO();
@@ -186,10 +189,10 @@ public class ProfileController extends HttpServlet {
         CVDTO cvdto = new CVDTO();
         cvdto = cvdao.loadCVByUserID(user.getUserID());
         request.setAttribute("cv", cvdto);
-    
+
         // Hoa: message for Applying for a job
         // But user role is not a CANDIDATE
-        String msg = (String)request.getAttribute("msg");
+        String msg = (String) request.getAttribute("msg");
         request.setAttribute("msg", msg);
         //
         request.getRequestDispatcher("/views/account/profile.jsp").forward(request, response);

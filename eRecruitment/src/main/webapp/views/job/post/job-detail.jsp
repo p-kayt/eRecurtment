@@ -74,6 +74,7 @@
             </div>
             <!-- Header End -->
             <c:if test="${not empty requestScope.msg}">
+                
                 <div class="alert alert-secondary alert-dismissible fade show d-flex justify-content-between" role="alert">
                     ${requestScope.msg}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -220,8 +221,8 @@
         <script src="js/main.js"></script>
 
         <!-- script for displaying element -->
-        <script>
-
-        </script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
 </html>

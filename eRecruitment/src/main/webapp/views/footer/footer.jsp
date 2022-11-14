@@ -19,54 +19,47 @@
       >
         <div class="container py-5">
           <div class="row g-5">
-            <div class="col-lg-3 col-md-6">
-              <h5 class="text-white mb-4">Công ty</h5>
-              <a class="btn btn-link text-white-50" href="">About Us</a>
-              <a class="btn btn-link text-white-50" href="">Contact Us</a>
-              <a class="btn btn-link text-white-50" href="">Our Services</a>
-              <a class="btn btn-link text-white-50" href="">Privacy Policy</a>
-              <a class="btn btn-link text-white-50" href=""
-                >Terms & Condition</a
-              >
+              <div class="col-lg-1 col-md-1">
             </div>
-            <div class="col-lg-3 col-md-6">
-              <h5 class="text-white mb-4">Links</h5>
-              <a class="btn btn-link text-white-50" href="">About Us</a>
-              <a class="btn btn-link text-white-50" href="">Contact Us</a>
-              <a class="btn btn-link text-white-50" href="">Our Services</a>
-              <a class="btn btn-link text-white-50" href="">Privacy Policy</a>
-              <a class="btn btn-link text-white-50" href=""
-                >Terms & Condition</a
-              >
+            <div class="col-lg-5 col-md-5">
+              <h5 class="text-white mb-4">Về dự án</h5>
+              <a class="btn btn-link text-white-50" href="https://docs.google.com/document/d/14Ahol4eYUBSTWYzbWIID3rXD79An56UN">Project introduction</a>
+              <a class="btn btn-link text-white-50" href="https://i0.wp.com/learn.onemonth.com/wp-content/uploads/2017/08/1-10.png?fit=845%2C503&ssl=1">About Us</a>
+              <a class="btn btn-link text-white-50" href="https://gitlab.com/404notfound-mhtdt/erecruitment">Project source code</a>
+              <a class="btn btn-link text-white-50" href="https://docs.google.com/document/d/1qa5BL9_J83SrSsCvKeUaMlA_bEG48DvV/">Design document</a>
+              
             </div>
-            <div class="col-lg-3 col-md-6">
+            
+            <div class="col-lg-5 col-md-5">
               <h5 class="text-white mb-4">Liên hệ </h5>
-              <p class="mb-2">
-                <i class="fa fa-map-marker-alt me-3"></i>123 Street, New York,
-                USA
-              </p>
-              <p class="mb-2">
-                <i class="fa fa-phone-alt me-3"></i>+012 345 67890
-              </p>
-              <p class="mb-2">
-                <i class="fa fa-envelope me-3"></i>info@example.com
-              </p>
+              <a class="mb-6" href="https://g.page/daihocfpthcm?share" target="_blank">
+                <i class="fa fa-map-marker-alt me-3"></i>Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Thành phố Hồ Chí Minh
+              </a>
+              <br>
+              <a class="mb-6">
+                <i class="fa fa-phone-alt me-3"></i>0123 456 789
+              </a>
+              <br>
+              <a class="mb-6">
+                <i class="fa fa-envelope me-3"></i>abccompany@eRecruitment.com
+              </a>
               <div class="d-flex pt-2">
-                <a class="btn btn-outline-light btn-social" href=""
+                <a class="btn btn-outline-light btn-social" href="https://twitter.com/home" target="_blank"
                   ><i class="fab fa-twitter"></i
                 ></a>
-                <a class="btn btn-outline-light btn-social" href=""
+                <a class="btn btn-outline-light btn-social" href="https://www.facebook.com/" target="_blank"
                   ><i class="fab fa-facebook-f"></i
                 ></a>
-                <a class="btn btn-outline-light btn-social" href=""
+                <a class="btn btn-outline-light btn-social" href="https://www.youtube.com/" target="_blank"
                   ><i class="fab fa-youtube"></i
                 ></a>
-                <a class="btn btn-outline-light btn-social" href=""
+                <a class="btn btn-outline-light btn-social" href="https://www.linkedin.com/" target="_blank"
                   ><i class="fab fa-linkedin-in"></i
                 ></a>
               </div>
             </div>
-            
+             <div class="col-lg-1 col-md-1">
+            </div>
           </div>
         </div>
         <div class="container">
@@ -77,8 +70,8 @@
               </div>
               <div class="col-md-6 text-center text-md-end">
                 <div class="footer-menu">
-                  <a href="">Home</a>
-                  <a href="">Cookies</a>
+                  <a href="home">Home</a>
+                  <a href="/*">Cookies</a>
                   <a href="">Help</a>
                   <a href="">FQAs</a>
                 </div>
