@@ -23,6 +23,8 @@
     </head>
     <body>
         <div class="container">
+            <jsp:include page="../header/header_loginbtn.jsp" />
+
             <div class="login-form">
                 <form action = "signup" method="post" id="signupForm">
                     <h2 class="d-flex justify-content-center mb-4">Đăng Ký</h2>
@@ -117,7 +119,7 @@
                                     />
                             </label>
                         </div>
-                        <div class="text-danger d-none" id="checkPass">
+                        <div class="text-danger " id="checkPass" style="display: none;">
                             <p>Mật khẩu không trùng khớp</p>
                         </div>
 
@@ -133,6 +135,7 @@
                 </form>
             </div>
         </div>
+        <jsp:include page="../footer/footer.jsp" />
     </div>
 
     <script>

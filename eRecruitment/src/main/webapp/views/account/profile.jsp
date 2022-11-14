@@ -69,15 +69,15 @@
                                 <form class="col-12 d-flex flex-column justify-content-center" action = "profile" method ="post" enctype="multipart/form-data"> <!-- multipart phai di voi method post-->
                                     <div class="d-flex justify-content-center col-12 p-3">
                                         <div class="btn btn-light">
-                                            <label class="form-label" for="customFile2">Choose file</label>
+                                            <label class="form-label" for="customFile2">Chọn file</label>
                                             <input class="form-control d-none" id="customFile2" type="file" name="file" accept="image/png" value ="" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])"/>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row justify-content-center">
                                         <input type ="hidden" name="action" value="updateAvatar">
-                                        <button class="col-4 btn btn-primary border border-1 m-1" type="submit" onclick="closeImgForm()">Update</button>
+                                        <button class="col-4 btn btn-primary border border-1 m-1" type="submit" onclick="closeImgForm()">Cập nhật</button>
 
-                                        <button type="button" class="btn cancel col-4 border border-1 m-1" onclick="closeImgForm()">Cancel</button>
+                                        <button type="button" class="btn cancel col-4 border border-1 m-1" onclick="closeImgForm()">Hủy</button>
                                     </div>
                                 </form>
                             </div>
@@ -85,21 +85,21 @@
                                 <h4 class="text-light"><%=user.getFirstName()%> <%=user.getLastName()%></h4>
                                 <div class="text-light">
                                     <c:if test="<%=user.getGenderID() == 1%>">
-                                        Male
+                                        Nam
                                     </c:if>
                                     <c:if test="<%=user.getGenderID() == 2%>">
-                                        Female
+                                        Nữ
                                     </c:if>
                                     <c:if test="<%=user.getGenderID() == 3%>">
-                                        Other
+                                        Bí mật
                                     </c:if>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-12 d-flex flex-column justify-content-center m-4">
-                            <button class="open-button btn btn-light border border-2 rounded rounded-3 col-10 m-1" id="open-button" onclick="openForm()">Edit profile</button>
-                            <button class="open-button btn btn-light border border-2 rounded rounded-3 col-10 m-1" id="open-pws" onclick="openPwsForm()">Change password</button>
+                            <button class="open-button btn btn-light border border-2 rounded rounded-3 col-10 m-1" id="open-button" onclick="openForm()">Chỉnh sửa hồ sơ</button>
+                            <button class="open-button btn btn-light border border-2 rounded rounded-3 col-10 m-1" id="open-pws" onclick="openPwsForm()">Đổi mật khẩu</button>
                         </div>
 
                         <div class="form-popup d-none " id="infoForm">
@@ -107,23 +107,23 @@
 
 
                                 <label class="col-12 d-flex flex-row justify-content-between m-1" for="firstName">
-                                    <span class="col-4">First name</span>
+                                    <span class="col-4">Họ</span>
                                     <input class="col-8" type = "text" id="firstName" name ="firstName"
-                                           placeholder = "Enter your first name" value="<%=user.getFirstName()%>">
+                                           placeholder = "Nhập vào họ" value="<%=user.getFirstName()%>">
                                 </label>
 
                                 <label  class="col-12 d-flex flex-row justify-content-between m-1" for ="lastName">
-                                    <span class="col-4">Last Name</span>
+                                    <span class="col-4">Tên</span>
                                     <input class="col-8" type="text" name ="lastName" id ="lastName" value = "<%=user.getLastName()%>"
-                                           placeholder = "Enter your last name">
+                                           placeholder = "Nhập vào tên">
                                 </label>
 
                                 <label  class="col-12 d-flex flex-row justify-content-start m-1" for="gender">
-                                    <span class="col-4">Gender</span>
+                                    <span class="col-4">Giới tính</span>
                                     <select class="col-8" name="gender" id="gender">
-                                        <option value = "Male" <%=user.getGenderID() == 1 ? "selected" : ""%>>Male</option>
-                                        <option value = "Female" <%=user.getGenderID() == 2 ? "selected" : ""%>>Female</option>                       
-                                        <option value = "Other" <%=user.getGenderID() == 3 ? "selected" : ""%>>Other</option>
+                                        <option value = "Male" <%=user.getGenderID() == 1 ? "selected" : ""%>>Nam</option>
+                                        <option value = "Female" <%=user.getGenderID() == 2 ? "selected" : ""%>>Nữ</option>                       
+                                        <option value = "Other" <%=user.getGenderID() == 3 ? "selected" : ""%>>Bí mật</option>
                                     </select>
                                 </label>
 
@@ -131,8 +131,8 @@
 
                                 <div class="d-flex flex-row col-12 justify-content-start m-2">
                                     <input type="hidden" name="action" value="updateProfile">
-                                    <button class="col-4 btn btn-primary" type="submit" >Save</button>
-                                    <button type="button" class="btn cancel col-4" onclick="closeForm()">Cancel</button>
+                                    <button class="col-4 btn btn-primary" type="submit" >Lưu</button>
+                                    <button type="button" class="btn cancel col-4" onclick="closeForm()">Ðóng</button>
                                     <p class="updateMsg">${updateMess}</p>
                                     <p class="updateMsg">${updateErrorMess}</p>
                                 </div>
@@ -144,26 +144,26 @@
                                 <p class="updateMsg">${changePassMess}</p>
 
                                 <label class="d-flex flex-column justify-content-start" for="oldPassword">
-                                    <span class="col-8"> Enter your password </span>
+                                    <span class="col-8">Nhập mật khẩu cũ</span>
                                     <input class="col-10" type="password" name="oldPassword" id="oldPassword" value="${oldPassword}"/>
                                     <p class="text-danger">${passwordErrMess1}</p>
                                 </label>
 
                                 <label class="d-flex flex-column justify-content-start" for="newPassword">
-                                    <span class="col-8">Enter new password </span>
+                                    <span class="col-8">Nhập mật khẩu mới</span>
                                     <input class="col-10" type="password" name="newPassword" id="newPassword" value="${newPassword}" />
                                     <p class="text-danger">${passwordErrMess2}</p>
                                 </label>
 
                                 <label class="d-flex flex-column justify-content-start" for="rePass">
-                                    <span class="col-8">Confirm password</span>
+                                    <span class="col-8">Xác nhận mật khẩu</span>
                                     <input class="col-10" type ="password" name="rePass" id="rePass" />
-                                    <p class="text-danger d-none">Password does not match!</p>
+                                    <p class="text-danger d-none">Mật khẩu không khớp!</p>
                                 </label>
                                 <div class="d-flex flex-row col-12 justify-content-start m-2">
                                     <input type="hidden" name="action" value="changePass">
-                                    <button class="col-4 btn btn-primary" onclick="checkPassword()" type="button">Save</button>
-                                    <button type="button" class="btn cancel col-4" onclick="closePwsForm()">Cancel</button>
+                                    <button class="col-4 btn btn-primary" onclick="checkPassword()" type="button">Lưu</button>
+                                    <button type="button" class="btn cancel col-4" onclick="closePwsForm()">Ðóng</button>
                                 </div>
                             </form>
                         </div>
@@ -181,11 +181,11 @@
                         <c:if test="${user.getUserRole() == 1}">
                             <div class="col-10 m-auto">
                                 <div class="d-flex flex-row justify-content-between">
-                                    <h2 class="text-primary col-4">My resume</h2>
+                                    <h2 class="text-primary col-4">CV của tôi</h2>
                                     <c:if test = "${not empty cv}">
                                         <form class="col-2" action="cv" method = "post">
                                             <input type="hidden" name="action" value="editMyCV">
-                                            <button class="btn btn-primary m-3" type="submit">Edit CV</button>
+                                            <button class="btn btn-primary m-3" type="submit">Chỉnh sửa CV</button>
                                         </form>
                                     </c:if>
                                 </div>
@@ -193,7 +193,7 @@
                                 <c:if test = "${empty cv}">
                                     <form action="cv" method = "post">
                                         <input type="hidden" name="action" value="createMyCV">
-                                        <button class="col-2 btn btn-primary" type="submit">Create CV</button>
+                                        <button class="col-2 btn btn-primary" type="submit">Tạo CV</button>
                                     </form>
                                 </c:if>
                             </div>
@@ -201,7 +201,7 @@
                                 <c:if test = "${not empty cv}">
                                     <form action="cv" method = "post">
                                         <input type="hidden" name="action" value="editMyCV">
-                                        <button class="col-2 btn btn-primary m-3" type="submit">Edit CV</button>
+                                        <button class="col-2 btn btn-primary m-3" type="submit">Chỉnh sửa CV</button>
                                     </form>
                                 </c:if>
                             </div>
@@ -217,13 +217,13 @@
                     <c:if test = "${empty cv}">
                         <form action="cv" method = "post">
                             <input type="hidden" name="action" value="createMyCV">
-                            <button class="col-2 btn btn-primary" type="submit">Create CV</button>
+                            <button class="col-2 btn btn-primary" type="submit">Tạo CV</button>
                         </form>
                     </c:if>
                     <c:if test = "${not empty cv}">
                         <form action="cv" method = "post">
                             <input type="hidden" name="action" value="editMyCV">
-                            <button class="col-2 btn btn-primary" type="submit">Edit CV</button>
+                            <button class="col-2 btn btn-primary" type="submit">Chỉnh sửa CV</button>
                         </form>
                     </c:if>
                 </div>

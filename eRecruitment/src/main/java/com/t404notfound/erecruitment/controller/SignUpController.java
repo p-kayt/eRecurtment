@@ -51,13 +51,13 @@ public class SignUpController extends HttpServlet {
                 request.setAttribute("email", email);
                 request.setAttribute("firstName", firstName);
                 request.setAttribute("lastName", lastName);
-                request.setAttribute("EmailErrorMess", "Invalid email");
+                request.setAttribute("EmailErrorMess", "Email không hợp lệ");
             } else {
                 if (dao.checkEmail(email)) {
                     request.setAttribute("email", email);
                     request.setAttribute("firstName", firstName);
                     request.setAttribute("lastName", lastName);
-                    request.setAttribute("EmailErrorMess", "This email has been used");
+                    request.setAttribute("EmailErrorMess", "Email đã được sử dụng");
                 } else {
                     UserDTO user = dao.signup(email, password, firstName, lastName, gender);
                     if (user != null) {

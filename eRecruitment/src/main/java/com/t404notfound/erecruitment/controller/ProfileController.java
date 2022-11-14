@@ -61,12 +61,12 @@ public class ProfileController extends HttpServlet {
                     String newPassword = request.getParameter("newPassword");
                     //check case password is null
                     if (oldPassword == null || oldPassword.equals("")) {
-                        request.setAttribute("passwordErrMess1", "Password cannot be empty");
+                        request.setAttribute("passwordErrMess1", "Mật khẩu không được để trống");
                         request.setAttribute("newPassword", newPassword);
                     } else {
                         //check case password is null
                         if (newPassword == null || newPassword.equals("")) {
-                            request.setAttribute("passwordErrMess2", "Password cannot be empty");
+                            request.setAttribute("passwordErrMess2", "Mật khẩu không được để trống");
                             request.setAttribute("oldPassword", oldPassword);
                         } else {
                             //checkPassword using login function 
@@ -76,10 +76,10 @@ public class ProfileController extends HttpServlet {
                                 if (checkChangePass) {
                                     user.setPassword(newPassword);
                                     session.setAttribute("user", user);
-                                    request.setAttribute("changePassMess", "Change password successfully.");
+                                    request.setAttribute("changePassMess", "Thay đổi mật khẩu thành công.");
                                 }
                             } else {
-                                request.setAttribute("passwordErrMess1", "Incorrect password.");
+                                request.setAttribute("passwordErrMess1", "Mật khẩu không chính xác.");
                                 request.setAttribute("oldPassword", oldPassword);
                                 request.setAttribute("newPassword", newPassword);
                             }
@@ -113,7 +113,7 @@ public class ProfileController extends HttpServlet {
                         }
                         user.setGenderID(genderID);
                         session.setAttribute("user", user);
-                        request.setAttribute("updateMess", "Update profile successfully");
+                        request.setAttribute("updateMess", "Cập nhật hồ sơ thành công");
                     }
                 } else if (action.equalsIgnoreCase("updateAvatar")) {
 
