@@ -126,11 +126,11 @@
                                                         </div>
                                                     </c:if>
                                                 </c:if>
-                                                
-                                                    <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
-                                                        <p class="col-2 bg-primary text-white text-center p-2 rounded rounded-9" id="status">${status}</p>
-                                                    </c:forEach>
-                                                
+
+                                                <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
+                                                    <p class="col-2 bg-primary text-white text-center p-2 rounded rounded-9" id="status">${status}</p>
+                                                </c:forEach>
+
                                             </div>
 
 
@@ -208,9 +208,10 @@
                 </c:choose>
 
             </section>
+            <jsp:include page="../footer/footer.jsp" />
         </div>
 
-        <jsp:include page="../footer/footer.jsp" />
+
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"

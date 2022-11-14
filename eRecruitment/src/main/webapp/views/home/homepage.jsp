@@ -257,7 +257,7 @@
                                     </nav>
                                 </div>
                             </div>
-                            
+
                             <div id="tab-2" class="tab-pane fade show p-0">
                                 <div class="row g-3">
                                     <c:if test="${not empty requestScope.fulltime}">
@@ -398,9 +398,9 @@
 
             </div>
             <!-- footers -->
-
+            <jsp:include page="../footer/footer.jsp" />
         </div>
-        <jsp:include page="../footer/footer.jsp" />
+
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"

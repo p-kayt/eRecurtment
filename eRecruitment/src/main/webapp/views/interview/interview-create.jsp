@@ -80,7 +80,7 @@
                         <div class="d-flex flex-column m-auto my-4 col-10 border border-1 shadow p-4 pb-5">
                             <form class="m-auto col-10" action = "interview" method = "get" id = "form1">
                                 <div class="d-flex flex-row justify-content-center row g-2 m-1">
-                                    <a href="post?action=post-detail&postID=${postID}" target="_blank">Xem bài đăng tuyển dụng</a>
+                                    <a class="col-11 text-decoration-underline fw-bold" href="post?action=post-detail&postID=${postID}" target="_blank">Xem bài đăng tuyển dụng</a>
                                 </div>
                                 <div class="d-flex flex-row justify-content-center row g-2 m-1">
                                     <label class="col-3" for="format">Hình thức</label>
@@ -92,7 +92,7 @@
                                         </c:forEach>
                                     </c:if>
                                 </div>-->
-                                    <select class="col-6" id = "format" name= "format">
+                                    <select class="col-6 p-1 formatcheck" id ="format" name= "format">
                                         <c:if test ="<%=(interviewFormat != null)%>" >
                                             <c:forEach items="<%=interviewFormat%>" var="i" varStatus="count">
                                                 <option value = "${count.index + 1}" ${(format == (count.index + 1)) ? "selected" : ""}>${i}</option>   
@@ -101,11 +101,27 @@
                                     </select>
                                     <span class="col-2"></span>
                                 </div>
-                                <div class="d-flex flex-row justify-content-center row g-2 m-1">
+                                <!--
+                                                                <div class="d-flex flex-row justify-content-center row g-2 m-1">
+                                <c:choose>
+                                    <c:when test="${interviewFormat == 'Online'}">
+                                        <label class="col-3" for = "link">Link</label>
+                                        <input class="col-8" type = "url" name="link" id="link" >
+                                    </c:when>
+                                    <c:otherwise>
+                                        <label class="col-3" for="address" >Địa chỉ</label>
+                                        <input class="col-8" type="text" name="address" id="address" >
+
+                                    </c:otherwise>
+                                </c:choose>
+
+                            </div>-->
+
+                                <div class="d-flex flex-row justify-content-center row g-2 m-1 " id="online">
                                     <label class="col-3" for = "link">Link</label>
                                     <input class="col-8" type = "url" name="link" id="link" >
                                 </div>
-                                <div class="d-flex flex-row justify-content-center row g-2 m-1">
+                                <div class="d-flex flex-row justify-content-center row g-2 m-1 " id="offline">
                                     <label class="col-3" for="address" >Địa chỉ</label>
                                     <input class="col-8" type="text" name="address" id="address" >
                                 </div>
@@ -169,11 +185,18 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
         <!--Check format: if format is offline then link is require, else, address is require-->
-        <!--        <script>
-                    function checkFormat(id) {
-                        var f = document.getElementById(id);
-                        
-                    }
-                </script>-->
-    </body>
+<!--        <script>
+           console.log( document.querySelector('#format').value == 1)
+            $(document).ready(function () {
+                
+                if (document.querySelector('#format').value == 2)
+                    (
+                            console.log(document.querySelector('#format').value)
+
+                            )
+            });
+
+        </script>-->
+    </script>
+</body>
 </html>

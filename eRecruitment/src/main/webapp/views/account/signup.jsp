@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="css/style_lgin.css">
     </head>
     <body>
-        <div class="container">
+        <div class="container-xxl bg-white p-0">
             <jsp:include page="../header/header_loginbtn.jsp" />
 
             <div class="login-form">
@@ -134,9 +134,8 @@
                     </div>
                 </form>
             </div>
+            <jsp:include page="../footer/footer.jsp" />
         </div>
-        <jsp:include page="../footer/footer.jsp" />
-    </div>
 
     <script>
         function checkForm() {

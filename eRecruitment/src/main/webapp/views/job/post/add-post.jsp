@@ -229,24 +229,9 @@
                     </div>
             </form>
         </div>
+        <jsp:include page="../../footer/footer.jsp" />
     </div>
-    <jsp:include page="../../footer/footer.jsp" />
-    <script type="text/javascript">
-        function getCurrentDate() {
-            var currentDate = new Date().toJSON().slice(0, 10);
-            return currentDate;
-        }
-        var createdDate = document.getElementById("createdDate");
-        createdDate.value = getCurrentDate();
-        var startDate = document.getElementById("startDate");
-        startDate.min = getCurrentDate();
-        startDate.onchange = function(){
-            var expiredate = document.getElementById("expiredDate");
-            expiredate.setAttribute("min", this.value)
-        }
-        var expiredDate = document.getElementById("expiredDate");
-        expiredDate.min = getCurrentDate();
-    </script>
+
 
 
     <!-- Back to Top -->
@@ -260,5 +245,23 @@
 
 
     <script src="js/jobutility.js"></script>
+    
+    
+    <script type="text/javascript">
+        function getCurrentDate() {
+            var currentDate = new Date().toJSON().slice(0, 10);
+            return currentDate;
+        }
+        var createdDate = document.getElementById("createdDate");
+        createdDate.value = getCurrentDate();
+        var startDate = document.getElementById("startDate");
+        startDate.min = getCurrentDate();
+        startDate.onchange = function () {
+            var expiredate = document.getElementById("expiredDate");
+            expiredate.setAttribute("min", this.value)
+        }
+        var expiredDate = document.getElementById("expiredDate");
+        expiredDate.min = getCurrentDate();
+    </script>
 </body>
 </html>

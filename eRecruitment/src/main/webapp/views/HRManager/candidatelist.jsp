@@ -170,8 +170,9 @@
                 </table>                
 
             </c:if>
+            <jsp:include page="../footer/footer.jsp" />
         </div>
-        <jsp:include page="../footer/footer.jsp" />
+
 
 
         <!-- Back to Top -->
