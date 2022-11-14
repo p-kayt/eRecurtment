@@ -423,11 +423,12 @@ public class CVController extends HttpServlet {
                 //Lấy đường dẫn tương đối
 
                 Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
-                //tạo file .png và ghi đè img vào
-                String fileName = "cv_avatar";
-                File file = File.createTempFile(fileName, ".png", image);
-                //tạo file .png và ghi đè img vào
+
                 if (filePart.getSize() > 0) {
+                    //tạo file .png và ghi đè img vào
+                    String fileName = "cv_avatar";
+                    File file = File.createTempFile(fileName, ".png", image);
+                    //tạo file .png và ghi đè img vào
                     try {
 
                         try ( InputStream input = filePart.getInputStream()) {
@@ -450,9 +451,12 @@ public class CVController extends HttpServlet {
                 }
 
 //                request.setAttribute("path", file.getAbsolutePath());
-                String url = "image/cv_avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/cv_avatar.png";
-                if (cvdao.changeAvatar(url, cvdto.getCVID())) {
-                    cvdto.setAvatar(url);
+                if (cvdto.getAvatar() != null && cvdto.getAvatar().contains("image/cv_avatar")) {
+
+                    String url = "image/cv_avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/cv_avatar.png";
+                    if (cvdao.changeAvatar(url, cvdto.getCVID())) {
+                        cvdto.setAvatar(url);
+                    }
                 }
 
                 cvdto = cvdao.loadCVByUserID(user.getUserID());
