@@ -62,20 +62,20 @@
                 <c:when test = "${user.userRole == 1}">
                     <ul class="nav nav-tabs bg-dark row pt-2 justify-content-start mx-auto">
                         <li class="nav-item col-auto">
-                            <a class="nav-link py-3 fw-bold border-0" href="./common-interview?action=showCandidatePendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
+                            <a class="nav-link py-3 fw-bold border-0 ${action == 'showCandidatePendingInterview' ? 'active' :'' }" href="./common-interview?action=showCandidatePendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
                         </li>
                         <li class="nav-item col-auto">
-                            <a class="nav-link py-3 fw-bold border-0  active" href="./common-interview?action=showCandidateInterviewHistory">Lịch sử phỏng vấn</a>
+                            <a class="nav-link py-3 fw-bold border-0  ${action == 'showCandidateInterviewHistory' ? 'active' :'' }" href="./common-interview?action=showCandidateInterviewHistory">Lịch sử phỏng vấn</a>
                         </li>
                     </ul>
                 </c:when>
                 <c:when test = "${user.userRole == 4}">
                     <ul class="nav nav-tabs bg-dark row pt-2 justify-content-start mx-auto">
                         <li class="nav-item col-auto">
-                            <a class="nav-link py-3 fw-bold border-0" href="./common-interview?action=showInterviewerPendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
+                            <a class="nav-link py-3 fw-bold border-0 ${action == 'showInterviewerPendingInterview' ? 'active' :'' }" href="./common-interview?action=showInterviewerPendingInterview">Các cuộc phỏng vấn sắp diễn ra</a>
                         </li>
                         <li class="nav-item col-auto">
-                            <a class="nav-link py-3 fw-bold border-0  active" href="./common-interview?action=showInterviewerInterviewHistory">Lịch sử phỏng vấn</a>
+                            <a class="nav-link py-3 fw-bold border-0 ${action == 'showInterviewerInterviewHistory' ? 'active' :'' }" href="./common-interview?action=showInterviewerInterviewHistory">Lịch sử phỏng vấn</a>
                         </li>
                     </ul>
                 </c:when>

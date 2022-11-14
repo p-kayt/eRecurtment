@@ -131,6 +131,7 @@ public class CommonInterviewController extends HttpServlet {
                     candidateInterviewTime.add(time);
                 }
 
+                request.setAttribute("action", action);
                 request.setAttribute("userID", userID);
                 request.setAttribute("listInterviewStatus", listInterviewStatus);
                 request.setAttribute("listInterviewStage", listInterviewStage);
@@ -161,6 +162,7 @@ public class CommonInterviewController extends HttpServlet {
                     candidateInterviewTime.add(time);
                 }
 
+                request.setAttribute("action", action);
                 request.setAttribute("userID", userID);
                 request.setAttribute("listInterviewStatus", listInterviewStatus);
                 request.setAttribute("listInterviewStage", listInterviewStage);
