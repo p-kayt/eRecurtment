@@ -317,7 +317,7 @@ public class HRInterviewController extends HttpServlet {
                 int appID = interviewDAO.getApplicationID(userID, postID);
                 //get ApplicationID
 
-                int preStage = postDAO.getIDOfPreviousStage(postID, stageID);
+                int preStage = interview.getStageID();
                 appDAO.rollbackToPreviousStage(preStage, appID);
                 // decrease stage 
 

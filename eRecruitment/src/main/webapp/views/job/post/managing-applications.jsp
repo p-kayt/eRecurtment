@@ -118,6 +118,9 @@
                                 <input class="btn btn-info" type="submit" value="Danh sách phỏng vấn">
                             </form>
                         </c:if>
+                        <c:if test="${stage.stageID == 2}">
+                            <p>Ứng viên cần phải được thêm vào các buổi phỏng vấn đã tạo để có thể xét duyệt và xem đánh giá của ứng viên</p>
+                        </c:if>
                         <div>
                             <table>
                                 <thead>
