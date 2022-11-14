@@ -1620,12 +1620,41 @@ public class ApplicationPostDAO {
         try {
             cn = DBUtil.getConnection();
             PreparedStatement pst = cn.prepareStatement(sql);
-            
+
             pst.setInt(1, postID);
             pst.setInt(2, stageID);
 
             ResultSet rs = pst.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (cn != null) {
+                try {
+                    cn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int getIDOfPreviousStage(int postID, int stageID) {
+        String sql = "select prev_ID from"
+                + " (select ID, lag(ID, 1, 0) over (order by ID) as prev_ID from Application_Stage where PostID = ?) as stage"
+                + " where ID =  ?";
+        try {
+            cn = DBUtil.getConnection();
+            PreparedStatement pst = cn.prepareStatement(sql);
+
+            pst.setInt(1, postID);
+            pst.setInt(2, stageID);
+
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (SQLException e) {
@@ -1645,7 +1674,7 @@ public class ApplicationPostDAO {
     public static void main(String[] args) {
 
         ApplicationPostDAO dao = new ApplicationPostDAO();
-        int res = dao.getIDOfNextStage(4, 19);
+        int res = dao.getIDOfPreviousStage(1, 2);
         System.out.println(res);
 
     }
