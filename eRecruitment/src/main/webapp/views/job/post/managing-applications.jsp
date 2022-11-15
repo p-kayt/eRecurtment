@@ -387,7 +387,7 @@
             <jsp:include page="../../footer/footer.jsp" />
         </div>
         
-        <span class="btn btn-primary" onclick="document.getElementById('managing-applications').submit()">Quản lý ứng tuyển</span>
+        <div class="btn btn-primary btn-lg-square back-to-top " style="margin-bottom: 60px" onclick="document.getElementById('managing-applications').submit()"><i class="bi bi-arrow-counterclockwise"></i></div>
         <form class="col-2 m-3" action="./job" method="post" id="managing-applications">
                         <input type="hidden" name="positionID" value="${requestScope.position.positionID}">
                         <input type="hidden" name="postID" value="${requestScope.post.postID}">

@@ -74,20 +74,17 @@
                                         <div class="border border-1 m-5 p-4 shadow">
                                             <c:forEach items="${InterviewList}" var="c" varStatus="loop">
                                                 <div class="border border-1 mb-5 p-4 shadow d-flex flex-column">
-                                                    <div class="row g-2 m-1 mx-3">
-                                                        <a href="post?action=post-detail&postID=${c.postID}" target="_blank">Xem bài đăng tuyển dụng</a>
-                                                    </div>
-                                                    <div class="row g-2 m-1 mx-3">
-                                                        <label class="col-2 fw-bold" for="status">Trạng thái</label>
+
+                                                    <div class="d-flex flex-row justify-content-end m-1 mx-3">
                                                         <c:forEach items="${listInterviewStatus}" begin="${loop.index}" end="${loop.index}" step="1" var="status">
-                                                            <p class="col-4" id="status">${status}</p>
-                                                            </c:forEach>
+                                                            <p class="col-2 bg-primary text-white text-center p-1" id="status">${status}</p>
+                                                        </c:forEach>
                                                     </div>
                                                     <div class="row g-2 m-1 mx-3">
                                                         <label class="col-2 fw-bold"  for="stage">Vòng</label>
                                                         <c:forEach items="${listInterviewStage}" begin="${loop.index}" end="${loop.index}" step="1" var="stage">
                                                             <p class="col-4" id="stage">${stage.split(";")[1]}</p>
-                                                            </c:forEach>
+                                                        </c:forEach>
                                                     </div>
                                                     <div class="d-flex flex-column m-1 mx-3">
                                                         <label class="col-2 fw-bold " for="description">Mô tả</label>
@@ -98,23 +95,26 @@
                                                         <label class="col-2 fw-bold" for="time">Thời gian</label>
                                                         <p class="col-4" id="time">${c.getTime()}</p>
                                                     </div>
+                                                    <div class="row g-2 m-1 mx-3 fs-6">
+                                                        <a class="text-decoration-underline" href="post?action=post-detail&postID=${c.postID}" target="_blank">Xem bài đăng tuyển dụng</a>
+                                                    </div>
 <!--                                                        <p>${c.getPostID()}</p>-->
-
-                                                    <form class="d-flex justify-content-end m-2" action="interview" method="post" >
-                                                        <input type="hidden" name="action" value="showInterviewDetail">
-                                                        <input type="hidden" name="interviewID" value="${c.getInterviewID()}">
-                                                        <input class="btn btn-primary" type="submit" value="Chi tiết">
-                                                    </form>
-
-                                                    <c:if test= "${c.bookerID == user.userID}">
+                                                    <div class="d-flex flex-row justify-content-end">
                                                         <form class="d-flex justify-content-end m-2" action="interview" method="post" >
-                                                            <input type="hidden" name="action" value="interviewDetail">
-                                                            <input type="hidden" name="postID" value="${c.getPostID()}">
+                                                            <input type="hidden" name="action" value="showInterviewDetail">
                                                             <input type="hidden" name="interviewID" value="${c.getInterviewID()}">
-                                                            <input class="btn btn-primary" type="submit" value="Chỉnh sửa">
+                                                            <input class="btn btn-primary" type="submit" value="Chi tiết">
                                                         </form>
-                                                    </c:if>
 
+                                                        <c:if test= "${c.bookerID == user.userID}">
+                                                            <form class="d-flex justify-content-end m-2" action="interview" method="post" >
+                                                                <input type="hidden" name="action" value="interviewDetail">
+                                                                <input type="hidden" name="postID" value="${c.getPostID()}">
+                                                                <input type="hidden" name="interviewID" value="${c.getInterviewID()}">
+                                                                <input class="btn btn-primary" type="submit" value="Chỉnh sửa">
+                                                            </form>
+                                                        </c:if>
+                                                    </div>
                                                 </div>
                                             </c:forEach>
                                         </div>
