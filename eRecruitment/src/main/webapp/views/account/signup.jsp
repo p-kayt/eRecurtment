@@ -113,13 +113,13 @@
                         <div class="form-group col-12  d-flex flex-row">
                             Giới tính
                             <div class="col-8  d-flex flex-row">
-                                <input type="radio" id="male" name="gender" value="Nam" checked>
+                                <input type="radio" id="male" name="gender" value="male" checked>
                                 <label for="male">Nam</label>
 
-                                <input type="radio" id="female" name="gender" value="Nữ">
+                                <input type="radio" id="female" name="gender" value="female">
                                   <label for="female">Nữ</label>
                                   
-                                <input type="radio" id="other" name="gender" value="Khác">
+                                <input type="radio" id="other" name="gender" value="other">
                                   <label for="other">Khác</label>
                             </div>
                         </div>
