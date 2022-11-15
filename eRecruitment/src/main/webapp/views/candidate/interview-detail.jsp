@@ -57,7 +57,6 @@
                 <jsp:include page="../header/header_logoutbtn.jsp" />
             </c:if>
 
-
             <section>
                 <c:choose>
                     <c:when test = "${user.userRole == 1}">
@@ -80,7 +79,7 @@
                                             <a class="text-decoration-underline fw-bold mx-5 " href = "post?action=post-detail&postID=${interview.postID}" target="_blank">Xem bài đăng tuyển dụng</a>
                                         </div>
                                         <div class="col-3">
-                                            <p class="text-white fw-bold bg-primary p-2 text-center">Trạng thái: ${result}</p>
+                                            <p class="text-white fw-bold bg-primary p-2 text-center">${result}</p>
                                         </div>
                                     </div>
 

@@ -121,7 +121,7 @@
                             <th scope="col" class="col-1 text-center pb-4">Tên</th>
                             <th scope="col" class="col-2 text-center pb-4">Quyền hệ thống</th>
                             <th scope="col" class="col-1 text-center pb-4">Trạng thái</th>
-                            <th scope="col" class="col-2 text-center pb-4">Action</th>
+                            <th scope="col" class="col-2 text-center pb-4">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
