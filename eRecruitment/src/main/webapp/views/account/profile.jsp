@@ -110,7 +110,12 @@
                         <div class="form-popup d-none " id="infoForm">
                             <form class="d-flex flex-column profile_form m-3 justify-content-start" action = "profile" method ="post" id="profileForm">
 
-
+                                <label class="col-12 d-flex flex-row justify-content-between m-1" for="firstName">
+                                    <span class="col-4">Email</span>
+                                    <input class="col-8" type = "text" id="firstName" name ="email"
+                                           value="<%=user.getEmail()%>" disabled>
+                                </label>
+                                
                                 <label class="col-12 d-flex flex-row justify-content-between m-1" for="firstName">
                                     <span class="col-4">Họ</span>
                                     <input class="col-8" type = "text" id="firstName" name ="firstName"
