@@ -64,7 +64,11 @@
                                 <%education = (EducationDTO) cv.getEducations().get(i);%>
                                 <div><b>Course: </b> <%=education.getEducationName()%></div>
                                 <div><b>Organization: </b> <%=education.getOrganizationName()%></div>
-                                <div><b>Status: </b> <%=education.getStatus()%></div>
+                                <%boolean status = false;%>
+                                <div><b>Status: </b> 
+                                    <c:if test="<%=(education.getStatus() == 1)%>">Complete</c:if>
+                                    <c:if test="<%=(education.getStatus() == 2)%>">In-progress</c:if>
+                                </div>
                             </div>
                             <% }%>                    
                         </div>

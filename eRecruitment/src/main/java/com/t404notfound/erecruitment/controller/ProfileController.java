@@ -167,15 +167,20 @@ public class ProfileController extends HttpServlet {
                         Files.move(source, source.resolveSibling("avatar.png"),
                                 StandardCopyOption.REPLACE_EXISTING);
                         //rename img
-                    }
-//                request.setAttribute("path", file.getAbsolutePath());
-                    if (user.getAvatarURL() != null && user.getAvatarURL().contains("image/avatar")) {
                         String url = "image/avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/avatar.png";
                         if (dao.changeAvatar(url, user.getUserID())) {
                             user.setAvatarURL(url);
                             session.setAttribute("user", user);
                         }
                     }
+////                request.setAttribute("path", file.getAbsolutePath());
+//                    if (user.getAvatarURL() != null && user.getAvatarURL().contains("image/avatar")) {
+//                        String url = "image/avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/avatar.png";
+//                        if (dao.changeAvatar(url, user.getUserID())) {
+//                            user.setAvatarURL(url);
+//                            session.setAttribute("user", user);
+//                        }
+//                    }
 
                 }
             }

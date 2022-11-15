@@ -258,11 +258,6 @@ public class CVController extends HttpServlet {
                     Files.move(source, source.resolveSibling("cv_avatar.png"),
                             StandardCopyOption.REPLACE_EXISTING);
                     //rename img
-                }
-
-//                request.setAttribute("path", file.getAbsolutePath());
-                if (cvdto.getAvatar() != null && cvdto.getAvatar().contains("image/cv_avatar")) {
-
                     String url = "image/cv_avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/cv_avatar.png";
                     if (cvdao.changeAvatar(url, cvdto.getCVID())) {
                         cvdto.setAvatar(url);
@@ -448,16 +443,13 @@ public class CVController extends HttpServlet {
                     Files.move(source, source.resolveSibling("cv_avatar.png"),
                             StandardCopyOption.REPLACE_EXISTING);
                     //rename img
-                }
-
-//                request.setAttribute("path", file.getAbsolutePath());
-                if (cvdto.getAvatar() != null && cvdto.getAvatar().contains("image/cv_avatar")) {
-
                     String url = "image/cv_avatar/" + user.getFirstName().trim() + user.getLastName().trim() + "/cv_avatar.png";
                     if (cvdao.changeAvatar(url, cvdto.getCVID())) {
                         cvdto.setAvatar(url);
                     }
                 }
+
+
 
                 cvdto = cvdao.loadCVByUserID(user.getUserID());
                 request.setAttribute("cv", cvdto);
